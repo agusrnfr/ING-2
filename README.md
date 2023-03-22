@@ -20,6 +20,8 @@ Montar Base de datos:
 
 7- npx sequelize-cli db:migrate
 
+8- npx sequelize-cli db:seed:all  // para cargar datos random
+
 Ejecutar:
 
 8- nodemon app
