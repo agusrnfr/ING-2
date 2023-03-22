@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+<link rel="stylesheet" href="resources/css/style.css">
+</head>
+    <div id="contenedor">
+        <div id="central">
+            <div id="login">
+                <div class="titulo">
+                    Bienvenido
+                </div>
+                <form action="/login" method="POST">
+                    <input type="text" name="user" placeholder="Usuario" required>
+                    
+                    <input type="password" placeholder="Contraseña" name="pass" required>
+                    
+                    <button type="submit" title="Ingresar" name="Ingresar">Login</button>
+                </form>
+                <div class="pie-form">
+                    <a href="#">¿Perdiste tu contraseña?</a>
+                    <a href="#">¿No tienes Cuenta? Registrate</a>
+                </div>
+            </div>
+            <div class="inferior">
+                <a href="#">Volver</a>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <% if(typeof alert != "undefined"){ %>
+        <script>
+            Swal.fire({
+            title: '<%= alertTitle %>',
+            text: '<%= alertMessage %>',
+            icon: '<%= alertIcon %>',
+            timer: <%= timer %>,
+            showConfirmButton: <%= showConfirmButton %>,
+            }).then(()=>{
+                window.location='/ <%= ruta %>'
+            })
+        </script>
+        <% } %>
+    }       
+</body>
+</html>
