@@ -1,23 +1,40 @@
-<table class="table">
-    <thead>
-      <tr>
-        <th scope="col">user</th>
-        <th scope="col">name</th>
-        <th scope="col">pass</th>
-        <th scope="col">rol</th>
-      </tr>
-    </thead>
-    <tbody>
-        <% data.forEach(usuario => { %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="resources/css/table.css">
+    <title>Usuarios</title>
+</head>
+<body>
+
+    <div class="tablita">
+    <table class="table table-hover">
+        <thead>
           <tr>
-            <td><%= usuario.user %></td>
-            <td><%= usuario.name %></td>
-            <td><%= usuario.pass %></td>
-            <td><%= usuario.rol %></td>
+            <th scope="col">user</th>
+            <th scope="col">name</th>
+            <th scope="col">pass</th>
+            <th scope="col">rol</th>
           </tr>
-        <% }); %>
-    </tbody>
-  </table>
+        </thead>
+        <tbody>
+            <% data.forEach(usuario => { %>
+              <tr>
+                <td><%= usuario.user %></td>
+                <td><%= usuario.name %></td>
+                <td><%= usuario.pass %></td>
+                <td><%= usuario.rol %></td>
+              </tr>
+            <% }); %>
+        </tbody>
+      </table>
+      <a href="/">Volver</a>
+    </div>
+     
+</body>
+</html>
 
 
-  <a href="/">Volver</a>

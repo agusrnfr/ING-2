@@ -1,0 +1,7 @@
+.tablita {
+    position: relative;
+    padding: 1rem;
+    margin: 1rem 300px 0;
+    border: solid #f7f7f9;
+    border-width: 0.2rem 0 0;
+}
