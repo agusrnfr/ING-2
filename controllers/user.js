@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 const {
   Model
 } = require('sequelize');
@@ -56,3 +56,4 @@ sequelize.sync().then(() => {
  }).catch((error) => {
     console.error('Unable to create table : ', error);
  });
+ */

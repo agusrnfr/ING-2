@@ -1,10 +1,12 @@
+/*
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const { Sequelize } = require('sequelize');
 
 // Configurar la base de datos
 const sequelize = new Sequelize('database', 'username', 'password', {
-  host: 'localhost',
+  host: 'sad',
   dialect: 'mysql'
 });
 
@@ -63,3 +65,5 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor iniciado en el puerto ${PORT}`);
 });
+
+*/

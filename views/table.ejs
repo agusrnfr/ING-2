@@ -1,0 +1,23 @@
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">user</th>
+        <th scope="col">name</th>
+        <th scope="col">pass</th>
+        <th scope="col">rol</th>
+      </tr>
+    </thead>
+    <tbody>
+        <% data.forEach(usuario => { %>
+          <tr>
+            <td><%= usuario.user %></td>
+            <td><%= usuario.name %></td>
+            <td><%= usuario.pass %></td>
+            <td><%= usuario.rol %></td>
+          </tr>
+        <% }); %>
+    </tbody>
+  </table>
+
+
+  <a href="/">Volver</a>

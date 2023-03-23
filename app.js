@@ -48,6 +48,12 @@ app.get('/register',(req,res)=>{
     res.render('register');
 })
 
+app.get('/table', async(req,res)=>{
+    const User = require('./models/user')(sequelize, Sequelize.DataTypes);
+    const data = await User.findAll();
+    res.render('table', { data });
+})
+
 app.post('/register', async(req,res)=>{
     const user = req.body.user;
     const name = req.body.name;
