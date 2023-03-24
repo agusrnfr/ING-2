@@ -23,10 +23,14 @@ const { sequelize, Sequelize } = require('./models');
 
 //invoco los require de los modelos
 const User = require('./models/user')(sequelize, Sequelize.DataTypes);
+const Paseador = require('./models/paseador')(sequelize, Sequelize.DataTypes);
+
 
 // var de sesion
 const session = require('express-session');
 const { getAllUsers } = require('./controllers/user');
+const { getAllPaseadores } = require('./controllers/paseador');
+
 app.use(session({
     secret:'secret',
     resave:'true',
@@ -116,7 +120,28 @@ app.post('/login', async(req,res)=>{
 
 })
 
+
+app.get('/paseadores',async(req,res)=>{
+    const data = await getAllPaseadores();
+    res.render('paseadores', { data });
+})
+
+app.get('/contacto/:id', async(req, res) => {
+    // Obtener el parámetro dinámico de la URL
+    const id = req.params.id;
+    res.render('contacto.ejs', { cliente: detallesDelCliente });
+})
+
 app.listen(3000,(req,res)=>{
     console.log('SERVER RUNNING IN  localhost:3000')
+  
+  })
 
+  // sincroniza tus modelos con la base de datos
+sequelize.sync()
+.then(() => {
+  console.log('Tablas creadas');
 })
+.catch((error) => {
+  console.error('Error al crear tablas:', error);
+});

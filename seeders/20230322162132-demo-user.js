@@ -13,13 +13,25 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    for (let i = 0; i < 10; i++) {
+
+    //USUARIOS
+    for (let i = 0; i < 5; i++) {
       await queryInterface.bulkInsert('users', [{
         
         user: faker.name.firstName(),
         name: faker.name.firstName()+faker.name.lastName(),
         rol: 'user',
         pass: '123'
+      }], {});
+      }
+
+    //PASEADORES
+    for (let i = 0; i < 5; i++) {
+      await queryInterface.bulkInsert('paseadores', [{
+        
+        nombre: faker.name.firstName(),
+        apellido: faker.name.lastName(),
+        disponibilidad: true,
       }], {});
       }
   },
