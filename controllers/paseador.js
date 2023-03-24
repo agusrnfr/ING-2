@@ -6,11 +6,16 @@ const Paseador = require('../models/paseador.js')(sequelize, Sequelize.DataTypes
 
 
 function getAllPaseadores(req, res) {
-  // Código para obtener todos los usuarios
   const data = Paseador.findAll();
   return data
 }
 
+function getAllPaseadoresDisponibles(req, res) {
+  const data = Paseador.findAll({where:{disponibilidad:true}})
+  return data
+}
+
 module.exports = {
-  getAllPaseadores
+  getAllPaseadores,
+  getAllPaseadoresDisponibles
 };

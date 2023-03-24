@@ -28,10 +28,10 @@ module.exports = {
     //PASEADORES
     for (let i = 0; i < 5; i++) {
       await queryInterface.bulkInsert('paseadores', [{
-        
+  
         nombre: faker.name.firstName(),
         apellido: faker.name.lastName(),
-        disponibilidad: true,
+        disponibilidad: Math.random() < 0.5, //devuelve ranodm true o false
       }], {});
       }
   },

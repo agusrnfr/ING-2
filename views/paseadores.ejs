@@ -10,7 +10,8 @@
     <%- include ('header') %>
 </head>
 <body>
-    <strong><p style="font-size: 20px;">Paseadores</p></strong>
+    
+  <!--   <strong><p style="font-size: 20px;">Paseadores</p></strong>
     <div id="contenedortabla">
         <table class="table">
             <thead>
@@ -32,26 +33,24 @@
                 <% }); %>
             </tbody>
           </table>
-          </div>
+          </div> -->
 
 
 
+    <div class="row">
+        <strong><p style="font-size: 20px;">Paseadores</p></strong>
+        <% data.forEach(paseador => { %>
+            
+                <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                <h5 class="card-title"> <%= paseador.nombre %> </h5>
+                <p class="card-text"><%= paseador.apellido %></p>
+                <a href="#" class="btn btn-primary">Contactar</a>
+                </div>
+                </div>
+          <% }); %> 
+    </div>
 
 
-<!-- ANTIGUO PANEL     -->
-<!--     <div class="container">
-        <div class="row">
-            <% data.forEach(paseador => { %>
-            <div class="col-lg-2 col-md-3 col-xs-6 ">
-                <div class="box"><td>
-                    <%= paseador.nombre %>
-                    <%= paseador.apellido %>
-                    Disponibilidad: <%= paseador.disponibilidad %>
-                    <button type="button" class="btn btn-primary"  onclick="window.location.href='/hola'">Contactar</button>
-                    </form>
-                </td></div>
-            </div>
-            <% }); %>
-        </div> -->
 </body>
 </html>

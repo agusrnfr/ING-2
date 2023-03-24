@@ -29,7 +29,7 @@ const Paseador = require('./models/paseador')(sequelize, Sequelize.DataTypes);
 // var de sesion
 const session = require('express-session');
 const { getAllUsers } = require('./controllers/user');
-const { getAllPaseadores } = require('./controllers/paseador');
+const { getAllPaseadores, getAllPaseadoresDisponibles } = require('./controllers/paseador');
 
 app.use(session({
     secret:'secret',
@@ -122,7 +122,7 @@ app.post('/login', async(req,res)=>{
 
 
 app.get('/paseadores',async(req,res)=>{
-    const data = await getAllPaseadores();
+    const data = await getAllPaseadoresDisponibles();
     res.render('paseadores', { data });
 })
 
