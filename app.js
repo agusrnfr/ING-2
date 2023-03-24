@@ -17,8 +17,16 @@ app.set('view engine', 'ejs');
 //invocamos bcrypt
 const bcrypt = require('bcryptjs')
 
+//invocamos al modulo de la conexion DB
+const connection = require('./database/server');
+const { sequelize, Sequelize } = require('./models');
+
+//invoco los require de los modelos
+const User = require('./models/user')(sequelize, Sequelize.DataTypes);
+
 // var de sesion
 const session = require('express-session');
+const { getAllUsers } = require('./controllers/user');
 app.use(session({
     secret:'secret',
     resave:'true',
@@ -31,11 +39,6 @@ app.use('/resources',express.static('public'));
 app.use('/resources',express.static(__dirname+'/public'));
 console.log('dir name:  ' + __dirname);
 
-//invocamos al modulo de la conexion DB
-const connection = require('./database/server');
-const { sequelize, Sequelize } = require('./models');
-
-const { User } = require('./models');
 
 //rutas
 app.get('/',(req,res)=>{
@@ -49,8 +52,7 @@ app.get('/register',(req,res)=>{
 })
 
 app.get('/table', async(req,res)=>{
-    const User = require('./models/user')(sequelize, Sequelize.DataTypes);
-    const data = await User.findAll();
+    const data = await getAllUsers();
     res.render('table', { data });
 })
 
@@ -60,7 +62,7 @@ app.post('/register', async(req,res)=>{
     const rol = req.body.rol;
     const pass = req.body.pass;
     
-    const User = require('./models/user')(sequelize, Sequelize.DataTypes);
+
     User.create({
         user:user,
         name:name,
@@ -87,7 +89,7 @@ app.post('/register', async(req,res)=>{
 app.post('/login', async(req,res)=>{
     const user = req.body.user;
     const pass = req.body.pass;
-    const User = require('./models/user')(sequelize, Sequelize.DataTypes);
+
     if(user && pass)
         User.findOne({
             where: {
