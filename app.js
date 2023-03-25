@@ -6,7 +6,6 @@ const app = express();
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 
-
 //invocamos dotenv
 const dotenv = require('dotenv');
 dotenv.config({path:'./env/.env'})
@@ -25,11 +24,13 @@ const { sequelize, Sequelize } = require('./models');
 const User = require('./models/user')(sequelize, Sequelize.DataTypes);
 const Paseador = require('./models/paseador')(sequelize, Sequelize.DataTypes);
 
+//proyecto de rutas
+app.use('/', require('./routes/userRoutes'))
 
 // var de sesion
 const session = require('express-session');
-const { getAllUsers } = require('./controllers/user');
-const { getAllPaseadores, getAllPaseadoresDisponibles } = require('./controllers/paseador');
+const { getAllUsers } = require('./controllers/userController');
+const { getAllPaseadores, getAllPaseadoresDisponibles } = require('./controllers/paseadorController');
 
 app.use(session({
     secret:'secret',
@@ -126,11 +127,9 @@ app.get('/paseadores',async(req,res)=>{
     res.render('paseadores', { data });
 })
 
-app.get('/contacto/:id', async(req, res) => {
-    // Obtener el parámetro dinámico de la URL
-    const id = req.params.id;
-    res.render('contacto.ejs', { cliente: detallesDelCliente });
-})
+
+
+
 
 app.listen(3000,(req,res)=>{
     console.log('SERVER RUNNING IN  localhost:3000')
