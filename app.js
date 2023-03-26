@@ -22,7 +22,7 @@ const { sequelize, Sequelize } = require('./models');
 
 //invoco los require de los modelos
 const User = require('./models/user')(sequelize, Sequelize.DataTypes);
-const Paseador = require('./models/paseador')(sequelize, Sequelize.DataTypes);
+const Trabajador = require('./models/trabajador')(sequelize, Sequelize.DataTypes);
 
 //proyecto de rutas
 app.use('/', require('./routes/userRoutes'))

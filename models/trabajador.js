@@ -2,8 +2,8 @@ const { DataTypes, Model } = require('sequelize');
 const { Sequelize } = require('sequelize');
 
 module.exports = (sequelize) => {
-  class Paseador extends Model {}
-  Paseador.init({
+  class Trabajador extends Model {}
+  Trabajador.init({
     nombre: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -12,12 +12,12 @@ module.exports = (sequelize) => {
         type: Sequelize.STRING,
         allowNull: true,
     },
-    disponibilidad: {
-        type: Sequelize.BOOLEAN,
+    zona: {
+        type: Sequelize.STRING,
         allowNull: false, 
     },
-    }, { sequelize, modelName: 'paseador', tableName: 'paseadores' });
+    }, { sequelize, modelName: 'trabajador', tableName: 'trabajadores' });
 
 
-  return Paseador;
+  return Trabajador;
 };

@@ -4,20 +4,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paseadores</title>
+    <title>Trabajadores</title>
     <%- include ('header') %>
 </head>
 <body id="body">
     
     <div class="row" style="margin: 35px;">
         <strong><p style="font-size: 20px;"> </p></strong>
-        <% data.forEach(paseador => { %>
+        <% data.forEach(trabajador => { %>
             
                 <div class="card" style="width: 18rem;margin: 5px;">
                 <div class="card-body">
-                <h5 class="card-title"> <%= paseador.nombre %> </h5>
-                <p class="card-text"><%= paseador.apellido %></p>
-                <a href="<%=`/contactar/trabajador/${paseador.id}`%>" class="btn btn-primary">Contactar</a>
+                <h5 class="card-title"> <%= trabajador.nombre %> </h5>
+                <p class="card-text"><%= trabajador.apellido %></p>
+                <a href="<%=`/contactar/trabajador/${trabajador.id}`%>" class="btn btn-primary">Contactar</a>
                 </div>
                 </div>
           <% }); %> 

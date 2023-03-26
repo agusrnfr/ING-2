@@ -25,13 +25,13 @@ module.exports = {
       }], {});
       }
 
-    //PASEADORES
+    //TRABAJADORES
     for (let i = 0; i < 5; i++) {
-      await queryInterface.bulkInsert('paseadores', [{
+      await queryInterface.bulkInsert('trabajadores', [{
   
         nombre: faker.name.firstName(),
         apellido: faker.name.lastName(),
-        disponibilidad: Math.random() < 0.5, //devuelve ranodm true o false
+        zona: "Ensenada",
       }], {});
       }
   },

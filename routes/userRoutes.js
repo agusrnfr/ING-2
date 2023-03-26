@@ -2,7 +2,7 @@ const { contactarTrabajador } = require('../controllers/contactarTrabajadorContr
 const { mostrarTablaUsers } = require('../controllers/userController');
 const { validarLogin , mostrarLogin } = require('../controllers/loginController');
 const { mostrarRegister, registrar } = require('../controllers/registerController');
-const { mostrarPaseadores } = require('../controllers/paseadorController');
+const { mostrarTrabajadores } = require('../controllers/trabajadorController');
 const { mostrarIndex } = require('../controllers/indexController');
 
 //invocamos express
@@ -22,7 +22,7 @@ app.post('/login', validarLogin)
 app.get('/register', mostrarRegister)
 app.post('/register', registrar)
 
-app.get('/paseadores', mostrarPaseadores)
+app.get('/trabajadores', mostrarTrabajadores)
 
 module.exports = app;
 

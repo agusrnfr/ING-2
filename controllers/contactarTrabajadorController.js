@@ -1,9 +1,9 @@
 const { sequelize, Sequelize } = require('../models');
-const Paseador = require('../models/paseador')(sequelize, Sequelize.DataTypes);
+const Trabajador = require('../models/trabajador')(sequelize, Sequelize.DataTypes);
 
 const contactarTrabajador = async (req, res) => {    
     
-    const trabajador = await Paseador.findByPk(req.params.id)
+    const trabajador = await Trabajador.findByPk(req.params.id)
         
     if(trabajador === null){
         res.send('no existe ese trabajador :(')
