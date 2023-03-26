@@ -6,11 +6,23 @@ const User = require('../models/user.js')(sequelize, Sequelize.DataTypes);
 
 
 function getAllUsers(req, res) {
-  // Código para obtener todos los usuarios
   const data = User.findAll();
   return data
 }
 
+const mostrarTablaUsers = async (req, res) => {    
+  const data = await getAllUsers()
+  if(User === null){
+      res.send('No hay usuarios cargados :(')
+  } 
+  else {
+      return res.render('../views/table.ejs', {data})
+  }
+}
+
+
+
 module.exports = {
-  getAllUsers 
+  getAllUsers,
+  mostrarTablaUsers,
 };

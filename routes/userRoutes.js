@@ -1,4 +1,5 @@
 const { contactarTrabajador } = require('../controllers/contactarTrabajadorController');
+const { mostrarTablaUsers } = require('../controllers/userController');
 
 //invocamos express
 const app = require('express').Router()
@@ -7,6 +8,8 @@ const app = require('express').Router()
 
 
 app.get('/contactar/trabajador/:id', contactarTrabajador)
+
+app.get('/table', mostrarTablaUsers)
 
 
 

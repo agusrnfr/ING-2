@@ -6,7 +6,7 @@ const contactarTrabajador = async (req, res) => {
     const trabajador = await Paseador.findByPk(req.params.id)
         
     if(trabajador === null){
-        res.redirect('/')
+        res.send('no existe ese paseador :(')
     }
     else {
         return res.render('../views/contactoTrabajador', {

@@ -56,10 +56,7 @@ app.get('/register',(req,res)=>{
     res.render('register');
 })
 
-app.get('/table', async(req,res)=>{
-    const data = await getAllUsers();
-    res.render('table', { data });
-})
+
 
 app.post('/register', async(req,res)=>{
     const user = req.body.user;
@@ -133,7 +130,6 @@ app.get('/paseadores',async(req,res)=>{
 
 app.listen(3000,(req,res)=>{
     console.log('SERVER RUNNING IN  localhost:3000')
-  
   })
 
   // sincroniza tus modelos con la base de datos
