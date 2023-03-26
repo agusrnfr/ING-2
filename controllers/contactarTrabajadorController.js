@@ -1,7 +1,7 @@
 const { sequelize, Sequelize } = require('../models');
 const Trabajador = require('../models/trabajador')(sequelize, Sequelize.DataTypes);
 
-const contactarTrabajador = async (req, res) => {    
+const mostrarCamposContactoTrabajador = async (req, res) => {    
     
     const trabajador = await Trabajador.findByPk(req.params.id)
         
@@ -16,6 +16,15 @@ const contactarTrabajador = async (req, res) => {
     }
 }
 
+const contactar = async(req,res) => {
+    const user = req.body.user;
+    const fecha = req.body.fecha;
+
+    const nombreUser = req.body.param2;
+    res.send('usuario: '+ user + ' fecha: ' + fecha + ' envia al trabajador: ' + nombreUser)
+}
+
 module.exports = {
-    contactarTrabajador,
+    mostrarCamposContactoTrabajador,
+    contactar,
 }

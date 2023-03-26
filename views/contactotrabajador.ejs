@@ -12,21 +12,23 @@
 <body>
 <body id="body">
         <div style="margin:10px;">
-                    
+                    <form action="/contactar/trabajador/:id" method="POST">
+                    <input type="hidden" name="param1" value="<%= id %>">
+                    <input type="hidden" name="param2" value="<%= nombre %>">
                     <input type="text" name="user" placeholder="Nombre y apellido" required>
                     <br>
-                    <input type="text" placeholder="Tipo de servicio" name="pass" required>
+                    <input type="text" placeholder="Tipo de servicio" name="tipoServicio" required>
                     <br>
-                    <input type="text" placeholder="Horario" name="pass" required>
+                    <input type="text" placeholder="Horario" name="horario" required>
                     <br>
-                    <input type="text" placeholder="Fecha" name="pass" required>
+                    <input type="text" name="fecha" placeholder="Fecha" required>
                     <br>
-                    <input type="text" placeholder="Telefono de contacto" name="pass" required>
+                    <input type="text" placeholder="Telefono de contacto" name="tel" required>
                     <br>
-                    <input type="text" placeholder="Mail" name="pass" required>
+                    <input type="text" placeholder="Mail" name="mail" required>
                     <br>
                     <button type="submit" title="Ingresar" name="Contactar">Contactar</button>
-                </form>
+                    </form>
             </body>
         </div>
 </body>

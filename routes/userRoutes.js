@@ -1,4 +1,4 @@
-const { contactarTrabajador } = require('../controllers/contactarTrabajadorController');
+const { mostrarCamposContactoTrabajador , contactar } = require('../controllers/contactarTrabajadorController');
 const { mostrarTablaUsers } = require('../controllers/userController');
 const { validarLogin , mostrarLogin } = require('../controllers/loginController');
 const { mostrarRegister, registrar } = require('../controllers/registerController');
@@ -12,7 +12,8 @@ const app = require('express').Router()
 
 app.get('/', mostrarIndex)
 
-app.get('/contactar/trabajador/:id', contactarTrabajador)
+app.get('/contactar/trabajador/:id', mostrarCamposContactoTrabajador)
+app.post('/contactar/trabajador/:id', contactar)
 
 app.get('/table', mostrarTablaUsers)
 
