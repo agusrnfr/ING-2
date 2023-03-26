@@ -49,9 +49,7 @@ console.log('dir name:  ' + __dirname);
 app.get('/',(req,res)=>{
     res.render('index');
 })
-app.get('/login',(req,res)=>{
-    res.render('login');
-})
+
 app.get('/register',(req,res)=>{
     res.render('register');
 })
@@ -85,36 +83,6 @@ app.post('/register', async(req,res)=>{
       .catch(error => {
         console.error('Error al crear usuario:', error);
     });
-
-})
-
-app.post('/login', async(req,res)=>{
-    const user = req.body.user;
-    const pass = req.body.pass;
-
-    if(user && pass)
-        User.findOne({
-            where: {
-            user: user,
-            pass: pass
-            }
-        }).then(usuarioEncontrado => {
-            if (usuarioEncontrado) {
-            // El usuario y la contraseña coinciden
-                res.render('login',{
-                    alert:true,
-                    alertTitle:"Registration",
-                    alertMessage:"Inicio de sesion exitoso",
-                    alertIcon:"success",
-                    showConfirmButton:false,
-                    timer:1500,
-                    ruta:'',
-                })
-            } else {
-                console.error('contra incorrecta');
-                // El usuario y/o la contraseña son incorrectos
-            }
-        });
 
 })
 
