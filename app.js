@@ -29,8 +29,6 @@ app.use('/', require('./routes/userRoutes'))
 
 // var de sesion
 const session = require('express-session');
-const { getAllUsers } = require('./controllers/userController');
-const { getAllPaseadores, getAllPaseadoresDisponibles } = require('./controllers/paseadorController');
 
 app.use(session({
     secret:'secret',
@@ -45,31 +43,16 @@ app.use('/resources',express.static(__dirname+'/public'));
 console.log('dir name:  ' + __dirname);
 
 
-//rutas
-app.get('/',(req,res)=>{
-    res.render('index');
-})
-
-
-
-
-
-
-
-app.get('/paseadores',async(req,res)=>{
-    const data = await getAllPaseadoresDisponibles();
-    res.render('paseadores', { data });
-})
-
-
-
-
-
+//servidor puerto
 app.listen(3000,(req,res)=>{
     console.log('SERVER RUNNING IN  localhost:3000')
   })
 
-  // sincroniza tus modelos con la base de datos
+
+// sincroniza los modelos con la DB, parametros posibles 
+//force:true borra todo y vuelve a crear
+//alter:true agrega pero no quita
+//ejemplo :  sequelize.sync({ force: true })
 sequelize.sync()
 .then(() => {
   console.log('Tablas creadas');
