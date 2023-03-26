@@ -20,8 +20,8 @@ const contactar = async(req,res) => {
     const user = req.body.user;
     const fecha = req.body.fecha;
 
-    const nombreUser = req.body.param2;
-    res.send('usuario: '+ user + ' fecha: ' + fecha + ' envia al trabajador: ' + nombreUser)
+    const nombreTrabajador = req.body.param2;
+    res.send('usuario: '+ user + ' fecha: ' + fecha + ' envia al trabajador: ' + nombreTrabajador)
 }
 
 module.exports = {
