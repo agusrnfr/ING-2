@@ -16,12 +16,17 @@ const mostrarCamposContactoTrabajador = async (req, res) => {
     }
 }
 
+/**
+ * contactar:
+ * Cuando se hace click en contactar
+ * se envia un mail a ambas partes interesadas
+ */
 const contactar = async(req,res) => {
     const user = req.body.user;
     const fecha = req.body.fecha;
 
     const nombreTrabajador = req.body.param2;
-    res.send('usuario: '+ user + ' fecha: ' + fecha + ' envia al trabajador: ' + nombreTrabajador)
+    res.send(' MAIL ENVIADO! '+'usuario: '+ user + ' fecha: ' + fecha + ' envia al trabajador: ' + nombreTrabajador)
 }
 
 module.exports = {
