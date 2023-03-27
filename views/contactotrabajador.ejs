@@ -12,9 +12,7 @@
 <body>
     <body id="body">
             <div style="margin:10px;">
-                        <form action="/contactar/trabajador/:id" method="POST">
-                            <input type="hidden" name="param1" value="<%= id %>">
-                            <input type="hidden" name="param2" value="<%= nombre %>">
+                        <form method="POST">
                             <input type="text" name="user" placeholder="Nombre y apellido" required>
                             <br>
                             <input type="text" placeholder="Tipo de servicio" name="tipoServicio" required>
