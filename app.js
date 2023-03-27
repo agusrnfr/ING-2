@@ -1,3 +1,4 @@
+const path = require('path');
 //invocamos express
 const express = require('express');
 const app = express();
@@ -36,12 +37,12 @@ app.use(session({
     saveUninitialized:'true',
 }));
 
+//para que las vistas(html/ejs) los busque en la carpeta views(pages).
+app.set('views', path.join(__dirname,'views')) 
+app.set('view engine', 'ejs')
 
-// el directorio public
-app.use('/resources',express.static('public'));
-app.use('/resources',express.static(__dirname+'/public'));
-console.log('dir name:  ' + __dirname);
-
+//para que busque los archivos estaticos en la carpeta public.
+app.use(express.static('public')); 
 
 //servidor puerto
 app.listen(3000,(req,res)=>{
