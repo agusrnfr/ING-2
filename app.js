@@ -73,3 +73,6 @@ exec('npx sequelize-cli db:seed:all', (err, stdout, stderr) => {
     console.log(`Datos cargados a partir del seeder`);
   }
 });
+
+// Export the sequelize instance
+module.exports = sequelize;
