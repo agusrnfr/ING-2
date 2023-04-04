@@ -41,7 +41,7 @@ app.use(session({
 app.set('views', path.join(__dirname,'views')) 
 app.set('view engine', 'ejs')
 
-//para que busque los archivos estaticos en la carpeta public.
+//para que busque los archivos estaticos tengan la carpeta public.
 app.use(express.static('public')); 
 
 //servidor puerto
@@ -50,14 +50,26 @@ app.listen(3000,(req,res)=>{
   })
 
 
-// sincroniza los modelos con la DB, parametros posibles 
-//force:true borra todo y vuelve a crear
-//alter:true agrega pero no quita
-//ejemplo :  sequelize.sync({ force: true })
-sequelize.sync()
+// Vuelve a crear todas las tablas y elimina a partir de los models
+sequelize.sync({
+  force: true,
+})
 .then(() => {
-  console.log('Tablas creadas');
+  console.log('Tablas creadas a partir de los models');
 })
 .catch((error) => {
   console.error('Error al crear tablas:', error);
+});
+
+
+//Carga las tablas a partir del seeder
+const { exec } = require('child_process');
+exec('npx sequelize-cli db:seed:all', (err, stdout, stderr) => {
+  if (err) {
+    console.error(`Error al cargar datos`);
+    return;
+  }
+  else {
+    console.log(`Datos cargados a partir del seeder`);
+  }
 });
