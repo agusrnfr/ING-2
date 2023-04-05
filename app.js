@@ -50,16 +50,18 @@ app.listen(3000,(req,res)=>{
   })
 
 
-// Vuelve a crear todas las tablas y elimina a partir de los models
-sequelize.sync({  
-  force: true,
-})
-.then(() => {
-  console.log('Tablas creadas a partir de los models');
-})
-.catch((error) => {
-  console.error('Error al crear tablas:', error);
-});
+// Elimina todas las tablas y crea a partir de los models
+sequelize.drop()
+  .then(() => {
+    console.log('Las tablas han sido eliminadas');
+    return sequelize.sync({ force: true });
+  })
+  .then(() => {
+    console.log('Las tablas han sido creadas nuevamente');
+  })
+  .catch((error) => {
+    console.error('Error al eliminar o crear las tablas:', error);
+  });
 
 
 //Carga las tablas a partir del seeder

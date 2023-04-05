@@ -5,7 +5,10 @@
     "database": "login_s",
     "host": "localhost",
     "dialect": "mysql",
-    "logging": false
+    "logging": false,
+    "define": {
+      "timestamps": false
+    }
   },
 
   "test": {
