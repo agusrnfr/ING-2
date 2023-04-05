@@ -43,9 +43,9 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-//ASOCIATIONS
-db.User.hasMany(db.Mascota, { foreignKey: 'mascotaId', as: 'mascotas' });
-db.Mascota.belongsTo(db.User, { foreignKey: 'usuarioId', as: 'usuario' });
+//ASOCIATIONS,  CLAVES FORANEAS
+db.User.hasMany(db.Mascota);
+db.Mascota.belongsTo(db.User);
 
 
 
