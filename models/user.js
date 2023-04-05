@@ -1,27 +1,31 @@
 const { DataTypes, Model } = require('sequelize');
-const { Sequelize } = require('sequelize');
 
 module.exports = (sequelize) => {
+
   class User extends Model {}
+
   User.init({
     user: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     pass: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     name: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     rol: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
     },
-    }, { sequelize, modelName: 'user' });
-
+  }, {
+    sequelize,
+    modelName: 'User',
+    tableName: 'users',
+  });
 
   return User;
 };

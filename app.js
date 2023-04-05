@@ -51,7 +51,7 @@ app.listen(3000,(req,res)=>{
 
 
 // Vuelve a crear todas las tablas y elimina a partir de los models
-sequelize.sync({
+sequelize.sync({  
   force: true,
 })
 .then(() => {

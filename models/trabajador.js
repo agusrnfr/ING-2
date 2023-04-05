@@ -17,7 +17,6 @@ module.exports = (sequelize) => {
         allowNull: false, 
     },
     }, { sequelize, modelName: 'trabajador', tableName: 'trabajadores' });
-
-
+ 
   return Trabajador;
 };
