@@ -2,7 +2,7 @@
 
 Instalar node y npm
 
-1- Instalar node
+1- Instalar node,  https://nodejs.org/es
 
 2- Instalar npm
 
