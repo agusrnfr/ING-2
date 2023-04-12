@@ -1,5 +1,9 @@
 #comandos usados
 
+error scripts
+en powershell>
+Set-ExecutionPolicy RemoteSigned
+
 npm init -y
 npm i express
 npm i express-session mysql ejs dotenv bcryptjs
