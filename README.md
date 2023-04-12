@@ -12,16 +12,9 @@ Montar Base de datos:
 
 1- instalar xaamp
 
-4- npm install --save mysql2
+2- crear una base de datos llamada login_s con admin apache desde xaamp
 
-5- npx sequelize-cli db:create
 
-6- npx sequelize-cli model:generate --name User --attributes user:string,name:string,rol:string,pass:string
+Ejecutar pagina:
 
-7- npx sequelize-cli db:migrate
-
-8- npx sequelize-cli db:seed:all  // para cargar datos random
-
-Ejecutar:
-
-8- nodemon app
+1- nodemon app
