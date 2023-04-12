@@ -14,6 +14,7 @@ Montar Base de datos:
 
 2- crear una base de datos llamada login_s con admin apache desde xaamp
 
+___________________
 
 Ejecutar pagina:
 
