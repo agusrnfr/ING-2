@@ -12,6 +12,8 @@ ___________________
 
 Montar Base de datos:
 
+1- instalar xaamp
+
 4- npm install --save mysql2
 
 5- npx sequelize-cli db:create
