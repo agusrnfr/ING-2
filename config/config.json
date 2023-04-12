@@ -12,15 +12,15 @@
   },
 
   "test": {
-    "username": "admin",
-    "password": "123",
+    "username": "root",
+    "password": "",
     "database": "login_s",
     "host": "localhost",
     "dialect": "mysql"
   },
   "production": {
-    "username": "admin",
-    "password": "123",
+    "username": "root",
+    "password": "",
     "database": "login_s",
     "host": "localhost",
     "dialect": "mysql"
