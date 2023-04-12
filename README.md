@@ -4,7 +4,7 @@ Instalar node y npm
 
 1- Instalar node,  https://nodejs.org/es (deberia venir con npm)
 
-2- npm install  (en el directorio raiz, esto instala todas las dependencias)
+2- npm install  (en el directorio raiz, esto instala todas las dependencias de la pagina)
 
 ___________________
 
