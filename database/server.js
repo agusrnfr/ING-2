@@ -3,7 +3,7 @@ const Sequelize = require("sequelize");
 
 
 const sequelize = new Sequelize(
- 'login_s',
+ 'veterinaria_db',
  'root',
  '',
   {

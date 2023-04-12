@@ -12,7 +12,7 @@ Montar Base de datos:
 
 1- instalar xaamp
 
-2- crear una base de datos llamada login_s con admin apache desde xaamp
+2- crear una base de datos llamada veterinaria_db con admin apache desde xaamp
 
 ___________________
 
