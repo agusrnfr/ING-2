@@ -6,7 +6,7 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     for (let i = 0; i < 5; i++) {
       await queryInterface.bulkInsert('users', [{
-        user: faker.name.firstName(),
+        mail: faker.name.firstName()+"@gmail.com",
         name: faker.name.firstName()+faker.name.lastName(),
         rol: 'user',
         pass: '123'

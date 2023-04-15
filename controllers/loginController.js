@@ -1,6 +1,6 @@
 const { sequelize, Sequelize } = require('../models');
 const User = require('../models/user')(sequelize, Sequelize.DataTypes);
-
+const session = require('express-session');
 
 const mostrarLogin = (req,res) =>{
     res.render('login')
@@ -8,17 +8,19 @@ const mostrarLogin = (req,res) =>{
 
 const validarLogin = async (req, res) => {    
     
-    const user = req.body.user;
+    const mail = req.body.mail;
     const pass = req.body.pass;
         
-    if(user && pass)
+    if(mail && pass)
         User.findOne({
             where: {
-            user: user,
+            mail: mail,
             pass: pass
             }
         }).then(usuarioEncontrado => {
             if (usuarioEncontrado) {
+                session.mail = mail;
+                session.loggedin = true;
             // El usuario y la contraseña coinciden
                 res.render('login',{
                     alert:true,
@@ -29,6 +31,9 @@ const validarLogin = async (req, res) => {
                     timer:1500,
                     ruta:'',
                 })
+            
+
+            
             } else {
                 console.error('contra incorrecta');
                 res.send('contraseña y/o usuario incorrecta')

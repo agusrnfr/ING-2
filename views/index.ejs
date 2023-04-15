@@ -2,10 +2,16 @@
 <body id="body">
 <card>
 
-<div class="card" style="width: 18rem;margin: 5px;">
+<div class="card" style="width: 30rem;margin: 5px;">
     <div class="card-body">
     <h5 class="card-title"> <h1>Inicio</h1></h5>
     <p class="card-text">
+
+        <% if (typeof usuario_mail !== 'undefined') { %>
+            Bienvenido usuario: <%= usuario_mail %>
+        <% } else { %>
+            Bienvenido visitante
+        <% } %>
 
 <div>
     <a href="/login">login</a>
@@ -16,11 +22,47 @@
 </div>
 
 <div>
-    <a href="/table">tabla de usuarios</a>
+    ________________ 
 </div>
 
 <div>
-    <a href="/trabajadores">trabajadores</a>
+    <a href="/trabajadores">Paseadores y cuidadores</a>
+</div>
+
+<div>
+    <a href="/perdidas">Perros perdidos y encontrados</a>
+</div>
+
+<div>
+    <a href="/adopciones">Adopcion de perros</a>
+</div>
+
+<div>
+    <a href="/campanias">Campañas de donacion</a>
+</div>
+
+<div>
+    <a href="/veterinarias_de_turno">Veterinarias de turno</a>
+</div>
+
+<div>
+    _______usuarios only_________ 
+</div>
+
+<div>
+    <a href="/turnos">Solicitar un turno</a>
+</div>
+
+<div>
+    <a href="/cruzas">Cruzas</a>
+</div>
+
+<div>
+    ________admin only__________ 
+</div>
+
+<div>
+    <a href="/table">Tabla de usuarios</a>
 </div>
 
 

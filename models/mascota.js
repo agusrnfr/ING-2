@@ -11,11 +11,11 @@ module.exports = (sequelize) => {
     },
     raza: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     color: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     fecha_nacimiento: {
       type: DataTypes.STRING,

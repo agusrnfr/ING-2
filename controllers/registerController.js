@@ -20,7 +20,7 @@ const registrar = async (req, res) => {
         console.error('Error al crear usuario:', error);
     else{  
         User.create({
-            user:user,
+            mail:user,
             name:name,
             rol:rol,
             pass:pass,
