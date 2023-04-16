@@ -4,15 +4,8 @@ const { validarLogin , mostrarLogin } = require('../controllers/loginController'
 const { mostrarRegister, registrar } = require('../controllers/registerController');
 const { mostrarTrabajadores } = require('../controllers/trabajadorController');
 const { mostrarIndex } = require('../controllers/indexController');
-const session = require('express-session');
+const { comprobar_sesion } = require('../controllers/loginController');
 
-const comprobar_sesion = (req, res, next) => {
-    if (session.loggedin) {
-      next();
-    } else {
-      res.redirect('/login');
-    }
-};
 
 //invocamos express
 const app = require('express').Router()

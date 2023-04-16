@@ -43,7 +43,21 @@ const validarLogin = async (req, res) => {
 }
 
 
+/**
+ * MIDDLEWARE comprobar sesion:
+ * Comprueba que tenga una sesion iniciada
+ * no importa si es sesion admin o de usuario
+ */
+const comprobar_sesion = (req, res, next) => {
+    if (session.loggedin) {
+      next();
+    } else {
+      res.redirect('/login');
+    }
+};
+
 module.exports = {
     validarLogin,
     mostrarLogin,
+    comprobar_sesion,
 }
