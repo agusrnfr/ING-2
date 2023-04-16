@@ -37,7 +37,14 @@ const registrar = async (req, res) => {
             })
         })
         .catch(error => {
-            console.error('Error al crear usuario:', error);
+            res.render('register',{
+                alert:true,
+                alertTitle:"Registration",
+                alertMessage:"Registracion fallida",
+                alertIcon:"error",
+                showConfirmButton:false,
+                timer:1500,
+            })
         });
 }}
 

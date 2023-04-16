@@ -24,7 +24,7 @@ const validarLogin = async (req, res) => {
             // El usuario y la contraseña coinciden
                 res.render('login',{
                     alert:true,
-                    alertTitle:"Registration",
+                    alertTitle:"Login",
                     alertMessage:"Inicio de sesion exitoso",
                     alertIcon:"success",
                     showConfirmButton:false,
@@ -35,9 +35,14 @@ const validarLogin = async (req, res) => {
 
             
             } else {
-                console.error('contra incorrecta');
-                res.send('contraseña y/o usuario incorrecta')
-                // El usuario y/o la contraseña son incorrectos
+                res.render('login',{
+                    alert:true,
+                    alertTitle:"Login",
+                    alertMessage:"Usuario o contraseña invalidos",
+                    alertIcon:"error",
+                    showConfirmButton:false,
+                    timer:1500,
+                })
             }
         });
 }
