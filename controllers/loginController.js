@@ -19,7 +19,7 @@ const validarLogin = async (req, res) => {
             }
         }).then(usuarioEncontrado => {
             if (usuarioEncontrado) {
-                session.mail = mail;
+                session.usuario = usuarioEncontrado.dataValues;
                 session.loggedin = true;
             // El usuario y la contraseña coinciden
                 res.render('login',{
