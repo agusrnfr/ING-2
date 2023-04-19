@@ -2,51 +2,57 @@ const { sequelize, Sequelize } = require('../models');
 const User = require('../models/user')(sequelize, Sequelize.DataTypes);
 const session = require('express-session');
 
-const mostrarLogin = (req,res) =>{
-    if(session.loggedin){
+const mostrarLogin = (req, res) => {
+    if (session.loggedin) {
         res.send("ya tiene una sesion iniciada")
         return
     }
     res.render('login')
 }
 
-const validarLogin = async (req, res) => {    
-    
-    const mail = req.body.mail;
-    const pass = req.body.pass;
+const validarLogin = async (req, res) => {
+    try {
+        const mail = req.body.mail;
+        const pass = req.body.pass;
 
-    if(mail && pass)
-        User.findOne({
-            where: {
-            mail: mail,
-            pass: pass
-            }
-        }).then(usuarioEncontrado => {
+        if (mail && pass) {
+            const usuarioEncontrado = await User.findOne({
+                where: {
+                    mail: mail,
+                    pass: pass
+                }
+            });
+            
             // El usuario y la contraseña no coinciden
             if (!usuarioEncontrado) {
-                res.render('login',{
-                    alert:true,
-                    alertTitle:"Login",
-                    alertMessage:"Usuario o contraseña invalidos",
-                    alertIcon:"error",
-                    showConfirmButton:false,
-                    timer:1500,
+                res.render('login', {
+                    alert: true,
+                    alertTitle: "Login",
+                    alertMessage: "Usuario o contraseña invalidos",
+                    alertIcon: "error",
+                    showConfirmButton: false,
+                    timer: 1500,
                 })
-            return
+                return
             }
+
             // El usuario y la contraseña coinciden
             session.usuario = usuarioEncontrado.dataValues;
             session.loggedin = true;
-            res.render('login',{
-                alert:true,
-                alertTitle:"Login",
-                alertMessage:"Inicio de sesion exitoso",
-                alertIcon:"success",
-                showConfirmButton:false,
-                timer:1500,
-                ruta:'',
+            res.render('login', {
+                alert: true,
+                alertTitle: "Login",
+                alertMessage: "Inicio de sesion exitoso",
+                alertIcon: "success",
+                showConfirmButton: false,
+                timer: 1500,
+                ruta: '',
             })
-        });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Ocurrió un error en el servidor');
+    }
 }
 
 
@@ -57,9 +63,9 @@ const validarLogin = async (req, res) => {
  */
 const comprobar_sesion = (req, res, next) => {
     if (session.loggedin) {
-      next();
+        next();
     } else {
-      res.redirect('/login');
+        res.redirect('/login');
     }
 };
 
