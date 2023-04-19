@@ -10,7 +10,7 @@ const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
 
 
-
+//todas cosas de configuracion de sequelize (no tocar)
 let sequelize;
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
@@ -39,11 +39,11 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
-
+// DB
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-//ASOCIATIONS,  CLAVES FORANEAS
+//ASOCIATIONS,  (CLAVES FORANEAS)
 db.User.hasMany(db.Mascota);
 db.Mascota.belongsTo(db.User);
 
@@ -51,5 +51,6 @@ db.Mascota.belongsTo(db.User);
 
 
 
+// no tocar esto
 module.exports = db;
 
