@@ -15,45 +15,50 @@ const validarLogin = async (req, res) => {
         const mail = req.body.mail;
         const pass = req.body.pass;
 
-        if (mail && pass) {
-            const usuarioEncontrado = await User.findOne({
-                where: {
-                    mail: mail,
-                    pass: pass
-                }
-            });
-            
-            // El usuario y la contraseña no coinciden
-            if (!usuarioEncontrado) {
-                res.render('login', {
-                    alert: true,
-                    alertTitle: "Login",
-                    alertMessage: "Usuario o contraseña invalidos",
-                    alertIcon: "error",
-                    showConfirmButton: false,
-                    timer: 1500,
-                })
-                return
-            }
+        //campos incompletos
+        if (!mail || !pass) {
+            return;
+        }
 
-            // El usuario y la contraseña coinciden
-            session.usuario = usuarioEncontrado.dataValues;
-            session.loggedin = true;
+        //buscar el usuario en la base de datos
+        const usuarioEncontrado = await User.findOne({
+            where: {
+                mail: mail,
+                pass: pass
+            }
+        });
+
+        //no existe ese usuario con esa contraseña
+        if (!usuarioEncontrado) {
             res.render('login', {
                 alert: true,
                 alertTitle: "Login",
-                alertMessage: "Inicio de sesion exitoso",
-                alertIcon: "success",
+                alertMessage: "Usuario o contraseña invalidos",
+                alertIcon: "error",
                 showConfirmButton: false,
                 timer: 1500,
-                ruta: '',
             })
+            return;
         }
+
+        //el usuario y la contraseña coinciden
+        session.usuario = usuarioEncontrado.dataValues;
+        session.loggedin = true;
+        res.render('login', {
+            alert: true,
+            alertTitle: "Login",
+            alertMessage: "Inicio de sesion exitoso",
+            alertIcon: "success",
+            showConfirmButton: false,
+            timer: 1500,
+            ruta: '',
+        });
+        
     } catch (error) {
         console.error(error);
-        res.status(500).send('Ocurrió un error en el servidor');
+        res.status(500).send('Ocurrió un error en el servidor en el login');
     }
-}
+};
 
 
 /**
