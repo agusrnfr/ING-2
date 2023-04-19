@@ -3,6 +3,10 @@ const User = require('../models/user')(sequelize, Sequelize.DataTypes);
 const session = require('express-session');
 
 const mostrarLogin = (req,res) =>{
+    if(session.loggedin){
+        res.send("ya tiene una sesion iniciada")
+        return
+    }
     res.render('login')
 }
 
@@ -10,7 +14,7 @@ const validarLogin = async (req, res) => {
     
     const mail = req.body.mail;
     const pass = req.body.pass;
-        
+
     if(mail && pass)
         User.findOne({
             where: {
@@ -18,23 +22,8 @@ const validarLogin = async (req, res) => {
             pass: pass
             }
         }).then(usuarioEncontrado => {
-            if (usuarioEncontrado) {
-                session.usuario = usuarioEncontrado.dataValues;
-                session.loggedin = true;
-            // El usuario y la contraseña coinciden
-                res.render('login',{
-                    alert:true,
-                    alertTitle:"Login",
-                    alertMessage:"Inicio de sesion exitoso",
-                    alertIcon:"success",
-                    showConfirmButton:false,
-                    timer:1500,
-                    ruta:'',
-                })
-            
-
-            
-            } else {
+            // El usuario y la contraseña no coinciden
+            if (!usuarioEncontrado) {
                 res.render('login',{
                     alert:true,
                     alertTitle:"Login",
@@ -43,7 +32,20 @@ const validarLogin = async (req, res) => {
                     showConfirmButton:false,
                     timer:1500,
                 })
+            return
             }
+            // El usuario y la contraseña coinciden
+            session.usuario = usuarioEncontrado.dataValues;
+            session.loggedin = true;
+            res.render('login',{
+                alert:true,
+                alertTitle:"Login",
+                alertMessage:"Inicio de sesion exitoso",
+                alertIcon:"success",
+                showConfirmButton:false,
+                timer:1500,
+                ruta:'',
+            })
         });
 }
 
