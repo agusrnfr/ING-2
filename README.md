@@ -6,9 +6,9 @@
 [![forthebadge](https://forthebadge.com/images/badges/uses-js.svg)](https://forthebadge.com)
 
 <div align="center">
-  <h1>Online Exam Portal</h1>
+  <h1>APP Veterinaria ¡Oh my DOG!</h1>
   <p>
-    APP Veterinaria ¡Oh my DOG!
+    Aplicacion web para el manejo de servicios de una veterinaria
   </p>
 </div>
 
