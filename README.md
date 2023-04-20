@@ -12,7 +12,7 @@
   </p>
 </div>
 
-# Steps
+# ✍️ Steps
 
 Install node and npm
 
