@@ -1,5 +1,5 @@
 [![Github all releases](https://img.shields.io/github/downloads/Naereen/StrapDown.js/total.svg)](https://GitHub.com/Naereen/StrapDown.js/releases/)
-[![GitLab commit count](https://badgen.net/gitlab/commits/NickBusey/HomelabOS/)](https://gitlab.com/NickBusey/HomelabOS/-/commits)
+[![GitLab commit count](https://badgen.net/gitlab/commits/NickBusey/HomelabOS/)]([https://gitlab.com/NickBusey/HomelabOS/-/commits](https://github.com/agusrnfr/ING-2/commits))
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 [![forthebadge](https://forthebadge.com/images/badges/0-percent-optimized.svg)](https://forthebadge.com)
