@@ -37,7 +37,7 @@ Run:
 
 ## :handshake: Contact
 
-Cuenca Laura: [Lau]([https://github.com/Tilk1](https://github.com/LauraCuenca))
+Cuenca Laura: [Lau](https://github.com/LauraCuenca)
 Lizondo Santiago: [Sun](https://github.com/Tilk1)
-Rojas Agustina:  [Agusrnfr]([https://github.com/Tilk1](https://github.com/agusrnfr))
+Rojas Agustina:  [Agusrnfr](https://github.com/agusrnfr)
 
