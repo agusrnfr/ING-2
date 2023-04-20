@@ -1,21 +1,30 @@
-# Pasos
+[![Github all releases](https://img.shields.io/github/downloads/Naereen/StrapDown.js/total.svg)](https://GitHub.com/Naereen/StrapDown.js/releases/)
+[![GitLab commit count](https://badgen.net/gitlab/commits/NickBusey/HomelabOS/)](https://gitlab.com/NickBusey/HomelabOS/-/commits)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
-Instalar node y npm
+[![forthebadge](https://forthebadge.com/images/badges/0-percent-optimized.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/60-percent-of-the-time-works-every-time.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/uses-js.svg)](https://forthebadge.com)
 
-1- Instalar node,  https://nodejs.org/es (deberia venir con npm)
 
-2- npm install  (en el directorio raiz, esto instala todas las dependencias de la pagina)
+# Steps
+
+Install node and npm
+
+1- Installing node,  https://nodejs.org/es (deberia venir con npm)
+
+2- npm install  (in main directory, this will install all dependecies)
 
 ___________________
 
-Montar Base de datos:
+Mount DB:
 
-1- instalar xaamp
+1- install xaamp
 
-2- crear una base de datos llamada veterinaria_db con admin apache desde xaamp
+2- create a db called veterinaria_db
 
 ___________________
 
-Ejecutar pagina:
+Run:
 
 1- nodemon app
