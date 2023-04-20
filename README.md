@@ -16,7 +16,7 @@
 
 Install node and npm
 
-1- Installing node,  https://nodejs.org/es (deberia venir con npm)
+1- Installing node,  https://nodejs.org/es (should also install npm)
 
 2- npm install  (in main directory, this will install all dependecies)
 
