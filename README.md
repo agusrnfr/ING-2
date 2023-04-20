@@ -6,7 +6,7 @@
 [![forthebadge](https://forthebadge.com/images/badges/uses-js.svg)](https://forthebadge.com)
 
 <div align="center">
-  <h1>APP Vet ¡Oh my DOG!</h1>
+  <h1>APP Vet ¡Oh my DOG! 🐕</h1>
   <p>
     Web app for managing services at a veterinary clinic for dogs
   </p>
@@ -33,3 +33,11 @@ ___________________
 Run:
 
 1- nodemon app
+
+
+## :handshake: Contact
+
+Cuenca Laura -
+Lizondo Santiago -
+Rojas Agustina - 
+
