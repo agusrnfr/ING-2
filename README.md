@@ -8,7 +8,7 @@
 <div align="center">
   <h1>APP Veterinaria ¡Oh my DOG!</h1>
   <p>
-    Aplicacion web para el manejo de servicios de una veterinaria
+    Aplicacion web para el manejo de servicios de una veterinaria para perros
   </p>
 </div>
 
