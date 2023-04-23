@@ -39,8 +39,7 @@ const filtrar = async (req, res) => {
       ]
     }
   });
-
-  console.log(data);
+  
   if (data.length === 0){
     res.send('No se encontraron resultados :(')
   } 
