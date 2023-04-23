@@ -22,7 +22,6 @@ const mostrarTablaUsers = async (req, res) => {
 
 const filtrar = async (req, res) => {
   const ingresado = req.body.searchTerm;
-  console.log(ingresado);
 
   //campos incompletos, muestro todos los usuarios
   if (!ingresado) {
