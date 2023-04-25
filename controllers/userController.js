@@ -16,7 +16,7 @@ const mostrarTablaUsers = async (req, res) => {
     res.send('No hay usuarios cargados :(')
   } 
   else {
-      return res.render('../views/table.ejs', {data})
+      return res.render('../views/table_usuarios.ejs', {data})
   }
 }
 
@@ -26,7 +26,7 @@ const filtrar = async (req, res) => {
   //campos incompletos, muestro todos los usuarios
   if (!ingresado) {
     const data = await User.findAll();
-    res.render('../views/table.ejs', { data })
+    res.render('../views/table_usuarios.ejs', { data })
     return
   }
 
