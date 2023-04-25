@@ -19,7 +19,7 @@ module.exports = {
         name: faker.name.firstName()+faker.name.lastName(),
         tel: "2116030285",
         DNI: "30227100",
-        pass: '123',
+        pass: '12345678',
         rol: 'cliente',
       }], {});
     }
