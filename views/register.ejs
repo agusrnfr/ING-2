@@ -3,50 +3,66 @@
 <head>  
 <%- include ('header') %>
 </head>
+<!-- BODY -->
+
 <body id="body">
-    <!DOCTYPE html>
-    <html lang="en">
-    
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-        <title>Untitled</title>
-        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    </head>
-    
-    <body>
-        <div class="container" style="position: absolute;left: 0;right: 0;top: 50%;transform: translateY(-50%);-ms-transform: translateY(-50%);-moz-transform: translateY(-50%);-webkit-transform: translateY(-50%);-o-transform: translateY(-50%);">
-            <div class="row d-flex d-xl-flex justify-content-center justify-content-xl-center">
-                <div class="col-sm-12 col-lg-10 col-xl-9 col-xxl-7 bg-white shadow-lg" style="border-radius: 5px;">
-                    <div class="p-5">
-                        <div class="text-center">
-                            <h4 class="text-dark mb-4">Crear una cuenta</h4>
-                        </div>
-                        <form action="/register" method="POST">
-                            <div class="mb-3"><input class="form-control form-control-user" type="email" name="mail" id="email" placeholder="Correo electronico" required=""></div>
-                            <div class="mb-3"><input class="form-control form-control-user" type="text" name="name" placeholder="Nombre completo" required=""></div>
-                            <div class="row mb-3">
-                                <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" name="pass" type="password" id="password" placeholder="Contraseña" required=""></div>
-                                <div class="col-sm-6">  <input type="radio" class="btn-check" name="rol" id="btnradio1" autocomplete="off" checked>
-                                                        <label class="btn btn-outline-primary" for="btnradio1">Cliente</label>
-                                                        <input type="radio" class="btn-check" name="rol" id="btnradio2" autocomplete="off">
-                                                        <label class="btn btn-outline-primary" for="btnradio2">Admin</label></div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="number" name="DNI" id="DNI" placeholder="DNI" required=""></div>
-                                <div class="col-sm-6"><input class="form-control form-control-user" type="number" name="tel" id="tel" placeholder="Telefono de contacto" required=""></div>
-                            </div>
-                            <div class="row mb-3">
-                                <p id="emailDuplicateErrorMsg" class="text-danger" style="display: none;"></p>
-                                <p id="emailErrorMsg" class="text-danger" style="display: none;">Paragraph</p>
-                                <p id="passwordErrorMsg" class="text-danger" style="display: none;">Paragraph</p>
-                            </div><button class="btn btn-primary d-block btn-user w-100" id="submitBtn" type="submit">Registrar</button>
-                            <hr>
-                        </form>
-                        <div class="text-center"><a class="small" href="/">Volver</a></div>
+  <br>
+  <div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-12 col-xl-9">
+        <div class="card text-black" style="border-radius: 25px;">
+          <div class="card-body p-md-5">
+            <div class="row justify-content-center">
+              <div class="col-md-10 col-lg-5 col-xl-6 order-2 order-lg-1">
+
+                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Registro</p>
+              <form action="/register" method="POST">
+
+                <div class="mb-3"><input class="form-control form-control-user" type="email" name="mail" id="email" placeholder="Correo electronico" required=""></div>
+                <div class="mb-3"><input class="form-control form-control-user" type="text" name="name" placeholder="Nombre completo" required=""></div>
+                <div class="row mb-3">
+                  <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" name="pass" type="password" id="password" placeholder="Contraseña" required=""></div>
+                  <div class="col-sm-6">  <input type="radio" class="btn-check" name="rol" id="btnradio1" autocomplete="off" checked>
+                    <label class="btn btn-outline-primary" for="btnradio1">Cliente</label>
+                    <input type="radio" class="btn-check" name="rol" id="btnradio2" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnradio2">Admin</label></div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="number" name="DNI" id="DNI" placeholder="DNI" required=""></div>
+                    <div class="col-sm-6"><input class="form-control form-control-user" type="number" name="tel" id="tel" placeholder="Telefono" required=""></div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="error-container" style="height: 30px; margin-bottom: 20px;">
+                      <p id="emailDuplicateErrorMsg" class="text-danger" style="display: none;">Paragraph</p>
+                      <p id="emailErrorMsg" class="text-danger" style="display: none;">Paragraph</p>
+                      <p id="passwordErrorMsg" class="text-danger" style="display: none;">Paragraph</p>
                     </div>
-                </div>
-            </div><script>
+                  </div><button class="btn btn-primary d-block btn-user w-100" id="submitBtn" type="submit">Registrar</button>
+                  <hr>
+
+                </form>
+                <div class="text-center"><a class="small" href="/">Volver</a></div>
+              </div>
+              <div class="col-md-10 col-lg-6 col-xl-6 d-flex align-items-center order-1 order-lg-2">
+
+                <img src="/img/dogo_bañera.png" width="400px"
+                  class="img-fluid" alt="Sample image">
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+
+
+
+<!-- SCRIPT -->
+<script>
         let email = document.getElementById("email")
         let password = document.getElementById("password")
         let submitBtn = document.getElementById("submitBtn")
@@ -115,7 +131,6 @@
 
             if (data.exists) {
                 displayErrorMsg("email", "El correo electrónico ya está en uso");
-                document.getElementById("emailDuplicateErrorMsg").style.display = "block";
             } else {
                 hideErrorMsg("email");
                 document.getElementById("emailDuplicateErrorMsg").style.display = "none";
