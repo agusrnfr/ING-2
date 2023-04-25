@@ -20,7 +20,7 @@ module.exports = {
         tel: "2116030285",
         DNI: "30227100",
         pass: '123',
-        rol: 'user',
+        rol: 'cliente',
       }], {});
     }
   },
