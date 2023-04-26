@@ -12,12 +12,7 @@ const { Op } = require('sequelize');
 
 const mostrarTablaUsers = async (req, res) => {    
   const data = await User.findAll();
-  if (data.length === 0){
-    res.send('No hay usuarios cargados :(')
-  } 
-  else {
-      return res.render('../views/table_usuarios.ejs', {data})
-  }
+  res.render('../views/table_usuarios.ejs', {data})
 }
 
 const filtrar = async (req, res) => {

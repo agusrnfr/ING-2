@@ -18,7 +18,7 @@ app.get('/contactar/trabajador/:id', mostrarCamposContactoTrabajador)
 app.post('/contactar/trabajador/:id', contactar)
 
 app.get('/table',comprobar_sesion, mostrarTablaUsers)
-app.post('/table',comprobar_sesion, filtrar)
+//app.post('/table',comprobar_sesion, filtrar)
 
 app.get('/login', mostrarLogin)
 app.post('/login', validarLogin)
