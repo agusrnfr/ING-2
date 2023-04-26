@@ -7,9 +7,9 @@ const mostrarRegister = (req,res) =>{
 }
 
 /**
- * registrar:
- * Cuando se hace click en registrar
- * se hacen las validaciones del back y se crea el user en la BD
+ * 
+ * Hace todas las validaciones del Back-End y se crea el user en la BD
+ * 
  */
 const registrar = async (req, res) => {    
     const mail = req.body.mail;
@@ -65,9 +65,9 @@ const registrar = async (req, res) => {
 }
 
 /**
- * funcion existe_duplicado:
+ * 
  * Devuelve true si ya existe un usuario con ese mail
- * devuelve false si no existe
+ * 
  */
 async function existe_duplicado(email) {
     const user = await User.findOne({
@@ -79,9 +79,9 @@ async function existe_duplicado(email) {
 }
 
 /**
- * chequear_mail_duplicado:
- * Mientras se va completando el campo mail
- * validaciones del front-end que no haya un mail ya registrado
+ * 
+ * valida en el Front-End que no haya un mail ya registrado
+ * 
  */
 const chequear_mail_duplicado = async (req, res) => {
     const { email } = req.body;
