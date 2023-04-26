@@ -9,7 +9,7 @@ const mostrarRegister = (req,res) =>{
 /**
  * registrar:
  * Cuando se hace click en registrar
- * se hacen las validaciones y se crea el user en la BD
+ * se hacen las validaciones del back y se crea el user en la BD
  */
 const registrar = async (req, res) => {    
     const mail = req.body.mail;
@@ -19,7 +19,15 @@ const registrar = async (req, res) => {
     const pass = req.body.pass;
     let rol = req.body.rol;
     if(!mail || !pass || !name || !tel || !DNI || !rol){
-        console.error('Error al crear usuario');
+        console.error('Error al crear usuario,campos incompletos');
+        return
+    }
+    if(pass.length<8){
+        console.error('Error al crear usuario,contraseña muy corta');
+        return
+    }
+    if (await existe_duplicado(mail)){
+        console.error('Error al crear usuario,mail duplicado');
         return
     }
     if(rol==='on')
@@ -42,7 +50,6 @@ const registrar = async (req, res) => {
             alertIcon:"success",
             showConfirmButton:false,
             timer:1500,
-            ruta:'',
         })
     })
     .catch(error => {
@@ -52,29 +59,36 @@ const registrar = async (req, res) => {
             alertMessage:"",
             alertIcon:"error",
             showConfirmButton:false,
-            timer:1500,
+            timer:2000,
         })
     });
 }
 
+/**
+ * funcion existe_duplicado:
+ * Devuelve true si ya existe un usuario con ese mail
+ * devuelve false si no existe
+ */
+async function existe_duplicado(email) {
+    const user = await User.findOne({
+        where: {mail: email}
+    });
+    if(user)
+        return true;
+    return false;
+}
 
+/**
+ * chequear_mail_duplicado:
+ * Mientras se va completando el campo mail
+ * validaciones del front-end que no haya un mail ya registrado
+ */
 const chequear_mail_duplicado = async (req, res) => {
     const { email } = req.body;
-    try {
-        const user = await User.findOne({
-            where: {
-                mail: email
-            }
-        });
-        if (user) {
-            res.json({ exists: true });
-        } else {
-            res.json({ exists: false });
-        }
-    } catch (error) {
-        console.log(error);
+    if (await existe_duplicado(email))
+        res.json({ exists: true });
+    else
         res.json({ exists: false });
-    }
 };
 
 
