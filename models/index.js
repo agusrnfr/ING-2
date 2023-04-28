@@ -80,6 +80,9 @@ db.Adopcion.belongsTo(db.User);
 db.User.hasMany(db.Cruza);
 db.Cruza.belongsTo(db.User);
 
+db.Cruza.belongsTo(db.Mascota);
+db.Mascota.hasOne(db.Cruza)
+
 
 // no tocar esto
 module.exports = db;
