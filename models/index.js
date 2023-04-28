@@ -52,8 +52,33 @@ db.Sequelize = Sequelize;
 db.User.hasMany(db.Mascota);
 db.Mascota.belongsTo(db.User);
 
+db.Beneficio.belongsTo(db.User);
+db.User.hasMany(db.Beneficio);
 
+db.User.hasMany(db.Historial);
+db.Historial.belongsTo(db.User);
+db.Mascota.hasMany(db.Historial);
+db.Historial.belongsTo(db.Mascota);
 
+db.Mascota.hasMany(db.Libreta);
+db.Libreta.belongsTo(db.Mascota);
+
+db.User.hasMany(db.Turno);
+db.Turno.belongsTo(db.User);
+db.Mascota.hasMany(db.Turno);
+db.Turno.belongsTo(db.Mascota);
+
+db.User.hasMany(db.Busqueda);
+db.Busqueda.belongsTo(db.User);
+
+db.User.hasMany(db.Perdida);
+db.Perdida.belongsTo(db.User);
+
+db.User.hasMany(db.Adopcion);
+db.Adopcion.belongsTo(db.User);
+
+db.User.hasMany(db.Cruza);
+db.Cruza.belongsTo(db.User);
 
 
 // no tocar esto

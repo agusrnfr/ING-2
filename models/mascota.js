@@ -26,7 +26,7 @@ module.exports = (sequelize) => {
       allowNull: true,
     },
     foto: {
-      type: DataTypes.STRING,
+      type: DataTypes.BLOB,
       allowNull: true,
     },
   }, {
