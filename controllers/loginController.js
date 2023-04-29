@@ -74,8 +74,16 @@ const comprobar_sesion = (req, res, next) => {
     }
 };
 
+const deslogear = async (req, res) => {
+    if (session.loggedin) {
+        session.loggedin = false
+    }
+    res.render('index',{ session: session })
+};
+
 module.exports = {
     validarLogin,
     mostrarLogin,
     comprobar_sesion,
+    deslogear,
 }

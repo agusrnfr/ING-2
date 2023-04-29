@@ -1,6 +1,6 @@
 const { mostrarCamposContactoTrabajador , contactar } = require('../controllers/contactarTrabajadorController');
 const { mostrarTablaUsers , filtrar } = require('../controllers/userController');
-const { validarLogin , mostrarLogin } = require('../controllers/loginController');
+const { validarLogin , mostrarLogin , deslogear } = require('../controllers/loginController');
 const { mostrarRegister, registrar , chequear_mail_duplicado } = require('../controllers/registerController');
 const { mostrarTrabajadores } = require('../controllers/trabajadorController');
 const { mostrarIndex } = require('../controllers/indexController');
@@ -22,6 +22,7 @@ app.get('/table',comprobar_sesion, mostrarTablaUsers)
 
 app.get('/login', mostrarLogin)
 app.post('/login', validarLogin)
+app.post('/logout', deslogear)
 
 app.get('/register', mostrarRegister)
 app.post('/register', registrar)
