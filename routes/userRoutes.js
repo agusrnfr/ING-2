@@ -4,7 +4,12 @@ const { validarLogin , mostrarLogin } = require('../controllers/loginController'
 const { mostrarRegister, registrar , chequear_mail_duplicado } = require('../controllers/registerController');
 const { mostrarTrabajadores } = require('../controllers/trabajadorController');
 const { mostrarIndex } = require('../controllers/indexController');
+<<<<<<< Updated upstream
 const { comprobar_sesion } = require('../controllers/loginController');
+=======
+const { comprobar_sesion , comprobar_sesion_admin } = require('../controllers/loginController');
+const { mostrarTodosLosTurnos } = require('../controllers/turnosController');
+>>>>>>> Stashed changes
 
 
 //invocamos express
@@ -28,6 +33,10 @@ app.post('/register', registrar)
 app.post('/chequear_mail_duplicado', chequear_mail_duplicado)
 
 app.get('/trabajadores', mostrarTrabajadores)
+
+
+//TURNOS
+app.get('/turnos/listarTodosLosTurnos', comprobar_sesion_admin, mostrarTodosLosTurnos);
 
 module.exports = app;
 
