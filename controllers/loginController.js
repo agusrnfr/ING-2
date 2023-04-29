@@ -74,6 +74,14 @@ const comprobar_sesion = (req, res, next) => {
     }
 };
 
+const comprobar_sesion_admin = async (req, res, next) => {
+    if (session.loggedin && session.usuario.rol === 'admin'){
+        next();
+    }     
+    else{ 
+    res.redirect('/');
+    }
+}
 const deslogear = async (req, res) => {
     if (session.loggedin) {
         session.loggedin = false
@@ -85,5 +93,6 @@ module.exports = {
     validarLogin,
     mostrarLogin,
     comprobar_sesion,
+    comprobar_sesion_admin,
     deslogear,
 }

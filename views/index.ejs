@@ -29,10 +29,6 @@
 <% } %>
 
 <div>
-    <a href="/register">registrar a un cliente</a>
-</div>
-
-<div>
     ________________ 
 </div>
 
@@ -40,6 +36,7 @@
     <a href="/adopciones">Adopcion de perros</a>
 </div>
 
+<% if (typeof session.usuario !== 'undefined' && (session.loggedin === true)) { %>
 <div>
     _______usuarios only_________ 
 </div>
@@ -51,7 +48,10 @@
 <div>
     <a href="/turnos">Solicitar un turno</a>
 </div>
+<% } %>
 
+
+<% if (typeof session.usuario !== 'undefined' && (session.loggedin === true) &&(session.usuario.rol === 'admin')) { %>
 <div>
     ________admin only__________ 
 </div>
@@ -60,6 +60,10 @@
     <a href="/table">Lista de clientes</a>
 </div>
 
+<div>
+    <a href="/register">registrar a un cliente</a>
+</div>
+<% } %>
 
 </p>
     </div>

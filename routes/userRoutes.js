@@ -4,7 +4,7 @@ const { validarLogin , mostrarLogin , deslogear } = require('../controllers/logi
 const { mostrarRegister, registrar , chequear_mail_duplicado } = require('../controllers/registerController');
 const { mostrarTrabajadores } = require('../controllers/trabajadorController');
 const { mostrarIndex } = require('../controllers/indexController');
-const { comprobar_sesion } = require('../controllers/loginController');
+const { comprobar_sesion , comprobar_sesion_admin } = require('../controllers/loginController');
 
 
 //invocamos express
@@ -24,7 +24,7 @@ app.get('/login', mostrarLogin)
 app.post('/login', validarLogin)
 app.post('/logout', deslogear)
 
-app.get('/register', mostrarRegister)
+app.get('/register', comprobar_sesion_admin , mostrarRegister)
 app.post('/register', registrar)
 app.post('/chequear_mail_duplicado', chequear_mail_duplicado)
 
