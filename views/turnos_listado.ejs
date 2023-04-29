@@ -2,8 +2,9 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 <%- include ('header') %>
-</head>
+    </head>
     <!-- BODY -->
+
     <body id="body">
         <br>
         <div class="container-sm" style="max-width: 1200px;">
@@ -43,7 +44,7 @@
                                     </td>
                                     <td><button type="button" class="btn btn-outline-primary"><i
                                                 class="bi bi-eye-fill">Ver</i></button>
-                                            </td>
+                                    </td>
                                 </tr>
                                 <% }); %>
                     </tbody>
@@ -58,33 +59,33 @@
         </div>
         <style>
             .dataTables_empty {
-              text-align: center;
+                text-align: center;
             }
-          </style>
+        </style>
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
         <script>
-      $(document).ready(function () {
-        $('#example').DataTable({
-          paging: true,
-          ordering: false,
-          info: false,
-          lengthMenu: [
-            [5, 15, 50, -1],
-            [5, 15, 50, 'Todos'],
-          ],
-          pageLength: 50, // Establecer como la opción por defecto
-          searching: false, // deshabilita la función de búsqueda
-          language: {
-            paginate: { previous: 'Anterior', next: 'Siguiente', },
-            zeroRecords: 'No hay turnos solicitados',
-            info: 'Mostrando pagina _PAGE_ de _PAGES_',
-            infoEmpty: 'No hay turnos solicitados',
-            lengthMenu: 'Mostrar _MENU_ entradas'
-          }
-        });
-      });
+            $(document).ready(function () {
+                $('#example').DataTable({
+                    paging: true,
+                    ordering: false,
+                    info: false,
+                    lengthMenu: [
+                        [5, 15, 50, -1],
+                        [5, 15, 50, 'Todos'],
+                    ],
+                    pageLength: 50, // Establecer como la opción por defecto
+                    searching: false, // deshabilita la función de búsqueda
+                    language: {
+                        paginate: { previous: 'Anterior', next: 'Siguiente', },
+                        zeroRecords: 'No hay turnos solicitados',
+                        info: 'Mostrando pagina _PAGE_ de _PAGES_',
+                        infoEmpty: 'No hay turnos solicitados',
+                        lengthMenu: 'Mostrar _MENU_ entradas'
+                    }
+                });
+            });
         </script>
     </body>
 
