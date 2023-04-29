@@ -10,14 +10,14 @@
         <div class="container-sm" style="max-width: 1200px;">
             <div class="card text-black" style="border-radius: 10px;">
                 <table class="table" id="tabla1">
-                    <thead class="">
+                    <thead class="table-secondary">
                         <tr>
-                            <th scope="col">Fecha</th>
-                            <th scope="col">Cliente</th>
-                            <th scope="col">Banda Horaria</th>
-                            <th scope="col">Practica</th>
-                            <th scope="col">Mascota</th>
-                            <th scope="col">Acciones</th>
+                            <th class="text-center" scope="col">Fecha</th>
+                            <th class="text-center" scope="col">Cliente</th>
+                            <th class="text-center" scope="col">Banda Horaria</th>
+                            <th class="text-center" scope="col">Practica</th>
+                            <th class="text-center" scope="col">Mascota</th>
+                            <th class="text-center" scope="col">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -27,27 +27,31 @@
                                 "2-digit", day: "2-digit" });
                                 %>
                                 <tr class="paginate">
-                                    <td class="max-width-100">
+                                    <td class="max-width-100 text-center">
                                         <%= fechaCorta %>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <%= turno.User.nombre %>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <%= turno.banda_horaria %>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <%= turno.practica %>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <%= turno.Mascota.nombre %>
                                     </td>
-                                    <td><button type="button" class="btn btn-outline-primary"><i
-                                                class="bi bi-eye-fill">Ver</i></button>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-primary btn-seleccionar"
+                                            data-target="#detalle-turno"><i class="bi bi-eye-fill">Ver</i></button>
                                     </td>
                                 </tr>
                                 <% }); %>
                     </tbody>
+                    <div id="detalle-turno" style="display: none;">
+                        <!-- Contenido que quieres mostrar/ocultar -->
+                    </div>
                 </table>
                 <% } %>
                     </tbody>
@@ -63,7 +67,6 @@
                 color: #9e1f1f;
                 font-style: italic;
             }
-            
         </style>
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
@@ -87,6 +90,13 @@
                         infoEmpty: 'No hay turnos solicitados',
                         lengthMenu: 'Mostrar _MENU_ entradas'
                     },
+                });
+                $('.btn-seleccionar').click(function () {
+                    // Obtener el valor del atributo data-target del botón correspondiente
+                    var target = $(this).data('target');
+
+                    // Mostrar/ocultar el elemento HTML correspondiente
+                    $(target).toggle();
                 });
             });
         </script>
