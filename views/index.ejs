@@ -7,8 +7,8 @@
     <h5 class="card-title"> <h1>Inicio</h1></h5>
     <p class="card-text">
 
-        <% if (typeof usuario !== 'undefined') { %>
-            Bienvenido usuario: <%= usuario.mail %>
+        <% if (typeof session.usuario !== 'undefined') { %>
+            Bienvenido usuario: <%= session.usuario.mail %>
         <% } else { %>
             Bienvenido visitante
         <% } %>
