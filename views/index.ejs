@@ -7,26 +7,19 @@
     <h5 class="card-title"> <h1>Inicio</h1></h5>
     <p class="card-text">
 
-        <% if (session.loggedin) { %>
-            Bienvenido usuario: <%= session.usuario.mail %>
+        <% if (typeof usuario !== 'undefined') { %>
+            Bienvenido usuario: <%= usuario.mail %>
         <% } else { %>
             Bienvenido visitante
         <% } %>
 
-
-<% if (session.loggedin === false) { %>
 <div>
     <a href="/login">login</a>
 </div>
-<div>
-    <a href="/register">registrarse</a>
-</div>
 
-<% } else { %>
-    <div>
-        <a href="/cerrar_sesion">cerrar sesion</a>
-    </div>
-<% } %>
+<div>
+    <a href="/register">registrar a un cliente</a>
+</div>
 
 <div>
     ________________ 
