@@ -30,7 +30,8 @@ const registrar = async (req, res) => {
         console.error('Error al crear usuario,mail duplicado');
         return
     }
-    if(rol==='on')
+    console.log(rol);
+    if(rol==='cliente')
         rol='cliente';
     else
         rol='admin';

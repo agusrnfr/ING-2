@@ -32,8 +32,8 @@ const validarLogin = async (req, res) => {
         if (!usuarioEncontrado) {
             res.render('login', {
                 alert: true,
-                alertTitle: "Login",
-                alertMessage: "Usuario o contraseña invalidos",
+                alertTitle: "Usuario o contraseña invalidos",
+                alertMessage: "",
                 alertIcon: "error",
                 showConfirmButton: false,
                 timer: 1500,
@@ -46,8 +46,8 @@ const validarLogin = async (req, res) => {
         session.loggedin = true;
         res.render('login', {
             alert: true,
-            alertTitle: "Login",
-            alertMessage: "Inicio de sesion exitoso",
+            alertTitle: "Inicio de sesion exitoso",
+            alertMessage: "",
             alertIcon: "success",
             showConfirmButton: false,
             timer: 1500,
@@ -74,8 +74,25 @@ const comprobar_sesion = (req, res, next) => {
     }
 };
 
+const comprobar_sesion_admin = (req, res, next) => {
+    if (session.loggedin && session.usuario.rol === 'admin'){
+        next();
+    }     
+    else{ 
+    res.redirect('/');
+    }
+}
+const deslogear = async (req, res) => {
+    if (session.loggedin) {
+        session.loggedin = false
+    }
+    res.render('index',{ session: session })
+};
+
 module.exports = {
     validarLogin,
     mostrarLogin,
     comprobar_sesion,
+    comprobar_sesion_admin,
+    deslogear,
 }

@@ -7,19 +7,26 @@
     <h5 class="card-title"> <h1>Inicio</h1></h5>
     <p class="card-text">
 
-        <% if (typeof usuario !== 'undefined') { %>
-            Bienvenido usuario: <%= usuario.mail %>
+        <% if (typeof session.usuario !== 'undefined' && (session.loggedin === true)) { %>
+            Bienvenido usuario: <%= session.usuario.mail %>
         <% } else { %>
             Bienvenido visitante
         <% } %>
 
-<div>
-    <a href="/login">login</a>
-</div>
 
-<div>
-    <a href="/register">registrarse</a>
-</div>
+<% if (typeof session.usuario !== 'undefined' && (session.loggedin === true)) { %>
+    <div>
+    <form id="logout-form" action="/logout" method="POST">
+        <button type="submit" class="btn btn-link">Cerrar sesión</button>
+    </form>
+    </div>
+<% } else { %>
+
+    <div>
+        <a href="/login">login</a>
+    </div>
+
+<% } %>
 
 <div>
     ________________ 
@@ -29,6 +36,7 @@
     <a href="/adopciones">Adopcion de perros</a>
 </div>
 
+<% if (typeof session.usuario !== 'undefined' && (session.loggedin === true)) { %>
 <div>
     _______usuarios only_________ 
 </div>
@@ -40,7 +48,10 @@
 <div>
     <a href="/turnos">Solicitar un turno</a>
 </div>
+<% } %>
 
+
+<% if (typeof session.usuario !== 'undefined' && (session.loggedin === true) &&(session.usuario.rol === 'admin')) { %>
 <div>
     ________admin only__________ 
 </div>
@@ -49,6 +60,10 @@
     <a href="/table">Lista de clientes</a>
 </div>
 
+<div>
+    <a href="/register">registrar a un cliente</a>
+</div>
+<% } %>
 
 </p>
     </div>
