@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pestaña</title>
+    <%- include ('header') %>
+</head>
+
+<body id="body">
+
+    <div class="container h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-lg-12 col-xl-6">
+          <div class="card text-black" style="border-radius: 25px;">
+            <div class="card-body p-md-4">
+              <div class="row justify-content-center">
+                
+                    <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-3">Registrar mascota</p>
+                    <div class="alert alert-info" role="alert">Se agregara mascota a: <strong><%= usuario.name %></strong></div>
+    <form method="POST">
+        <div class="row mb-3">
+        <div class="mb-3"><input class="form-control form-control-user" type="text" name="nombre" placeholder="Nombre de la mascota" required=""></div>
+        <div class="mb-3"><input class="form-control form-control-user" type="text" name="raza"   placeholder="Raza" required=""></div>
+        <div class="mb-3"><input class="form-control form-control-user" type="text" name="color"   placeholder="Color" required=""></div>
+        <div>Fecha de nacimiento</div>
+        <div class="mb-3"><input class="form-control form-control-user" type="date" name="fecha_nacimiento"   placeholder="Fecha de nacimiento" required=""></div>
+        <span id="fecha-invalida" class="text-danger" style="display:none;">Fecha inválida</span>
+        <div class="mb-3"><label for="input-file" class="form-label">Agregar fotografia</label><input type="file" class="form-control" id="input-file" name="imagen">
+        <br>    
+        <div><textarea class="form-control form-control-user" name="observaciones" placeholder="Observaciones"></textarea></div>
+        <br>
+        <button class="btn btn-primary d-block btn-user w-100" name="registrar_mascota" type="submit" id="registrar-btn">Registrar</button>
+
+    </div>
+</div>
+<hr>
+</form>
+<div class="text-center"><a class="small" href="/">Volver</a></div>
+</div>
+</div>
+    </div>
+</div>
+</div>
+</div>
+
+    <%- include ('sweet-alert') %> 
+    <script>
+        // Obtener el elemento de entrada de fecha y el botón de registro
+        var fechaNacimiento = document.getElementsByName("fecha_nacimiento")[0];
+        var btnRegistrar = document.getElementsByName("registrar_mascota")[0];
+      
+        // Obtener la fecha actual
+        var fechaActual = new Date().toISOString().split("T")[0];
+      
+        // Establecer la fecha mínima y máxima
+        fechaNacimiento.setAttribute("max", fechaActual);
+      
+        fechaNacimiento.oninput = function() {
+          // Obtener la fecha ingresada
+          var fechaIngresada = this.value;
+      
+          // Verificar si la fecha ingresada es válida y no es posterior a hoy
+          if (Date.parse(fechaIngresada) && fechaIngresada <= fechaActual) {
+            // Fecha válida, ocultar mensaje y habilitar botón de registro
+            document.getElementById("fecha-invalida").style.display = "none";
+            btnRegistrar.disabled = false;
+          } else {
+            // Fecha inválida, mostrar mensaje y deshabilitar botón de registro
+            document.getElementById("fecha-invalida").style.display = "block";
+            btnRegistrar.disabled = true;
+          }
+        };
+      </script>
+</body>
+</html>
