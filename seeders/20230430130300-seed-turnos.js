@@ -7,16 +7,16 @@ module.exports = {
       banda_horaria: 'Mañana',
       estado: 'Pendiente',
       practica: 'Desparasitacion',
-      UserId: null, // SOLUCIONAR PONER UN FK
-      MascotumId: null, // SOLUCIONAR PONER UN FK
+      UserId: 3,
+      MascotumId: 1,
     }], {});
     await queryInterface.bulkInsert('turnos', [{
       fecha: moment().add(124, 'days').toDate(),
       banda_horaria: 'Tarde',
       estado: 'Pendiente',
       practica: 'Vacuna A',
-      UserId: null, // SOLUCIONAR PONER UN FK
-      MascotumId: null, // SOLUCIONAR PONER UN FK
+      UserId: 3,
+      MascotumId: 1,
     }], {});
   },
   
