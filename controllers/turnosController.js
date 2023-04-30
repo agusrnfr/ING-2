@@ -1,13 +1,12 @@
-const { sequelize, Sequelize } = require('../models');
-
 const mostrarTodosLosTurnos = async (req, res) => {
+    const { sequelize, Sequelize, } = require('../models');
     const Turno = require('../models/turno.js')(sequelize)
-    const User = require('../models/user.js')(sequelize)
-    const Mascota = require('../models/mascota.js')(sequelize)
+    //const User = require('../models/user.js')(sequelize)
     const data = await Turno.findAll({
         raw: true,
-        attributes: { include: ['UserId', 'MascotumId'] },
-    })
+        attributes: ['id', 'fecha','banda_horaria',, 'estado', 'UserId', 'MascotumId'],
+      })
+       // .then (turnos => User.findByPk(turnos.UserId))
         .catch(error => {
             console.log(error);
         });

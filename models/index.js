@@ -49,10 +49,10 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 //ASOCIATIONS,  (CLAVES FORANEAS)
-db.User.hasMany(db.Turno);
-db.Turno.belongsTo(db.User);
-db.Mascota.hasMany(db.Turno);
-db.Turno.belongsTo(db.Mascota);
+db.User.hasMany(db.Turno, {foreignKey: 'UserId'});
+db.Turno.belongsTo(db.User, {foreignKey: 'UserId'});
+db.Mascota.hasMany(db.Turno, { foreignKey: 'MascotumId'});
+db.Turno.belongsTo(db.Mascota, { foreignKey: 'MascotumId'});
 
 db.User.hasMany(db.Mascota);
 db.Mascota.belongsTo(db.User);

@@ -26,6 +26,6 @@ module.exports = (sequelize) => {
         modelName: 'Turno',
         tableName: 'turnos',
     });
+
     return Turno;
 };
-    
