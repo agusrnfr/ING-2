@@ -5,7 +5,7 @@
     "database": "veterinaria_db",
     "host": "localhost",
     "dialect": "mysql",
-    "logging": false,
+    "logging": true,
     "define": {
       "timestamps": false
     }
