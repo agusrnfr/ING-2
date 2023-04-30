@@ -25,7 +25,7 @@ const registrarMascota = async (req, res) => {
     
 
     await Mascota.create({
-        usuarioid: 1,
+        UserId: 1,
         nombre: nombre,
         raza: raza,
         color: color,
