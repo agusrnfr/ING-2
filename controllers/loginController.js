@@ -1,5 +1,4 @@
-const { sequelize, Sequelize } = require('../models');
-const User = require('../models/user')(sequelize, Sequelize.DataTypes);
+const User = require('../db/models/user.js');
 const session = require('express-session');
 
 const mostrarLogin = (req, res) => {
