@@ -3,8 +3,7 @@ module.exports = {
   /** @type {import('sequelize-cli').Migration} */
   async up (queryInterface, Sequelize) {
     const moment = require('moment');
-    const User = require('../models/user')(queryInterface.sequelize, Sequelize.DataTypes);
-    const user = await User.findByPk(3);
+    const UserModel = require('../db/models/user');
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Luna',
       raza: 'Golden Retriever',

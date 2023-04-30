@@ -6,7 +6,7 @@ const { mostrarTrabajadores } = require('../controllers/trabajadorController');
 const { mostrarIndex } = require('../controllers/indexController');
 const { comprobar_sesion , comprobar_sesion_admin } = require('../controllers/loginController');
 const { mostrarTodosLosTurnos } = require('../controllers/turnosController');
-
+const { mostrarAgregarMascota , registrarMascota } = require('../controllers/mascotasController');
 
 //invocamos express
 const app = require('express').Router()
@@ -34,6 +34,10 @@ app.get('/trabajadores', mostrarTrabajadores)
 
 //TURNOS
 app.get('/turnos/listarTodosLosTurnos', comprobar_sesion_admin, mostrarTodosLosTurnos);
+
+//MASCOTAS
+app.get('/agregar_mascota/cliente/:id', mostrarAgregarMascota)
+app.post('/agregar_mascota/cliente/:id', registrarMascota)
 
 module.exports = app;
 
