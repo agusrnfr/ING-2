@@ -5,6 +5,7 @@ const { mostrarRegister, registrar , chequear_mail_duplicado } = require('../con
 const { mostrarTrabajadores } = require('../controllers/trabajadorController');
 const { mostrarIndex } = require('../controllers/indexController');
 const { comprobar_sesion , comprobar_sesion_admin } = require('../controllers/loginController');
+const { mostrarTodosLosTurnos } = require('../controllers/turnosController');
 
 
 //invocamos express
@@ -29,6 +30,10 @@ app.post('/register', registrar)
 app.post('/chequear_mail_duplicado', chequear_mail_duplicado)
 
 app.get('/trabajadores', mostrarTrabajadores)
+
+
+//TURNOS
+app.get('/turnos/listarTodosLosTurnos', comprobar_sesion_admin, mostrarTodosLosTurnos);
 
 module.exports = app;
 

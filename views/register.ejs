@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>  
-<%- include ('header') %>
+
+<head>
+  <%- include ('header') %>
 </head>
 <!-- BODY -->
 
@@ -16,24 +17,30 @@
               <div class="col-md-10 col-lg-5 col-xl-6 order-2 order-lg-1">
 
                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Registro</p>
-              <form action="/register" method="POST">
+                <form action="/register" method="POST">
 
-                <div class="mb-3"><input class="form-control form-control-user" type="email" name="mail" id="email" placeholder="Correo electronico" required=""></div>
-                <div class="mb-3"><input class="form-control form-control-user" type="text" name="name" placeholder="Nombre completo" required=""></div>
-                <div class="row mb-3">
-                  <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" name="pass" type="password" id="password" placeholder="Contraseña" required=""></div>
-                  <div class="col-sm-6">
-                    <!--  -->
-                    <input type="radio" class="btn-check" name="rol" id="btnradio1" autocomplete="off" value="cliente" checked>
-                    <label class="btn btn-outline-primary" for="btnradio1">Cliente</label>
-                    <input type="radio" class="btn-check" name="rol" id="btnradio2" autocomplete="off" value="admin">
-                    <label class="btn btn-outline-primary" for="btnradio2">Admin</label>
-                    <!--  -->
-                  </div>
+                  <div class="mb-3"><input class="form-control form-control-user" type="email" name="mail" id="email"
+                      placeholder="Correo electronico" required=""></div>
+                  <div class="mb-3"><input class="form-control form-control-user" type="text" name="name"
+                      placeholder="Nombre completo" required=""></div>
+                  <div class="row mb-3">
+                    <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" name="pass"
+                        type="password" id="password" placeholder="Contraseña" required=""></div>
+                    <div class="col-sm-6">
+                      <!--  -->
+                      <input type="radio" class="btn-check" name="rol" id="btnradio1" autocomplete="off" value="cliente"
+                        checked>
+                      <label class="btn btn-outline-primary" for="btnradio1">Cliente</label>
+                      <input type="radio" class="btn-check" name="rol" id="btnradio2" autocomplete="off" value="admin">
+                      <label class="btn btn-outline-primary" for="btnradio2">Admin</label>
+                      <!--  -->
+                    </div>
                   </div>
                   <div class="row mb-3">
-                    <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="text" name="DNI" id="DNI" placeholder="DNI" required=""></div>
-                    <div class="col-sm-6"><input class="form-control form-control-user" type="number" name="tel" id="tel" placeholder="Telefono" required=""></div>
+                    <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="text"
+                        name="DNI" id="DNI" placeholder="DNI" required=""></div>
+                    <div class="col-sm-6"><input class="form-control form-control-user" type="number" name="tel"
+                        id="tel" placeholder="Telefono" required=""></div>
                   </div>
                   <div class="row mb-3">
                     <div class="error-container" style="height: 30px; margin-bottom: 20px;">
@@ -41,16 +48,17 @@
                       <p id="emailErrorMsg" class="text-danger" style="display: none;">Paragraph</p>
                       <p id="passwordErrorMsg" class="text-danger" style="display: none;">Paragraph</p>
                     </div>
-                  </div><button class="btn btn-primary d-block btn-user w-100" id="submitBtn" type="submit">Registrar</button>
+                  </div><button class="btn btn-primary d-block btn-user w-100" id="submitBtn"
+                    type="submit">Registrar</button>
                   <hr>
 
                 </form>
                 <div class="text-center"><a class="small" href="/">Volver</a></div>
               </div>
-              <div class="col-md-10 col-lg-6 col-xl-6 d-flex align-items-center order-1 order-lg-2 justify-content-center">
+              <div
+                class="col-md-10 col-lg-6 col-xl-6 d-flex align-items-center order-1 order-lg-2 justify-content-center">
 
-                <img src="/img/dogo_bañera.png" width="400px"
-                  class="img-fluid" alt="Sample image">
+                <img src="/img/dogo_bañera.png" width="400px" class="img-fluid" alt="Sample image">
 
               </div>
             </div>
@@ -67,92 +75,92 @@
 
 <!-- SCRIPT -->
 <script>
-        let email = document.getElementById("email")
-        let password = document.getElementById("password")
-        let submitBtn = document.getElementById("submitBtn")
-        let emailErrorMsg = document.getElementById('emailErrorMsg')
-        let passwordErrorMsg = document.getElementById('passwordErrorMsg')
-    
-        function displayErrorMsg(type, msg) {
-            if(type == "email") {
-                emailErrorMsg.style.display = "block"
-                emailErrorMsg.innerHTML = msg
-                submitBtn.disabled = true
-            }
-            else {
-                passwordErrorMsg.style.display = "block"
-                passwordErrorMsg.innerHTML = msg
-                submitBtn.disabled = true
-            }
-        }
-    
-        function hideErrorMsg(type) {
-            if(type == "email") {
-                emailErrorMsg.style.display = "none"
-                emailErrorMsg.innerHTML = ""
-                if(passwordErrorMsg.innerHTML == "")
-                    submitBtn.disabled = false
-            }
-            else {
-                passwordErrorMsg.style.display = "none"
-                passwordErrorMsg.innerHTML = ""
-                if(emailErrorMsg.innerHTML == "")
-                    submitBtn.disabled = false
-            }
-        }
-        
-        // Validate password upon change
-        password.addEventListener("input", function() {
-    
-            // If password has no value, then it won't be changed and no error will be displayed
-            if(password.value.length == 0) hideErrorMsg("password")
-            
-            // Check if the password has 8 characters or more
-            if(password.value.length >= 8)
-                hideErrorMsg("password")
-            else
-                displayErrorMsg("password", "La contraseña debe contener al menos 8 caracteres")
-        });
+  let email = document.getElementById("email")
+  let password = document.getElementById("password")
+  let submitBtn = document.getElementById("submitBtn")
+  let emailErrorMsg = document.getElementById('emailErrorMsg')
+  let passwordErrorMsg = document.getElementById('passwordErrorMsg')
+
+  function displayErrorMsg(type, msg) {
+    if (type == "email") {
+      emailErrorMsg.style.display = "block"
+      emailErrorMsg.innerHTML = msg
+      submitBtn.disabled = true
+    }
+    else {
+      passwordErrorMsg.style.display = "block"
+      passwordErrorMsg.innerHTML = msg
+      submitBtn.disabled = true
+    }
+  }
+
+  function hideErrorMsg(type) {
+    if (type == "email") {
+      emailErrorMsg.style.display = "none"
+      emailErrorMsg.innerHTML = ""
+      if (passwordErrorMsg.innerHTML == "")
+        submitBtn.disabled = false
+    }
+    else {
+      passwordErrorMsg.style.display = "none"
+      passwordErrorMsg.innerHTML = ""
+      if (emailErrorMsg.innerHTML == "")
+        submitBtn.disabled = false
+    }
+  }
+
+  // Validate password upon change
+  password.addEventListener("input", function () {
+
+    // If password has no value, then it won't be changed and no error will be displayed
+    if (password.value.length == 0) hideErrorMsg("password")
+
+    // Check if the password has 8 characters or more
+    if (password.value.length >= 8)
+      hideErrorMsg("password")
+    else
+      displayErrorMsg("password", "La contraseña debe contener al menos 8 caracteres")
+  });
 
 
 
-        // Validate email upon change
-        email.addEventListener("input", async function() {
-        // Check if the email is valid using a regular expression (string@string.string)
-        if(email.value.match(/^[^@]+@[^@]+\.[^@]+$/)) {
-            //busca en el servidor si ya existe
-            const response = await fetch('/chequear_mail_duplicado', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    email: email.value
-                })
-            });
-            
-            const data = await response.json();
+  // Validate email upon change
+  email.addEventListener("input", async function () {
+    // Check if the email is valid using a regular expression (string@string.string)
+    if (email.value.match(/^[^@]+@[^@]+\.[^@]+$/)) {
+      //busca en el servidor si ya existe
+      const response = await fetch('/chequear_mail_duplicado', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: email.value
+        })
+      });
 
-            if (data.exists) {
-                displayErrorMsg("email", "El correo electrónico ya está en uso");
-            } else {
-                hideErrorMsg("email");
-                document.getElementById("emailDuplicateErrorMsg").style.display = "none";
-            }
-            } 
-        else {
-            displayErrorMsg("email", "Correo invalido");
-        }
-    });
+      const data = await response.json();
 
-    </script>
-        </div>
-        
-    </body>
-    
-    </html>
-    <%- include ('sweet-alert') %>
+      if (data.exists) {
+        displayErrorMsg("email", "El correo electrónico ya está en uso");
+      } else {
+        hideErrorMsg("email");
+        document.getElementById("emailDuplicateErrorMsg").style.display = "none";
+      }
+    }
+    else {
+      displayErrorMsg("email", "Correo invalido");
+    }
+  });
+
+</script>
+</div>
 
 </body>
-</html>
 
+</html>
+<%- include ('sweet-alert') %>
+
+  </body>
+
+  </html>

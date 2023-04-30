@@ -49,6 +49,11 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 //ASOCIATIONS,  (CLAVES FORANEAS)
+db.User.hasMany(db.Turno);
+db.Turno.belongsTo(db.User);
+db.Mascota.hasMany(db.Turno);
+db.Turno.belongsTo(db.Mascota);
+
 db.User.hasMany(db.Mascota);
 db.Mascota.belongsTo(db.User);
 
@@ -62,11 +67,6 @@ db.Historial.belongsTo(db.Mascota);
 
 db.Mascota.hasMany(db.Libreta);
 db.Libreta.belongsTo(db.Mascota);
-
-db.User.hasMany(db.Turno);
-db.Turno.belongsTo(db.User);
-db.Mascota.hasMany(db.Turno);
-db.Turno.belongsTo(db.Mascota);
 
 db.User.hasMany(db.Busqueda);
 db.Busqueda.belongsTo(db.User);
@@ -82,7 +82,6 @@ db.Cruza.belongsTo(db.User);
 
 db.Cruza.belongsTo(db.Mascota);
 db.Mascota.hasOne(db.Cruza)
-
 
 // no tocar esto
 module.exports = db;
