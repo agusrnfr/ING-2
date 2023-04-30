@@ -21,7 +21,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% if (!data.length===0) { %>
+                        <% if (!data.length == 0) { %>
                             <% data.forEach(turno=> {
                                 const fechaCorta = turno.fecha.toLocaleDateString("es-ES", { year: "2-digit", month:
                                 "2-digit", day: "2-digit" });
@@ -31,7 +31,7 @@
                                         <%= fechaCorta %>
                                     </td>
                                     <td class="text-center">
-                                        <%= turno.User.nombre %>
+                                        <%= turno.UserId %>
                                     </td>
                                     <td class="text-center">
                                         <%= turno.banda_horaria %>
@@ -40,18 +40,15 @@
                                         <%= turno.practica %>
                                     </td>
                                     <td class="text-center">
-                                        <%= turno.Mascota.nombre %>
+                                        <%= turno.MascotumId %>
                                     </td>
-                                    <td>
-                                        <button type="button" class="btn btn-outline-primary btn-seleccionar"
+                                    <td class="text-center">
+                                        <button type="button" class="align-center btn btn-outline-primary btn-seleccionar"
                                             data-target="#detalle-turno"><i class="bi bi-eye-fill">Ver</i></button>
                                     </td>
                                 </tr>
                                 <% }); %>
                     </tbody>
-                    <div id="detalle-turno" style="display: none;">
-                        <!-- Contenido que quieres mostrar/ocultar -->
-                    </div>
                 </table>
                 <% } %>
                     </tbody>
@@ -73,8 +70,10 @@
         <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
         <script>
             $(document).ready(function () {
+                const tableRows = $('#tabla1 tbody tr').length;
+                const pagingEnable = tableRows > 50;
                 $('#tabla1').DataTable({
-                    paging: true,
+                    paging: pagingEnable,
                     ordering: false,
                     info: false,
                     lengthMenu: [
@@ -91,13 +90,7 @@
                         lengthMenu: 'Mostrar _MENU_ entradas'
                     },
                 });
-                $('.btn-seleccionar').click(function () {
-                    // Obtener el valor del atributo data-target del botón correspondiente
-                    var target = $(this).data('target');
 
-                    // Mostrar/ocultar el elemento HTML correspondiente
-                    $(target).toggle();
-                });
             });
         </script>
     </body>
