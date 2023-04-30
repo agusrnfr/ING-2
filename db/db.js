@@ -6,7 +6,11 @@ const sequelize = new Sequelize(
     database.username,
     database.password, {
         host: database.host,
-        dialect: "mysql"
+        dialect: "mysql",
+        logging: false,
+        define: {
+          timestamps: false
+        }
     }
 );
 
