@@ -1,13 +1,14 @@
 const { Sequelize } = require('sequelize');
-const { database } = require('../config/config.json');
+const config = require('../config/config.json');
 
 const sequelize = new Sequelize(
-  'veterinaria_db',
-  'root',
-  '',
+  config.development.database,
+  config.development.username,
+  config.development.password,
    {
-     host: 'localhost',
-     dialect: 'mysql'
+     host: config.development.host,
+     dialect: config.development.dialect,
+     logging: false,
    }
  );
 

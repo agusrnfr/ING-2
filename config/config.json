@@ -5,7 +5,6 @@
     "database": "veterinaria_db",
     "host": "localhost",
     "dialect": "mysql",
-    "logging": false,
     "define": {
       "timestamps": false
     }
@@ -14,15 +13,21 @@
   "test": {
     "username": "root",
     "password": "",
-    "database": "veterinaria_db",
+    "database": "veterinaria_db_test",
     "host": "localhost",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "define": {
+      "timestamps": false
+    }
   },
   "production": {
     "username": "root",
     "password": "",
-    "database": "veterinaria_db",
+    "database": "veterinaria_db_production",
     "host": "localhost",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "define": {
+      "timestamps": false
+    }
   }
 }

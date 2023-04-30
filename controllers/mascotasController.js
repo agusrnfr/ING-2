@@ -20,11 +20,9 @@ const registrarMascota = async (req, res) => {
     const foto = req.body.imagen;
     const observaciones = req.body.observaciones;
     const UserId = req.params.id;
-    console.log(req.params.id)
-    
 
     await Mascota.create({
-        UserId: 1,
+        UserId: UserId,
         nombre: nombre,
         raza: raza,
         color: color,
