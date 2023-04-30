@@ -1,6 +1,6 @@
-const path = require('path');
 //invocamos express
 const express = require('express');
+const path = require('path');
 const app = express();
 const sequelize = require('./db/db');
 
@@ -33,6 +33,35 @@ app.use(express.static('public'));
 //servidor puerto
 app.listen(3000, (req, res) => {
   console.log('SERVER RUNNING IN  localhost:3000')
+});
+
+sequelize.drop()
+  .then(() => {
+    console.log('Las tablas han sido eliminadas');
+    return sequelize.sync({ force: true });
+  })
+  .then(() => {
+    console.log('Las tablas han sido creadas nuevamente');
+  })
+  .catch((error) => {
+    console.error('Error al eliminar o crear las tablas:', error);
+  });
+
+
+//Carga las tablas a partir del seeder
+const { exec } = require('child_process');
+exec('npx sequelize-cli db:seed:all', (err, stdout, stderr) => {
+  if (err) {
+    console.error(`Error al cargar datos`);
+    return;
+  }
+  else {
+    console.log(`Datos cargados a partir del seeder`);
+  }
+});
+
+  /*
+  
 
   sequelize.drop()
     .then(() => {
@@ -46,7 +75,7 @@ app.listen(3000, (req, res) => {
       console.error('Error al eliminar o crear las tablas:', error);
     });
 
-  /*    sequelize.sync({ force: true }).then(() => {
+   sequelize.sync({ force: true }).then(() => {
    console.log("Nos hemos conectado a la base de datos");
  }).catch(error => {
    console.log('Se ha producido un error', error);
@@ -64,5 +93,8 @@ app.listen(3000, (req, res) => {
      console.log(`Datos cargados a partir del seeder`);
    }
  });
- */
 });
+
+ */
+
+module.exports = sequelize;

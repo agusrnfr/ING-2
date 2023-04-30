@@ -1,14 +1,13 @@
-//const {Adopcion, Beneficio, Busqueda, Cruza, Historial, Libreta, Mascota, Perdida, Turno, User } = require ('/models');
-const Adopcion = require ('/models/adopcion.js');
-const Beneficio = require ('/models/beneficio.js');
-const Busqueda = require ('/models/busqueda.js');
-const Cruza = require ('/models/cruza.js');
-const Historial = require ('/models/historial.js');
-const Libreta = require ('/models/libreta.js');
-const Mascota = require ('/models/mascota.js');
-const Perdida = require ('/models/perdida.js');
-const Turno = require ('/models/turno.js');
-const User = require ('/models/user.js');
+const Adopcion = require ('./models/adopcion.js');
+const Beneficio = require ('./models/beneficio.js');
+const Busqueda = require ('./models/busqueda.js');
+const Cruza = require ('./models/cruza.js');
+const Historial = require ('./models/historial.js');
+const Libreta = require ('./models/libreta.js');
+const Mascota = require ('./models/mascota.js');
+const Perdida = require ('./models/perdida.js');
+const Turno = require ('./models/turno.js');
+const User = require ('./models/user.js');
 
 
 User.hasMany(Turno)
