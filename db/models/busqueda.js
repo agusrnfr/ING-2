@@ -50,4 +50,4 @@ Busqueda.init({
     tableName: 'busquedas',
 });
 
-module.exports = { Busqueda };
+module.exports = Busqueda;

@@ -22,4 +22,4 @@ Trabajador.init({
   tableName: 'trabajadores',
 });
 
-module.exports = { Trabajador };
+module.exports = Trabajador;

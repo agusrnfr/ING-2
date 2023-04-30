@@ -34,4 +34,4 @@ User.init({
   tableName: 'users',
 });
 
-module.exports = { User };
+module.exports = User;

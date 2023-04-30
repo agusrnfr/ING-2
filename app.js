@@ -34,34 +34,35 @@ app.use(express.static('public'));
 app.listen(3000, (req, res) => {
   console.log('SERVER RUNNING IN  localhost:3000')
 
-  sequelize.sync({ force: true }).then(() => {
-    console.log("Nos hemos conectado a la base de datos");
-  }).catch(error => {
-    console.log('Se ha producido un error', error);
-  })
+  sequelize.drop()
+    .then(() => {
+      console.log('Las tablas han sido eliminadas');
+      return sequelize.sync({ force: true });
+    })
+    .then(() => {
+      console.log('Las tablas han sido creadas nuevamente');
+    })
+    .catch((error) => {
+      console.error('Error al eliminar o crear las tablas:', error);
+    });
 
-  /*   sequelize.drop()
-      .then(() => {
-        console.log('Las tablas han sido eliminadas');
-        return sequelize.sync({ force: true });
-      })
-      .then(() => {
-        console.log('Las tablas han sido creadas nuevamente');
-      })
-      .catch((error) => {
-        console.error('Error al eliminar o crear las tablas:', error);
-      }); */
+  /*    sequelize.sync({ force: true }).then(() => {
+   console.log("Nos hemos conectado a la base de datos");
+ }).catch(error => {
+   console.log('Se ha producido un error', error);
+ })
 
 
-  //Carga las tablas a partir del seeder
-  const { exec } = require('child_process');
-  exec('npx sequelize-cli db:seed:all', (err, stdout, stderr) => {
-    if (err) {
-      console.error(`Error al cargar datos`);
-      return;
-    }
-    else {
-      console.log(`Datos cargados a partir del seeder`);
-    }
-  });
+ //Carga las tablas a partir del seeder
+ const { exec } = require('child_process');
+ exec('npx sequelize-cli db:seed:all', (err, stdout, stderr) => {
+   if (err) {
+     console.error(`Error al cargar datos`);
+     return;
+   }
+   else {
+     console.log(`Datos cargados a partir del seeder`);
+   }
+ });
+ */
 });

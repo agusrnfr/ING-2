@@ -32,4 +32,4 @@ Historial.init({
     tableName: 'historiales',
 });
 
-module.exports = { Historial };
+module.exports = Historial;

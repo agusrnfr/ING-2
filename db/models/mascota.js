@@ -34,4 +34,4 @@ Mascota.init({
   tableName: 'mascotas',
 });
 
-module.exports = { Mascota };
+module.exports = Mascota;

@@ -18,4 +18,4 @@ Beneficio.init({
     tableName: 'beneficios',
 });
 
-module.exports = { Beneficio };
+module.exports = Beneficio;

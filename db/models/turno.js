@@ -26,4 +26,4 @@ Turno.init({
     tableName: 'turnos',
 });
 
-module.exports = { Turno };
+module.exports = Turno;

@@ -50,4 +50,4 @@ Perdida.init({
     tableName: 'perdidas',
 });
 
-module.exports = { Perdida };
+module.exports = Perdida;

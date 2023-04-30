@@ -7,7 +7,7 @@ const sequelize = new Sequelize(
     database.password, {
         host: database.host,
         dialect: "mysql",
-        logging: false,
+        logging: true,
         define: {
           timestamps: false
         }

@@ -54,4 +54,4 @@ Adopcion.init({
     tableName: 'adopciones',
 });
 
-module.exports = { Adopcion };
+module.exports = Adopcion;

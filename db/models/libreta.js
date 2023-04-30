@@ -26,4 +26,4 @@ Libreta.init({
     tableName: 'libretas',
 });
 
-module.exports = { Libreta };
+module.exports = Libreta;

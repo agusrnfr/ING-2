@@ -22,4 +22,4 @@ Campania.init({
   tableName: 'campanias',
 });
 
-module.exports = { Campania };
+module.exports = Campania;

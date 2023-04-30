@@ -34,4 +34,4 @@ Cruza.init({
     tableName: 'cruzas',
 });
 
-module.exports = { Cruza };
+module.exports = Cruza;
