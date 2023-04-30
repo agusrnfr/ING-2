@@ -12,7 +12,7 @@ module.exports = {
       fecha_nacimiento: moment('2018-07-15').toDate(),
       observaciones: 'Tiene una mancha blanca en la pata izquierda',
       foto: null,
-      UserId: null, // SOLUCIONAR PONER UN FK
+      UserId: 3,
     }], {});
   },
 
