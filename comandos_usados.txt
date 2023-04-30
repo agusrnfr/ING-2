@@ -1,0 +1,27 @@
+#comandos usados
+
+error scripts
+en powershell>
+Set-ExecutionPolicy RemoteSigned
+
+npm init -y
+npm i express
+npm i express-session mysql ejs dotenv bcryptjs
+
+node app  # para correrlo
+npm i -g nodemon
+
+nodemon app #para correrlo
+
+_______________
+#sequelize
+
+npm i sequelize
+npm install --save mysql2
+npx sequelize-cli init
+npx sequelize-cli db:create
+npx sequelize-cli model:generate --name User --attributes user:string,name:string,rol:string,pass:string
+
+npx sequelize-cli db:migrate
+
+npx sequelize-cli db:seed:all
