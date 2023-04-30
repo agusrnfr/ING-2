@@ -1,17 +1,14 @@
 const { Sequelize } = require('sequelize');
-const { database } = require('../config');
+const { database } = require('../config/config.json');
 
 const sequelize = new Sequelize(
-    database.database,
-    database.username,
-    database.password, {
-        host: database.host,
-        dialect: "mysql",
-        logging: false,
-        define: {
-          timestamps: false
-        }
-    }
-);
+  'veterinaria_db',
+  'root',
+  '',
+   {
+     host: 'localhost',
+     dialect: 'mysql'
+   }
+ );
 
 module.exports = sequelize;

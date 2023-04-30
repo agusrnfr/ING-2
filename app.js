@@ -34,7 +34,9 @@ app.use(express.static('public'));
 app.listen(3000, (req, res) => {
   console.log('SERVER RUNNING IN  localhost:3000')
 });
-
+require('./db/associations');
+require('./db/models/campania');
+require('./db/models/trabajador');
 sequelize.drop()
   .then(() => {
     console.log('Las tablas han sido eliminadas');
