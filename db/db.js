@@ -9,7 +9,6 @@ const sequelize = new Sequelize(
      host: config.development.host,
      dialect: config.development.dialect,
      logging: false,
-     timestamps: config.development.timestamps,
    }
  );
 
