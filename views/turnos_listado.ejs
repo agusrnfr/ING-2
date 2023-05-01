@@ -14,6 +14,7 @@
                         <tr>
                             <th class="text-center" scope="col">Fecha</th>
                             <th class="text-center" scope="col">Cliente</th>
+                            <th class="text-center" scope="col">Mail</th>
                             <th class="text-center" scope="col">Banda Horaria</th>
                             <th class="text-center" scope="col">Practica</th>
                             <th class="text-center" scope="col">Mascota</th>
@@ -21,41 +22,55 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% if (!data.length == 0) { %>
+                        <% if (!data.length==0) { %>
                             <% data.forEach(turno=> {
                                 const fechaCorta = turno.fecha.toLocaleDateString("es-ES", { year: "2-digit", month:
                                 "2-digit", day: "2-digit" });
+                                const estado = turno.estado.toLowerCase();
+                                const cellClass = estado === "aceptado" ? "alert-success" : estado === "rechazado" ?
+                                "alert-danger" : "";
                                 %>
                                 <tr class="paginate">
-                                    <td class="max-width-100 text-center">
+                                    <td class="max-width-100 text-center align-middle">
                                         <%= fechaCorta %>
                                     </td>
-                                    <td class="text-center">
+                                    <td class="text-center align-middle">
                                         <%= turno.user %>
                                     </td>
-                                    <td class="text-center">
+                                    <td class="text-center align-middle">
+                                        <%= turno.mailUser %>
+                                    </td>
+                                    <td class="text-center align-middle">
                                         <%= turno.banda_horaria %>
                                     </td>
-                                    <td class="text-center">
+                                    <td class="text-center align-middle">
                                         <%= turno.practica %>
                                     </td>
-                                    <td class="text-center">
+                                    <td class="text-center align-middle">
                                         <%= turno.nombre %>
                                     </td>
-                                    <td class="text-center">
-                                        <button type="button" class="align-center btn btn-outline-primary btn-seleccionar"
-                                            data-target="#detalle-turno"><i class="bi bi-eye-fill">Ver</i></button>
+                                    <td class="text-center align-middle">
+                                        <% if (estado==="pendiente" ) { %>
+                                            <div>
+                                                <button type="button" class="btn btn-outline-success">Aceptar</button>
+                                                <button type="button" class="btn btn-outline-danger">Rechazar</button>
+                                            </div>
+                                            <% } else { %>
+                                                <div class="alert <%= cellClass %> m-0">
+                                                    <%= turno.estado %>
+                                                  </div>
+                                                <% } %>
                                     </td>
                                 </tr>
                                 <% }); %>
+                                    <% } %>
                     </tbody>
                 </table>
-                <% } %>
-                    </tbody>
-                    </table>
-                    <div class="text-center">
-                        <a href="/">Volver</a>
-                    </div>
+                </tbody>
+                </table>
+                <div class="text-center">
+                    <a href="/">Volver</a>
+                </div>
             </div>
         </div>
         <style>

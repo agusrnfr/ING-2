@@ -7,7 +7,7 @@ const mostrarTodosLosTurnos = async (req, res) => {
         raw: true,
         include: [
             { model: Mascota, as: 'Mascotum', attributes: ['nombre'] },
-            { model: User, as: 'User', attributes: ['name'] }]
+            { model: User, as: 'User', attributes: ['name','mail'] }]
     })
         .catch(error => {
             console.log(error);
@@ -20,14 +20,14 @@ const mostrarTodosLosTurnos = async (req, res) => {
             banda_horaria: turno.banda_horaria,
             estado: turno.estado,
             practica: turno.practica,
-            createdAt: turno.createdAt,
-            updatedAt: turno.updatedAt,
             UserId: turno.UserId,
             MascotumId: turno.MascotumId,
             nombre: turno['Mascotum.nombre'],
-            user: turno['User.name']
+            user: turno['User.name'],
+            mailUser: turno['User.mail'] 
         };
     });
+    console.log(data);
     res.render('turnos_listado.ejs', { data });
 };
 
