@@ -13,6 +13,15 @@ module.exports = {
       foto: null,
       UserId: 3,
     }], {});
+    await queryInterface.bulkInsert('mascotas', [{
+      nombre: 'Diana',
+      raza: 'Pitbull',
+      color: 'Blanco',
+      fecha_nacimiento: moment('2019-05-17').toDate(),
+      observaciones: 'Es juguetona y le gusta correr',
+      foto: null,
+      UserId: 4,
+    }], {});
     for (let i = 0; i < 10; i++) {
       await queryInterface.bulkInsert('mascotas', [{
         nombre: faker.name.firstName(),

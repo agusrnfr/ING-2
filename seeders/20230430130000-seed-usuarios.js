@@ -28,13 +28,31 @@ module.exports = {
       pass: '123456789',
       rol: 'cliente',
     }], {});
+    await queryInterface.bulkInsert('users', [{
+      mail: 'akus.g@gmail.com',
+      name: 'Agustin Garcia',
+      tel: "2216473789",
+      DNI: "442573678",
+      pass: '123456789',
+      rol: 'cliente',
+    }], {});
+    await queryInterface.bulkInsert('users', [{
+      mail: 'nami.w@gmail.com',
+      name: 'Naomi Diaz',
+      tel: "2216469589",
+      DNI: "37257378",
+      pass: '123456789',
+      rol: 'cliente',
+    }], {});
     for (let i = 0; i < 5; i++) {
+      let name = faker.name.firstName();
+      let lastName = faker.name.lastName();
       await queryInterface.bulkInsert('users', [{
-        mail: faker.name.firstName()+"@gmail.com",
-        name: faker.name.firstName()+ " " + faker.name.lastName(),
-        tel: "2116030285",
-        DNI: "30227100",
-        pass: '12345678',
+        mail: name+lastName+"@gmail.com",
+        name: name + " " + lastName,
+        tel: faker.random.number({ min: 2210000000, max: 2219999999 }),
+        DNI: faker.random.number({ min: 30000000, max: 50000000 }),
+        pass: '123456789',
         rol: 'cliente',
       }], {});
     }
