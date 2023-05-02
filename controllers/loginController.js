@@ -85,7 +85,7 @@ const deslogear = async (req, res) => {
     if (session.loggedin) {
         session.loggedin = false
     }
-    res.render('index',{ session: session })
+    res.redirect('/')
 };
 
 module.exports = {
