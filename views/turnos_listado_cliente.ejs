@@ -23,7 +23,7 @@
                         <% if (!data.length==0) { %>
                             <% data.forEach(turno=> {
                                 const fechaCorta = turno.fecha.toLocaleDateString("es-ES", {day: "2-digit",
-                                month:"2-digit", year: "2-digit"});
+                                month:"2-digit", year:"numeric"});
                                 const estado = turno.estado.toLowerCase();
                                 const cellClass = estado === "aceptado" ? "alert-success" : estado === "rechazado" ?
                                 "alert-danger" : "alert-info";
@@ -84,9 +84,9 @@
                     searching: false, // deshabilita la función de búsqueda
                     language: {
                         paginate: { previous: 'Anterior', next: 'Siguiente', },
-                        zeroRecords: 'No tiene turnos solicitado',
+                        zeroRecords: 'No tiene turnos solicitados',
                         info: 'Mostrando pagina _PAGE_ de _PAGES_',
-                        infoEmpty: 'No tiene turnos solicitado',
+                        infoEmpty: 'No tiene turnos solicitados',
                         lengthMenu: 'Mostrar _MENU_ entradas'
                     },
                 });
