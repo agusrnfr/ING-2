@@ -48,7 +48,7 @@ module.exports = {
       let name = faker.name.firstName();
       let lastName = faker.name.lastName();
       await queryInterface.bulkInsert('users', [{
-        mail: name+lastName+"@gmail.com",
+        mail: name.toLowerCase()+lastName.toLowerCase()+"@gmail.com",
         name: name + " " + lastName,
         tel: faker.random.number({ min: 2210000000, max: 2219999999 }),
         DNI: faker.random.number({ min: 30000000, max: 50000000 }),
