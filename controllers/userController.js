@@ -1,8 +1,5 @@
 'use strict';
-const { sequelize, Sequelize } = require('../models');
-const { Model } = require('sequelize');
-const { DataTypes } = require("sequelize");
-const User = require('../models/user.js')(sequelize, Sequelize.DataTypes);
+const User = require('../db/models/user.js');
 const { Op } = require('sequelize');
 
 /* function getAllUsers(req, res) {

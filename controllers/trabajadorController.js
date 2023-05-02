@@ -1,8 +1,5 @@
 'use strict';
-const { sequelize, Sequelize } = require('../models');
-const { Model } = require('sequelize');
-const { DataTypes } = require("sequelize");
-const Trabajador = require('../models/trabajador.js')(sequelize, Sequelize.DataTypes);
+const Trabajador = require('../db/models/trabajador.js');
 
 
 const mostrarTrabajadores = async(req,res) =>{

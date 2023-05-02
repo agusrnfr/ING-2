@@ -1,7 +1,7 @@
-const { sequelize, Sequelize } = require('../models');
+const Mascota = require('../db/models/mascota');
+const User = require('../db/models/user')
 
 const mostrarAgregarMascota = async (req, res) => {    
-    const User = require('../models/user')(sequelize, Sequelize.DataTypes);
     usuario = await User.findByPk(req.params.id)
     if(usuario === null){
         res.send('no existe ese usuario :(')
@@ -13,7 +13,6 @@ const mostrarAgregarMascota = async (req, res) => {
 }
 
 const registrarMascota = async (req, res) => {
-    const Mascota = require('../models/mascota')(sequelize, Sequelize.DataTypes);
     const nombre = req.body.nombre;
     const raza = req.body.raza;
     const color = req.body.color;
@@ -21,11 +20,9 @@ const registrarMascota = async (req, res) => {
     const foto = req.body.imagen;
     const observaciones = req.body.observaciones;
     const UserId = req.params.id;
-    console.log(req.params.id)
-    
 
     await Mascota.create({
-        UserId: 1,
+        UserId: UserId,
         nombre: nombre,
         raza: raza,
         color: color,

@@ -1,6 +1,4 @@
-const { sequelize, Sequelize } = require('../models');
-const Trabajador = require('../models/trabajador')(sequelize, Sequelize.DataTypes);
-const User = require('../models/user')(sequelize, Sequelize.DataTypes);
+const Trabajador = require('../db/models/trabajador.js');
 
 const mostrarCamposContactoTrabajador = async (req, res) => {    
     
