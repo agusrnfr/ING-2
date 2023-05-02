@@ -1,17 +1,17 @@
 
 const User = require('../db/models/user.js');
 
+
+
 const mostrarCliente = async(req, res) => {
-    const user = await User.findByPk(req.params.id)
-    
-    if(user === null){
+    const usuario = await User.findByPk(req.params.id)
+    if(usuario === null){
         res.send('no existe ese usuario :(')
         return
     }
-    usuario = user.dataValues; //lo vuelve un objeto
-    return res.render('../views/cliente', { usuario })
+    const mascotas = await usuario.getMascotas()
+    return res.render('../views/cliente', { usuario: usuario.dataValues, mascotas })
 }
-
 
 module.exports = {
     mostrarCliente

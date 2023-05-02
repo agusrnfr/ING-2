@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="es">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,7 +27,24 @@
                     <div>DNI: <%= usuario.DNI %></div>
                     <div>Rol: <%= usuario.rol %></div>
                     <div>Mascotas:</div>
-                    
+                    <div>
+                                  <table class="table" id="tabla1">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Nombre</th>
+                                      <th scope="col">Raza</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                      <% mascotas.forEach(mascota => { %>
+                                    <tr class="paginate">
+                                      <td><%= mascota.nombre %></td>
+                                      <td><%= mascota.raza %></td>
+                                      </tr>
+                                      <% }); %>
+                                    </tbody>
+                                  </table>
+                    </div>
 
 <div class="text-center"><a class="small" href="/table">Volver</a></div>
 </div>
@@ -34,5 +53,33 @@
 </div>
 </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+<script>
+    $(document).ready(function () {
+        const tableRows = $('#tabla1 tbody tr').length;
+        const pagingEnable = tableRows > 50;
+        $('#tabla1').DataTable({
+            paging: pagingEnable,
+            ordering: false,
+            info: false,
+            lengthMenu: [
+                [5, 15, 50, -1],
+                [5, 15, 50, 'Todos'],
+            ],
+            pageLength: 50, // Establecer como la opción por defecto
+            searching: false, // deshabilita la función de búsqueda
+            language: {
+                paginate: { previous: 'Anterior', next: 'Siguiente', },
+                zeroRecords: 'No hay turnos solicitados',
+                info: 'Mostrando pagina _PAGE_ de _PAGES_',
+                infoEmpty: 'No hay turnos solicitados',
+                lengthMenu: 'Mostrar _MENU_ entradas'
+            },
+        });
+
+    });
+</script>
 </body>
 </html>
