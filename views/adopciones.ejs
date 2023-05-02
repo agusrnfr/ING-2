@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adopcion a ciegas</title>
+    <%- include ('header') %>
+</head>
+<body id="body">
+
+
+  <div class="row" style="margin: 35px;">
+    <strong><p style="font-size: 20px;"> </p></strong>
+    <% data.forEach(adopcion => { %>
+        
+            <div class="card" style="width: 18rem;margin: 5px;">
+            <div class="card-body">
+            <h5 class="card-title"> <%= adopcion.nombre %> </h5>
+            <p class="card-text"><%= adopcion.raza %></p>
+            <a href="#" class="btn btn-primary">Contactar </a>
+            </div>
+            </div>
+      <% }); %> 
+ </div>
+
+
+<%- include ('footer') %>
+</body>
+
+</html>
+
