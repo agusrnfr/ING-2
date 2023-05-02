@@ -30,7 +30,7 @@ module.exports = {
         fecha_nacimiento: faker.date.future(),
         observaciones: faker.random.arrayElement(['Es muy jugueton', 'Es muy nervioso', 'Agresivo','Calmado']),
         foto: null,
-        UserId: faker.random.number({ min: 3, max: 8 }),
+        UserId: faker.datatype.number({ min: 3, max: 8 }),
       }], {});
     }
   },
