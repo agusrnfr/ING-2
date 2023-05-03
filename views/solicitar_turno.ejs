@@ -1,0 +1,112 @@
+<%- include ('header', {tituloweb: '¡Oh my dog! | Turnos ' }); %>
+
+    <body id="body">
+
+        <div class="container h-100 mt-5">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-lg-12 col-xl-8">
+                    <div class="card text-black" style="border-radius: 25px;">
+                        <div class="card-body p-md-4">
+                            <div class="row justify-content-center">
+                                <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-3">Solicitar turno</p>
+                                <form method="POST" action="/turnos">
+                                    <div class="row mb-3">
+                                        <div class="mb-3">
+                                            <label class="b"> Fecha de atencion </label>
+                                            <% let fechaMinima=new Date().toISOString().split("T")[0]; let
+                                                fechaMaxima=new Date();
+                                                fechaMaxima.setFullYear(fechaMaxima.getFullYear() + 2);
+                                                fechaMaxima=fechaMaxima.toISOString().split("T")[0]; %>
+                                                <input class="form-control form-control-user" type="date"
+                                                    name="fecha_turno" min="<%= fechaMinima %>" max="<%= fechaMaxima %>"
+                                                    required="">
+                                        </div>
+                                        <div class="mb-3">
+                                            <select class="form-select" name="banda_horaria" required="">
+                                                <option value="" disabled selected>Banda horaria</option>
+                                                <option value="Mañana">Mañana</option>
+                                                <option value="Tarde">Tarde</option>
+                                            </select>
+                                        </div>
+                                        <div class="alert alert-info mb-3 text-center" role="alert" id="fecha_invalida"
+                                            style="display:none;">
+                                            <span class="text-info">Fecha de atencion inválida. </span>
+                                            <span class="text-info">Horarios de atención: Lunes a viernes de 8 a 13hs y
+                                                de 15 a 20hs. Sábados de 8 a 13hs. </span>
+                                        </div>
+                                        <div class="mb-3">
+                                            <select class="form-select" name="practica" required="">
+                                                <option value="" disabled selected>Práctica</option>
+                                                <option value="Consulta general">Consulta general</option>
+                                                <option value="Desparasitacion">Desparasitación</option>
+                                                <option value="Castracion" disabled>Castración</option>
+                                                <option value="Vacuna A" disabled>Vacuna A</option>
+                                                <option value="Vacuna B" disabled>Vacuna B</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <% if (mascotas.length> 0) { %>
+                                                <select id="mascota" class="form-select" name="mascota" required="">
+                                                    <option value="" disabled selected>Mascota</option>
+                                                    <% mascotas.forEach(function(mascota) { %>
+                                                        <option value="<%= mascota.id %>">
+                                                            <%= mascota.nombre %>
+                                                        </option>
+                                                        <% }); %>
+                                                </select>
+                                                <% } else { %>
+                                                    <p>No tenes mascotas registradas.</p>
+                                                    <% } %>
+                                        </div>
+                                        <div class="mb-3">
+                                                <button class="btn btn-primary d-block btn-user w-100"
+                                                    name="enviar_turno" type="submit" id="enviar_turno">Enviar turno</button>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </form>
+                                <div class="text-center"><a class="small" href="/">Volver</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <script>
+                let mascotas = "<%= mascotas %>";
+                let fecha_turno = document.getElementsByName("fecha_turno");
+                let btnEnviar = document.getElementById("enviar_turno");
+
+                if (mascotas.length == 0) {
+                    btnEnviar.disabled = true;
+                }
+
+                function fechaInvalida() {
+                    let fecha_turno = document.getElementsByName("fecha_turno")[0].value;
+                    let banda_horaria = document.getElementsByName("banda_horaria")[0].value;
+                    let dia_semana = new Date(fecha_turno).getDay(); // 0 para Domingo, 1 para Lunes, 2 para Martes, etc.
+                    if (dia_semana == 6 || (dia_semana == 5 && banda_horaria == "Tarde")) {
+                        document.getElementById("fecha_invalida").style.display = "block";
+                        return true; // la fecha es inválida
+                    }
+                    else {
+                        document.getElementById("fecha_invalida").style.display = "none";
+                        return false; // la fecha es válida
+                    }
+                }
+
+                btnEnviar.onclick = function (event) {
+                    if (fechaInvalida()) {
+                        event.preventDefault(); // evita que se envíe el formulario
+                    } else if (mascotas.length == 0) {
+                        console.log("No tenes mascotas registradas.")
+                        event.preventDefault(); // evita que se envíe el formulario
+                    }
+                };
+
+            </script>
+
+    </body>
+    <%- include ('sweet-alert') %>
+
+        </html>

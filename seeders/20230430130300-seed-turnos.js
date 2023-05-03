@@ -46,7 +46,7 @@ module.exports = {
         fecha: faker.date.future(),
         banda_horaria: faker.random.arrayElement(['Mañana', 'Tarde']),
         estado: faker.random.arrayElement(['Pendiente', 'Aceptado', 'Rechazado']),
-        practica: faker.random.arrayElement(['Consulta general', 'Vacuna A', 'Vacuna B', 'Desparasitacion']),
+        practica: faker.random.arrayElement(['Consulta general', 'Vacuna A', 'Vacuna B', 'Desparasitacion', 'Castracion']),
         UserId: dueño,
         MascotumId: faker.random.arrayElement(mascota).id,
       }], {});
