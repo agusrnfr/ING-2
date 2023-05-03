@@ -50,13 +50,13 @@
                                         <%= turno.nombre %>
                                     </td>
                                     <td class="text-center align-middle" id="estado<%= celdaEstado %>">
-                                        <% if (estado==="pendiente" ) { const idTurno=turno.id; %>
+                                        <% if (estado==="pendiente" ) { const idTurno=turno.id; const mailTurno=turno.mailUser; %>
                                             <div>
                                                 <button type="button"
-                                                    onclick="confirmarTurno(true,'<%= idTurno%>','<%= celdaEstado %>')"
+                                                    onclick="confirmarTurno(true,'<%= idTurno%>','<%= mailTurno%>','<%= celdaEstado %>')"
                                                     class="btn btn-outline-success">Aceptar</button>
                                                 <button type="button"
-                                                    onclick="confirmarTurno(false,'<%= idTurno%>','<%= celdaEstado %>')"
+                                                    onclick="confirmarTurno(false,'<%= idTurno%>','<%= mailTurno%>','<%= celdaEstado %>')"
                                                     class="btn btn-outline-danger">Rechazar</button>
                                             </div>
                                             <% } else { %>
@@ -112,8 +112,8 @@
 
             });
 
-            function confirmarTurno(estado, idTurno, celdaEstado) {
-                const data = { estado: estado, idTurno: idTurno };
+            function confirmarTurno(estado, idTurno, mailTurno, celdaEstado) {
+                const data = { estado: estado, idTurno: idTurno, mailTurno: mailTurno};
                 fetch('/turnos/listarTodosLosTurnos', {
                     method: 'POST',
                     headers: {
