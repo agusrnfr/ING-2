@@ -42,7 +42,7 @@
             <td><%= usuario.DNI %></td>
           <!--<td><%= usuario.pass %></td>-->
             <td><%= usuario.rol %></td>
-            <td><button type="button" class="btn btn-outline-primary"><i class="bi bi-eye-fill">Ver</i></button>
+            <td><button type="button" onclick="location.href='<%= `/ver_cliente/${usuario.id}` %>'" class="btn btn-outline-primary"><i class="bi bi-eye-fill"></i>Ver</button>
               <button type="button" onclick="location.href='<%= `/agregar_mascota/cliente/${usuario.id}` %>'" class="btn btn-outline-info"><i class="bi bi-plus-lg me-2"></i>Agregar Mascota</button>
               <!-- <a href="`/contactar/trabajador/${trabajador.id}`" class="btn btn-primary">Contactar</a> -->
               <!-- <button type="button" class="btn btn-outline-danger"><i class="bi bi-x"></i>Eliminar</button> -->

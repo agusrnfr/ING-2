@@ -38,7 +38,7 @@ module.exports = {
       MascotumId: 1,
     }], {});
     for (let i = 0; i < 20; i++) {
-      let dueño = faker.random.number({ min: 3, max: 10 });
+      let dueño = faker.datatype.number({ min: 3, max: 10 });
       if (excludeList.includes(dueño)) continue; // valido si el dueño está en la lista de exclusiones
       let mascota = await Mascota.findAll({ where: { UserId: dueño } });
       if (mascota.length == 0) continue; //valido que el dueño tenga mascotas

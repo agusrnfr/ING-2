@@ -7,6 +7,7 @@ const { mostrarIndex } = require('../controllers/indexController');
 const { comprobar_sesion , comprobar_sesion_admin } = require('../controllers/loginController');
 const { solicitarTurno, mostrarTodosLosTurnos, mostrarMisTurnos, cambiarEstadoTurno, guardarTurno} = require('../controllers/turnosController');
 const { mostrarAgregarMascota , registrarMascota } = require('../controllers/mascotasController');
+const { mostrarCliente } = require('../controllers/clienteController')
 
 //invocamos express
 const app = require('express').Router()
@@ -42,6 +43,10 @@ app.post('/turnos/listarTodosLosTurnos',comprobar_sesion_admin, cambiarEstadoTur
 //MASCOTAS
 app.get('/agregar_mascota/cliente/:id', mostrarAgregarMascota)
 app.post('/agregar_mascota/cliente/:id', registrarMascota)
+
+//VER CLIENTE
+app.get('/ver_cliente/:id', comprobar_sesion_admin, mostrarCliente)
+
 
 module.exports = app;
 

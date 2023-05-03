@@ -1,5 +1,12 @@
 const User = require('../db/models/user.js');
 
+function convertirNombre(nombre) {
+    const palabras = nombre.toLowerCase().split(" ");
+    for (let i = 0; i < palabras.length; i++) {
+      palabras[i] = palabras[i].charAt(0).toUpperCase() + palabras[i].slice(1);
+    }
+    return palabras.join(" ");
+  }
 
 const mostrarRegister = (req,res) =>{
     res.render('register')
@@ -11,8 +18,8 @@ const mostrarRegister = (req,res) =>{
  * 
  */
 const registrar = async (req, res) => {    
-    const mail = req.body.mail;
-    const name = req.body.name;
+    const mail = req.body.mail.toLowerCase();
+    const name = convertirNombre(req.body.name);
     const tel = req.body.tel;
     const DNI = req.body.DNI;
     const pass = req.body.pass;

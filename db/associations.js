@@ -15,7 +15,7 @@ Turno.belongsTo(User)
 Mascota.hasMany(Turno)
 Turno.belongsTo(Mascota)
 
-User.hasMany(Mascota);
+User.hasMany(Mascota, { as: 'mascotas' });
 Mascota.belongsTo(User);
 
 Beneficio.belongsTo(User);
