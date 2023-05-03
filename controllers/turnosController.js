@@ -5,6 +5,9 @@ const session = require('express-session');
 const moment = require('moment');
 const { transporter } = require('../config/mailer');
 
+const verificaciones = () => {
+}
+
 const solicitarTurno = async (req, res) => {
     const id = session.usuario.id;
     const mascotas = await Mascota.findAll({ where: { UserId: id } })
