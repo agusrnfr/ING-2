@@ -7,7 +7,7 @@ const { mostrarIndex } = require('../controllers/indexController');
 const { comprobar_sesion , comprobar_sesion_admin } = require('../controllers/loginController');
 const { mostrarTodosLosTurnos, mostrarMisTurnos} = require('../controllers/turnosController');
 const { mostrarAgregarMascota , registrarMascota } = require('../controllers/mascotasController');
-const { mostrarAdopciones } = require('../controllers/adopcionController');
+const { mostrarAdopciones , cambiarEstado } = require('../controllers/adopcionController');
 
 //invocamos express
 const app = require('express').Router()
@@ -35,6 +35,7 @@ app.get('/trabajadores', mostrarTrabajadores)
 
 //ADOPCION
 app.get('/adopciones',mostrarAdopciones)
+app.post('/adopcion/seAdopto',comprobar_sesion, cambiarEstado)
 
 //TURNOS
 app.get('/turnos/listarTodosLosTurnos', comprobar_sesion_admin, mostrarTodosLosTurnos);

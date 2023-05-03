@@ -15,6 +15,13 @@ const mostrarAdopciones = async (req, res) => {
     }
 }
 
+const cambiarEstado = async (req, res) => {
+ 
+  res.send('hola')
+
+}
+
 module.exports = {
     mostrarAdopciones,
+    cambiarEstado
 }

@@ -10,15 +10,26 @@
 <body id="body">
 
 
-  <div class="row" style="margin: 35px;">
+  <div class="row" style="margin: 30px;">
     <strong><p style="font-size: 20px;"> </p></strong>
     <% data.forEach(adopcion => { %>
         
-            <div class="card" style="width: 18rem;margin: 5px;">
+            <div class="card" style="width: 17rem;margin: 7px;">
             <div class="card-body">
-            <h5 class="card-title"> <%= adopcion.nombre %> </h5>
-            <p class="card-text"><%= adopcion.raza %></p>
-            <a href="#" class="btn btn-primary">Contactar </a>
+              <h5 class="card-title d-flex justify-content-between align-items-center">
+                <%= adopcion.nombre %> 
+                <a href="#" id= "adopto <%= adopcion.id %>" class="btn btn-primary mx-2" onclick= "cambiarEstado(this, '<%= adopcion.id %>', '<%= adopcion.se_adopto %>')">
+                  <%= adopcion.se_adopto ? 'Adoptado' : 'Adoptar' %>
+                </a>
+              </h5>
+            <p class="card-text"> Edad : <%= adopcion.edad %> meses</p>
+            <p class="card-text">Raza: <%= adopcion.raza %></p>
+            <p class="card-text">Color: <%= adopcion.color %></p>
+            <p class="card-text">Sexo: <%= adopcion.sexo %></p>
+            <p class="card-text">Origen: <%= adopcion.origen %></p>
+            <p class="card-text">Vacunas: <%= adopcion.vacunas %></p>
+            <p class="card-text">Caracteristicas : <%= adopcion.caracteristicas %></p>
+            <a href="#" class="btn btn-primary"> Contactar </a>
             </div>
             </div>
       <% }); %> 
@@ -26,6 +37,27 @@
 
 
 <%- include ('footer') %>
+
+<script>
+  async function cambiarEstado(boton, adopcionId, seAdopto) {
+  const url = '/adopcion/seAdopto';
+  const nuevoEstado = !seAdopto; // Cambia el estado actual al nuevo estado
+
+  console.log(boton);
+   //Envía la solicitud AJAX al servidor para actualizar el estado en la base de datos
+    const response = await fetch(url, {
+     method: 'POST',
+     body: JSON.stringify({ id: adopcionId, se_adopto: seAdopto }),
+    headers: {
+      'Content-Type': 'application/json'
+     }
+  });
+   const data = await response.json();
+   console.log(data);
+   console.log('Respuesta del servidor:', data);
+}
+</script>
+
 </body>
 
 </html>
