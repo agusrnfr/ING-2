@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
 
 transporter.verify().then(() => {
   console.log('Ready for send emails');
-});
+}).catch(error => { console.log('Ha ocurrido un error con nodemailer') });
 
 module.exports = { 
   transporter,
