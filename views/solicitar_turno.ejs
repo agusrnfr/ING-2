@@ -9,10 +9,21 @@
                     <div class="card text-black" style="border-radius: 25px;">
                         <div class="card-body p-md-4">
                             <div class="row justify-content-center">
-                                <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-3">Solicitar turno <i class="bi bi-calendar-check"></i></p>
+                                <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-3">Solicitar turno <i
+                                        class="bi bi-calendar-check"></i></p>
                                 <form method="POST" action="/turnos">
                                     <div class="row mb-3">
                                         <div class="mb-3">
+                                            <select class="form-select" name="practica" id="practica" required="">
+                                                <option value="" disabled selected>Práctica</option>
+                                                <option value="Consulta general">Consulta general</option>
+                                                <option value="Desparasitacion">Desparasitación</option>
+                                                <option value="Castracion">Castración</option>
+                                                <option value="Vacuna A">Vacuna A</option>
+                                                <option value="Vacuna B">Vacuna B</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3" id="div_fecha" style="display: none;">
                                             <label class="b"> Fecha de atencion </label>
                                             <% let fechaMinima=new Date().toISOString().split("T")[0]; let
                                                 fechaMaxima=new Date();
@@ -36,21 +47,14 @@
                                                 de 15 a 20hs. Sábados de 8 a 13hs. </p>
                                         </div>
                                         <div class="mb-3">
-                                            <select class="form-select" name="practica" required="">
-                                                <option value="" disabled selected>Práctica</option>
-                                                <option value="Consulta general">Consulta general</option>
-                                                <option value="Desparasitacion">Desparasitación</option>
-                                                <option value="Castracion" disabled>Castración</option>
-                                                <option value="Vacuna A" disabled>Vacuna A</option>
-                                                <option value="Vacuna B" disabled>Vacuna B</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
                                             <% if (mascotas.length> 0) { %>
                                                 <select id="mascota" class="form-select" name="mascota" required="">
                                                     <option value="" disabled selected>Mascota</option>
-                                                    <% mascotas.forEach(function(mascota) { %>
-                                                        <option value="<%= mascota.id %>">
+                                                    <% mascotas.forEach(function(mascota) { 
+                                                        let fechaCorta = mascota.fecha_nacimiento.toLocaleDateString("es-ES", {day: "2-digit",
+                                                        month:"2-digit", year:"numeric"});
+                                                        %>
+                                                        <option value="<%= mascota.id %>-<%= fechaCorta %>">
                                                             <%= mascota.nombre %>
                                                         </option>
                                                         <% }); %>
@@ -60,8 +64,8 @@
                                                     <% } %>
                                         </div>
                                         <div class="mb-3">
-                                                <button class="btn btn-primary d-block btn-user w-100"
-                                                    name="enviar_turno" type="submit" id="enviar_turno">Enviar turno</button>
+                                            <button class="btn btn-primary d-block btn-user w-100" name="enviar_turno"
+                                                type="submit" id="enviar_turno">Enviar turno</button>
                                         </div>
                                     </div>
                                     <hr>
@@ -73,39 +77,51 @@
                 </div>
             </div>
         </div>
-            <script>
-                let mascotas = "<%= mascotas %>";
-                let fecha_turno = document.getElementsByName("fecha_turno");
-                let btnEnviar = document.getElementById("enviar_turno");
+        <script>
+            const mascotas = "<%= mascotas %>";
+            const btnEnviar = document.getElementById("enviar_turno");
+            const practicaSelect = document.getElementById('practica');
+            const fechaDiv = document.getElementById('div_fecha');
+            
+            
+            if (mascotas.length == 0) { // si no tiene mascotas registradas no puede solicitar un turno
+                btnEnviar.disabled = true;
+            }
 
-                if (mascotas.length == 0) {
-                    btnEnviar.disabled = true;
+            practicaSelect.addEventListener('change', function () { // si la práctica es consulta general o desparasitación, se muestra el campo de fecha
+                if (practicaSelect.value === 'Consulta general' || practicaSelect.value === 'Desparasitacion' || practicaSelect.value === 'Castracion') {
+                    fechaDiv.style.display = 'block';
+                    fechaDiv.querySelector('input').required = true;
+                } else {
+                    fechaDiv.style.display = 'none';
+                    fechaDiv.querySelector('input').required = false;
                 }
+            });
 
-                function fechaInvalida() {
-                    let fecha_turno = document.getElementsByName("fecha_turno")[0].value;
-                    let banda_horaria = document.getElementsByName("banda_horaria")[0].value.toLowerCase();
-                    let dia_semana = new Date(fecha_turno).getDay(); // 0 para Domingo, 1 para Lunes, 2 para Martes, etc.
+            function fechaInvalida() { // valida que la fecha no sea sábado o domingo
+                let fecha_turno = document.getElementsByName("fecha_turno")[0].value;
+                let banda_horaria = document.getElementsByName("banda_horaria")[0].value.toLowerCase();
+                let dia_semana = new Date(fecha_turno).getDay(); // 0 para Domingo, 1 para Lunes, 2 para Martes, etc.
 
-                    if (dia_semana == 6 || (dia_semana == 5 && banda_horaria == "tarde")) {
-                        document.getElementById("fecha_invalida").style.display = "block";
-                        return true; // la fecha es inválida
-                    }
-                    else {
-                        document.getElementById("fecha_invalida").style.display = "none";
-                        return false; // la fecha es válida
-                    }
+                if (dia_semana == 6 || (dia_semana == 5 && banda_horaria == "tarde")) {
+                    document.getElementById("fecha_invalida").style.display = "block";
+                    return true; // la fecha es inválida
                 }
+                else {
+                    document.getElementById("fecha_invalida").style.display = "none";
+                    return false; // la fecha es válida
+                }
+            }
 
-                btnEnviar.onclick = function (event) {
-                    if (fechaInvalida()) {
-                        event.preventDefault(); // evita que se envíe el formulario
-                    } else if (mascotas.length == 0) {
-                        event.preventDefault(); // evita que se envíe el formulario
-                    }
-                };
+            btnEnviar.onclick = function (event) { // si la fecha es inválida o no tiene mascotas registradas, no se envía el formulario
+                if (fechaInvalida()) {
+                    event.preventDefault(); // evita que se envíe el formulario
+                } else if (mascotas.length == 0) {
+                    event.preventDefault(); // evita que se envíe el formulario
+                }
+            };
 
-            </script>
+        </script>
 
     </body>
     <%- include ('sweet-alert') %>
