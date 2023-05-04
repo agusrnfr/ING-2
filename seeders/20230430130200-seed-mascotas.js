@@ -22,6 +22,33 @@ module.exports = {
       foto: null,
       UserId: 4,
     }], {});
+    await queryInterface.bulkInsert('mascotas', [{
+      nombre: 'Leona',
+      raza: 'Cruza',
+      color: 'Negra',
+      fecha_nacimiento: moment('2018-01-12').toDate(),
+      observaciones: 'Es panzona y le gusta dormir',
+      foto: null,
+      UserId: 6,
+    }], {});
+    await queryInterface.bulkInsert('mascotas', [{
+      nombre: 'Mimi',
+      raza: 'Caniche',
+      color: 'Blanca',
+      fecha_nacimiento: moment('2018-01-12').toDate(),
+      observaciones: 'Ladra mucho y le gusta comer',
+      foto: null,
+      UserId: 3,
+    }], {});
+    await queryInterface.bulkInsert('mascotas', [{
+      nombre: 'Bart',
+      raza: 'Salchicha',
+      color: 'Marron',
+      fecha_nacimiento: moment('2018-01-12').toDate(),
+      observaciones: 'Es muy cariñoso y le gusta jugar con la pelota',
+      foto: null,
+      UserId: 5,
+    }], {});
     for (let i = 0; i < 10; i++) {
       await queryInterface.bulkInsert('mascotas', [{
         nombre: faker.name.firstName(),
