@@ -49,7 +49,7 @@ module.exports = {
       name: 'Agustina Rojas',
       tel: "2212212201",
       DNI: "44444444",
-      pass: 'taylorswiftteamo',
+      pass: '123456789',
       rol: 'cliente',
     }], {});
     for (let i = 0; i < 5; i++) {

@@ -5,8 +5,36 @@ const session = require('express-session');
 const moment = require('moment');
 const { transporter } = require('../config/mailer');
 
-const verificaciones = () => {
+const verificaciones = (req, res, next) => {
+    let { fecha_turno, banda_horaria, practica, mascota } = req.body;
+
+    if (!fecha_turno || !moment(fecha_turno).isValid()) { //Verifica que la fecha sea válida
+        return res.status(404).json('La fecha de turno no es válida');
+    }
+    
+    fecha_turno = moment(fecha_turno).startOf('day'); // Establece la fecha al inicio del día
+    let dia = fecha_turno.day();
+
+    if (!practica || !mascota || !banda_horaria) { // Verifica que no haya campos vacíos
+        return res.status(404).json('No se puede solicitar turno con campos vacíos');
+    }
+
+    if (dia === 6 && banda_horaria.toLowerCase() === 'tarde' || dia === 0) { // Verifica que no se solicite turno para los sábados o domingos
+        return res.status(404).json('No se puede solicitar turno para las tardes de los sábados o los domingos');
+    }
+
+    if (fecha_turno.isBefore(moment().startOf('day'))) { // Verifica que no se solicite turno para una fecha anterior a la actual
+        return res.status(404).json('No se puede solicitar turno para una fecha anterior a la actual');
+    }
+
+    if (fecha_turno.isAfter(moment().startOf('day').add(2, 'years'))) { // Verifica que no se solicite turno para una fecha muy lejana
+        return res.status(404).json('No se puede solicitar turno para una fecha muy lejana');
+    }
+
+    next(); //si pasa todas las verificaciones, pasa al siguiente middleware
 }
+
+
 
 const solicitarTurno = async (req, res) => {
     const id = session.usuario.id;
@@ -21,11 +49,11 @@ const solicitarTurno = async (req, res) => {
 const guardarTurno = async (req, res) => {
     const { fecha_turno, banda_horaria, practica, mascota } = req.body;
     const UserId = session.usuario.id;
-    const mascotas = await Mascota.findAll({ where: { UserId: UserId } })
-    .catch(error => {
-        console.log(error);
-        res.status(500).json('Error al devolver los resultados: ' + error);
-    });
+    const mascotas = await Mascota.findAll({ where: { UserId: UserId } }) //    ESTO SE REPITE, DEBERIA ESTAR EN UNA FUNCION
+        .catch(error => {
+            console.log(error);
+            res.status(500).json('Error al devolver los resultados: ' + error);
+        });
     await Turno.create({
         fecha: moment(fecha_turno).toDate(),
         banda_horaria: banda_horaria,
@@ -46,7 +74,7 @@ const guardarTurno = async (req, res) => {
                 timer: false,
             });
         });
-    res.render('solicitar_turno.ejs', { 
+    res.render('solicitar_turno.ejs', {
         mascotas,
         alert: true,
         alertTitle: "Solicitud exitosa",
@@ -144,6 +172,7 @@ const cambiarEstadoTurno = async (req, res) => {
 
 
 module.exports = {
+    verificaciones,
     solicitarTurno,
     guardarTurno,
     mostrarTodosLosTurnos,
