@@ -111,3 +111,48 @@
     <%- include ('sweet-alert') %>
 
         </html>
+
+<!-- CUESTIONES PARA RESOLVER CUANDO SE IMPLEMENTEN LOS OTROS TURNOS:
+Para lograr lo que deseas, puedes agregar un poco de JavaScript que se encargue de mostrar y 
+ocultar el campo de fecha de atención según la selección del usuario en la lista desplegable de prácticas. 
+Aquí te dejo un ejemplo de cómo podrías hacerlo:
+Primero, agrega un id al campo de selección de prácticas para poder identificarlo fácilmente:
+
+<select class="form-select" name="practica" id="practica" required="">
+
+Luego, agrega un div para envolver el campo de fecha de atención, de modo que podamos ocultarlo fácilmente con CSS:
+
+<div class="mb-3" id="div_fecha" style="display: none;">
+    <label class="b"> Fecha de atencion </label>
+    <% let fechaMinima=new Date().toISOString().split("T")[0]; let
+        fechaMaxima=new Date();
+        fechaMaxima.setFullYear(fechaMaxima.getFullYear() + 2);
+        fechaMaxima=fechaMaxima.toISOString().split("T")[0]; %>
+        <input class="form-control form-control-user" type="date"
+            name="fecha_turno" min="<%= fechaMinima %>" max="<%= fechaMaxima %>"
+            required="">
+</div>
+
+Finalmente, agrega el siguiente código JavaScript en la sección <head> de tu página:
+
+    <script>
+    const practicaSelect = document.getElementById('practica');
+    const fechaDiv = document.getElementById('div_fecha');
+
+    practicaSelect.addEventListener('change', function () {
+        if (practicaSelect.value === 'Consulta general' || practicaSelect.value === 'Desparasitacion') {
+            fechaDiv.style.display = 'block';
+            fechaDiv.querySelector('input').required = true;
+        } else {
+            fechaDiv.style.display = 'none';
+            fechaDiv.querySelector('input').required = false;
+        }
+    });
+</script>
+
+Este código agrega un escuchador de eventos al campo de selección de prácticas. Cada vez que el usuario 
+seleccione una opción, el código verificará si la opción seleccionada es "Consulta general" o 
+"Desparasitacion". Si lo es, se mostrará el campo de fecha de atención y se requerirá que se ingrese una 
+fecha válida. Si no lo es, se ocultará el campo y no será necesario ingresar una fecha.
+
+-->
