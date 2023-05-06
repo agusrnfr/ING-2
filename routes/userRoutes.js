@@ -9,6 +9,7 @@ const { verificaciones, solicitarTurno, mostrarTodosLosTurnos, mostrarMisTurnos,
 const { mostrarAgregarMascota , registrarMascota } = require('../controllers/mascotasController');
 const { mostrarAdopciones , cambiarEstado } = require('../controllers/adopcionController');
 const { mostrarCliente } = require('../controllers/clienteController')
+const { mostrarAdopciones , esDuenio, cambiarEstado, mostrarPublicacion, guardarPublicacion } = require('../controllers/adopcionController');
 
 //invocamos express
 const app = require('express').Router()
@@ -36,7 +37,9 @@ app.get('/trabajadores', mostrarTrabajadores)
 
 //ADOPCION
 app.get('/adopciones',mostrarAdopciones)
-app.post('/adopcion/seAdopto',comprobar_sesion, cambiarEstado)
+app.post('/adopcion/seAdopto',comprobar_sesion, esDuenio , cambiarEstado)
+app.get('/publicacion',comprobar_sesion, mostrarPublicacion)
+app.post('/publicacion',comprobar_sesion, guardarPublicacion)
 
 //TURNOS
 app.get('/turnos', comprobar_sesion, solicitarTurno);
