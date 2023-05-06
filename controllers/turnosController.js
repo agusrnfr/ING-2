@@ -20,7 +20,7 @@ const verificaciones = async (req, res, next) => { // Verifica que los datos ing
         res.status(500).json('Error al buscar las mascotas del usuario: ' + error);
     }
 
-    if (practica == 'Castracion' || practica == 'Desparasitacion' || practica == 'Consulta general') { // Verifica que la fechea sea validad
+    if (practica == 'Castracion' || practica == 'Desparasitacion' || practica == 'Consulta general' || practica == 'Urgencia') { // Verifica que la fechea sea validad
 
         if (!fecha_turno || !moment(fecha_turno).isValid()) { //Verifica que la fecha sea válida
             return res.status(400).json('La fecha de turno no es válida');
@@ -122,7 +122,7 @@ const calcularFechaVacuna = (fecha, practica, mascota, banda_horaria) => { // Ca
             return fecha; // Si la fecha no es sábado ni domingo, se le asigna la fecha de la vacuna a 1 año de la fecha actual
         }
     } else {
-        return moment(fecha).startOf('day'); // Si la práctica es castración, desparasitación o consulta general, se le asigna la fecha ingresada
+        return moment(fecha).startOf('day'); // Si la práctica es castración, desparasitación, consulta general o urgencia, se le asigna la fecha ingresada
     }
 }
 

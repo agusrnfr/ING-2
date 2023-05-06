@@ -18,6 +18,7 @@
                                                 <option value="" disabled selected>Práctica</option>
                                                 <option value="Consulta general">Consulta general</option>
                                                 <option value="Desparasitacion">Desparasitación</option>
+                                                <option value="Urgencia">Urgencia</option>
                                                 <option value="Castracion">Castración</option>
                                                 <option value="Vacuna A">Vacuna A</option>
                                                 <option value="Vacuna B">Vacuna B</option>
@@ -93,13 +94,13 @@
                 btnEnviar.disabled = true;
             }
 
-            practicaSelect.addEventListener('change', function () { // si la práctica es consulta general o desparasitación, se muestra el campo de fecha
+            practicaSelect.addEventListener('change', function () { // si la práctica es consulta general, desparasitación, castracion o urgencia se muestra el campo de fecha
                 const fechaDiv = document.getElementById('div_fecha');
 
                 document.getElementById("edadInvalida").style.display = "none"; // se oculta el mensaje de edad inválida
                 document.getElementById("fecha_invalida").style.display = "none"; // se oculta el mensaje de fecha inválida
 
-                if (practicaSelect.value === 'Consulta general' || practicaSelect.value === 'Desparasitacion' || practicaSelect.value === 'Castracion') { // si la práctica es consulta general, desparasitación o castracion, se muestra el campo de fecha
+                if (practicaSelect.value === 'Consulta general' || practicaSelect.value === 'Desparasitacion' || practicaSelect.value === 'Castracion' || practicaSelect.value === 'Urgencia' ) { // si la práctica es consulta general, desparasitación, castracion o urgencia, se muestra el campo de fecha
                     fechaDiv.style.display = 'block';
                     document.getElementById("fecha").required = true;
                 } else { // si la práctica es vacuna, se oculta el campo de fecha ya que no es necesario
