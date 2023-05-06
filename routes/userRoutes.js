@@ -5,9 +5,10 @@ const { mostrarRegister, registrar , chequear_mail_duplicado } = require('../con
 const { mostrarTrabajadores } = require('../controllers/trabajadorController');
 const { mostrarIndex } = require('../controllers/indexController');
 const { comprobar_sesion , comprobar_sesion_admin } = require('../controllers/loginController');
-const { mostrarTodosLosTurnos, mostrarMisTurnos} = require('../controllers/turnosController');
+const { verificaciones, solicitarTurno, mostrarTodosLosTurnos, mostrarMisTurnos, cambiarEstadoTurno, guardarTurno} = require('../controllers/turnosController');
 const { mostrarAgregarMascota , registrarMascota } = require('../controllers/mascotasController');
 const { mostrarAdopciones , cambiarEstado } = require('../controllers/adopcionController');
+const { mostrarCliente } = require('../controllers/clienteController')
 
 //invocamos express
 const app = require('express').Router()
@@ -38,12 +39,19 @@ app.get('/adopciones',mostrarAdopciones)
 app.post('/adopcion/seAdopto',comprobar_sesion, cambiarEstado)
 
 //TURNOS
+app.get('/turnos', comprobar_sesion, solicitarTurno);
+app.post('/turnos', comprobar_sesion, verificaciones, guardarTurno);
 app.get('/turnos/listarTodosLosTurnos', comprobar_sesion_admin, mostrarTodosLosTurnos);
 app.get('/turnos/misTurnos',comprobar_sesion, mostrarMisTurnos);
+app.post('/turnos/listarTodosLosTurnos',comprobar_sesion_admin, cambiarEstadoTurno);
 
 //MASCOTAS
 app.get('/agregar_mascota/cliente/:id', mostrarAgregarMascota)
 app.post('/agregar_mascota/cliente/:id', registrarMascota)
+
+//VER CLIENTE
+app.get('/ver_cliente/:id', comprobar_sesion_admin, mostrarCliente)
+
 
 module.exports = app;
 

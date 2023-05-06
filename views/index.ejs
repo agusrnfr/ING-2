@@ -1,4 +1,4 @@
-<%- include ('header') %>
+<%- include ('header', {tituloweb: '¡Oh my dog!'}); %>
 <head>
     <meta name="description" content="Descripción de la página">
     <link rel="stylesheet" type="text/css" href="/public/css/main.css">
@@ -191,6 +191,9 @@
 <div>
     <a href="/turnos">Solicitar un turno</a>
 </div>
+<div>
+    <a href="/turnos/misTurnos">Listar mis turnos</a>
+</div>
 <% } %>
 
 
@@ -213,7 +216,7 @@
 <% } %>
 
 </p>
-      </div>
+ 
 </div>
     <%- include ('footer') %>
 </body>

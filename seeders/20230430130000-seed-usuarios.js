@@ -44,14 +44,22 @@ module.exports = {
       pass: '123456789',
       rol: 'cliente',
     }], {});
+    await queryInterface.bulkInsert('users', [{
+      mail: 'agusrojasmc@gmail.com',
+      name: 'Agustina Rojas',
+      tel: "2212212201",
+      DNI: "44444444",
+      pass: '123456789',
+      rol: 'cliente',
+    }], {});
     for (let i = 0; i < 5; i++) {
       let name = faker.name.firstName();
       let lastName = faker.name.lastName();
       await queryInterface.bulkInsert('users', [{
-        mail: name+lastName+"@gmail.com",
+        mail: name.toLowerCase()+lastName.toLowerCase()+"@gmail.com",
         name: name + " " + lastName,
-        tel: faker.random.number({ min: 2210000000, max: 2219999999 }),
-        DNI: faker.random.number({ min: 30000000, max: 50000000 }),
+        tel: faker.datatype.number({ min: 2210000000, max: 2219999999 }),
+        DNI: faker.datatype.number({ min: 30000000, max: 50000000 }),
         pass: '123456789',
         rol: 'cliente',
       }], {});
