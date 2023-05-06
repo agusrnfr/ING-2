@@ -7,7 +7,6 @@ const { mostrarIndex } = require('../controllers/indexController');
 const { comprobar_sesion , comprobar_sesion_admin } = require('../controllers/loginController');
 const { verificaciones, solicitarTurno, mostrarTodosLosTurnos, mostrarMisTurnos, cambiarEstadoTurno, guardarTurno} = require('../controllers/turnosController');
 const { mostrarAgregarMascota , registrarMascota } = require('../controllers/mascotasController');
-const { mostrarAdopciones , cambiarEstado } = require('../controllers/adopcionController');
 const { mostrarCliente } = require('../controllers/clienteController')
 const { mostrarAdopciones , esDuenio, cambiarEstado, mostrarPublicacion, guardarPublicacion } = require('../controllers/adopcionController');
 
