@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include ('header') %>
+</head>
+<!-- BODY -->
+
+<body id="body">
+  <br>
+  <div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-12 col-xl-7">
+        <div class="card text-black" style="border-radius: 25px;">
+          <div class="card-body p-md-5">
+            <div class="row justify-content-center">
+              <div class="col-md-10 col-lg-5 col-xl-6 order-2 order-lg-1">
+
+                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Realiza tu publicacion</p>
+                <form id= "myForm" action="/publicacion" method="POST">
+
+                  <div class="row mb-3">
+                       <label for="nombre">Nombre de la mascota:</label>
+                        <input type="text" name="nombre" id="nombre" placeholder="Escribe el nombre">
+          
+                        <label for="edad">Edad de la mascota:</label>
+                        <input type="number" name="edad" id="edad" placeholder="Escribe la edad, solo el num ">
+
+                        <label for="raza">Raza de la mascota:</label>
+                        <input type="text" name="raza" id="raza" placeholder="Escribe la raza ">
+
+                        <label for="color">Color de la mascota:</label>
+                        <input type="text" name="color" id="color" placeholder="Escribe el color ">
+
+                        <label for="sexo">Sexo de la mascota:</label>
+                        <input type="text" name="sexo" id="sexo" placeholder="Ej: Masculino / Femenino ">
+
+                        <label for="origen">Origen de la mascota:</label>
+                        <input type="text" name="origen" id="origen" placeholder="Ej: refugiado, encontrado">
+
+                        <label for="vacunas">Vacunas de la mascota:</label>
+                        <input type="text" name="vacunas" id="vacunas" placeholder="Escribe las vacunas">
+
+                        <label for="caracteristicas">Caracteristicas adicionales :</label>
+                        <input type="text" name="caracteristicas" id="caracteristicas" placeholder="Ej: cariñoso, temeroso">
+
+                  </div><button class="btn btn-primary d-block btn-user w-100" id="submitBtn"
+                    type="submit">Publicar</button>
+                  <hr>
+
+                </form>
+                <div class="text-center"><a class="small" href="/">Volver</a></div>
+              </div>
+              <div
+                class="col-md-10 col-lg-6 col-xl-6 d-flex align-items-center order-1 order-lg-2 justify-content-center">
+
+                <img src="/img/perro_taza.png" width="350px" class="img-fluid" alt="Sample image">
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+
+ <!-- Script que verifica que ningun campo quede en blanco-->
+ <script>
+  const form = document.getElementById('myForm');
+  
+  form.addEventListener('submit', (event) => {
+    const nombre = document.getElementById('nombre').value;
+    const edad = document.getElementById('edad').value;
+    const raza = document.getElementById('raza').value;
+    const color = document.getElementById('color').value;
+    const sexo = document.getElementById('sexo').value;
+    const origen = document.getElementById('origen').value;
+    const vacunas = document.getElementById('vacunas').value;
+    const caracteristicas = document.getElementById('caracteristicas').value;
+  
+    if (!nombre || !edad || !raza || !color || !sexo || !origen || !vacunas || !caracteristicas  ) {
+      event.preventDefault(); // Evita que se envíe el formulario
+      alert('Por favor complete todos los campos solicitados.');
+    }
+  });
+  
+</script>
+</div>
+
+</body>
+
+</html>
+<%- include ('sweet-alert') %>
+
+  </body>
+
+  </html>
