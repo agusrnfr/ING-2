@@ -9,7 +9,7 @@ const mostrarAdopciones = async (req, res) => {
       if(data.length === 0) {
         res.send('No hay publicaciones cargadas.')
       } else {
-        res.render('adopciones', { data , esDuenio , session: session})
+        res.render('adopciones', { data , esDuenio })
       }
     } catch (error) {
       console.error(error)
