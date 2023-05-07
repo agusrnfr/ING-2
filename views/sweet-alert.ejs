@@ -7,6 +7,8 @@
             icon: '<%= alertIcon %>',
             timer: <%= timer %>,
             showConfirmButton: <%= showConfirmButton %>,
+            confirmButtonColor: '#b8dbe0',
+            cancelButtonColor: '#f4945c',
             }).then(() => {
                 <% if (typeof ruta !== 'undefined') { %>
                     window.location = '/<%= ruta %>';

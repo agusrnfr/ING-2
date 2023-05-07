@@ -1,7 +1,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-<%- include ('header') %>
+<%- include ('header', {tituloweb: '¡Oh my dog! | Turnos'}); %>
     </head>
     <!-- BODY -->
 
@@ -23,7 +23,7 @@
                         <% if (!data.length==0) { %>
                             <% data.forEach(turno=> {
                                 const fechaCorta = turno.fecha.toLocaleDateString("es-ES", {day: "2-digit",
-                                month:"2-digit", year: "2-digit"});
+                                month:"2-digit", year:"numeric"});
                                 const estado = turno.estado.toLowerCase();
                                 const cellClass = estado === "aceptado" ? "alert-success" : estado === "rechazado" ?
                                 "alert-danger" : "alert-info";
@@ -84,9 +84,9 @@
                     searching: false, // deshabilita la función de búsqueda
                     language: {
                         paginate: { previous: 'Anterior', next: 'Siguiente', },
-                        zeroRecords: 'No tiene turnos solicitado',
+                        zeroRecords: 'No tiene turnos solicitados',
                         info: 'Mostrando pagina _PAGE_ de _PAGES_',
-                        infoEmpty: 'No tiene turnos solicitado',
+                        infoEmpty: 'No tiene turnos solicitados',
                         lengthMenu: 'Mostrar _MENU_ entradas'
                     },
                 });
