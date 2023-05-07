@@ -13,53 +13,57 @@ const verificaciones = async (req, res, next) => { // Verifica que los datos ing
         const mascotasCliente = await buscarMascotasCliente(session.usuario.id);
         const mascotaSeleccionada = mascotasCliente.find(m => m.id == id);
         if (!mascotaSeleccionada) { // Verifica que la mascota exista y pertenezca al usuario
-            return res.status(400).json('La mascota seleccionada no existe o no pertenece al usuario logueado');
+            return res.redirect(`/turnos/turnoGuardado?success=false&status=400&mensaje=${encodeURIComponent('La mascota seleccionada no existe o no pertenece al usuario logueado')}`);
         }
     } catch (error) {
         console.log(error);
-        res.status(500).json('Error al buscar las mascotas del usuario: ' + error);
+        return res.redirect(`/turnos/turnoGuardado?success=false&status=500&mensaje=${encodeURIComponent('Error al buscar las mascotas del usuario')}`);
     }
 
     if (practica == 'Castracion' || practica == 'Desparasitacion' || practica == 'Consulta general' || practica == 'Urgencia') { // Verifica que la fechea sea validad
 
         if (!fecha_turno || !moment(fecha_turno).isValid()) { //Verifica que la fecha sea válida
-            return res.status(400).json('La fecha de turno no es válida');
+            return res.redirect(`/turnos/turnoGuardado?success=false&status=400&mensaje=${encodeURIComponent('La fecha de turno no es válida')}`);
         }
 
         fecha_turno = moment(fecha_turno).startOf('day'); // Establece la fecha al inicio del día
         let dia = fecha_turno.day();
 
         if (!practica || !mascota || !banda_horaria) { // Verifica que no haya campos vacíos
-            return res.status(400).json('No se puede solicitar turno con campos vacíos');
+            return res.redirect(`/turnos/turnoGuardado?success=false&status=400&mensaje=${encodeURIComponent('No se puede solicitar turno con campos vacíos')}`);
+
         }
 
         if (dia === 6 && banda_horaria.toLowerCase() === 'tarde' || dia === 0) { // Verifica que no se solicite turno para los sábados o domingos
-            return res.status(404).json('No se puede solicitar turno para las tardes de los sábados o los domingos');
+            return res.redirect(`/turnos/turnoGuardado?success=false&status=400&mensaje=${encodeURIComponent('No se puede solicitar turno para las tardes de los sábados o los domingos')}`);
+
         }
 
         if (fecha_turno.isBefore(moment().startOf('day').add(1, 'day'))) { // Verifica que no se solicite turno para una fecha anterior o igual a la actual
-            return res.status(400).json('No se puede solicitar turno para una fecha anterior a la actual');
+            return res.redirect(`/turnos/turnoGuardado?success=false&status=400&mensaje=${encodeURIComponent('No se puede solicitar turno para una fecha anterior o igual a la actual')}`);
         }
 
         if (fecha_turno.isAfter(moment().startOf('day').add(2, 'years'))) { // Verifica que no se solicite turno para una fecha muy lejana
-            return res.status(400).json('No se puede solicitar turno para una fecha muy lejana');
+            return res.redirect(`/turnos/turnoGuardado?success=false&status=400&mensaje=${encodeURIComponent('No se puede solicitar turno para una fecha muy lejana')}`);
         }
 
         if (practica == 'Castracion') {
             if (calcularEdadMasco(fechaNacimiento) < 6) { // Verifica que la mascota tenga al menos 6 meses
-                return res.status(400).json('La mascota debe tener al menos 6 meses para solicitar la castración');
+                return res.redirect(`/turnos/turnoGuardado?success=false&status=400&mensaje=${encodeURIComponent('La mascota debe tener al menos 6 meses para solicitar la castración')}`);
+
             }
         }
     }
     if (practica == 'Vacuna A') {
         if (calcularEdadMasco(fechaNacimiento) < 2) { // Verifica que la mascota tenga al menos 2 meses}
-            console.log(calcularEdadMasco(fechaNacimiento))
-            return res.status(400).json('La mascota debe tener al menos 2 meses para solicitar la vacuna A');
+            return res.redirect(`/turnos/turnoGuardado?success=false&status=400&mensaje=${encodeURIComponent('La mascota debe tener al menos 2 meses para solicitar la vacuna A')}`);
+
         }
     }
     if (practica == 'Vacuna B') {
         if (calcularEdadMasco(fechaNacimiento) < 4) { // Verifica que la mascota tenga al menos 4 meses
-            return res.status(400).json('La mascota debe tener al menos 4 meses para solicitar la vacuna B');
+            return res.redirect(`/turnos/turnoGuardado?success=false&status=400&mensaje=${encodeURIComponent('La mascota debe tener al menos 4 meses para solicitar la vacuna B')}`);
+
         }
     }
     next(); //si pasa todas las verificaciones, pasa al siguiente middleware
@@ -154,13 +158,13 @@ const guardarTurno = async (req, res) => { // Si se guardó correctamente el tur
     try {
         const turnoCreado = await crearTurnoBD(fecha_turno, banda_horaria, practica, UserId, mascotaObj);
         if (turnoCreado) {
-            res.redirect('/turnos/turnoGuardado?success=true');
+            res.redirect(`/turnos/turnoGuardado?success=true&status=200&mensaje=${encodeURIComponent('Su solicitud ha sido registrada, puede verificarla en su listado de turnos')}`);
         } else {
-            res.redirect('/turnos/turnoGuardado?success=false');
+            res.redirect(`/turnos/turnoGuardado?success=false&status=500&mensaje=${encodeURIComponent('Error al guardar el turno, por favor reingrese los datos')}`);
         }
     } catch (error) {
         console.log(error);
-        res.status(500).json('Error al guardar el turno: ' + error);
+        res.redirect(`/turnos/turnoGuardado?success=false&status=500&mensaje=${encodeURIComponent('Error al guardar el turno, por favor reingrese los datos')}`);
     }
 };
 
@@ -250,26 +254,29 @@ const cambiarEstadoTurno = async (req, res) => { // Cambia el estado del turno y
 
 const turnoGuardado = async (req, res) => { // Muestra la alerta de que se guardó correctamente el turno o que hubo un error
     const success = req.query.success;
+    const mensajeDecodificado = decodeURIComponent(req.query.mensaje);
+    const status = Number(req.query.status);
     const UserId = session.usuario.id;
+
     try {
         const mascotas = await buscarMascotasCliente(UserId);
         if (success == 'true') {
-            res.render('solicitar_turno.ejs', {
+            res.status(status).render('solicitar_turno.ejs', {
                 mascotas,
                 alert: true,
                 alertTitle: "Solicitud exitosa",
-                alertMessage: "Su solicitud ha sido registrada, puede verificarla en su listado de turnos",
+                alertMessage: mensajeDecodificado,
                 alertIcon: "success",
                 showConfirmButton: true,
                 timer: 1500,
             });
         }
         else if (success == 'false') {
-            res.status(500).render('solicitar_turno.ejs', {
+            res.status(status).render('solicitar_turno.ejs', {
                 mascotas,
                 alert: true,
                 alertTitle: "Error",
-                alertMessage: "Error al guardar el turno, por favor reingrese los datos",
+                alertMessage: mensajeDecodificado,
                 alertIcon: "error",
                 showConfirmButton: true,
                 timer: false,
@@ -278,7 +285,15 @@ const turnoGuardado = async (req, res) => { // Muestra la alerta de que se guard
     }
     catch (error) { // ERROR AL BUSCAR LAS MASCOTAS DEL CLIENTE
         console.log(error);
-        res.status(500).json('Error al devolver los resultados: ' + error);
+        res.status(500).render('solicitar_turno.ejs', {
+            mascotas: null,
+            alert: true,
+            alertTitle: "Error",
+            alertMessage: mensajeDecodificado,
+            alertIcon: "error",
+            showConfirmButton: true,
+            timer: false,
+        });
     }
 }
 
