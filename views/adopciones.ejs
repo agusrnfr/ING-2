@@ -11,10 +11,11 @@
 
 <br>
 
-
+<% if (typeof session.usuario !== 'undefined' && (session.loggedin === true)) { %>
   <div class="container text-end">
     <a href="/publicacion" class="btn btn-primary">Publicar Adopción</a>
   </div>
+  <% } %>
 
 
   <div class="row" style="margin: 30px;">
