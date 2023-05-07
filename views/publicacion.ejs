@@ -20,29 +20,38 @@
                 <form id= "myForm" action="/publicacion" method="POST">
 
                   <div class="row mb-3">
-                       <label for="nombre">Nombre de la mascota:</label>
-                        <input type="text" name="nombre" id="nombre" placeholder="Escribe el nombre">
-          
+
+                        <label for="nombre">Nombre de la mascota:</label>
+                        <div class="mb-3"><input class="form-control form-control-user" type="text" name="nombre" id="nombre"
+                        placeholder="Escribe el nombre" required=""></div>
+
                         <label for="edad">Edad de la mascota:</label>
-                        <input type="number" name="edad" id="edad" placeholder="Escribe la edad, solo el num ">
+                        <div class="mb-3"><input class="form-control form-control-user" type="number" name="edad" id="edad"
+                          placeholder="Escribe la edad, solo el num" required=""></div>
 
                         <label for="raza">Raza de la mascota:</label>
-                        <input type="text" name="raza" id="raza" placeholder="Escribe la raza ">
+                        <div class="mb-3"><input class="form-control form-control-user" type="text" name="raza" id="raza"
+                          placeholder="Escribe la raza" required=""></div>
 
                         <label for="color">Color de la mascota:</label>
-                        <input type="text" name="color" id="color" placeholder="Escribe el color ">
+                        <div class="mb-3"><input class="form-control form-control-user" type="text" name="color" id="color"
+                          placeholder="Escribe el color" required=""></div>
 
                         <label for="sexo">Sexo de la mascota:</label>
-                        <input type="text" name="sexo" id="sexo" placeholder="Ej: Masculino / Femenino ">
+                        <div class="mb-3"><input class="form-control form-control-user" type="text" name="sexo" id="sexo"
+                          placeholder="Ej: Masculino / Femenino" required=""></div>
 
                         <label for="origen">Origen de la mascota:</label>
-                        <input type="text" name="origen" id="origen" placeholder="Ej: refugiado, encontrado">
+                        <div class="mb-3"><input class="form-control form-control-user" type="text" name="origen" id="origen"
+                          placeholder="Ej: refugiado, encontrado" required=""></div>
 
                         <label for="vacunas">Vacunas de la mascota:</label>
-                        <input type="text" name="vacunas" id="vacunas" placeholder="Escribe las vacunas">
+                        <div class="mb-3"><input class="form-control form-control-user" type="text" name="vacunas" id="vacunass"
+                          placeholder="Escribe lsa vacunas" required=""></div>
 
                         <label for="caracteristicas">Caracteristicas adicionales :</label>
-                        <input type="text" name="caracteristicas" id="caracteristicas" placeholder="Ej: cariñoso, temeroso">
+                        <div class="mb-3"><input class="form-control form-control-user" type="text" name="caracteristicas" id="caracteristicas"
+                          placeholder="Escribe el nombre" required=""></div>
 
                   </div><button class="btn btn-primary d-block btn-user w-100" id="submitBtn"
                     type="submit">Publicar</button>
