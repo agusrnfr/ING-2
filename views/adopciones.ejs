@@ -26,11 +26,11 @@
             <div class="card-body">
               <h5 class="card-title d-flex justify-content-between align-items-center">
                 <%= adopcion.nombre %> 
-                <% if (esDuenio) { %>
-                <a href="#" id= "adopto <%= adopcion.id %>" class="btn btn-primary mx-2" onclick= "cambiarEstado(this, '<%= adopcion.id %>', '<%= adopcion.se_adopto ? true : false %>')">
-                  <%= adopcion.se_adopto ? 'Fue Adoptado' : 'No Adoptado' %>
-                </a>
-                <% } %>
+
+                  <!-- <a href="#" id="adopto <%= adopcion.id %>" class="btn btn-primary mx-2" onclick="cambiarEstado(this, '<%= adopcion.id %>', '<%= adopcion.se_adopto ? true : false %>')">
+                    <%= adopcion.se_adopto ? 'Fue Adoptado' : 'Adoptado' %>
+                  </a> -->
+
               </h5>
             <p class="card-text"> Edad : <%= adopcion.edad %> meses</p>
             <p class="card-text">Raza: <%= adopcion.raza %></p>
@@ -39,6 +39,8 @@
             <p class="card-text">Origen: <%= adopcion.origen %></p>
             <p class="card-text">Vacunas: <%= adopcion.vacunas %></p>
             <p class="card-text">Caracteristicas : <%= adopcion.caracteristicas %></p>
+
+
             <% if (!esDuenio) { %>
               <a href="#" class="btn btn-primary">Contactar</a>
             <% } %>
@@ -75,6 +77,24 @@
     console.log('Respuesta del servidor:', data);
   }
 </script>
+
+<script>
+  $(document).ready(function() {
+    // Obtener el ID de la publicación
+    const adopcionId = '<%= adopcionId %>';
+  
+    // Hacer una solicitud AJAX a la ruta /adopcion/:id/seAdopto
+    $.get(`/adopcion/${adopcionId}/seAdopto`, function(result) {
+      if (result) {
+        // El usuario es el dueño de la publicación, mostrar el botón
+        $('#adopto<%= adopcionId %>').show();
+      } else {
+        // El usuario no es el dueño de la publicación, ocultar el botón
+        $('#adopto<%= adopcionId %>').hide();
+      }
+    });
+  });
+  </script>
 
 </body>
 

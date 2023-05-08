@@ -26,7 +26,7 @@ Adopcion.init({
     },
     caracteristicas: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     mail: {
         type: DataTypes.STRING,

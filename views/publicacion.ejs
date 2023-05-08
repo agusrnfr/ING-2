@@ -51,7 +51,7 @@
 
                         <label for="caracteristicas">Caracteristicas adicionales :</label>
                         <div class="mb-3"><input class="form-control form-control-user" type="text" name="caracteristicas" id="caracteristicas"
-                          placeholder="Escribe el nombre" required=""></div>
+                          placeholder="Escribe el nombre"></div>
 
                   </div><button class="btn btn-primary d-block btn-user w-100" id="submitBtn"
                     type="submit">Publicar</button>
@@ -88,9 +88,8 @@
     const sexo = document.getElementById('sexo').value;
     const origen = document.getElementById('origen').value;
     const vacunas = document.getElementById('vacunas').value;
-    const caracteristicas = document.getElementById('caracteristicas').value;
   
-    if (!nombre || !edad || !raza || !color || !sexo || !origen || !vacunas || !caracteristicas  ) {
+    if (!nombre || !edad || !raza || !color || !sexo || !origen || !vacunas  ) {
       event.preventDefault(); // Evita que se envíe el formulario
       alert('Por favor complete todos los campos solicitados.');
     }
