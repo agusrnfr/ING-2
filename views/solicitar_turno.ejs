@@ -9,18 +9,36 @@
                     <div class="card text-black" style="border-radius: 25px;">
                         <div class="card-body p-md-4">
                             <div class="row justify-content-center">
-                                <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-3">Solicitar turno <i class="bi bi-calendar-check"></i></p>
+                                <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-3">Solicitar turno <i
+                                        class="bi bi-calendar-check"></i></p>
                                 <form method="POST" action="/turnos">
                                     <div class="row mb-3">
                                         <div class="mb-3">
+                                            <select class="form-select" name="practica" id="practica" required="">
+                                                <option value="" disabled selected>Práctica</option>
+                                                <option value="Consulta general">Consulta general</option>
+                                                <option value="Desparasitacion">Desparasitación</option>
+                                                <option value="Urgencia">Urgencia</option>
+                                                <option value="Castracion">Castración</option>
+                                                <option value="Vacuna A">Vacuna A</option>
+                                                <option value="Vacuna B">Vacuna B</option>
+                                            </select>
+                                        </div>
+                                        <div class="alert alert-danger mb-3 text-center" role="alert" id="edadInvalida"
+                                            style="display:none;">
+                                            <p class="text-danger m-0" id="textoEdadInvalida"></p>
+                                        </div>
+                                        <div class="mb-3" id="div_fecha" style="display: none;">
                                             <label class="b"> Fecha de atencion </label>
-                                            <% let fechaMinima=new Date().toISOString().split("T")[0]; let
-                                                fechaMaxima=new Date();
+                                            <%  let fechaMinima=new Date(); 
+                                                fechaMinima.setDate(fechaMinima.getDate() + 1); 
+                                                fechaMinima=fechaMinima.toISOString().split("T")[0]; 
+                                                let fechaMaxima=new Date();
                                                 fechaMaxima.setFullYear(fechaMaxima.getFullYear() + 2);
                                                 fechaMaxima=fechaMaxima.toISOString().split("T")[0]; %>
-                                                <input class="form-control form-control-user" type="date"
-                                                    name="fecha_turno" min="<%= fechaMinima %>" max="<%= fechaMaxima %>"
-                                                    required="">
+                                                <input class="form-control form-control-user" type="date" id="fecha"
+                                                    name="fecha_turno" min="<%= fechaMinima %>"
+                                                    max="<%= fechaMaxima %>">
                                         </div>
                                         <div class="mb-3">
                                             <select class="form-select" name="banda_horaria" required="">
@@ -36,32 +54,26 @@
                                                 de 15 a 20hs. Sábados de 8 a 13hs. </p>
                                         </div>
                                         <div class="mb-3">
-                                            <select class="form-select" name="practica" required="">
-                                                <option value="" disabled selected>Práctica</option>
-                                                <option value="Consulta general">Consulta general</option>
-                                                <option value="Desparasitacion">Desparasitación</option>
-                                                <option value="Castracion" disabled>Castración</option>
-                                                <option value="Vacuna A" disabled>Vacuna A</option>
-                                                <option value="Vacuna B" disabled>Vacuna B</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
                                             <% if (mascotas.length> 0) { %>
                                                 <select id="mascota" class="form-select" name="mascota" required="">
                                                     <option value="" disabled selected>Mascota</option>
-                                                    <% mascotas.forEach(function(mascota) { %>
-                                                        <option value="<%= mascota.id %>">
+                                                    <% mascotas.forEach(function(mascota) { let
+                                                        fechaCorta=mascota.fecha_nacimiento.toLocaleDateString("es-ES",
+                                                        {day: "2-digit" , month:"2-digit", year:"numeric"}); %>
+                                                        <option value="<%= mascota.id %>-<%= fechaCorta %>">
                                                             <%= mascota.nombre %>
                                                         </option>
                                                         <% }); %>
                                                 </select>
                                                 <% } else { %>
-                                                    <p>No tenes mascotas registradas.</p>
+                                                    <div class="alert alert-danger mb-3 text-center" role="alert">
+                                                        <p class="text-danger m-0">No tiene mascotas registradas. </p>
+                                                    </div>
                                                     <% } %>
                                         </div>
                                         <div class="mb-3">
-                                                <button class="btn btn-primary d-block btn-user w-100"
-                                                    name="enviar_turno" type="submit" id="enviar_turno">Enviar turno</button>
+                                            <button class="btn btn-primary d-block btn-user w-100" name="enviar_turno"
+                                                type="submit" id="enviar_turno">Enviar turno</button>
                                         </div>
                                     </div>
                                     <hr>
@@ -73,39 +85,96 @@
                 </div>
             </div>
         </div>
-            <script>
-                let mascotas = "<%= mascotas %>";
-                let fecha_turno = document.getElementsByName("fecha_turno");
-                let btnEnviar = document.getElementById("enviar_turno");
+        <script>
+            const mascotas = "<%= mascotas %>";
+            const btnEnviar = document.getElementById("enviar_turno");
+            const practicaSelect = document.getElementById('practica');
 
-                if (mascotas.length == 0) {
-                    btnEnviar.disabled = true;
+            if (mascotas.length == 0) { // si no tiene mascotas registradas no puede solicitar un turno
+                btnEnviar.disabled = true;
+            }
+
+            practicaSelect.addEventListener('change', function () { // si la práctica es consulta general, desparasitación, castracion o urgencia se muestra el campo de fecha
+                const fechaDiv = document.getElementById('div_fecha');
+
+                document.getElementById("edadInvalida").style.display = "none"; // se oculta el mensaje de edad inválida
+                document.getElementById("fecha_invalida").style.display = "none"; // se oculta el mensaje de fecha inválida
+
+                if (practicaSelect.value === 'Consulta general' || practicaSelect.value === 'Desparasitacion' || practicaSelect.value === 'Castracion' || practicaSelect.value === 'Urgencia' ) { // si la práctica es consulta general, desparasitación, castracion o urgencia, se muestra el campo de fecha
+                    fechaDiv.style.display = 'block';
+                    document.getElementById("fecha").required = true;
+                } else { // si la práctica es vacuna, se oculta el campo de fecha ya que no es necesario
+                    fechaDiv.style.display = 'none';
+                    document.getElementById("fecha").required = false;
                 }
+            });
 
-                function fechaInvalida() {
-                    let fecha_turno = document.getElementsByName("fecha_turno")[0].value;
-                    let banda_horaria = document.getElementsByName("banda_horaria")[0].value.toLowerCase();
-                    let dia_semana = new Date(fecha_turno).getDay(); // 0 para Domingo, 1 para Lunes, 2 para Martes, etc.
+            function fechaInvalida() { // valida que la fecha no sea sábado o domingo
+                const fecha_turno = document.getElementsByName("fecha_turno")[0].value;
+                const banda_horaria = document.getElementsByName("banda_horaria")[0].value.toLowerCase();
+                const fecha = new Date(`${fecha_turno}T00:00:00`);
+                const dia_semana = fecha.getUTCDay(); // 0 para Domingo, 1 para Lunes, 2 para Martes, etc.
+                const practica = document.getElementById("practica").value;
+                console.log(fecha_turno);
+                console.log(dia_semana);
 
-                    if (dia_semana == 6 || (dia_semana == 5 && banda_horaria == "tarde")) {
-                        document.getElementById("fecha_invalida").style.display = "block";
-                        return true; // la fecha es inválida
-                    }
-                    else {
-                        document.getElementById("fecha_invalida").style.display = "none";
-                        return false; // la fecha es válida
-                    }
+                if (practica == "Vacuna A" || practica == "Vacuna B") { // si la practica es una vacuna, no se toma en cuenta el día de la semana
+                    return false; // la fecha no se toma en cuenta
                 }
+                else if (dia_semana == 0 || (dia_semana == 6 && banda_horaria == "tarde")) { // si la fecha es domingo o sabado a la tarde, se muestra el mensaje de fecha inválida
+                    document.getElementById("fecha_invalida").style.display = "block";
+                    return true; // la fecha es inválida
+                }
+                else {
+                    document.getElementById("fecha_invalida").style.display = "none";
+                    return false; // la fecha es válida
+                }
+            }
+            function calcularEdad(fechaNacimiento) {
+                const fechaActual = new Date(); // fecha actual
+                const partesFecha = fechaNacimiento.split("/"); // partes de la fecha de nacimiento
+                const fecha = new Date(partesFecha[2], partesFecha[1] - 1, partesFecha[0]); // fecha de nacimiento en formato Date
+                const meses = (fechaActual.getFullYear() - fecha.getFullYear()) * 12 + fechaActual.getMonth() - fecha.getMonth(); // edad en meses
 
-                btnEnviar.onclick = function (event) {
-                    if (fechaInvalida()) {
-                        event.preventDefault(); // evita que se envíe el formulario
-                    } else if (mascotas.length == 0) {
-                        event.preventDefault(); // evita que se envíe el formulario
-                    }
-                };
+                return Math.floor(meses); // se redondea la edad en meses
+            }
 
-            </script>
+
+            function mascotaCumpleConEdad() {
+                const mascota = document.getElementById("mascota").value; // id-mascota-fecha
+                const partesMascota = mascota.split("-"); // partes de la mascota
+                const fechaNacimiento = partesMascota[1]; // fecha de nacimiento de la mascota
+                const edadMascotaEnMeses = calcularEdad(fechaNacimiento); // edad de la mascota en meses
+                const practica = document.getElementById("practica").value; // práctica seleccionada
+
+                if (practica == "Vacuna A" && edadMascotaEnMeses < 2) { // si la práctica es vacuna A y la mascota tiene menos de 2 meses, se muestra el mensaje de edad inválida
+                    document.getElementById("textoEdadInvalida").innerHTML = "La mascota debe tener al menos 2 meses para recibir esta vacuna.";
+                    document.getElementById("edadInvalida").style.display = "block";
+                    return false;
+                }
+                else if (practica == "Vacuna B" && edadMascotaEnMeses < 4) { // si la práctica es vacuna B y la mascota tiene menos de 4 meses, se muestra el mensaje de edad inválida
+                    document.getElementById("textoEdadInvalida").innerHTML = "La mascota debe tener al menos 4 meses para recibir esta vacuna.";
+                    document.getElementById("edadInvalida").style.display = "block";
+                    return false;
+                }
+                else if (practica == "Castracion" && edadMascotaEnMeses < 6) { // si la práctica es castración y la mascota tiene menos de 6 meses, se muestra el mensaje de edad inválida
+                    document.getElementById("textoEdadInvalida").innerHTML = "La mascota debe tener al menos 6 meses para realizar esta práctica.";
+                    document.getElementById("edadInvalida").style.display = "block";
+                    return false;
+                }
+                else { // si la práctica es consulta general o desparasitación, o la mascota cumple con la edad, no se muestra el mensaje de edad inválida
+                    document.getElementById("edadInvalida").style.display = "none";
+                    return true;
+                }
+            }
+
+            btnEnviar.onclick = function (event) { // si la fecha es inválida o la mascota no cumple con la edad, no se envía el turno
+                if (fechaInvalida() || !mascotaCumpleConEdad() || mascotas.length == 0) {
+                    event.preventDefault(); // se cancela el envío del formulario
+                }
+            };
+
+        </script>
 
     </body>
     <%- include ('sweet-alert') %>

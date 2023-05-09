@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adopcion a ciegas</title>
-    <%- include ('header') %>
+    <%- include ('header', {tituloweb: '¡Oh my dog! | Adopciones'}); %>
 </head>
 <body id="body">
 
@@ -61,8 +61,8 @@
     </div>
  </div>
 
+ <div class="text-center"><a class="small" href="/table">Volver</a></div>
 
-<%- include ('footer') %>
 
 <script>
   async function cambiarEstado(boton, adopcionId, seAdopto) {

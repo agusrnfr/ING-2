@@ -15,7 +15,7 @@ module.exports = {
     await queryInterface.bulkInsert('users', [{
       mail: 'pedro@gmail.com',
       name: 'Pedro Perez',
-      tel: "21160322267",
+      tel: "2116032267",
       DNI: "31227109",
       pass: '123',
       rol: 'admin',
@@ -49,6 +49,14 @@ module.exports = {
       name: 'Agustina Rojas',
       tel: "2212212201",
       DNI: "44444444",
+      pass: '123456789',
+      rol: 'cliente',
+    }], {});
+    await queryInterface.bulkInsert('users', [{
+      mail: 'cordgoode@gmail.com',
+      name: 'Cordelia Goode',
+      tel: "2212172211",
+      DNI: "44542424",
       pass: '123456789',
       rol: 'cliente',
     }], {});
