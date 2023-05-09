@@ -24,12 +24,15 @@
         
             <div class="card" style="width: 17rem;margin: 7px ; margin-bottom: 0;;">
             <div class="card-body">
-              <h5 class="card-title d-flex justify-content-between align-items-center">
-                <%= adopcion.nombre %> 
 
-                  <!-- <a href="#" id="adopto <%= adopcion.id %>" class="btn btn-primary mx-2" onclick="cambiarEstado(this, '<%= adopcion.id %>', '<%= adopcion.se_adopto ? true : false %>')">
-                    <%= adopcion.se_adopto ? 'Fue Adoptado' : 'Adoptado' %>
-                  </a> -->
+              <% if (session.usuario && session.usuario.id === adopcion.UserId) { %>
+                <a href="#" id="adopto <%= adopcion.id %>" class="btn btn-primary mx-2" onclick="cambiarEstado(this, '<%= adopcion.id %>', '<%= adopcion.se_adopto ? true : false %>')">
+                  <%= adopcion.se_adopto ? 'Adoptado' : 'Cambiar Estado' %>
+                </a> <% } %> 
+                <br>
+
+              <h5 class="card-title d-flex justify-content-between align-items-center">
+                <%= adopcion.nombre %> <span class="emoji">&#x1F43E;</span>
 
               </h5>
             <p class="card-text"> Edad : <%= adopcion.edad %> meses</p>
@@ -39,14 +42,23 @@
             <p class="card-text">Origen: <%= adopcion.origen %></p>
             <p class="card-text">Vacunas: <%= adopcion.vacunas %></p>
             <p class="card-text">Caracteristicas : <%= adopcion.caracteristicas %></p>
+            <p class="card-text">
+              <%= adopcion.se_adopto ? "Adoptado" : " Por adoptar " %>
+            </p>
 
-
-            <% if (!esDuenio) { %>
-              <a href="#" class="btn btn-primary">Contactar</a>
+            <% if (!session.usuario || (session.usuario && session.usuario.id !== adopcion.UserId)) { %>
+              <% if (!adopcion.se_adopto) { %>
+                <a href="#" class="btn btn-primary">Contactar</a>
+              <% } %>
             <% } %>
+
+          </div>
             </div>
-            </div>
-      <% }); %> 
+
+      <% }) %> 
+
+      <div class="text-center"><a class="small" href="/">Volver</a></div>
+    </div>
  </div>
 
 
@@ -60,7 +72,7 @@
     
     console.log(nuevoEstado);
     
-    boton.innerHTML = nuevoEstado ? 'Fue Adoptado' : 'No Adoptado';
+    boton.innerHTML = nuevoEstado ? 'Cambiar Estado' : 'Adoptado';
     boton.disabled = true; // Deshabilita el botón para que no se pueda hacer clic nuevamente
     
     console.log(boton);
@@ -77,24 +89,6 @@
     console.log('Respuesta del servidor:', data);
   }
 </script>
-
-<script>
-  $(document).ready(function() {
-    // Obtener el ID de la publicación
-    const adopcionId = '<%= adopcionId %>';
-  
-    // Hacer una solicitud AJAX a la ruta /adopcion/:id/seAdopto
-    $.get(`/adopcion/${adopcionId}/seAdopto`, function(result) {
-      if (result) {
-        // El usuario es el dueño de la publicación, mostrar el botón
-        $('#adopto<%= adopcionId %>').show();
-      } else {
-        // El usuario no es el dueño de la publicación, ocultar el botón
-        $('#adopto<%= adopcionId %>').hide();
-      }
-    });
-  });
-  </script>
 
 </body>
 

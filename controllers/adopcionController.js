@@ -4,50 +4,30 @@ const Adopcion = require('../db/models/adopcion.js');
 const session = require('express-session');
 
 const mostrarAdopciones = async (req, res) => {
-    try {
-      const data = await Adopcion.findAll()
-      const esDuenio = session.usuario && session.usuario.tipo === 'duenio';
+  try {
+    const data = await Adopcion.findAll()
+    let adopcionesOrdenadas = data.sort(compararPorEstado)
 
-      if(data.length === 0) {
-        res.send('No hay publicaciones de adopción disponibles.')
-      } else {
-        res.render('adopciones', { data , esDuenio , session: session , adopcionId: data[0].id})
-      }
-    } catch (error) {
-      console.error(error)
-      res.send('Hubo un error al cargar las publicaciones de adopción.')
+    if(adopcionesOrdenadas.length === 0) {
+      res.send('No hay publicaciones de adopción disponibles.')
+    } else {
+      res.render('adopciones', { data: adopcionesOrdenadas, session: session })
     }
-}
-
-
-//Devuelve si es el dueño de la publicacion
-const esDuenio = async (req, res) => {
-  const adopcionId = req.params.id;
-  const usuarioId = session.usuario.id; 
-
-  console.log('adopcionId:', adopcionId);
-  console.log('usuarioId:', usuarioId);
-  
-  const publicacion = await Adopcion.findOne({
-    where: {
-      id: adopcionId,
-      userid: usuarioId
-    }
-  });
-
-  if (publicacion) {
-    res.send(true); // El usuario es el dueño de la publicación
-  } else {
-    res.send(false); // El usuario no es el dueño de la publicación
+  } catch (error) {
+    console.error(error)
+    res.send('Hubo un error al cargar las publicaciones de adopción.')
   }
 }
 
-  const resultado = async (req, res) => {
-   const adopcion = await Adopcion.findByPk(req.params.id);
-   const esDuenio = req.esDuenio; // Obtener el valor de req.esDuenio
-   res.render('adopciones', { adopcion, esDuenio }); // Enviar resultados a la plantilla
-  };
-
+function compararPorEstado(a, b) {
+  if (a.se_adopto && !b.se_adopto) {
+    return 1;
+  } else if (!a.se_adopto && b.se_adopto) {
+    return -1;
+  } else {
+    return 0;
+  }
+}
 
 const cambiarEstado = async (req, res) => {
   const adopcionId = req.body.id;
@@ -148,10 +128,7 @@ const guardarPublicacion = async (req, res) => {
 
 module.exports = {
     mostrarAdopciones,
-    esDuenio,
     cambiarEstado,
     mostrarPublicacion,
     guardarPublicacion,
-    resultado,
-  
 }

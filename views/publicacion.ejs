@@ -27,7 +27,7 @@
 
                         <label for="edad">Edad de la mascota:</label>
                         <div class="mb-3"><input class="form-control form-control-user" type="number" name="edad" id="edad"
-                          placeholder="Escribe la edad, solo el num" required=""></div>
+                          placeholder="Escribe la edad, solo el num" required="" min="1" ></div>
 
                         <label for="raza">Raza de la mascota:</label>
                         <div class="mb-3"><input class="form-control form-control-user" type="text" name="raza" id="raza"
@@ -35,11 +35,16 @@
 
                         <label for="color">Color de la mascota:</label>
                         <div class="mb-3"><input class="form-control form-control-user" type="text" name="color" id="color"
-                          placeholder="Escribe el color" required=""></div>
+                          placeholder="Escribe el color" required="" ></div>
 
-                        <label for="sexo">Sexo de la mascota:</label>
-                        <div class="mb-3"><input class="form-control form-control-user" type="text" name="sexo" id="sexo"
-                          placeholder="Ej: Masculino / Femenino" required=""></div>
+                          <label for="sexo">Sexo de la mascota:</label>
+                          <div class="mb-3">
+                            <select class="form-control form-control-user" name="sexo" id="sexo" required="">
+                              <option value="">Elige un sexo</option>
+                              <option value="masculino">Macho</option>
+                              <option value="femenino">Hembra</option>
+                            </select>
+                          </div>
 
                         <label for="origen">Origen de la mascota:</label>
                         <div class="mb-3"><input class="form-control form-control-user" type="text" name="origen" id="origen"
@@ -49,9 +54,10 @@
                         <div class="mb-3"><input class="form-control form-control-user" type="text" name="vacunas" id="vacunass"
                           placeholder="Escribe lsa vacunas" required=""></div>
 
-                        <label for="caracteristicas">Caracteristicas adicionales :</label>
-                        <div class="mb-3"><input class="form-control form-control-user" type="text" name="caracteristicas" id="caracteristicas"
-                          placeholder="Escribe el nombre"></div>
+                          <label for="caracteristicas">Caracteristicas adicionales :</label>
+                          <div class="mb-3">
+                            <textarea class="form-control form-control-user" name="caracteristicas" id="caracteristicas" placeholder="Escribe las características" rows="5" cols="30"></textarea>
+                          </div>
 
                   </div><button class="btn btn-primary d-block btn-user w-100" id="submitBtn"
                     type="submit">Publicar</button>

@@ -131,9 +131,8 @@ h3 {
     align-items: center;
     background-image: url(../img/banner.png);
     background-repeat: no-repeat;
-    background-attachment: fixed;
     background-size: contain;
-    background-position: center 75px;
+    background-position: center 3px;
  
 }
 

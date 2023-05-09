@@ -5,8 +5,8 @@
   </head>
 
 <body id="body">
-    <section class="section-1 mb-5"> 
-       
+    <section class="section-1 mb-5">
+
     </section>
  <!-- SERVICIOS-->
 
@@ -21,7 +21,7 @@
         </div>
 
         <!-- Cuidadores-->
-
+<!-- 
         <div class="container text-center">
             <div class="row g-3">
                 <div class="col-12 col-md-6 col-lg-4">
@@ -36,24 +36,25 @@
                             <a href="#" class="btn btn-primary">Ver Más</a>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                  <!-- Adopcion-->
-                <div class="col-12 col-md-6 col-lg-4 text-center">
-                    <div class="card">
-                        <img src="../img/icons/adopcion2.png" class="card-img-top" alt="icon-adopcion">
-                        <div class="card-body">
-                            <h5 class="card-title">Adopcion a ciegas</h5>
-                        <p class="card-text">La adopción a ciegas es un servicio, donde su objetivo es crear conciencia acerca de la importancia de adoptar mascotas, 
-                            sin dejarnos llevar por la apariencia de los animales.
-                           <br> ¡Adoptar es dar una segunda oportunidad y cambiar una vida para siempre!"
-                            </p>
-                            <a href="/adopciones" class="btn btn-primary">Ver Más</a>
+                    <div class="col-12 col-md-6 col-lg-4 mx-auto my-3 d-flex justify-content-center align-items-center">
+                        <div class="card" style="width: 50rem;">
+                            <img src="../img/icons/adopcion2.png" class="card-img-top" alt="icon-adopcion">
+                            <div class="card-body">
+                                <h5 class="card-title">Adopcion a ciegas</h5>
+                                <p class="card-text">La adopción a ciegas es un servicio, donde su objetivo es crear conciencia acerca de la importancia de adoptar mascotas,
+                                    sin dejarnos llevar por la apariencia de los animales.
+                                   <br> ¡Adoptar es dar una segunda oportunidad y cambiar una vida para siempre!"
+                                </p>
+                                <a href="/adopciones" class="btn btn-primary">Ver Más</a>
+                            </div>
                         </div>
                     </div>
                 </div>
                  <!-- Perdida-->
-                <div class="col-12 col-md-6 col-lg-4 text-center">
+                <!-- <div class="col-12 col-md-6 col-lg-4 text-center">
                     <div class="card">
                         <img src="../img/icons/perdida2.png" class="card-img-top" alt="icon-perdida">
                         <div class="card-body">
@@ -69,14 +70,14 @@
                 </div>
             </div>
         </div>
-    
-    
-        <br><br><br><br>
+ -->
+
+        <br><br>
     </div>
 
 </section>
 
-<br><br>
+
 
 
 <!-- IMAGEN DEL MEDIO-->
@@ -87,11 +88,11 @@
 
 
 </section>
-<br><br><br>
+<br><br>
 
 <!-- SECCION CAMPAÑAS-->
 
-
+<!-- 
 <div class="container">
     <div class="row g-3">
         <div class="col-12 col-md-6 col-lg-4">
@@ -128,7 +129,7 @@
                     <p class="card-text">Cati es una perrita de 5 meses, la cual fue adoptada a travez de nuestro servicio de adopcion a ciegas,
                          tuvo un accidente con un auto
                         y lamentablemente tuvo que ser internada de urgencia.
-                        <br> Lo cual requirio de medicamentos y se tiene que 
+                        <br> Lo cual requirio de medicamentos y se tiene que
                         realizar una operacion muy costosa!
                     </p>
                     <a href="#" class="btn btn-primary">Ver Más</a>
@@ -136,10 +137,10 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 
-<br><br><br><br>
+<br><br>
 <!-- Inicio sun -->
 
 <body id="body">
@@ -171,17 +172,17 @@
 
 <% } %>
 
-<div>
-    ________________ 
+ <div>
+    ________________
 </div>
 
 <div>
     <a href="/adopciones">Adopcion de perros</a>
 </div>
 
-<% if (typeof session.usuario !== 'undefined' && (session.loggedin === true)) { %>
+ <% if (typeof session.usuario !== 'undefined' && (session.loggedin === true)) { %>
 <div>
-    _______usuarios only_________ 
+    _______usuarios only_________
 </div>
 
 <div>
@@ -194,12 +195,12 @@
 <div>
     <a href="/turnos/misTurnos">Listar mis turnos</a>
 </div>
-<% } %>
+<% } %> 
 
 
 <% if (typeof session.usuario !== 'undefined' && (session.loggedin === true) &&(session.usuario.rol === 'admin')) { %>
 <div>
-    ________admin only__________ 
+    ________admin only__________
 </div>
 
 <div>
