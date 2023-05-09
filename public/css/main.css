@@ -1,0 +1,316 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+}
+
+
+/*=MENU=*/
+a {
+    color: black !important;
+    text-decoration: none !important;
+}
+header{
+
+    width: 100vw;
+    height: 100px;
+    background-color: #FFF;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 25%);
+    display: flex;
+    align-items: center;
+}
+
+header .container-fluid{
+
+    width: 100%;
+    padding: 0 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+@media(max-width:992px){
+
+    header .container-fluid{
+
+        padding: 0 5%;
+    }
+}
+
+header .navb-logo img{
+
+    width: 90px;
+    height: 50px;
+}
+
+header .navb-items{
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    letter-spacing: 3px;
+}
+
+header .item{
+
+    text-align: center;
+    margin-inline: 8%;
+    font-size: 18px;
+    letter-spacing: 3px;
+    color: #102447;
+    padding: 5px 0;
+    transition: all .1s ease;
+    border-bottom: 0px solid #f4945c;
+    border-top: 0px solid #f4945c;
+    cursor: pointer;
+}
+
+header .item:hover{
+
+    border-bottom: 3px solid #f4945c;
+    border-top: 3px solid #f4945c;
+}
+
+header .item-button a{
+
+    background-color: #4998b0;
+    width: 150px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    transition: all .5s ease;
+}
+
+header .item-button a:hover{
+
+    background-color: #f4945c;
+}
+
+header .mobile-toggler{
+
+    font-size: 30px;
+}
+
+h3 {
+    font-size: 2rem; /* Cambiar el tamaño del texto a 2.5 rem */
+  }
+
+
+.navb-button{
+
+    width: 100%;
+    height: 47px;
+    background-color: #fefefe;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 700;
+    color: #40639a;
+    letter-spacing: 2px;
+    transition: all .5s ease;
+}
+
+.navb-button:hover{
+
+    background-color: #f4945c;
+    color: #fefefe;
+}
+
+.section-1{
+
+    width: 100vw;
+    height: 35vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url(../img/banner.png);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: contain;
+    background-position: center 75px;
+ 
+}
+
+.section-1 p{
+
+    font-size: 60px;
+    font-weight: 700;
+    color: #161515;
+    width: 90%;
+    text-align: center;
+}
+
+@media(max-width:767px){
+
+    .section-1 p{
+
+        font-size: 50px;
+        text-align: start;
+        width: 70%;
+        margin: auto;
+    }
+}
+
+/* SECCION CARDS*/
+
+
+.card{
+
+    display: flex;
+    transition-duration: .6s;
+    clip-path: polygon(50% 0, 100% 0, 100% 50%, 100% 100%, 50% 100%, 0 100%, 0 50%, 0 0);
+    background-color: #b8dbe0 !important;
+
+}
+
+.card-img-top {
+    display: block;
+    margin: 0 auto;
+    max-width: 250px;
+    max-height: 250px;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+/* SECCION CARDS campaña*/
+
+.cardc{
+
+    display: flex;
+    transition-duration: .6s;
+    clip-path: polygon(50% 0, 100% 0, 100% 50%, 100% 100%, 50% 100%, 0 100%, 0 50%, 0 0);
+    background-color: #b8dbe0 !important;
+
+}
+
+
+.card-img-topc {
+    display: block;
+    margin: 0 auto;
+    max-width: 400px;
+    max-height: 300px;
+}
+
+
+/*SECCION foto medio*/
+
+.elemento-con-fondo {
+    position: relative;
+
+    height: 250px; /* altura del contenedor */
+    background-image: url(../img/perritos/varios.jpg);
+    background-position: center;
+    background-size: contain;
+  }
+  
+  .elemento-con-fondo::before {
+    content: 
+    "Los perros no son nuestra vida entera, pero hacen nuestra vida completa.";
+    white-space: pre-wrap;
+    position: absolute;
+    top: 7%; /* centrado vertical */
+    left: 50%; /* centrado horizontal */
+    transform: translate(-50%, -50%); /* centrado exacto */
+    color: rgb(26, 25, 25); /* color del texto */
+    font-size: 20px; /* tamaño de fuente del texto */
+    text-align: start; /* centrado horizontal del texto */
+  }
+
+
+.linear-white::after{
+    content: "",;
+    display: block;
+    width: 100%;
+    height: 10px;
+    background-color: #fff;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+}
+/*= Fondo Footer =*/
+.fondo-color{
+    background-color: #3b7385;
+}
+
+.social-media ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+footer {
+    display: flex;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+
+/*=MEDIA QUERIES PANTALLA ANCHA=*/
+
+@media (max-width:1200px){
+    #intro, #equipo {
+        width:90% !important;
+        margin:auto;
+    }
+
+    #local {
+        flex-wrap: wrap;
+        padding-top:30px;
+   }
+  
+
+}
+/*=MEDIA QUERIES PANTALLA SM=*/
+
+
+@media (max-width:768px) {
+
+    #intro, #equipo{
+        width:90% !important;
+        margin:auto;
+    }
+
+    #img-equipo{
+        max-height:20rem !important;
+        width:90%;
+    }
+       
+    #local {
+        flex-wrap: wrap;
+    }
+    .mapa img {
+        width:100%;
+        height:auto;
+    }
+   
+
+
+}
+/*=MEDIA QUERIES PANTALLA EXTRA-SM=*/
+
+@media (max-width: 576px) {
+    #servicios-fila-2 {
+        width:100% !important;
+    }
+    #servicios-fila-1 {
+        width:100% !important;
+    }
+
+    .icono-wrap{
+        flex-wrap:wrap !important;
+        justify-content: center !important;
+        text-align: center;
+    }
+}

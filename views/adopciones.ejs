@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adopcion a ciegas</title>
+    <%- include ('header', {tituloweb: '¡Oh my dog! | Adopciones'}); %>
+</head>
+<body id="body">
+
+<br>
+
+<% if (typeof session.usuario !== 'undefined' && (session.loggedin === true)) { %>
+  <div class="container text-end">
+    <a href="/publicacion" class="btn btn-primary">Publicar Adopción</a>
+  </div>
+  <% } %>
+
+
+  <div class="row" style="margin: 30px;">
+    <strong><p style="font-size: 20px;"> </p></strong>
+    <% data.forEach(adopcion => { %>
+        
+            <div class="card" style="width: 17rem;margin: 7px ; margin-bottom: 0;;">
+            <div class="card-body">
+              <h5 class="card-title d-flex justify-content-between align-items-center">
+                <%= adopcion.nombre %> 
+
+                  <!-- <a href="#" id="adopto <%= adopcion.id %>" class="btn btn-primary mx-2" onclick="cambiarEstado(this, '<%= adopcion.id %>', '<%= adopcion.se_adopto ? true : false %>')">
+                    <%= adopcion.se_adopto ? 'Fue Adoptado' : 'Adoptado' %>
+                  </a> -->
+
+              </h5>
+            <p class="card-text"> Edad : <%= adopcion.edad %> meses</p>
+            <p class="card-text">Raza: <%= adopcion.raza %></p>
+            <p class="card-text">Color: <%= adopcion.color %></p>
+            <p class="card-text">Sexo: <%= adopcion.sexo %></p>
+            <p class="card-text">Origen: <%= adopcion.origen %></p>
+            <p class="card-text">Vacunas: <%= adopcion.vacunas %></p>
+            <p class="card-text">Caracteristicas : <%= adopcion.caracteristicas %></p>
+
+
+            <% if (!esDuenio) { %>
+              <a href="#" class="btn btn-primary">Contactar</a>
+            <% } %>
+            </div>
+            </div>
+      <% }); %> 
+ </div>
+
+ <div class="text-center"><a class="small" href="/table">Volver</a></div>
+
+
+<script>
+  async function cambiarEstado(boton, adopcionId, seAdopto) {
+    console.log(seAdopto);
+    const url = '/adopcion/seAdopto';
+    const nuevoEstado = !JSON.parse(seAdopto); // Cambia el estado actual al nuevo estado
+    
+    console.log(nuevoEstado);
+    
+    boton.innerHTML = nuevoEstado ? 'Fue Adoptado' : 'No Adoptado';
+    boton.disabled = true; // Deshabilita el botón para que no se pueda hacer clic nuevamente
+    
+    console.log(boton);
+    //Envía la solicitud AJAX al servidor para actualizar el estado en la base de datos
+    const response = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify({ id: adopcionId, se_adopto: nuevoEstado }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const data = await response.json();
+    console.log(data);
+    console.log('Respuesta del servidor:', data);
+  }
+</script>
+
+<script>
+  $(document).ready(function() {
+    // Obtener el ID de la publicación
+    const adopcionId = '<%= adopcionId %>';
+  
+    // Hacer una solicitud AJAX a la ruta /adopcion/:id/seAdopto
+    $.get(`/adopcion/${adopcionId}/seAdopto`, function(result) {
+      if (result) {
+        // El usuario es el dueño de la publicación, mostrar el botón
+        $('#adopto<%= adopcionId %>').show();
+      } else {
+        // El usuario no es el dueño de la publicación, ocultar el botón
+        $('#adopto<%= adopcionId %>').hide();
+      }
+    });
+  });
+  </script>
+
+</body>
+
+</html>
+

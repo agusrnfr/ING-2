@@ -1,5 +1,9 @@
 const User = require('../db/models/user.js');
 
+/**
+ * Si se ingresa el nombre todo en mayuscula o de forma
+ * desprolija esto lo corrige, una mayuscula al comienzo de cada palabra
+ */
 function convertirNombre(nombre) {
     const palabras = nombre.toLowerCase().split(" ");
     for (let i = 0; i < palabras.length; i++) {
@@ -13,9 +17,7 @@ const mostrarRegister = (req,res) =>{
 }
 
 /**
- * 
  * Hace todas las validaciones del Back-End y se crea el user en la BD
- * 
  */
 const registrar = async (req, res) => {    
     const mail = req.body.mail.toLowerCase();
@@ -36,11 +38,6 @@ const registrar = async (req, res) => {
         console.error('Error al crear usuario,mail duplicado');
         return
     }
-    console.log(rol);
-    if(rol==='cliente')
-        rol='cliente';
-    else
-        rol='admin';
     User.create({
         mail:mail,
         name:name,
@@ -72,9 +69,7 @@ const registrar = async (req, res) => {
 }
 
 /**
- * 
  * Devuelve true si ya existe un usuario con ese mail
- * 
  */
 async function existe_duplicado(email) {
     const user = await User.findOne({
@@ -86,9 +81,7 @@ async function existe_duplicado(email) {
 }
 
 /**
- * 
  * valida en el Front-End que no haya un mail ya registrado
- * 
  */
 const chequear_mail_duplicado = async (req, res) => {
     const { email } = req.body;

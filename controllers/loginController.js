@@ -73,6 +73,11 @@ const comprobar_sesion = (req, res, next) => {
     }
 };
 
+/**
+ * MIDDLEWARE comprobar sesion admin:
+ * Comprueba que tenga una sesion iniciada
+ * de admin
+ */
 const comprobar_sesion_admin = (req, res, next) => {
     if (session.loggedin && session.usuario.rol === 'admin'){
         next();
