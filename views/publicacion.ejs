@@ -50,9 +50,14 @@
                         <div class="mb-3"><input class="form-control form-control-user" type="text" name="origen" id="origen"
                           placeholder="Ej: refugiado, encontrado" required=""></div>
 
-                        <label for="vacunas">Vacunas de la mascota:</label>
-                        <div class="mb-3"><input class="form-control form-control-user" type="text" name="vacunas" id="vacunass"
-                          placeholder="Escribe lsa vacunas" required=""></div>
+                          <label for="vacunas">¿La mascota está vacunada?</label>
+                          <div class="mb-3">
+                          <select class="form-control form-control-user" name="vacunas" id="vacunas" required="">
+                            <option value="">Elige una opcion</option>
+                            <option value="1">Sí</option>
+                            <option value="0">No</option>
+                          </select>
+                        </div>
 
                           <label for="caracteristicas">Caracteristicas adicionales :</label>
                           <div class="mb-3">

@@ -11,25 +11,27 @@
 
 <br>
 
-<% if (typeof session.usuario !== 'undefined' && (session.loggedin === true)) { %>
+<% if (session && session.usuario && session.loggedin) { %>
   <div class="container text-end">
     <a href="/publicacion" class="btn btn-primary">Publicar Adopción</a>
   </div>
-  <% } %>
+<% } %>
 
 
   <div class="row" style="margin: 30px;">
     <strong><p style="font-size: 20px;"> </p></strong>
+    <% if (!data.length==0) { %>
     <% data.forEach(adopcion => { %>
         
             <div class="card" style="width: 17rem;margin: 7px ; margin-bottom: 0;;">
             <div class="card-body">
 
+              <!-- Boton Cambiar Estado -->
               <% if (session.usuario && session.usuario.id === adopcion.UserId) { %>
-                <a href="#" id="adopto <%= adopcion.id %>" class="btn btn-primary mx-2" onclick="cambiarEstado(this, '<%= adopcion.id %>', '<%= adopcion.se_adopto ? true : false %>')">
+                <a href="#" id="adopto <%= adopcion.id %>" class="btn btn-primary mx-2 <% if (adopcion.se_adopto) { %> disabled <% } %>" onclick="cambiarEstado(this, '<%= adopcion.id %>', '<%= adopcion.se_adopto ? true : false %>')">
                   <%= adopcion.se_adopto ? 'Adoptado' : 'Cambiar Estado' %>
-                </a> <% } %> 
-                <br>
+                </a>
+              <% } %>
 
               <h5 class="card-title d-flex justify-content-between align-items-center">
                 <%= adopcion.nombre %> <span class="emoji">&#x1F43E;</span>
@@ -48,35 +50,37 @@
 
             <% if (!session.usuario || (session.usuario && session.usuario.id !== adopcion.UserId)) { %>
               <% if (!adopcion.se_adopto) { %>
-                <a href="#" class="btn btn-primary">Contactar</a>
+                <a href="/contactoAdoptante" class="btn btn-primary">Contactar</a>
               <% } %>
             <% } %>
 
           </div>
             </div>
+            <% }) %>
+            <% } else { %>
+              <p style="text-align: center;"> No hay publicaciones de adopción disponibles.</p>
+          <% } %>
 
-      <% }) %> 
-
-      <div class="text-center"><a class="small" href="/">Volver</a></div>
     </div>
  </div>
 
  <div class="text-center"><a class="small" href="/table">Volver</a></div>
 
+ <script>
+async function cambiarEstado(boton, adopcionId, seAdopto) {
+  console.log(seAdopto);
+  const url = '/adopcion/seAdopto';
+  const nuevoEstado = !JSON.parse(seAdopto); // Cambia el estado actual al nuevo estado
 
-<script>
-  async function cambiarEstado(boton, adopcionId, seAdopto) {
-    console.log(seAdopto);
-    const url = '/adopcion/seAdopto';
-    const nuevoEstado = !JSON.parse(seAdopto); // Cambia el estado actual al nuevo estado
-    
-    console.log(nuevoEstado);
-    
-    boton.innerHTML = nuevoEstado ? 'Cambiar Estado' : 'Adoptado';
-    boton.disabled = true; // Deshabilita el botón para que no se pueda hacer clic nuevamente
-    
-    console.log(boton);
-    //Envía la solicitud AJAX al servidor para actualizar el estado en la base de datos
+  console.log(nuevoEstado);
+
+  boton.innerHTML = nuevoEstado ? 'Adoptado' : 'Cambiar Estado';
+  boton.disabled = true; // Deshabilita el botón para que no se pueda hacer clic nuevamente
+
+  console.log(boton);
+
+  try {
+    // Envía la solicitud AJAX al servidor para actualizar el estado en la base de datos
     const response = await fetch(url, {
       method: 'POST',
       body: JSON.stringify({ id: adopcionId, se_adopto: nuevoEstado }),
@@ -84,12 +88,17 @@
         'Content-Type': 'application/json'
       }
     });
-    const data = await response.json();
-    console.log(data);
-    console.log('Respuesta del servidor:', data);
-  }
-</script>
 
+    const data = await response.json();
+    console.log('Respuesta del servidor:', data);
+
+  } catch (error) {
+    console.error('Error al realizar la solicitud:', error);
+  }
+}
+  </script>
+
+ <%- include ('sweet-alert') %>
 </body>
 
 </html>

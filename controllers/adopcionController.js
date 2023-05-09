@@ -5,19 +5,19 @@ const session = require('express-session');
 
 const mostrarAdopciones = async (req, res) => {
   try {
-    const data = await Adopcion.findAll()
-    let adopcionesOrdenadas = data.sort(compararPorEstado)
+     const data = await Adopcion.findAll();
+     let adopcionesOrdenadas = data.sort(compararPorEstado);
 
-    if(adopcionesOrdenadas.length === 0) {
-      res.send('No hay publicaciones de adopción disponibles.')
+    if (adopcionesOrdenadas.length === 0) {
+      res.render('adopciones', { data: adopcionesOrdenadas, session: session });
     } else {
-      res.render('adopciones', { data: adopcionesOrdenadas, session: session })
+      res.render('adopciones', { data: adopcionesOrdenadas, session: session });
     }
   } catch (error) {
-    console.error(error)
-    res.send('Hubo un error al cargar las publicaciones de adopción.')
+    console.error(error);
+    res.send('Hubo un error al cargar las publicaciones de adopción.');
   }
-}
+};
 
 function compararPorEstado(a, b) {
   if (a.se_adopto && !b.se_adopto) {
@@ -45,17 +45,20 @@ const cambiarEstado = async (req, res) => {
   });
   
   if (adopcion) {
-    // Actualizar el estado de adopción de la publicación
-    await Adopcion.update(
-      { se_adopto: !adopcion.se_adopto },
-      { where: { id: adopcionId } }
-    );
-
-    res.send(true);
-    console.log('Se cambio el estado')
+    try {
+      // Actualizar el estado de adopción de la publicación
+      await Adopcion.update(
+        { se_adopto: !adopcion.se_adopto },
+        { where: { id: adopcionId } }
+      );
+  
+      res.json({ success: true }); // Envía una respuesta JSON indicando que el cambio de estado se realizó correctamente
+    } catch (error) {
+      console.error(error);
+      res.json({ success: false }); // Envía una respuesta JSON indicando que hubo un error al cambiar el estado
+    }
   } else {
-    res.send(false);
-    console.log('No se cambio el estado :(')
+    res.json({ success: false }); // Envía una respuesta JSON indicando que el usuario no es el dueño de la publicación
   }
 }
 
@@ -124,6 +127,40 @@ const guardarPublicacion = async (req, res) => {
   
 }
 
+//Contacto adoptantes
+const mostrarContacto = (req, res) => {
+
+  res.render('contactoAdoptante')
+}
+
+const contactoAdoptante = async (req, res) => {
+  const nombre = req.body.nombre;
+  const mail = req.body.mail;
+  const telefono = req.body.telefono;
+
+  if (!nombre || !mail || !telefono) {
+    console.error('Error al crear publicación, campos incompletos');
+    res.render('contactoAdoptante', {
+      alert: true,
+      alertTitle: 'Error al crear publicación',
+      alertMessage: 'Por favor, completa todos los campos requeridos',
+      alertIcon: 'error',
+      showConfirmButton: false,
+      timer: 2000,
+    });
+  } else {
+    // Aquí se realizaría el envío del correo electrónico
+    // y se mostraría la alerta de éxito en caso de que el envío haya sido exitoso.
+    res.render('contactoAdoptante', {
+      alert: true,
+      alertTitle: 'Mail Enviado!',
+      alertMessage: '',
+      alertIcon: 'success',
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  }
+};
 
 
 module.exports = {
@@ -131,4 +168,6 @@ module.exports = {
     cambiarEstado,
     mostrarPublicacion,
     guardarPublicacion,
+    mostrarContacto,
+    contactoAdoptante,
 }
