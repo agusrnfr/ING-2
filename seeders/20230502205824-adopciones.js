@@ -13,10 +13,24 @@
     const sexos = ['Macho', 'Hembra'];
     const origenes = ['Abandonado', 'Rescatado', 'Entregado por dueño','Hijo de mi mascota'];
     const edades = [1, 2, 3,7,10,6,8]; 
-     const seAdoptoOptions = [true,false];
-    const vacunasv = ['antirrabica','vacuna A','vacuna B'];
+    const seAdoptoOptions = [true,false];
+    const vacunasv = [true, false];
 
-    const adopciones = [];
+
+    await queryInterface.bulkInsert('adopciones', [{
+      nombre: 'Milaneso',
+      raza: 'colly',
+      color: 'Manteca',
+      caracteristicas: 'Docil',
+      sexo: 'Macho',
+      origen: 'Rescatado',
+      edad: '3',
+      se_adopto: false,
+      vacunas: false,
+      UserId: 3,
+      mail: 'juancho@gmail.com',
+      tel: 2213566,
+    }], {});
 
     for (let i = 0; i < 4; i++) {
        let dueño = faker.datatype.number({ min: 3, max: 10 });
@@ -30,26 +44,24 @@
        let seAdopto = seAdoptoOptions[Math.floor(Math.random() * seAdoptoOptions.length)];
        let vacunas = vacunasv[Math.floor(Math.random() * vacunasv.length)];
        let mail = faker.internet.email();
-      let tel = faker.phone.phoneNumber();
+       let tel = faker.phone.phoneNumber();
 
-      let adopcion = {
-         nombre,
-         vacunas,
-         edad,
-         sexo,
-         origen,
-         caracteristicas,
-         mail,
-         tel,
-         se_adopto: seAdopto,
-         raza,
-         color,
-        UserId: dueño,
-       };
-      adopciones.push(adopcion);
-     }
-    await queryInterface.bulkInsert('adopciones', adopciones);
-   },
+    await queryInterface.bulkInsert('adopciones',[{
+      nombre: nombre,
+      raza: raza,
+      color: color,
+      caracteristicas: caracteristicas,
+      sexo: sexo,
+      origen: origen,
+      edad:edad,
+      se_adopto: seAdopto,
+      vacunas: vacunas,
+      UserId: dueño,
+      mail: mail,
+      tel: tel,
+   }], {});
+  }
+},
 
   down: async (queryInterface, Sequelize) => {
      //await queryInterface.bulkDelete('adopciones', null, {});
