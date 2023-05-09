@@ -2,21 +2,25 @@
 const User = require('../db/models/user.js');
 const { Op } = require('sequelize');
 
-/* function getAllUsers(req, res) {
-  const data = User.findAll();
-  return data
-} */
-
+/**
+ * Muestra la tabla de usuarios
+ * excluyendo los admines
+ */
 const mostrarTablaUsers = async (req, res) => {    
-  const data = await User.findAll();
+  const data = await User.findAll({
+    where: { rol: 'cliente' }
+  });
   res.render('../views/table_usuarios.ejs', {data})
 }
 
+/**
+ * Filtrar
+ * Esta funcion aun no esta disponible -no usar-
+ */
 const filtrar = async (req, res) => {
   const ingresado = req.body.searchTerm;
-
-  //campos incompletos, muestro todos los usuarios
-  if (!ingresado) {
+  
+  if (!ingresado) {   //campos incompletos, muestro todos los usuarios
     const data = await User.findAll();
     res.render('../views/table_usuarios.ejs', { data })
     return
