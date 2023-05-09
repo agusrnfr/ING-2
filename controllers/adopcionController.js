@@ -1,3 +1,4 @@
+const { error } = require('jquery');
 const Adopcion = require('../db/models/adopcion.js');
 
 const session = require('express-session');
@@ -6,10 +7,11 @@ const mostrarAdopciones = async (req, res) => {
     try {
       const data = await Adopcion.findAll()
       const esDuenio = session.usuario && session.usuario.tipo === 'duenio';
+
       if(data.length === 0) {
-        res.send('No hay publicaciones cargadas.')
+        res.send('No hay publicaciones de adopción disponibles.')
       } else {
-        res.render('adopciones', { data , esDuenio , session: session})
+        res.render('adopciones', { data , esDuenio , session: session , adopcionId: data[0].id})
       }
     } catch (error) {
       console.error(error)
@@ -17,51 +19,65 @@ const mostrarAdopciones = async (req, res) => {
     }
 }
 
+
+//Devuelve si es el dueño de la publicacion
 const esDuenio = async (req, res) => {
-  const publicacionId = req.params.id;
+  const adopcionId = req.params.id;
   const usuarioId = session.usuario.id; 
+
+  console.log('adopcionId:', adopcionId);
+  console.log('usuarioId:', usuarioId);
   
-  const publicacion = await Publicacion.findOne({
+  const publicacion = await Adopcion.findOne({
     where: {
-      id: publicacionId,
+      id: adopcionId,
       userid: usuarioId
     }
   });
 
   if (publicacion) {
-    // el usuario es el dueño de la publicación
-    res.send(true);
+    res.send(true); // El usuario es el dueño de la publicación
   } else {
-    // el usuario no es el dueño de la publicación
-    res.send(false);
+    res.send(false); // El usuario no es el dueño de la publicación
   }
 }
 
+  const resultado = async (req, res) => {
+   const adopcion = await Adopcion.findByPk(req.params.id);
+   const esDuenio = req.esDuenio; // Obtener el valor de req.esDuenio
+   res.render('adopciones', { adopcion, esDuenio }); // Enviar resultados a la plantilla
+  };
+
+
 const cambiarEstado = async (req, res) => {
-  const publicacionId = req.params.id;
-  const usuarioId = req.session.UserId;
+  const adopcionId = req.body.id;
+  const usuarioId = session.usuario.id;
+
+  console.log('adopcionId:', adopcionId);
+  console.log('usuarioId:', usuarioId);
   
   // Verificar si el usuario es el dueño de la publicación
-  const publicacion = await Adopcion.findOne({
+  const adopcion = await Adopcion.findOne({
     where: {
-      id: publicacionId,
+      id: adopcionId,
       UserId: usuarioId
     }
   });
   
-  if (publicacion) {
+  if (adopcion) {
     // Actualizar el estado de adopción de la publicación
     await Adopcion.update(
-      { se_adopto: !publicacion.se_adopto },
-      { where: { id: publicacionId } }
+      { se_adopto: !adopcion.se_adopto },
+      { where: { id: adopcionId } }
     );
 
     res.send(true);
+    console.log('Se cambio el estado')
   } else {
     res.send(false);
+    console.log('No se cambio el estado :(')
   }
 }
-
 
 const mostrarPublicacion = (req, res) => {
 
@@ -77,14 +93,13 @@ const guardarPublicacion = async (req, res) => {
   const sexo = req.body.sexo;
   const origen = req.body.origen;
   const vacunas = req.body.vacunas;
-  const caracteristicas = req.body.caracteristicas;
   const mail= session.usuario.mail;
   const tel = session.usuario.tel; //se va a llenar con el email y tel de cliente
   const id = session.usuario.id;
   const se_adopto = false;
 
 
-  if(!nombre || !edad || !raza || !color || !sexo || !origen || !vacunas || !caracteristicas ){
+  if(!nombre || !edad || !raza || !color || !sexo || !origen || !vacunas ){
       console.error('Error al crear publicación,campos incompletos');
       return
   }
@@ -96,7 +111,6 @@ const guardarPublicacion = async (req, res) => {
       edad:edad,
       sexo: sexo,
       origen:origen,
-      caracteristicas:caracteristicas,
       mail:mail,
       tel: tel,
       se_adopto: se_adopto,
@@ -138,5 +152,6 @@ module.exports = {
     cambiarEstado,
     mostrarPublicacion,
     guardarPublicacion,
+    resultado,
   
 }

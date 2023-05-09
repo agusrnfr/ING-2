@@ -12,13 +12,14 @@ module.exports = {
     const caracteristica = ['Juguetón', 'Cariñoso', 'Guardián', 'Activo', 'Asustadizo','Serio'];
     const sexos = ['Macho', 'Hembra'];
     const origenes = ['Abandonado', 'Rescatado', 'Entregado por dueño','Hijo de mi mascota'];
-    const edades = [1, 2, 3,7,10,6,8]; // 1 para cachorro, 2 para adulto, 3 para anciano
+    const edades = [1, 2, 3,7,10,6,8]; 
     const seAdoptoOptions = [true,false];
     const vacunasv = ['antirrabica','vacuna A','vacuna B'];
 
     const adopciones = [];
 
     for (let i = 0; i < 5; i++) {
+      let dueño = faker.datatype.number({ min: 3, max: 10 });
       let nombre = nombres.splice (Math.floor(Math.random() * nombres.length),1) [0];
       let edad = edades[Math.floor(Math.random() * edades.length)];
       let sexo = sexos[Math.floor(Math.random() * sexos.length)];
@@ -43,7 +44,7 @@ module.exports = {
         se_adopto: seAdopto,
         raza,
         color,
-        UserId: Math.floor(Math.random() * (excludeList[1] - excludeList[0] + 1)) + excludeList[0],
+        UserId: dueño,
       };
 
       adopciones.push(adopcion);
