@@ -7,7 +7,7 @@ const { mostrarIndex } = require('../controllers/indexController');
 const { comprobar_sesion, comprobar_sesion_admin } = require('../controllers/loginController');
 const { verificaciones, solicitarTurno, mostrarTodosLosTurnos, mostrarMisTurnos, cambiarEstadoTurno, guardarTurno, turnoGuardado } = require('../controllers/turnosController');
 const { mostrarAgregarMascota, registrarMascota } = require('../controllers/mascotasController');
-const { mostrarCliente } = require('../controllers/clienteController')
+const { mostrarCliente , mostrarClienteModificar } = require('../controllers/clienteController')
 const { mostrarAdopciones , esDuenio , cambiarEstado, mostrarPublicacion, guardarPublicacion, resultado } = require('../controllers/adopcionController');
 
 //invocamos express
@@ -55,6 +55,7 @@ app.post('/agregar_mascota/cliente/:id', registrarMascota)
 
 //VER CLIENTE
 app.get('/ver_cliente/:id', comprobar_sesion_admin, mostrarCliente)
+app.get('/modificar/cliente/:id', comprobar_sesion_admin, mostrarClienteModificar)
 
 
 module.exports = app;
