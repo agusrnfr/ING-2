@@ -156,7 +156,7 @@
                                                                     data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body row align-items-center">
-                                                                <textarea id="motivoRechazo"class="form-control" placeholder="Motivo de rechazo"></textarea>
+                                                                <textarea id="motivoRechazo_<%= turno.id %>" class="form-control" placeholder="Motivo de rechazo"></textarea>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary"
@@ -250,7 +250,7 @@
             }
 
             function rechazarTurno(idTurno, mailTurno, celdaEstado) {
-                const motivoRechazo = document.getElementById('motivoRechazo').value;
+                const motivoRechazo = document.getElementById('motivoRechazo_' + idTurno).value;
                 console.log(motivoRechazo)
                 const data = { estado: false, idTurno: idTurno, mailTurno: mailTurno, motivoRechazo: motivoRechazo};
                 fetch('/turnos/listarTodosLosTurnos', {
