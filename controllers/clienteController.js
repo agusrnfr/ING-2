@@ -47,8 +47,7 @@ const actualizarUsuario = async(req, res) => {
         return false;
     }
 
-    // Actualizar usuario
-    User.findByPk(req.params.id)
+    User.findByPk(req.params.id) // Actualizar usuario
     .then(user => {
       user.mail = mail;
       user.name = name;
