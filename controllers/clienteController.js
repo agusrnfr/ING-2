@@ -1,7 +1,7 @@
 
 const User = require('../db/models/user.js');
-
-
+const { convertirNombre } = require('./registerController.js');
+const { validarCampos } = require('./registerController.js');
 
 const mostrarCliente = async(req, res) => {
     const usuario = await User.findByPk(req.params.id)
@@ -24,7 +24,52 @@ const mostrarClienteModificar = async(req, res) => {
     return res.render('../views/modificar_cliente', { usuario: usuario.dataValues, mascotas })
 }
 
+const actualizarUsuario = async(req, res) => {
+    const mail = req.body.mail.toLowerCase();
+    const name = convertirNombre(req.body.name);
+    const tel = req.body.tel;
+    const DNI = req.body.DNI;
+    const pass = req.body.pass;
+
+    if(await !validarCampos(mail , pass , name , tel , DNI)){
+        return false
+    }
+    const user = await User.findOne({
+        where: {mail: mail}
+    });
+
+    const user_url = await User.findOne({
+        where: {id: req.params.id}
+    });
+
+    if(user && (user_url.mail != mail)){
+        console.error('Error al crear usuario,mail duplicado o el usuario no existe');
+        return false;
+    }
+
+    // Actualizar usuario
+    User.findByPk(req.params.id)
+        .then(user => {
+        user.mail = mail;
+        user.name = name;
+        user.tel = tel;
+        user.DNI = DNI;
+        user.pass = pass;
+
+        return user.save();
+        })
+        .then(() => {
+            console.log("se actualizo")
+        })
+        .catch(error => {
+            console.log("error al actualizar")
+        });
+
+}
+
+
 module.exports = {
     mostrarCliente,
     mostrarClienteModificar,
+    actualizarUsuario,
 }

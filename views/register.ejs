@@ -161,7 +161,7 @@
       const data = await response.json();
 
       if (data.exists) {
-        displayErrorMsg("email", "El correo electrónico ya está en uso");
+        displayErrorMsg("email", "El correo electrónico ya esta en uso");
       } else {
         hideErrorMsg("email");
         document.getElementById("emailDuplicateErrorMsg").style.display = "none";

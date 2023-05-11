@@ -19,7 +19,7 @@
             <div class="card-body p-md-4">
               <div class="row justify-content-center">
                 
-<form method="POST" action="/actualizar-usuario">
+<form method="POST">
   <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-3"><i class="bi bi-person-fill-gear"></i> Modificar datos de cliente</p>
   <div class="alert alert-warning" role="alert">Se va a modificar a: <strong><%= usuario.name %></strong></div>
   <div class="mb-3">
@@ -180,7 +180,7 @@
       const data = await response.json();
       const mail = '<%= usuario.mail %>';
       if ((data.exists) && (mail != email.value)) {
-        displayErrorMsg("email", "El correo electrónico ya está en uso");
+        displayErrorMsg("email", "El correo electrónico ya esta en uso");
       } else {
         hideErrorMsg("email");
         document.getElementById("emailDuplicateErrorMsg").style.display = "none";
