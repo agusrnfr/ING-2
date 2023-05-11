@@ -101,7 +101,7 @@ const solicitarTurno = async (req, res) => { // Muestra el formulario para solic
     }
     catch (error) {
         console.log(error);
-        res.status(500).json('Error al devolver los resultados: ' + error);
+        res.status(500).render('solicitar_turno.ejs', { mascotas: [] });
     }
 };
 
@@ -170,55 +170,58 @@ const guardarTurno = async (req, res) => { // Si se guardó correctamente el tur
 
 
 const mostrarTodosLosTurnos = async (req, res) => { // Muestra todos los turnos
-    const turnos = await Turno.findAll({
-        raw: true,
-        include: [
-            { model: Mascota, as: 'Mascotum', attributes: ['nombre'] },
-            { model: User, as: 'User', attributes: ['name', 'mail'] }]
-    })
-        .catch(error => {
-            console.log(error);
-            res.status(500).json('Error al devolver los resultados: ' + error);
+    try {
+        const turnos = await Turno.findAll({
+            raw: true,
+            include: [
+                { model: Mascota, as: 'Mascotum', attributes: ['nombre'] },
+                { model: User, as: 'User', attributes: ['name', 'mail'] }]
         });
-    const data = turnos.map(turno => {
-        return {
-            id: turno.id,
-            fecha: turno.fecha,
-            banda_horaria: turno.banda_horaria,
-            estado: turno.estado,
-            practica: turno.practica,
-            UserId: turno.UserId,
-            MascotumId: turno.MascotumId,
-            nombre: turno['Mascotum.nombre'],
-            user: turno['User.name'],
-            mailUser: turno['User.mail']
-        };
-    }).sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
-    res.render('turnos_listado.ejs', { data });
+        const data = turnos.map(turno => {
+            return {
+                id: turno.id,
+                fecha: turno.fecha,
+                banda_horaria: turno.banda_horaria,
+                estado: turno.estado,
+                practica: turno.practica,
+                UserId: turno.UserId,
+                MascotumId: turno.MascotumId,
+                nombre: turno['Mascotum.nombre'],
+                user: turno['User.name'],
+                mailUser: turno['User.mail']
+            };
+        }).sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+        res.render('turnos_listado.ejs', { data });
+    } catch (error) {
+        console.log(error);
+        res.status(500).render('turnos_listado.ejs', { data: [] });
+    };
 };
 
 const mostrarMisTurnos = async (req, res) => { // Muestra los turnos del usuario logueado
-    const turnos = await Turno.findAll({
-        raw: true,
-        include: { model: Mascota, as: 'Mascotum', attributes: ['nombre'] },
-        where: { UserId: session.usuario.id }
-    })
-        .catch(error => {
-            console.log(error);
-            res.status(500).json('Error al devolver los resultados: ' + error);
-        });
-    const data = turnos.map(turno => {
-        return {
-            id: turno.id,
-            fecha: turno.fecha,
-            banda_horaria: turno.banda_horaria,
-            estado: turno.estado,
-            practica: turno.practica,
-            MascotumId: turno.MascotumId,
-            nombre: turno['Mascotum.nombre'],
-        };
-    }).sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
-    res.render('turnos_listado_cliente.ejs', { data });
+    try {
+        const turnos = await Turno.findAll({
+            raw: true,
+            include: { model: Mascota, as: 'Mascotum', attributes: ['nombre'] },
+            where: { UserId: session.usuario.id }
+        })
+        const data = turnos.map(turno => {
+            return {
+                id: turno.id,
+                fecha: turno.fecha,
+                banda_horaria: turno.banda_horaria,
+                estado: turno.estado,
+                practica: turno.practica,
+                MascotumId: turno.MascotumId,
+                nombre: turno['Mascotum.nombre'],
+            };
+        }).sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+        res.render('turnos_listado_cliente.ejs', { data });
+    }
+    catch (error) {
+        console.log(error);
+        res.status(500).render('turnos_listado_cliente.ejs', { data: [] });
+    };
 };
 
 const cambiarEstadoTurno = async (req, res) => { // Cambia el estado del turno y envía un mail al cliente
@@ -238,7 +241,7 @@ const cambiarEstadoTurno = async (req, res) => { // Cambia el estado del turno y
 
         const fechaTurno = new Date(turno.fecha);
         fechaTurno.setHours(horas, minutos, 0, 0);
-         result = await Turno.update(
+        result = await Turno.update(
             {
                 estado: estado,
                 fecha: fechaTurno
@@ -249,7 +252,7 @@ const cambiarEstadoTurno = async (req, res) => { // Cambia el estado del turno y
                 console.log(error);
                 res.status(500).json('Error al cambiar estado: ' + error) //ERROR AL CONECTARSE CON LA BASE DE DATOS
             });
-    }else {
+    } else {
         const motivoRechazo = req.body.motivoRechazo;
         result = await Turno.update(
             {
@@ -315,7 +318,7 @@ const turnoGuardado = async (req, res) => { // Muestra la alerta de que se guard
     catch (error) { // ERROR AL BUSCAR LAS MASCOTAS DEL CLIENTE
         console.log(error);
         res.status(500).render('solicitar_turno.ejs', {
-            mascotas: null,
+            mascotas: [],
             alert: true,
             alertTitle: "Error",
             alertMessage: mensajeDecodificado,
