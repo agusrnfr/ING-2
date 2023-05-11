@@ -20,6 +20,10 @@ Turno.init({
         type: DataTypes.STRING,
         allowNull: false,
     },
+    motivoDeRechazo: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+    },
 }, {
     sequelize,
     modelName: 'Turno',

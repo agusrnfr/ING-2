@@ -14,18 +14,45 @@ module.exports = {
       MascotumId: 1,
     }], {});
     await queryInterface.bulkInsert('turnos', [{
+      fecha: moment().add(8, 'days').toDate(),
+      banda_horaria: 'Tarde',
+      estado: 'Pendiente',
+      practica: 'Consulta general',
+      UserId: 6,
+      MascotumId: 3,
+    }], {});
+    await queryInterface.bulkInsert('turnos', [{
+      fecha: moment().add(9, 'days').toDate(),
+      banda_horaria: 'Tarde',
+      estado: 'Pendiente',
+      practica: 'Castracion',
+      UserId: 4,
+      MascotumId: 2,
+    }], {});
+    await queryInterface.bulkInsert('turnos', [{
+      fecha: moment().add(12, 'days').toDate(),
+      banda_horaria: 'Tarde',
+      estado: 'Pendiente',
+      practica: 'Desparasitacion',
+      motivoDeRechazo: 'No se puede vacunar porque tiene una enfermedad',
+      UserId: 7,
+      MascotumId: 10,
+    }], {});
+    await queryInterface.bulkInsert('turnos', [{
       fecha: moment().add(124, 'days').toDate(),
       banda_horaria: 'Tarde',
       estado: 'Rechazado',
       practica: 'Vacuna A',
-      UserId: 3,
-      MascotumId: 1,
+      motivoDeRechazo: 'No se puede vacunar porque tiene una enfermedad',
+      UserId: 7,
+      MascotumId: 10,
     }], {});
     await queryInterface.bulkInsert('turnos', [{
       fecha: moment('2023-06-01').toDate(),
       banda_horaria: 'Tarde',
       estado: 'Rechazado',
       practica: 'Consulta general',
+      motivoDeRechazo: 'Ese dia cerramos',
       UserId: 4,
       MascotumId: 2,
     }], {});
@@ -37,7 +64,7 @@ module.exports = {
       UserId: 3,
       MascotumId: 1,
     }], {});
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 2; i++) {
       let dueño = faker.datatype.number({ min: 3, max: 10 });
       if (excludeList.includes(dueño)) continue; // valido si el dueño está en la lista de exclusiones
       let mascota = await Mascota.findAll({ where: { UserId: dueño } });

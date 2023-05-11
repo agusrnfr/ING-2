@@ -108,7 +108,7 @@ const solicitarTurno = async (req, res) => { // Muestra el formulario para solic
 const calcularFechaVacuna = (fecha, practica, mascota, banda_horaria) => { // Calcula la fecha de la vacuna
     const edadMascota = calcularEdadMasco(mascota.fechaNacimiento); // Calcula la edad de la mascota en meses
     if (practica == 'Vacuna A' && edadMascota < 4) { // Si la mascota tiene menos de 4 meses, se le asigna la fecha de la vacuna A a 21 días de la fecha actual
-        fecha = moment().add(21, 'days').startOf('day'); 
+        fecha = moment().add(21, 'days').startOf('day');
         if (fecha.day() == 6 && banda_horaria.toLowerCase() == 'tarde') { // Si la fecha es sábado y la banda horaria es tarde, se le asigna la fecha de la vacuna A a 23 días de la fecha actual
             return fecha.add(2, 'days'); // 
         } else if (fecha.day() == 0) { // Si la fecha es domingo, se le asigna la fecha de la vacuna A a 22 días de la fecha actual
@@ -226,21 +226,50 @@ const cambiarEstadoTurno = async (req, res) => { // Cambia el estado del turno y
     const idTurno = req.body.idTurno;
     const mailTurno = req.body.mailTurno;
     const estado = bool ? "Aceptado" : "Rechazado";
-    const result = await Turno.update(
-        { estado: estado },
-        { where: { id: idTurno, estado: "Pendiente" } }
-    )
-        .catch(error => {
-            console.log(error);
-            res.status(500).json('Error al cambiar estado: ' + error) //ERROR AL CONECTARSE CON LA BASE DE DATOS
-        });
+    let result;
+    if (bool) {
+        const horas = req.body.horas;
+        const minutos = req.body.minutos;
+        const turno = await Turno.findByPk(idTurno)
+            .catch(error => {
+                console.log(error);
+                res.status(500).json('Error al cambiar estado: ' + error) //ERROR AL CONECTARSE CON LA BASE DE DATOS
+            });
+
+        const fechaTurno = new Date(turno.fecha);
+        fechaTurno.setHours(horas, minutos, 0, 0);
+         result = await Turno.update(
+            {
+                estado: estado,
+                fecha: fechaTurno
+            },
+            { where: { id: idTurno, estado: "Pendiente" } }
+        )
+            .catch(error => {
+                console.log(error);
+                res.status(500).json('Error al cambiar estado: ' + error) //ERROR AL CONECTARSE CON LA BASE DE DATOS
+            });
+    }else {
+        const motivoRechazo = req.body.motivoRechazo;
+        result = await Turno.update(
+            {
+                estado: estado,
+                motivoDeRechazo: motivoRechazo
+            },
+            { where: { id: idTurno, estado: "Pendiente" } }
+        )
+            .catch(error => {
+                console.log(error);
+                res.status(500).json('Error al cambiar estado: ' + error) //ERROR AL CONECTARSE CON LA BASE DE DATOS
+            });
+    }
     if (result[0] === 0) {
         res.status(400).json('No se pudo actualizar el estado del turno'); //ERROR AL ACTUALIZAR EL ESTADO YA SEA PORQUE NO SE ENCONTRO O PORQUE EL ESTADO NO ES PENDIENTE
     } else {
         /*
         await transporter.sendMail({
             from: '"Estado de turno actualizado" <veterinaria.omd@gmail.com>',
-            to: "veterinaria.omd@gmail.com", //deberia ser --> to: mailTurno,
+            to: "agusrojastfm@gmail.com", //deberia ser --> to: mailTurno,
             subject: "Estado de turno actualizado",
             text: "Estimado cliente, el estado de su turno ha sido actualizado, por favor ingrese a la pagina para ver el estado del mismo.",
         })
@@ -296,6 +325,22 @@ const turnoGuardado = async (req, res) => { // Muestra la alerta de que se guard
         });
     }
 }
+
+/* ATENCION, PARA MOSTRAR LA HORA CORRECTA QUE SE LE SETEO A UN TURNO HAY QUE HACER LO SIGUIENTE, YA QUE EN LA BD NO SE TIENE EL HORARIO LOCAL, SINO QUE SE TIENE EL HORARIO UTC
+const moment = require('moment-timezone');
+
+// fechaHora es la fecha y hora almacenada en la base de datos
+const fechaHora = '2022-05-12T15:30:00';
+
+// Convertir a la zona horaria deseada
+const fechaHoraZonaHoraria = moment.tz(fechaHora, 'America/Argentina/Buenos_Aires');
+
+// Formatear la fecha y hora en el formato deseado (por ejemplo, DD/MM/YYYY HH:mm:ss)
+const fechaHoraFormateada = fechaHoraZonaHoraria.format('DD/MM/YYYY HH:mm:ss');
+
+// Mostrar la fecha y hora formateada
+console.log(fechaHoraFormateada); // Salida: "12/05/2022 15:30:00"
+*/
 
 module.exports = {
     verificaciones,
