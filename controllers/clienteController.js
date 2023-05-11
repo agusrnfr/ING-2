@@ -49,21 +49,33 @@ const actualizarUsuario = async(req, res) => {
 
     // Actualizar usuario
     User.findByPk(req.params.id)
-        .then(user => {
-        user.mail = mail;
-        user.name = name;
-        user.tel = tel;
-        user.DNI = DNI;
-        user.pass = pass;
-
-        return user.save();
-        })
-        .then(() => {
-            console.log("se actualizo")
-        })
-        .catch(error => {
-            console.log("error al actualizar")
-        });
+    .then(user => {
+      user.mail = mail;
+      user.name = name;
+      user.tel = tel;
+      user.DNI = DNI;
+      user.pass = pass;
+  
+      return user.save();
+    })
+    .then(async () => {
+      const nuevo_usuario = await User.findOne({
+        where: { mail: mail }
+      });
+  
+      res.render('modificar_cliente.ejs', {
+        usuario: nuevo_usuario,
+        alert: true,
+        alertTitle: "Perfil actualizado con éxito",
+        alertMessage: "",
+        alertIcon: "success",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    })
+    .catch(error => {
+      console.log("error al actualizar");
+    });
 
 }
 
