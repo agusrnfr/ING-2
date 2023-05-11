@@ -94,6 +94,15 @@ module.exports = {
       foto: null,
       UserId: 7,
     }], {});
+    await queryInterface.bulkInsert('mascotas', [{
+      nombre: 'Stevie',
+      raza: 'Golden Retriever',
+      color: 'Amarillo',
+      fecha_nacimiento: moment().clone().subtract(5, 'months').toDate(),
+      observaciones: 'Es muy cariñoso y activo',
+      foto: null,
+      UserId: 8,
+    }], {});
     for (let i = 0; i < 10; i++) {
       const today = new Date();
       const minDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());

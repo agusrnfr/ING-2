@@ -6,7 +6,7 @@ const moment = require('moment');
 const { transporter } = require('../config/mailer');
 
 const verificaciones = async (req, res, next) => { // Verifica que los datos ingresados sean válidos
-    let { fecha_turno, banda_horaria, practica, mascota } = req.body;
+    let { fecha_turno, banda_horaria, practica, mascota, opcion } = req.body;
     let { id, fechaNacimiento } = obtenerIdyFechaDeMascota(mascota);
 
     try {
@@ -48,8 +48,8 @@ const verificaciones = async (req, res, next) => { // Verifica que los datos ing
         }
 
         if (practica == 'Castracion') {
-            if (calcularEdadMasco(fechaNacimiento) < 6) { // Verifica que la mascota tenga al menos 6 meses
-                return res.redirect(`/turnos/turnoGuardado?success=false&status=400&mensaje=${encodeURIComponent('La mascota debe tener al menos 6 meses para solicitar la castración')}`);
+            if (calcularEdadMasco(fechaNacimiento) < 6 && opcion == "no") { // Verifica que la mascota tenga al menos 6 meses o haya tenido su primer celo
+                return res.redirect(`/turnos/turnoGuardado?success=false&status=400&mensaje=${encodeURIComponent('La mascota debe tener al menos 6 meses o haber tenido su primer celo para solicitar la castración')}`);
 
             }
         }
