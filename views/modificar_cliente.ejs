@@ -46,9 +46,9 @@
   </div>
   <div class="row mb-3">
     <div class="error-container" style="height: 30px; margin-bottom: 20px;">
-      <p id="emailDuplicateErrorMsg" class="text-danger" style="display: none;">Paragraph</p>
-      <p id="emailErrorMsg" class="text-danger" style="display: none;">Paragraph</p>
-      <p id="passwordErrorMsg" class="text-danger" style="display: none;">Paragraph</p>
+      <p id="emailDuplicateErrorMsg" class="text-danger" style="display: none;"></p>
+      <p id="emailErrorMsg" class="text-danger" style="display: none;"></p>
+      <p id="passwordErrorMsg" class="text-danger" style="display: none;"></p>
     </div>
   </div>
   <button class="btn btn-primary d-block btn-user w-100" id="submitBtn" type="submit">Actualizar</button>
@@ -151,10 +151,6 @@
 
   // Validate password upon change
   password.addEventListener("input", function () {
-
-    // If password has no value, then it won't be changed and no error will be displayed
-    if (password.value.length == 0) hideErrorMsg("password")
-
     // Check if the password has 8 characters or more
     if (password.value.length >= 8)
       hideErrorMsg("password")
