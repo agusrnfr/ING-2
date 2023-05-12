@@ -1,4 +1,3 @@
-
 const User = require('../db/models/user.js');
 const { convertirNombre } = require('./registerController.js');
 const { validarCampos } = require('./registerController.js');

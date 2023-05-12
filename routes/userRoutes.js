@@ -9,6 +9,7 @@ const { verificaciones, solicitarTurno, mostrarTodosLosTurnos, mostrarMisTurnos,
 const { mostrarAgregarMascota, registrarMascota } = require('../controllers/mascotasController');
 const { mostrarCliente , mostrarClienteModificar , actualizarUsuario } = require('../controllers/clienteController')
 const { mostrarAdopciones , esDuenio , cambiarEstado, mostrarPublicacion, guardarPublicacion, resultado } = require('../controllers/adopcionController');
+const { mostrarModificarPerfil } = require('../controllers/modificarPerfilController');
 
 //invocamos express
 const app = require('express').Router()
@@ -33,6 +34,7 @@ app.post('/chequear_mail_duplicado', chequear_mail_duplicado)
 
 app.get('/trabajadores', mostrarTrabajadores)
 
+app.get('/modificar_mi_perfil',mostrarModificarPerfil)
 
 //ADOPCION
 app.get('/adopciones',mostrarAdopciones, resultado)
