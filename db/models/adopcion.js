@@ -16,6 +16,10 @@ Adopcion.init({
         type: DataTypes.INTEGER,
         allowNull: false,
     },
+    tipo_edad: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
     sexo: {
         type: DataTypes.STRING,
         allowNull: false,

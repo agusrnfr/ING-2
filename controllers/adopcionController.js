@@ -1,5 +1,6 @@
 const { error } = require('jquery');
 const Adopcion = require('../db/models/adopcion.js');
+const User = require('../db/models/user');
 
 const session = require('express-session');
 
@@ -71,6 +72,7 @@ const mostrarPublicacion = (req, res) => {
 const guardarPublicacion = async (req, res) => {    
   const nombre = req.body.nombre;
   const edad = req.body.edad;
+  const tipo_edad = req.body.tipo_edad;
   const raza = req.body.raza;
   const color = req.body.color;
   const sexo = req.body.sexo;
@@ -92,6 +94,7 @@ const guardarPublicacion = async (req, res) => {
       nombre:nombre,
       vacunas:vacunas,
       edad:edad,
+      tipo_edad: tipo_edad,
       sexo: sexo,
       origen:origen,
       mail:mail,
@@ -129,11 +132,29 @@ const guardarPublicacion = async (req, res) => {
 
 //Contacto adoptantes
 const mostrarContacto = (req, res) => {
+  let nombre = '';
+  let mail = '';
+  let telefono = '';
 
-  res.render('contactoAdoptante')
-}
+  if (session && session.usuario && session.loggedin) {
+    // Si el usuario ha iniciado sesión, pre-cargamos los datos del usuario
+    nombre = session.usuario.name;
+    mail = session.usuario.mail;
+    telefono = session.usuario.tel;
+  }
+
+  console.log(session);
+
+  res.render('contactoAdoptante', {
+    session: session,
+    nombre: nombre,
+    mail: mail,
+    telefono: telefono,
+  });
+};
 
 const contactoAdoptante = async (req, res) => {
+
   const nombre = req.body.nombre;
   const mail = req.body.mail;
   const telefono = req.body.telefono;

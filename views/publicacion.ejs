@@ -25,9 +25,15 @@
                         <div class="mb-3"><input class="form-control form-control-user" type="text" name="nombre" id="nombre"
                         placeholder="Escribe el nombre" required=""></div>
 
-                        <label for="edad">Edad de la mascota:</label>
-                        <div class="mb-3"><input class="form-control form-control-user" type="number" name="edad" id="edad"
-                          placeholder="Escribe la edad, solo el num" required="" min="1" ></div>
+                        <label for="sexo">Edad de la mascota</label>
+                        <div class="mb-3">
+                          <input class="form-control form-control-user" type="number" name="edad" id="edad" placeholder="Escribe la edad, solo el num" required="" min="1">
+                          <select class="form-control form-control-user"name="tipo_edad" id="tipo_edad">
+                            <option value="">Elige el tipo</option>
+                            <option value="meses">Meses</option>
+                            <option value="años">Años</option>
+                          </select>
+                        </div>
 
                         <label for="raza">Raza de la mascota:</label>
                         <div class="mb-3"><input class="form-control form-control-user" type="text" name="raza" id="raza"
@@ -94,19 +100,27 @@
   form.addEventListener('submit', (event) => {
     const nombre = document.getElementById('nombre').value;
     const edad = document.getElementById('edad').value;
+    const tipo_edad = document.getElementById('tipo_edad').value;
     const raza = document.getElementById('raza').value;
     const color = document.getElementById('color').value;
     const sexo = document.getElementById('sexo').value;
     const origen = document.getElementById('origen').value;
     const vacunas = document.getElementById('vacunas').value;
   
-    if (!nombre || !edad || !raza || !color || !sexo || !origen || !vacunas  ) {
+    if (!nombre || !edad || !raza || !color || !sexo || !origen || !vacunas || !tipo_edad  ) {
       event.preventDefault(); // Evita que se envíe el formulario
       alert('Por favor complete todos los campos solicitados.');
     }
+
+    if (tipo_edad === 'meses' && edad > 12) {
+      event.preventDefault(); // Evita que se envíe el formulario
+      alert('El valor máximo permitido para meses es 12.');
+    }
+    
   });
   
 </script>
+
 </div>
 
 </body>

@@ -15,27 +15,46 @@
     const edades = [1, 2, 3,7,10,6,8]; 
     const seAdoptoOptions = [true,false];
     const vacunasv = [true, false];
+    const tipos = ['meses', 'años'];
 
 
     await queryInterface.bulkInsert('adopciones', [{
-      nombre: 'Milaneso',
+      nombre: 'Luffy',
       raza: 'colly',
       color: 'Manteca',
       caracteristicas: 'Docil',
       sexo: 'Macho',
       origen: 'Rescatado',
       edad: '3',
+      tipo_edad: 'años',
       se_adopto: false,
       vacunas: false,
-      UserId: 3,
-      mail: 'juancho@gmail.com',
-      tel: 2213566,
+      UserId: 7,
+      mail: 'cordgoode@gmail.com',
+      tel: 2213566567,
     }], {});
 
-    for (let i = 0; i < 4; i++) {
+    await queryInterface.bulkInsert('adopciones', [{
+      nombre: 'Zoro',
+      raza: 'Dogo',
+      color: 'blanco',
+      caracteristicas: 'serio',
+      sexo: 'Macho',
+      origen: 'Refugiado',
+      edad: '5',
+      tipo_edad: 'años',
+      se_adopto: false,
+      vacunas: false,
+      UserId: 7,
+      mail: 'cordgoode@gmail.com',
+      tel: 2213566567,
+    }], {});
+
+    for (let i = 0; i < 2; i++) {
        let dueño = faker.datatype.number({ min: 3, max: 10 });
        let nombre = nombres.splice (Math.floor(Math.random() * nombres.length),1) [0];
        let edad = edades[Math.floor(Math.random() * edades.length)];
+       let tipo_edad = tipos[Math.floor(Math.random() * tipos.length)];
        let sexo = sexos[Math.floor(Math.random() * sexos.length)];
        let origen = origenes[Math.floor(Math.random() * origenes.length)];
        let caracteristicas = caracteristica[Math.floor(Math.random() * caracteristica.length)];
@@ -54,6 +73,7 @@
       sexo: sexo,
       origen: origen,
       edad:edad,
+      tipo_edad: tipo_edad,
       se_adopto: seAdopto,
       vacunas: vacunas,
       UserId: dueño,
