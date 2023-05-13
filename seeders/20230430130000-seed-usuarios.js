@@ -68,6 +68,14 @@ module.exports = {
       pass: '123456789',
       rol: 'cliente',
     }], {});
+    await queryInterface.bulkInsert('users', [{
+      mail: 'ldr1985@gmail.com',
+      name: 'Lana Del Rey',
+      tel: "2216785218",
+      DNI: "44565422",
+      pass: '123456789',
+      rol: 'cliente',
+    }], {});
     for (let i = 0; i < 5; i++) {
       let name = faker.name.firstName();
       let lastName = faker.name.lastName();
