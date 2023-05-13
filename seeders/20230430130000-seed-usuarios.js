@@ -76,7 +76,7 @@ module.exports = {
       pass: '123456789',
       rol: 'cliente',
     }], {});
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 0; i++) {
       let name = faker.name.firstName();
       let lastName = faker.name.lastName();
       await queryInterface.bulkInsert('users', [{
