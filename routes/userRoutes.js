@@ -8,8 +8,8 @@ const { comprobar_sesion, comprobar_sesion_admin } = require('../controllers/log
 const { verificaciones, solicitarTurno, mostrarTodosLosTurnos, mostrarMisTurnos, cambiarEstadoTurno, guardarTurno, turnoGuardado } = require('../controllers/turnosController');
 const { mostrarAgregarMascota, registrarMascota } = require('../controllers/mascotasController');
 const { mostrarCliente , mostrarClienteModificar , actualizarUsuario } = require('../controllers/clienteController')
-const { mostrarModificarPerfil } = require('../controllers/modificarPerfilController');
 const { mostrarAdopciones, cambiarEstado, mostrarPublicacion, guardarPublicacion, mostrarContacto, contactoAdoptante} = require('../controllers/adopcionController');
+const { mostrarModificarPerfil , modificarMiPerfil } = require('../controllers/modificarPerfilController');
 
 //invocamos express
 const app = require('express').Router()
@@ -35,6 +35,7 @@ app.post('/chequear_mail_duplicado', chequear_mail_duplicado)
 app.get('/trabajadores', mostrarTrabajadores)
 
 app.get('/modificar_mi_perfil',mostrarModificarPerfil)
+app.post('/modificarMiPerfil', modificarMiPerfil)
 
 //ADOPCION
 app.get('/adopciones',mostrarAdopciones)

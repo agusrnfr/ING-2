@@ -19,16 +19,16 @@
             <div class="card-body p-md-4">
               <div class="row justify-content-center">
                 
-<form method="POST">
+<form action="/modificarMiPerfil" method="POST">
   <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-3"><i class="bi bi-person-fill-gear"></i> Modificar datos de mi perfil</p>
   <div class="alert alert-warning" role="alert">Se va a modificar su perfil, para cambiar ciertos campos debera acercarse a la veterinaria</div>
   <div class="mb-3">
     <label for="email">Correo electrónico:</label>
-    <input class="form-control form-control-user" type="email" name="mail" id="email" value="<%= usuario.mail %>" placeholder="Correo electrónico" required="" disabled>
+    <input class="form-control form-control-user" type="email" name="mail" id="email" value="<%= usuario.mail %>" placeholder="Correo electrónico" required readonly style="background-color: #f1f1f1; cursor: not-allowed;">
   </div>
   <div class="mb-3">
     <label for="name">Nombre completo:</label>
-    <input class="form-control form-control-user" type="text" name="name" value="<%= usuario.name %>" placeholder="Nombre completo" required="" disabled>
+    <input class="form-control form-control-user" type="text" name="name" value="<%= usuario.name %>" placeholder="Nombre completo" required readonly style="background-color: #f1f1f1; cursor: not-allowed;">
   </div>
   <div class="mb-3">
       <label for="pass">Contraseña:</label>
@@ -37,7 +37,7 @@
   <div class="row mb-3">
     <div class="col-sm-6 mb-3 mb-sm-0">
       <label for="DNI">DNI:</label>
-      <input class="form-control form-control-user" type="text" name="DNI" id="DNI" placeholder="DNI" required="" value="<%= usuario.DNI %>" disabled>
+      <input class="form-control form-control-user" type="text" name="DNI" id="DNI" placeholder="DNI" required="" value="<%= usuario.DNI %>" required readonly style="background-color: #f1f1f1; cursor: not-allowed;">
     </div>
     <div class="col-sm-6">
       <label for="tel">Teléfono:</label>
