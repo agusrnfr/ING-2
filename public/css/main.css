@@ -11,15 +11,21 @@ a {
     color: black !important;
     text-decoration: none !important;
 }
-header{
 
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100vw;
     height: 100px;
     background-color: #FFF;
     box-shadow: 0px 3px 8px rgba(0, 0, 0, 25%);
     display: flex;
     align-items: center;
+    z-index: 1050;
+    margin-bottom: 500px; /* agrega un margen inferior de 20px */
 }
+  
 
 header .container-fluid{
 
@@ -28,14 +34,6 @@ header .container-fluid{
     display: flex;
     align-items: center;
     justify-content: space-between;
-}
-
-@media(max-width:992px){
-
-    header .container-fluid{
-
-        padding: 0 5%;
-    }
 }
 
 header .navb-logo img{
@@ -123,39 +121,26 @@ h3 {
 }
 
 .section-1{
-
     width: 100vw;
     height: 35vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url(../img/banner.png);
+    background-image: url(../img/perritos/varios.jpg);
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center 3px;
- 
+    background-color: #28738a;
+    margin-top: 100px; /* agregar margen superior */
 }
 
 .section-1 p{
-
     font-size: 60px;
     font-weight: 700;
     color: #161515;
     width: 90%;
     text-align: center;
 }
-
-@media(max-width:767px){
-
-    .section-1 p{
-
-        font-size: 50px;
-        text-align: start;
-        width: 70%;
-        margin: auto;
-    }
-}
-
 /* SECCION CARDS*/
 
 
@@ -163,8 +148,10 @@ h3 {
 
     display: flex;
     transition-duration: .6s;
-    clip-path: polygon(50% 0, 100% 0, 100% 50%, 100% 100%, 50% 100%, 0 100%, 0 50%, 0 0);
     background-color: #b8dbe0 !important;
+    margin: 50px;
+    /* width: auto;
+    height: auto; */
 
 }
 
@@ -181,13 +168,13 @@ h3 {
     justify-content: center;
     align-items: center;
 }
+
 /* SECCION CARDS campaña*/
 
 .cardc{
 
     display: flex;
     transition-duration: .6s;
-    clip-path: polygon(50% 0, 100% 0, 100% 50%, 100% 100%, 50% 100%, 0 100%, 0 50%, 0 0);
     background-color: #b8dbe0 !important;
 
 }
@@ -210,6 +197,7 @@ h3 {
     background-image: url(../img/perritos/varios.jpg);
     background-position: center;
     background-size: contain;
+
   }
   
   .elemento-con-fondo::before {
@@ -236,80 +224,4 @@ h3 {
     left: 0;
     bottom: 0;
 
-}
-/*= Fondo Footer =*/
-.fondo-color{
-    background-color: #3b7385;
-}
-
-.social-media ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-footer {
-    display: flex;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-}
-
-
-/*=MEDIA QUERIES PANTALLA ANCHA=*/
-
-@media (max-width:1200px){
-    #intro, #equipo {
-        width:90% !important;
-        margin:auto;
-    }
-
-    #local {
-        flex-wrap: wrap;
-        padding-top:30px;
-   }
-  
-
-}
-/*=MEDIA QUERIES PANTALLA SM=*/
-
-
-@media (max-width:768px) {
-
-    #intro, #equipo{
-        width:90% !important;
-        margin:auto;
-    }
-
-    #img-equipo{
-        max-height:20rem !important;
-        width:90%;
-    }
-       
-    #local {
-        flex-wrap: wrap;
-    }
-    .mapa img {
-        width:100%;
-        height:auto;
-    }
-   
-
-
-}
-/*=MEDIA QUERIES PANTALLA EXTRA-SM=*/
-
-@media (max-width: 576px) {
-    #servicios-fila-2 {
-        width:100% !important;
-    }
-    #servicios-fila-1 {
-        width:100% !important;
-    }
-
-    .icono-wrap{
-        flex-wrap:wrap !important;
-        justify-content: center !important;
-        text-align: center;
-    }
 }

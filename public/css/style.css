@@ -5,7 +5,18 @@
     color: #1b262c;
     
     margin: 0;
-    background-color: white;
+    background-color: #f8f9fa;
+    /* #3b7385 */
+}
+#body_index {
+    font-family: 'Overpass', sans-serif;
+    font-weight: normal;
+    font-size: 100%;
+    color: #1b262c;
+    
+    margin: 0;
+    background-color: #f8f9fa;
+    /* #3b7385 */
 }
 
 #contenedor {
@@ -129,8 +140,30 @@
 .inferior a:hover {
     color: #3282b8;
 }
-
+/* Main */
 a {
     color: black;
     text-decoration: none;
 }
+
+/*= Fondo Footer =*/
+.fondo-color{
+    background-color: #1d4f60;
+}
+
+.social-media ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+footer {
+    display: flex;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+
+
+

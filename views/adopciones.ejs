@@ -8,7 +8,7 @@
     <%- include ('header', {tituloweb: '¡Oh my dog! | Adopciones'}); %>
 </head>
 <body id="body">
-
+<br><br><br><br>
 <br>
 
 <% if (session && session.usuario && session.loggedin) { %>
@@ -28,7 +28,7 @@
 
               <!-- Boton Cambiar Estado -->
               <% if (session.usuario && session.usuario.id === adopcion.UserId) { %>
-                <a href="#" id="adopto <%= adopcion.id %>" class="btn btn-primary mx-2 <% if (adopcion.se_adopto) { %> disabled <% } %>" onclick="cambiarEstado(this, '<%= adopcion.id %>', '<%= adopcion.se_adopto ? true : false %>')">
+                <a id="adopto <%= adopcion.id %>" class="btn btn-primary mx-2 <% if (adopcion.se_adopto) { %> disabled <% } %>" onclick="cambiarEstado(this, '<%= adopcion.id %>', '<%= adopcion.se_adopto ? true : false %>')">
                   <%= adopcion.se_adopto ? 'Adoptado' : 'Cambiar Estado' %>
                 </a>
               <% } %>
@@ -67,37 +67,35 @@
  <div class="text-center"><a class="small" href="/table">Volver</a></div>
 
  <script>
-async function cambiarEstado(boton, adopcionId, seAdopto) {
-  console.log(seAdopto);
-  const url = '/adopcion/seAdopto';
-  const nuevoEstado = !JSON.parse(seAdopto); // Cambia el estado actual al nuevo estado
-
-  console.log(nuevoEstado);
-
-  boton.innerHTML = nuevoEstado ? 'Adoptado' : 'Cambiar Estado';
-  boton.disabled = true; // Deshabilita el botón para que no se pueda hacer clic nuevamente
-
-  console.log(boton);
-
-  try {
-    // Envía la solicitud AJAX al servidor para actualizar el estado en la base de datos
-    const response = await fetch(url, {
-      method: 'POST',
-      body: JSON.stringify({ id: adopcionId, se_adopto: nuevoEstado }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-
-    const data = await response.json();
-    console.log('Respuesta del servidor:', data);
-
-  } catch (error) {
-    console.error('Error al realizar la solicitud:', error);
+  async function cambiarEstado(boton, adopcionId, seAdopto) {
+    console.log(seAdopto);
+    const url = '/adopcion/seAdopto';
+    const nuevoEstado = !JSON.parse(seAdopto); // Cambia el estado actual al nuevo estado
+    try {
+      // Envía la solicitud AJAX al servidor para actualizar el estado en la base de datos
+      const response = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify({ id: adopcionId, se_adopto: nuevoEstado }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+  
+  if (response.ok) {
+    console.log(nuevoEstado);
+    boton.innerHTML = nuevoEstado ? 'Adoptado' : 'Cambiar Estado';
+    boton.disabled = true; // Deshabilita el botón para que no se pueda hacer clic nuevamente
+    console.log(boton);
   }
-}
+      const data = await response.json();
+      console.log('Respuesta del servidor:', data);
+  
+    } catch (error) {
+      console.error('Error al realizar la solicitud:', error);
+    }
+  }
   </script>
-
+    <%- include ('footer') %>
  <%- include ('sweet-alert') %>
 </body>
 

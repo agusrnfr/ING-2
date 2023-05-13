@@ -17,18 +17,20 @@ app.use('/', require('./routes/userRoutes'))
 // var de sesion
 const session = require('express-session');
 
-app.use(session({
-  secret: 'secret',
-  resave: 'true',
-  saveUninitialized: 'true',
-}));
+
+app.use(express.static(path.join(__dirname, 'public'), { type: 'text/css' }));
+
 
 //para que las vistas(html/ejs) los busque en la carpeta views(pages).
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
 //para que busque los archivos estaticos tengan la carpeta public.
-app.use(express.static('public'));
+app.use(express.static('public', { 
+  setHeaders: (res, path, stat) => {
+    res.set('Content-Type', 'text/css');
+  }
+}));
 
 //servidor puerto
 app.listen(3000, (req, res) => {

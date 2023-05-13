@@ -162,6 +162,9 @@ const contactoAdoptante = async (req, res) => {
   if (!nombre || !mail || !telefono) {
     console.error('Error al crear publicación, campos incompletos');
     res.render('contactoAdoptante', {
+      nombre:"",
+      mail:"",
+      telefono: "",
       alert: true,
       alertTitle: 'Error al crear publicación',
       alertMessage: 'Por favor, completa todos los campos requeridos',
@@ -173,6 +176,9 @@ const contactoAdoptante = async (req, res) => {
     // Aquí se realizaría el envío del correo electrónico
     // y se mostraría la alerta de éxito en caso de que el envío haya sido exitoso.
     res.render('contactoAdoptante', {
+      nombre:"",
+      mail:"",
+      telefono: "",
       alert: true,
       alertTitle: 'Mail Enviado!',
       alertMessage: '',

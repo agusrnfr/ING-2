@@ -1,12 +1,11 @@
 <%- include ('header', {tituloweb: '¡Oh my dog!'}); %>
-<head>
-    <meta name="description" content="Descripción de la página">
-    <link rel="stylesheet" type="text/css" href="/public/css/main.css">
-  </head>
 
-<body id="body">
-    <section class="section-1 mb-5">
+<body id="body_index">
 
+<div class="elemento-con-fondo"
+   style="background-image: url(../img/perritos/varios.jpg); background-position: center; background-size: cover; height: 300px;">
+</div>
+<br><br>
     </section>
  <!-- SERVICIOS-->
 
@@ -38,21 +37,81 @@
                     </div>
                 </div> -->
 
-                 <!-- Adopcion-->
-                    <div class="col-12 col-md-6 col-lg-4 mx-auto my-3 d-flex justify-content-center align-items-center">
-                        <div class="card" style="width: 50rem;">
-                            <img src="../img/icons/adopcion2.png" class="card-img-top" alt="icon-adopcion">
-                            <div class="card-body">
-                                <h5 class="card-title">Adopcion a ciegas</h5>
-                                <p class="card-text">La adopción a ciegas es un servicio, donde su objetivo es crear conciencia acerca de la importancia de adoptar mascotas,
-                                    sin dejarnos llevar por la apariencia de los animales.
-                                   <br> ¡Adoptar es dar una segunda oportunidad y cambiar una vida para siempre!"
+
+            <div class="container text-center">
+            <div class="row g-3">
+                <div class="col-12 col-md-6 col-lg-4 px-3">
+                <div class="card">
+                <img src="../img/icons/adopcion2.png" class="card-img-top" alt="icon-adopcion">
+                <div class="card-body">
+                                    <h5 class="card-title">Adopcion a ciegas</h5>
+                                    <p class="card-text">La adopción a ciegas es un servicio, donde su objetivo es crear conciencia acerca de la importancia de adoptar mascotas,
+                                        sin dejarnos llevar por la apariencia de los animales.
+                                        <br> ¡Adoptar es dar una segunda oportunidad y cambiar una vida para siempre!"
+                                    </p>
+                                    <a href="/adopciones" class="btn btn-primary">Ver Más</a>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- Inicio sun -->
+                    <div class="col-12 col-md-6 col-lg-4 px-3">
+                            <div class="card">
+                                <div class="card-body">
+                                <!-- <h5 class="card-title"> <h1>Inicio</h1></h5> -->
+                                <p class="card-text">
+                    
+                                    <% if (typeof session.usuario !== 'undefined' && (session.loggedin === true)) { %>
+                                        
+                                    <h5 class="card-title">Bienvenido usuario: <%= session.usuario.mail %></h5>
+                                    <% } else { %>
+                                    <h5 class="card-title">Bienvenido visitante</h5>
+                                    <% } %>
+                    
+                    
+                                <% if (typeof session.usuario !== 'undefined' && (session.loggedin === true)) { %>
+                                    <div>
+                                    <form id="logout-form" action="/logout" method="POST">
+                                        <button type="submit" class="btn btn-link">Cerrar sesión</button>
+                                    </form>
+                                    </div>
+                                <% } else { %>
+                    
+                                    <div>
+                                        <a href="/login">login</a>
+                                    </div>
+                    
+                                <% } %>
+                    
+                                 <div>
+                                    ________________
+                                </div>
+                    
+                                <div>
+                                    <a href="/adopciones">Adopcion de perros</a>
+                                </div>
+                    
+                                 <% if (typeof session.usuario !== 'undefined' && (session.loggedin === true)) { %>
+                                <div>
+                                    _______usuarios only_________
+                                </div>
+                    
+                                <div>
+                                    <a href="/perfil">Modificar mi perfil</a>
+                                </div>
+                    
+                                <div>
+                                    <a href="/turnos">Solicitar un turno</a>
+                                </div>
+                                <div>
+                                    <a href="/turnos/misTurnos">Listar mis turnos</a>
+                                </div>
+                                <% } %>
                                 </p>
-                                <a href="/adopciones" class="btn btn-primary">Ver Más</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+         </div>
                  <!-- Perdida-->
                 <!-- <div class="col-12 col-md-6 col-lg-4 text-center">
                     <div class="card">
@@ -82,13 +141,8 @@
 
 <!-- IMAGEN DEL MEDIO-->
 
-    <div class="elemento-con-fondo"
-        style="background-image: url(../img/perritos/varios.jpg); background-position: center; background-size: cover; height: 300px;">
-    </div>
-
 
 </section>
-<br><br>
 
 <!-- SECCION CAMPAÑAS-->
 
@@ -141,80 +195,6 @@
 
 
 <br><br>
-<!-- Inicio sun -->
-
-<body id="body">
-<card>
-
-<div class="card" style="width: 30rem;margin: 5px;">
-    <div class="card-body">
-    <h5 class="card-title"> <h1>Inicio</h1></h5>
-    <p class="card-text">
-
-        <% if (typeof session.usuario !== 'undefined' && (session.loggedin === true)) { %>
-            Bienvenido usuario: <%= session.usuario.mail %>
-        <% } else { %>
-            Bienvenido visitante
-        <% } %>
-
-
-<% if (typeof session.usuario !== 'undefined' && (session.loggedin === true)) { %>
-    <div>
-    <form id="logout-form" action="/logout" method="POST">
-        <button type="submit" class="btn btn-link">Cerrar sesión</button>
-    </form>
-    </div>
-<% } else { %>
-
-    <div>
-        <a href="/login">login</a>
-    </div>
-
-<% } %>
-
- <div>
-    ________________
-</div>
-
-<div>
-    <a href="/adopciones">Adopcion de perros</a>
-</div>
-
- <% if (typeof session.usuario !== 'undefined' && (session.loggedin === true)) { %>
-<div>
-    _______usuarios only_________
-</div>
-
-<div>
-    <a href="/perfil">Modificar mi perfil</a>
-</div>
-
-<div>
-    <a href="/turnos">Solicitar un turno</a>
-</div>
-<div>
-    <a href="/turnos/misTurnos">Listar mis turnos</a>
-</div>
-<% } %> 
-
-
-<% if (typeof session.usuario !== 'undefined' && (session.loggedin === true) &&(session.usuario.rol === 'admin')) { %>
-<div>
-    ________admin only__________
-</div>
-
-<div>
-    <a href="/table">Lista de clientes</a>
-</div>
-
-<div>
-    <a href="/register">Registrar a un cliente</a>
-</div>
-
-<div>
-    <a href="/turnos/listarTodosLosTurnos">Listar turnos de todos los clientes</a>
-</div>
-<% } %>
 
 </p>
  </div>
