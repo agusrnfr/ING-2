@@ -7,8 +7,9 @@ const { mostrarIndex } = require('../controllers/indexController');
 const { comprobar_sesion, comprobar_sesion_admin } = require('../controllers/loginController');
 const { verificaciones, solicitarTurno, mostrarTodosLosTurnos, mostrarMisTurnos, cambiarEstadoTurno, guardarTurno, turnoGuardado } = require('../controllers/turnosController');
 const { mostrarAgregarMascota, registrarMascota } = require('../controllers/mascotasController');
-const { mostrarCliente } = require('../controllers/clienteController')
+const { mostrarCliente , mostrarClienteModificar , actualizarUsuario } = require('../controllers/clienteController')
 const { mostrarAdopciones , esDuenio , cambiarEstado, mostrarPublicacion, guardarPublicacion, resultado } = require('../controllers/adopcionController');
+const { mostrarModificarPerfil } = require('../controllers/modificarPerfilController');
 
 //invocamos express
 const app = require('express').Router()
@@ -33,6 +34,7 @@ app.post('/chequear_mail_duplicado', chequear_mail_duplicado)
 
 app.get('/trabajadores', mostrarTrabajadores)
 
+app.get('/modificar_mi_perfil',mostrarModificarPerfil)
 
 //ADOPCION
 app.get('/adopciones',mostrarAdopciones, resultado)
@@ -55,7 +57,8 @@ app.post('/agregar_mascota/cliente/:id', registrarMascota)
 
 //VER CLIENTE
 app.get('/ver_cliente/:id', comprobar_sesion_admin, mostrarCliente)
-
+app.get('/modificar/cliente/:id', comprobar_sesion_admin, mostrarClienteModificar)
+app.post('/modificar/cliente/:id',comprobar_sesion_admin, actualizarUsuario)
 
 module.exports = app;
 

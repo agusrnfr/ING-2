@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include ('header', {tituloweb: '¡Oh my dog! | Modificar cliente'}); %>
+</head>
+
+<body id="body">
+  
+    <div class="container h-100" style="margin-top: 20px;">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-lg-12 col-xl-10">
+          <div class="card text-black" style="border-radius: 25px;">
+            <div class="card-body p-md-4">
+              <div class="row justify-content-center">
+                
+<form method="POST">
+  <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-3"><i class="bi bi-person-fill-gear"></i> Modificar datos de mi perfil</p>
+  <div class="alert alert-warning" role="alert">Se va a modificar su perfil, para cambiar ciertos campos debera acercarse a la veterinaria</div>
+  <div class="mb-3">
+    <label for="email">Correo electrónico:</label>
+    <input class="form-control form-control-user" type="email" name="mail" id="email" value="<%= usuario.mail %>" placeholder="Correo electrónico" required="" disabled>
+  </div>
+  <div class="mb-3">
+    <label for="name">Nombre completo:</label>
+    <input class="form-control form-control-user" type="text" name="name" value="<%= usuario.name %>" placeholder="Nombre completo" required="" disabled>
+  </div>
+  <div class="mb-3">
+      <label for="pass">Contraseña:</label>
+      <input class="form-control form-control-user" name="pass" value="<%= usuario.pass %>" type="password" id="password" placeholder="Contraseña" required="">
+  </div>
+  <div class="row mb-3">
+    <div class="col-sm-6 mb-3 mb-sm-0">
+      <label for="DNI">DNI:</label>
+      <input class="form-control form-control-user" type="text" name="DNI" id="DNI" placeholder="DNI" required="" value="<%= usuario.DNI %>" disabled>
+    </div>
+    <div class="col-sm-6">
+      <label for="tel">Teléfono:</label>
+      <input class="form-control form-control-user" type="tel" name="tel" value="<%= usuario.tel %>" id="tel" placeholder="Teléfono" required="">
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="error-container" style="height: 30px; margin-bottom: 20px;">
+      <p id="emailDuplicateErrorMsg" class="text-danger" style="display: none;"></p>
+      <p id="emailErrorMsg" class="text-danger" style="display: none;"></p>
+      <p id="passwordErrorMsg" class="text-danger" style="display: none;"></p>
+    </div>
+  </div>
+  <button class="btn btn-primary d-block btn-user w-100" id="submitBtn" type="submit">Actualizar</button>
+  <hr>
+</form>
+
+
+<div class="text-center"><a class="small" href="/">Volver</a></div>
+</div>
+</div>
+    </div>
+</div>
+</div>
+</div>
+<%- include ('sweet-alert') %>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+<script>
+    $(document).ready(function () {
+        const tableRows = $('#tabla1 tbody tr').length;
+        const pagingEnable = tableRows > 50;
+        $('#tabla1').DataTable({
+            paging: pagingEnable,
+            ordering: false,
+            info: false,
+            lengthMenu: [
+                [5, 15, 50, -1],
+                [5, 15, 50, 'Todos'],
+            ],
+            pageLength: 50, // Establecer como la opción por defecto
+            searching: false, // deshabilita la función de búsqueda
+            language: {
+                paginate: { previous: 'Anterior', next: 'Siguiente', },
+                zeroRecords: 'La persona no posee mascotas',
+                info: 'Mostrando pagina _PAGE_ de _PAGES_',
+                infoEmpty: 'La persona no posee mascotas',
+                lengthMenu: 'Mostrar _MENU_ entradas'
+            },
+        });
+
+    });
+</script>
+
+
+
+<!-- script telefono -->
+<script>
+  const telInput = document.getElementById('tel');
+
+  telInput.addEventListener('input', function() {
+    let telValue = this.value.replace(/\D/g, ''); // Eliminar cualquier carácter que no sea un número
+    telValue = telValue.substring(0, 10); // Limitar la cantidad máxima de caracteres a 15 (por ejemplo, para evitar que el usuario ingrese números de teléfono demasiado largos)
+    
+    const telFormatted = telValue.replace(/^(\d{2})(\d{4})(\d{4})$/, '$1$2$3'); // No agregar guiones
+    //const telFormatted = telValue.replace(/^(\d{2})(\d{4})(\d{5})$/, '+$1-$2-$3'); // Agregar los guiones en el formato deseado
+
+    this.value = telFormatted;
+  });
+</script>
+
+<div id="usuario" usuario="<%- JSON.stringify(usuario) %>"></div>
+
+<!-- SCRIPT -->
+<script>
+  let email = document.getElementById("email")
+  let password = document.getElementById("password")
+  let submitBtn = document.getElementById("submitBtn")
+  let emailErrorMsg = document.getElementById('emailErrorMsg')
+  let passwordErrorMsg = document.getElementById('passwordErrorMsg')
+
+  function displayErrorMsg(type, msg) {
+    if (type == "email") {
+      emailErrorMsg.style.display = "block"
+      emailErrorMsg.innerHTML = msg
+      submitBtn.disabled = true
+    }
+    else {
+      passwordErrorMsg.style.display = "block"
+      passwordErrorMsg.innerHTML = msg
+      submitBtn.disabled = true
+    }
+  }
+
+  function hideErrorMsg(type) {
+    if (type == "email") {
+      emailErrorMsg.style.display = "none"
+      emailErrorMsg.innerHTML = ""
+      if (passwordErrorMsg.innerHTML == "")
+        submitBtn.disabled = false
+    }
+    else {
+      passwordErrorMsg.style.display = "none"
+      passwordErrorMsg.innerHTML = ""
+      if (emailErrorMsg.innerHTML == "")
+        submitBtn.disabled = false
+    }
+  }
+
+  // Validate password upon change
+  password.addEventListener("input", function () {
+    // Check if the password has 8 characters or more
+    if (password.value.length >= 8)
+      hideErrorMsg("password")
+    else
+      displayErrorMsg("password", "La contraseña debe tener 8 caracteres o mas")
+  });
+
+
+
+  // Validate email upon change
+  email.addEventListener("input", async function () {
+    // Check if the email is valid using a regular expression (string@string.string)
+    if (email.value.match(/^[^@]+@[^@]+\.[^@]+$/)) {
+      //busca en el servidor si ya existe
+      const response = await fetch('/chequear_mail_duplicado', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: email.value
+        })
+      });
+
+      const data = await response.json();
+      const mail = '<%= usuario.mail %>';
+      if ((data.exists) && (mail != email.value)) {
+        displayErrorMsg("email", "El correo electrónico ya esta en uso");
+      } else {
+        hideErrorMsg("email");
+        document.getElementById("emailDuplicateErrorMsg").style.display = "none";
+      }
+    }
+    else {
+      displayErrorMsg("email", "Correo invalido");
+    }
+  });
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -7,7 +7,7 @@ const mostrarAgregarMascota = async (req, res) => {
         res.send('no existe ese usuario :(')
         return
     }
-    res.render('../views/agregarMascota',{
+    res.render('../views/agregar_mascota',{
         usuario: usuario.dataValues
     })
 }
@@ -30,7 +30,7 @@ const registrarMascota = async (req, res) => {
         observaciones: observaciones,
     })
     .then(user => {
-        res.render('agregarMascota',{
+        res.render('agregar_mascota',{
             alert:true,
             alertTitle:"Registracion exitosa",
             alertMessage:"",
@@ -40,7 +40,7 @@ const registrarMascota = async (req, res) => {
         })
     })
     .catch(error => {
-        res.render('agregarMascota',{
+        res.render('agregar_mascota',{
             alert:true,
             alertTitle:"Registracion fallida",
             alertMessage:"",
