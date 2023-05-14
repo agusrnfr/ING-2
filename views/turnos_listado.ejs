@@ -156,7 +156,9 @@
                                                                     data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body row align-items-center">
-                                                                <textarea id="motivoRechazo_<%= turno.id %>" class="form-control" placeholder="Motivo de rechazo"></textarea>
+                                                                <textarea id="motivoRechazo_<%= turno.id %>"
+                                                                    class="form-control"
+                                                                    placeholder="Motivo de rechazo"></textarea>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary"
@@ -171,6 +173,7 @@
                                             </div>
                                             <% } else { %>
                                                 <div class="alert <%= cellClass %> m-0">
+                                                    <i class="bi bi-eye-fill"></i>
                                                     <%= turno.estado %>
                                                 </div>
                                                 <% } %>
@@ -236,7 +239,7 @@
                 })
                     .then(response => {
                         if (response.ok) {
-                            document.getElementById("estado" + celdaEstado).innerHTML = '<div class="alert alert-success m-0">Aceptado</div>';
+                            document.getElementById("estado" + celdaEstado).innerHTML = '<div class="alert alert-success m-0"><i class="bi bi-eye-fill"></i> Aceptado</div>';
                             // document.getElementById("estado" + celdaEstado).innerHTML = '<div class="alert alert-danger m-0">Rechazado</div>';
                         }
                         return (response.json());
@@ -252,7 +255,7 @@
             function rechazarTurno(idTurno, mailTurno, celdaEstado) {
                 const motivoRechazo = document.getElementById('motivoRechazo_' + idTurno).value;
                 console.log(motivoRechazo)
-                const data = { estado: false, idTurno: idTurno, mailTurno: mailTurno, motivoRechazo: motivoRechazo};
+                const data = { estado: false, idTurno: idTurno, mailTurno: mailTurno, motivoRechazo: motivoRechazo };
                 fetch('/turnos/listarTodosLosTurnos', {
                     method: 'POST',
                     headers: {
@@ -262,7 +265,7 @@
                 })
                     .then(response => {
                         if (response.ok) {
-                            document.getElementById("estado" + celdaEstado).innerHTML = '<div class="alert alert-danger m-0">Rechazado</div>';
+                            document.getElementById("estado" + celdaEstado).innerHTML = '<div class="alert alert-danger m-0"><i class="bi bi-eye-fill"></i> Rechazado</div>';
                         }
                         return (response.json());
                     })
