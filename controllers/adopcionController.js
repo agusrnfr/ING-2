@@ -68,6 +68,7 @@ const mostrarPublicacion = (req, res) => {
     res.render('publicacion')
 }
 
+let publicacion = false;
 //Guarda publicacion de adopcion
 const guardarPublicacion = async (req, res) => {    
   const nombre = req.body.nombre;
@@ -105,6 +106,7 @@ const guardarPublicacion = async (req, res) => {
       UserId: id,
   
   })
+  
   .then( Adopcion => {
       res.render('publicacion',{
           alert:true,
@@ -113,6 +115,7 @@ const guardarPublicacion = async (req, res) => {
           alertIcon:"success",
           showConfirmButton:false,
           timer:1500,
+          ruta: 'adopciones'
       })
   })
 

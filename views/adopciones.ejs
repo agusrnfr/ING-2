@@ -28,7 +28,8 @@
 
               <!-- Boton Cambiar Estado -->
               <% if (session.usuario && session.usuario.id === adopcion.UserId) { %>
-                <a id="adopto <%= adopcion.id %>" class="btn btn-primary mx-2 <% if (adopcion.se_adopto) { %> disabled <% } %>" onclick="cambiarEstado(this, '<%= adopcion.id %>', '<%= adopcion.se_adopto ? true : false %>')">
+                <a id="adopto <%= adopcion.id %>" class="btn btn-primary mx-2 <% if (adopcion.se_adopto) { %> disabled <% } %>" 
+                  onclick="cambiarEstado(this, '<%= adopcion.id %>', '<%= adopcion.se_adopto ? true : false %>')">
                   <%= adopcion.se_adopto ? 'Adoptado' : 'Cambiar Estado' %>
                 </a>
               <% } %>
@@ -72,6 +73,8 @@
     const url = '/adopcion/seAdopto';
     const nuevoEstado = !JSON.parse(seAdopto); // Cambia el estado actual al nuevo estado
     try {
+      console.log(boton.disabled)
+
       // Envía la solicitud AJAX al servidor para actualizar el estado en la base de datos
       const response = await fetch(url, {
         method: 'POST',
@@ -82,11 +85,13 @@
       });
   
   if (response.ok) {
-    console.log(nuevoEstado);
     boton.innerHTML = nuevoEstado ? 'Adoptado' : 'Cambiar Estado';
-    boton.disabled = true; // Deshabilita el botón para que no se pueda hacer clic nuevamente
     console.log(boton);
-  }
+    boton.disabled = true; // Deshabilita el botón para que no se pueda hacer clic nuevamente
+    console.log(boton.disabled);
+    }
+
+
       const data = await response.json();
       console.log('Respuesta del servidor:', data);
   
@@ -144,7 +149,7 @@
 
 
     <%- include ('footer') %>
- <%- include ('sweet-alert') %>
+    <%- include ('sweet-alert') %>
 </body>
 
 </html>

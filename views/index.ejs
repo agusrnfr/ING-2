@@ -106,6 +106,24 @@
                                     <a href="/turnos/misTurnos">Listar mis turnos</a>
                                 </div>
                                 <% } %>
+                                <% if (typeof session.usuario !== 'undefined' && (session.loggedin === true) &&(session.usuario.rol === 'admin')) { %>
+                                    <div>
+                                        ________admin only__________ 
+                                    </div>
+                                    
+                                    <div>
+                                        <a href="/table">Lista de clientes</a>
+                                    </div>
+                                    
+                                    <div>
+                                        <a href="/register">Registrar a un cliente</a>
+                                    </div>
+                                    
+                                    <div>
+                                        <a href="/turnos/listarTodosLosTurnos">Listar turnos de todos los clientes</a>
+                                    </div>
+                                    <% } %>
+                                    
                                 </p>
                                 </div>
                             </div>
