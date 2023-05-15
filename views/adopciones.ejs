@@ -95,6 +95,54 @@
     }
   }
   </script>
+
+<script>
+  async function cambiarEstado(boton, adopcionId, seAdopto) {
+  console.log(seAdopto);
+  const url = '/adopcion/seAdopto';
+  const nuevoEstado = !JSON.parse(seAdopto); // Cambia el estado actual al nuevo estado
+  try {
+    console.log(boton.disabled);
+
+    // Deshabilita el botón antes de realizar la solicitud fetch
+    boton.disabled = true;
+
+    // Envía la solicitud AJAX al servidor para actualizar el estado en la base de datos
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify({ id: adopcionId, se_adopto: nuevoEstado }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        if (response.ok) {
+          boton.innerHTML = nuevoEstado ? 'Adoptado' : 'Cambiar Estado';
+          console.log(boton);
+        } else {
+          // En caso de error, habilita el botón nuevamente
+          boton.disabled = false;
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Respuesta del servidor:', data);
+      })
+      .catch(error => {
+        console.error('Error al realizar la solicitud:', error);
+        // En caso de error, habilita el botón nuevamente
+        boton.disabled = false;
+      });
+  } catch (error) {
+    console.error('Error al realizar la solicitud:', error);
+    // En caso de error, habilita el botón nuevamente
+    boton.disabled = false;
+  }
+}
+  </script>
+
+
+
     <%- include ('footer') %>
  <%- include ('sweet-alert') %>
 </body>
