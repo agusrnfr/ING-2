@@ -32,6 +32,8 @@
                             <option value="meses">Meses</option>
                             <option value="años">Años</option>
                           </select>
+                          <p id="mensajeMaximo" style="display: none; color: black;">El número máximo permitido es 11.</p>
+                          <p id="mensajeError" style="display: none; color: red;">El valor máximo permitido para meses es 11.</p>
                           <br>
                           <input class="form-control form-control-user" type="number" name="edad" id="edad" placeholder="Escribe la edad, solo el num" required="" min="1">
                         </div>
@@ -99,6 +101,9 @@
 const form = document.getElementById('myForm');
 const edadInput = document.getElementById('edad');
 const tipoEdadInput = document.getElementById('tipo_edad');
+const mensajeMaximo = document.getElementById('mensajeMaximo');
+const mensajeError = document.getElementById('mensajeError');
+
 
 form.addEventListener('submit', (event) => {
   const nombre = document.getElementById('nombre').value;
@@ -116,13 +121,30 @@ form.addEventListener('submit', (event) => {
   }
 });
 
+tipoEdadInput.addEventListener('change', () => {
+  const tipo_edad = tipoEdadInput.value;
+
+  if (tipo_edad === 'meses') {
+    mensajeMaximo.style.display = 'block';
+    mensajeError.style.display = 'none';
+    edadInput.value = ''; // Limpiar el campo de edad
+  } else {
+    mensajeMaximo.style.display = 'none';
+    mensajeError.style.display = 'none';
+  }
+});
+
 edadInput.addEventListener('input', () => {
   const edad = parseInt(edadInput.value);
   const tipo_edad = tipoEdadInput.value;
 
   if (tipo_edad === 'meses' && edad > 11) {
-    alert('El valor máximo permitido para meses es 11.');
+    mensajeMaximo.style.display = 'none';
+    mensajeError.style.display = 'block';
     edadInput.value = ''; // Limpiar el campo de edad si es mayor a 11 meses
+  } else {
+    mensajeMaximo.style.display = 'none';
+    mensajeError.style.display = 'none';
   }
 });
   

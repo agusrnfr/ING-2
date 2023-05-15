@@ -174,6 +174,7 @@ const contactoAdoptante = async (req, res) => {
       alertIcon: 'error',
       showConfirmButton: false,
       timer: 2000,
+     
     });
   } else {
     // Aquí se realizaría el envío del correo electrónico
@@ -188,6 +189,7 @@ const contactoAdoptante = async (req, res) => {
       alertIcon: 'success',
       showConfirmButton: false,
       timer: 1500,
+      ruta: 'adopciones',
     });
   }
 };
