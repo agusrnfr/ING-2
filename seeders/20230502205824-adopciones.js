@@ -45,9 +45,41 @@
       tipo_edad: 'años',
       se_adopto: false,
       vacunas: false,
-      UserId: 7,
-      mail: 'cordgoode@gmail.com',
-      tel: 2213566567,
+      UserId: 9,
+      mail: 'deanswift@gmail.com',
+      tel: 2213432727,
+    }], {});
+
+    await queryInterface.bulkInsert('adopciones', [{
+      nombre: 'Kira',
+      raza: 'caniche',
+      color: 'marron',
+      caracteristicas: 'juguetona',
+      sexo: 'Hembra',
+      origen: 'refugiada',
+      edad: '4',
+      tipo_edad: 'meses',
+      se_adopto: false,
+      vacunas: true,
+      UserId: 6,
+      mail: 'agusrojasmc@gmail.com',
+      tel: 2212212201,
+    }], {});
+
+    await queryInterface.bulkInsert('adopciones', [{
+      nombre: 'Umi',
+      raza: 'cruza',
+      color: 'gris',
+      caracteristicas: 'juguetona',
+      sexo: 'Hembra',
+      origen: 'rescatada',
+      edad: '2',
+      tipo_edad: 'años',
+      se_adopto: false,
+      vacunas: true,
+      UserId: 6,
+      mail: 'agusrojasmc@gmail.com',
+      tel: 2212212201,
     }], {});
 
     for (let i = 0; i < 2; i++) {

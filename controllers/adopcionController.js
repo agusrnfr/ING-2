@@ -68,6 +68,7 @@ const mostrarPublicacion = (req, res) => {
     res.render('publicacion')
 }
 
+let publicacion = false;
 //Guarda publicacion de adopcion
 const guardarPublicacion = async (req, res) => {    
   const nombre = req.body.nombre;
@@ -105,6 +106,7 @@ const guardarPublicacion = async (req, res) => {
       UserId: id,
   
   })
+  
   .then( Adopcion => {
       res.render('publicacion',{
           alert:true,
@@ -113,6 +115,7 @@ const guardarPublicacion = async (req, res) => {
           alertIcon:"success",
           showConfirmButton:false,
           timer:1500,
+          ruta: 'adopciones'
       })
   })
 
@@ -162,6 +165,9 @@ const contactoAdoptante = async (req, res) => {
   if (!nombre || !mail || !telefono) {
     console.error('Error al crear publicación, campos incompletos');
     res.render('contactoAdoptante', {
+      nombre:"",
+      mail:"",
+      telefono: "",
       alert: true,
       alertTitle: 'Error al crear publicación',
       alertMessage: 'Por favor, completa todos los campos requeridos',
@@ -173,9 +179,9 @@ const contactoAdoptante = async (req, res) => {
     // Aquí se realizaría el envío del correo electrónico
     // y se mostraría la alerta de éxito en caso de que el envío haya sido exitoso.
     res.render('contactoAdoptante', {
+      nombre:"",
       alert: true,
       alertTitle: 'Mail Enviado!',
-      alertMessage: '',
       alertIcon: 'success',
       showConfirmButton: false,
       timer: 1500,
