@@ -180,8 +180,11 @@ const contactoAdoptante = async (req, res) => {
     // y se mostraría la alerta de éxito en caso de que el envío haya sido exitoso.
     res.render('contactoAdoptante', {
       nombre:"",
+      mail:"",
+      telefono: "",
       alert: true,
       alertTitle: 'Mail Enviado!',
+      alertMessage: '',
       alertIcon: 'success',
       showConfirmButton: false,
       timer: 1500,
