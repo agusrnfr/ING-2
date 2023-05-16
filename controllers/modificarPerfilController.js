@@ -20,8 +20,17 @@ const modificarMiPerfil = async(req, res) => {
     const pass = req.body.pass;
 
     if(!validarCampos(mail , pass , name , tel , DNI)){
-        return false
+        res.render('modificar_mi_perfil', 
+        { usuario: session.usuario,
+          alert:true,
+          alertIcon:"error",
+          alertTitle: "contraseña muy corta o campos incompletos",
+          alertMessage:"",
+          timer: 2000,
+          showConfirmButton: false,})
+        return
     }
+
     const user = await User.findOne({
         where: {mail: mail}
     });
@@ -30,10 +39,7 @@ const modificarMiPerfil = async(req, res) => {
         where: {mail: session.usuario.mail}
     });
 
-    console.log(user.mail)
-    console.log(user_url.mail)
-
-    if(user && (user_url.mail != mail)){
+    if(user && user_url && (user_url.mail != mail)){
         console.error('Error al crear usuario,mail duplicado o el usuario no existe');
         return false;
     }
