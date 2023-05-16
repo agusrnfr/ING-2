@@ -40,7 +40,9 @@
 
                         <label for="raza">Raza de la mascota:</label>
                         <div class="mb-3"><input class="form-control form-control-user" type="text" name="raza" id="raza"
-                          placeholder="Escribe la raza" required=""></div>
+                          placeholder="Escribe la raza" required="">
+                          <div id="mensajeError" style="display: none; color: red;">Por favor complete todos los campos solicitados.</div>
+                        </div>
 
                         <label for="color">Color de la mascota:</label>
                         <div class="mb-3"><input class="form-control form-control-user" type="text" name="color" id="color"
@@ -68,7 +70,7 @@
                           </select>
                         </div>
 
-                          <label for="caracteristicas">Caracteristicas adicionales :</label>
+                          <label for="caracteristicas">Caracteristicas adicionales : (opcional)</label>
                           <div class="mb-3">
                             <textarea class="form-control form-control-user" name="caracteristicas" id="caracteristicas" placeholder="Escribe las características" rows="5" cols="30"></textarea>
                           </div>
@@ -78,12 +80,12 @@
                   <hr>
 
                 </form>
-                <div class="text-center"><a class="small" href="/">Volver</a></div>
+                <div class="text-center"><a class="small" href="/adopciones">Volver</a></div>
               </div>
               <div
                 class="col-md-10 col-lg-6 col-xl-6 d-flex align-items-center order-1 order-lg-2 justify-content-center">
 
-                <img src="/img/perro_taza.png" width="350px" class="img-fluid" alt="Sample image">
+                <img src="/img/perricontento.png" width="300px" class="img-fluid" alt="Sample image" style="margin-top: -350px;">
 
               </div>
             </div>
@@ -117,7 +119,7 @@ form.addEventListener('submit', (event) => {
 
   if (!nombre || !edad || !raza || !color || !sexo || !origen || !vacunas || !tipo_edad) {
     event.preventDefault();
-    alert('Por favor complete todos los campos solicitados.');
+    mensajeError.style.display = 'block'; // Mostrar el mensaje de error
   }
 });
 

@@ -44,7 +44,7 @@
             <p class="card-text">Color: <%= adopcion.color %></p>
             <p class="card-text">Sexo: <%= adopcion.sexo %></p>
             <p class="card-text">Origen: <%= adopcion.origen %></p>
-            <p class="card-text">Vacunas: <%= adopcion.vacunas %></p>
+            <p class="card-text">Vacunas: <%= adopcion.vacunas ? "Si" : "No"%> </p>
             <p class="card-text">Caracteristicas : <%= adopcion.caracteristicas %></p>
             <p class="card-text" id="parrafo-<%= adopcion.id %>">
               <%= adopcion.se_adopto ? "Adoptado" : " Por adoptar " %>
@@ -52,7 +52,7 @@
 
             <% if (!session.usuario || (session.usuario && session.usuario.id !== adopcion.UserId)) { %>
               <% if (!adopcion.se_adopto) { %>
-                <a href="/contactoAdoptante" class="btn btn-primary">Contactar</a>
+                <a href="/contactoAdoptante?idAdopcion=<%= adopcion.id %>" class="btn btn-primary">Contactar</a>
               <% } %>
             <% } %>
 

@@ -1,6 +1,7 @@
 const { error } = require('jquery');
 const Adopcion = require('../db/models/adopcion.js');
 const User = require('../db/models/user');
+const { transporter } = require('../config/mailer');
 
 const session = require('express-session');
 
@@ -68,7 +69,7 @@ const mostrarPublicacion = (req, res) => {
     res.render('publicacion')
 }
 
-let publicacion = false;
+
 //Guarda publicacion de adopcion
 const guardarPublicacion = async (req, res) => {    
   const nombre = req.body.nombre;
@@ -133,34 +134,75 @@ const guardarPublicacion = async (req, res) => {
   
 }
 
-//Contacto adoptantes
-const mostrarContacto = (req, res) => {
-  let nombre = '';
-  let mail = '';
-  let telefono = '';
+// Contacto adoptantes
+const mostrarContacto = async (req, res) => {
+  try {
+    let nombre = '';
+    let mail = '';
+    let telefono = '';
 
-  if (session && session.usuario && session.loggedin) {
-    // Si el usuario ha iniciado sesión, pre-cargamos los datos del usuario
-    nombre = session.usuario.name;
-    mail = session.usuario.mail;
-    telefono = session.usuario.tel;
+    const idAdopcion = req.query.idAdopcion;
+    if (typeof idAdopcion === 'undefined') {
+      return res.status(400).send('El ID de la adopción no está definido');
+    }
+    
+    const adopcion = await obtenerAdopcionPorId(idAdopcion);
+
+    if (session && session.usuario && session.loggedin) {
+      // Si el usuario ha iniciado sesión, pre-cargamos los datos del usuario
+      nombre = session.usuario.name;
+      mail = session.usuario.mail;
+      telefono = session.usuario.tel;
+    }
+
+    res.render('contactoAdoptante', {
+      session: session,
+      nombre: nombre,
+      mail: mail,
+      telefono: telefono,
+      adopcion,
+    });
+  } catch (error) {
+    console.error('Error al mostrar el contacto del adoptante:', error);
+    res.status(500).send('Error interno del servidor');
   }
-
-  console.log(session);
-
-  res.render('contactoAdoptante', {
-    session: session,
-    nombre: nombre,
-    mail: mail,
-    telefono: telefono,
-  });
 };
 
+const obtenerAdopcionPorId = async (id) => {
+  try {
+    const adopcion = await Adopcion.findOne({
+      where: {
+        id: id,
+      },
+    });
+    return adopcion;
+  } catch (error) {
+    console.error('Error al obtener la adopción:', error);
+    throw error;
+  }
+};
+
+
+// Se contacta y se envia el email
 const contactoAdoptante = async (req, res) => {
 
   const nombre = req.body.nombre;
   const mail = req.body.mail;
   const telefono = req.body.telefono;
+  const motivos= req.body.motivos;
+ 
+  const idAdopcion = req.query.idAdopcion;
+    if (typeof idAdopcion === 'undefined') {
+      return res.status(400).send('El ID de la adopción no está definido');
+    }
+
+    const adopcion = await obtenerAdopcionPorId(idAdopcion);
+    if (!adopcion) {
+      return res.status(404).send('No se encontró la adopción');
+    }
+
+    const mascota = adopcion.nombre;
+
 
   if (!nombre || !mail || !telefono) {
     console.error('Error al crear publicación, campos incompletos');
@@ -168,6 +210,7 @@ const contactoAdoptante = async (req, res) => {
       nombre:"",
       mail:"",
       telefono: "",
+      adopcion: adopcion,
       alert: true,
       alertTitle: 'Error al crear publicación',
       alertMessage: 'Por favor, completa todos los campos requeridos',
@@ -176,6 +219,7 @@ const contactoAdoptante = async (req, res) => {
       timer: 2000,
      
     });
+
   } else {
     // Aquí se realizaría el envío del correo electrónico
     // y se mostraría la alerta de éxito en caso de que el envío haya sido exitoso.
@@ -183,6 +227,7 @@ const contactoAdoptante = async (req, res) => {
       nombre:"",
       mail:"",
       telefono: "",
+      adopcion: adopcion,
       alert: true,
       alertTitle: 'Mail Enviado!',
       alertMessage: '',
@@ -191,6 +236,15 @@ const contactoAdoptante = async (req, res) => {
       timer: 1500,
       ruta: 'adopciones',
     });
+    await transporter.sendMail({
+      from: '"Me interesa adoptar" <veterinaria.omd@gmail.com>',
+      to: "laura.cuenca1@gmail.com", //deberia ser --> to: mailTurno,
+      subject: "Me interesa adoptar a su perro",
+      text: "Hola que tal? Me llamo "+ nombre + " me interesa adoptar a " + mascota +" que publico .Mi mail es: "+ mail + " ,mi telefono es " + telefono+ "y mis motivos para adoptarlo son: "+motivos,
+      })
+         .catch(error => {
+             console.log('Error al enviar mail');
+         });
   }
 };
 
