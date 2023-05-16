@@ -5,14 +5,14 @@ module.exports = {
     const moment = require('moment');
     const Mascota = require('../db/models/mascota.js');
     const faker = require('faker');
-    await queryInterface.bulkInsert('turnos', [{
+/*     await queryInterface.bulkInsert('turnos', [{
       fecha: moment().add(7, 'days').toDate(),
       banda_horaria: 'Mañana',
       estado: 'Pendiente',
       practica: 'Desparasitacion',
       UserId: 3,
       MascotumId: 1,
-    }], {});
+    }], {}); */
     await queryInterface.bulkInsert('turnos', [{
       fecha: moment().add(8, 'days').toDate(),
       banda_horaria: 'Tarde',
@@ -56,14 +56,14 @@ module.exports = {
       UserId: 4,
       MascotumId: 2,
     }], {});
-    await queryInterface.bulkInsert('turnos', [{
+/*     await queryInterface.bulkInsert('turnos', [{
       fecha: moment().add(124, 'days').toDate(),
       banda_horaria: 'Tarde',
       estado: 'Aceptado',
       practica: 'Consulta general',
       UserId: 3,
       MascotumId: 1,
-    }], {});
+    }], {}); */
     for (let i = 0; i < 2; i++) {
       let dueño = faker.datatype.number({ min: 3, max: 10 });
       if (excludeList.includes(dueño)) continue; // valido si el dueño está en la lista de exclusiones
