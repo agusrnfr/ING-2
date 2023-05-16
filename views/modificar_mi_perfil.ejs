@@ -37,7 +37,12 @@
   <div class="row mb-3">
     <div class="col-sm-6 mb-3 mb-sm-0">
       <label for="DNI">DNI:</label>
-      <input class="form-control form-control-user" type="text" name="DNI" id="DNI" placeholder="DNI" required="" value="<%= usuario.DNI %>" required readonly style="background-color: #f1f1f1; cursor: not-allowed;">
+
+      <% if (usuario.rol === 'cliente'){%>
+        <input class="form-control form-control-user" type="text" name="DNI" id="DNI" placeholder="DNI" required="" value="<%= usuario.DNI %>" required readonly style="background-color: #f1f1f1; cursor: not-allowed;">
+        <% } else { %>
+          <input class="form-control form-control-user" type="text" name="DNI" id="DNI" placeholder="DNI" required="" value="<%= usuario.DNI %>" required>
+    <% } %>
     </div>
     <div class="col-sm-6">
       <label for="tel">Teléfono:</label>
