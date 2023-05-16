@@ -33,6 +33,7 @@
                                     <tr>
                                       <th scope="col">Nombre</th>
                                       <th scope="col">Raza</th>
+                                      <th scope="col">Edad en meses</th>
                                     </tr>
                                   </thead>
                                   <tbody>
@@ -40,6 +41,7 @@
                                     <tr class="paginate">
                                       <td><%= mascota.nombre %></td>
                                       <td><%= mascota.raza %></td>
+                                      <td><%= calcularEdadMasco(mascota.fecha_nacimiento) %></td>
                                       </tr>
                                       <% }); %>
                                     </tbody>

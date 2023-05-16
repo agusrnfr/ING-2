@@ -353,4 +353,5 @@ module.exports = {
     mostrarMisTurnos,
     cambiarEstadoTurno,
     turnoGuardado,
+    calcularEdadMasco,
 }

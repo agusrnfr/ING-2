@@ -8,8 +8,9 @@ const mostrarCliente = async(req, res) => {
         res.send('no existe ese usuario :(')
         return
     }
+    const { calcularEdadMasco } = require('./turnosController.js');
     const mascotas = await usuario.getMascotas()
-    return res.render('../views/cliente', { usuario: usuario.dataValues, mascotas })
+    return res.render('../views/cliente', { usuario: usuario.dataValues, mascotas , calcularEdadMasco })
 }
 
 const mostrarClienteModificar = async(req, res) => {
