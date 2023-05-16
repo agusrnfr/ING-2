@@ -12,7 +12,7 @@ function convertirNombre(nombre) {
     return palabras.join(" ");
   }
 
-async function validarCampos(mail , pass , name , tel , DNI){
+function validarCampos(mail , pass , name , tel , DNI){
     if(!mail || !pass || !name || !tel || !DNI ){
         console.error('Validacion invalida, campos incompletos');
         return false

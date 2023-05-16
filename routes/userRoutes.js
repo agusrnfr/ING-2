@@ -34,8 +34,8 @@ app.post('/chequear_mail_duplicado', chequear_mail_duplicado)
 
 app.get('/trabajadores', mostrarTrabajadores)
 
-app.get('/modificar_mi_perfil',mostrarModificarPerfil)
-app.post('/modificarMiPerfil', modificarMiPerfil)
+app.get('/modificar_mi_perfil',comprobar_sesion, mostrarModificarPerfil)
+app.post('/modificarMiPerfil', comprobar_sesion, modificarMiPerfil)
 
 //ADOPCION
 app.get('/adopciones',mostrarAdopciones, resultado)
