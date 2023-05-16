@@ -269,7 +269,7 @@ const cambiarEstadoTurno = async (req, res) => { // Cambia el estado del turno y
     if (result[0] === 0) {
         res.status(400).json('No se pudo actualizar el estado del turno'); //ERROR AL ACTUALIZAR EL ESTADO YA SEA PORQUE NO SE ENCONTRO O PORQUE EL ESTADO NO ES PENDIENTE
     } else {
-        /*
+        
         await transporter.sendMail({
             from: '"Estado de turno actualizado" <veterinaria.omd@gmail.com>',
             to: "agusrojastfm@gmail.com", //deberia ser --> to: mailTurno,
@@ -279,7 +279,7 @@ const cambiarEstadoTurno = async (req, res) => { // Cambia el estado del turno y
             .catch(error => {
                 console.log('Error al enviar mail');
             });
-            */
+            
         res.status(200).json('Estado del turno actualizado correctamente');
     }
 }

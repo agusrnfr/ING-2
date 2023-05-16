@@ -24,7 +24,7 @@ const modificarMiPerfil = async(req, res) => {
         { usuario: session.usuario,
           alert:true,
           alertIcon:"error",
-          alertTitle: "contraseña muy corta o campos incompletos",
+          alertTitle: "Contraseña muy corta o campos incompletos",
           alertMessage:"",
           timer: 2000,
           showConfirmButton: false,})

@@ -9,7 +9,7 @@ module.exports = {
       name: 'Lucia Diaz',
       tel: "2116032221",
       DNI: "40227109",
-      pass: '123',
+      pass: '123456789',
       rol: 'admin',
     }], {});
     await queryInterface.bulkInsert('users', [{
@@ -17,7 +17,7 @@ module.exports = {
       name: 'Pedro Perez',
       tel: "2116032267",
       DNI: "31227109",
-      pass: '123',
+      pass: '123456789',
       rol: 'admin',
     }], {});
     await queryInterface.bulkInsert('users', [{
