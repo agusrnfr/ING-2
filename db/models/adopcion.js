@@ -9,11 +9,15 @@ Adopcion.init({
         allowNull: false,
     },
     vacunas: {
-        type: DataTypes.STRING,
+        type: DataTypes.BOOLEAN,
         allowNull: false,
     },
     edad: {
         type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    tipo_edad: {
+        type: DataTypes.STRING,
         allowNull: false,
     },
     sexo: {

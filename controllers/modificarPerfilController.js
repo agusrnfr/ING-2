@@ -1,36 +1,25 @@
 const User = require('../db/models/user.js');
+const session = require('express-session');
 const { convertirNombre } = require('./registerController.js');
 const { validarCampos } = require('./registerController.js');
 
-const mostrarCliente = async(req, res) => {
-    const usuario = await User.findByPk(req.params.id)
+const mostrarModificarPerfil = async(req, res) => {
+    const usuario = await User.findByPk(session.usuario.id)
     if(usuario === null){
-        res.send('no existe ese usuario :(')
+        res.send('No existe tu user, esto no deberia ocurrir')
         return
     }
-    const mascotas = await usuario.getMascotas()
-    return res.render('../views/cliente', { usuario: usuario.dataValues, mascotas })
+    return res.render('../views/modificar_mi_perfil', { usuario: session.usuario })
 }
 
-const mostrarClienteModificar = async(req, res) => {
-    const usuario = await User.findByPk(req.params.id)
-    if(usuario === null){
-        res.send('no existe ese usuario :(')
-        return
-    }
-
-    const mascotas = await usuario.getMascotas()
-    return res.render('../views/modificar_cliente', { usuario: usuario.dataValues, mascotas })
-}
-
-const actualizarUsuario = async(req, res) => {
+const modificarMiPerfil = async(req, res) => {
     const mail = req.body.mail.toLowerCase();
     const name = convertirNombre(req.body.name);
     const tel = req.body.tel;
     const DNI = req.body.DNI;
     const pass = req.body.pass;
 
-    if(await !validarCampos(mail , pass , name , tel , DNI)){
+    if(!validarCampos(mail , pass , name , tel , DNI)){
         return false
     }
     const user = await User.findOne({
@@ -38,15 +27,18 @@ const actualizarUsuario = async(req, res) => {
     });
 
     const user_url = await User.findOne({
-        where: {id: req.params.id}
+        where: {mail: session.usuario.mail}
     });
+
+    console.log(user.mail)
+    console.log(user_url.mail)
 
     if(user && (user_url.mail != mail)){
         console.error('Error al crear usuario,mail duplicado o el usuario no existe');
         return false;
     }
 
-    User.findByPk(req.params.id) // Actualizar usuario
+    User.findByPk(session.usuario.id) // Actualizar usuario
     .then(user => {
       user.mail = mail;
       user.name = name;
@@ -60,8 +52,8 @@ const actualizarUsuario = async(req, res) => {
       const nuevo_usuario = await User.findOne({
         where: { mail: mail }
       });
-  
-      res.render('modificar_cliente.ejs', {
+      session.usuario = nuevo_usuario;
+      res.render('modificar_mi_perfil', {
         usuario: nuevo_usuario,
         alert: true,
         alertTitle: "Perfil actualizado con éxito",
@@ -77,9 +69,7 @@ const actualizarUsuario = async(req, res) => {
 
 }
 
-
 module.exports = {
-    mostrarCliente,
-    mostrarClienteModificar,
-    actualizarUsuario,
+    mostrarModificarPerfil,
+    modificarMiPerfil
 }

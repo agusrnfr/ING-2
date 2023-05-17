@@ -12,6 +12,19 @@ function convertirNombre(nombre) {
     return palabras.join(" ");
   }
 
+async function validarCampos(mail , pass , name , tel , DNI){
+    if(!mail || !pass || !name || !tel || !DNI ){
+        console.error('Validacion invalida, campos incompletos');
+        return false
+    }
+    if(pass.length<8){
+        console.error('Validacion invalida, contraseña muy corta');
+        return false
+    }
+
+    return true
+}
+
 const mostrarRegister = (req,res) =>{
     res.render('register')
 }
@@ -26,18 +39,15 @@ const registrar = async (req, res) => {
     const DNI = req.body.DNI;
     const pass = req.body.pass;
     let rol = req.body.rol;
-    if(!mail || !pass || !name || !tel || !DNI || !rol){
-        console.error('Error al crear usuario,campos incompletos');
-        return
-    }
-    if(pass.length<8){
-        console.error('Error al crear usuario,contraseña muy corta');
-        return
+
+    if(await !validarCampos(mail , pass , name , tel , DNI)){
+        return false
     }
     if (await existe_duplicado(mail)){
         console.error('Error al crear usuario,mail duplicado');
-        return
+        return false
     }
+
     User.create({
         mail:mail,
         name:name,
@@ -93,6 +103,10 @@ const chequear_mail_duplicado = async (req, res) => {
 
 
 module.exports = {
+    //** funciones utiles*/
+    convertirNombre,
+    validarCampos,
+    //*******************/
     registrar,
     mostrarRegister,
     chequear_mail_duplicado,

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include ('header', {tituloweb: '¡Oh my dog! | Contacto Adoptante'}); %>
+</head>
+
+<body id="body">
+    <br><br><br><br><br>
+    <div class="container h-100 mt-4" >
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-lg-12 col-xl-7">
+          <div class="card text-black" style="border-radius: 25px;">
+            <div class="card-body p-md-5">
+              <div class="row justify-content-center">
+                <div class="col-md-10 col-lg-5 col-xl-6 order-2 order-lg-1">
+                    <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Contactar Adoptante</p>
+
+    <form id= "miForm"   action="/contactoAdoptante" method="POST">
+        <div class="row mb-3">
+
+          <label for="color">Nombre y Apellido: </label>
+          <div class="mb-3">
+            <input class="form-control form-control-user" 
+                   type="text" 
+                   name="nombre" 
+                   id="nombre" 
+                   placeholder="Ej: Juan Perez" 
+                   value="<%= nombre %>"
+                   required="">
+          </div>
+          
+          <label for="color">Telefono: </label>
+          <div class="mb-3">
+            <input class="form-control form-control-user" 
+                   name="telefono" 
+                   type="number" 
+                   id="telefono" 
+                   placeholder="Numero de telefono" 
+                   value="<%= telefono %>"
+                   required="">
+          </div>
+          
+          <label for="color">Mail: </label>
+          <div class="mb-3">
+            <input class="form-control form-control-user" 
+                   name="mail" 
+                   type="email" 
+                   id="mail" 
+                   placeholder="Mail de contacto" 
+                   value="<%= mail %>"
+                   required="">
+          </div>
+
+          <label for="color">Motivos para adoptar: </label>
+          <div class="mb-3">
+          <textarea class="form-control form-control-user" name="motivos" id="motivos" 
+           placeholder="Escribe los motivos para adoptar " rows="5" cols="30"></textarea></div>
+
+
+        </div>
+        <button class="btn btn-primary d-block btn-user w-100" name="Ingresar" type="submit">Enviar mail</button>
+
+    </div>
+    <div class="col-md-10 col-lg-6 col-xl-6 d-flex align-items-center order-1 order-lg-2 justify-content-center">
+        <img src="/img/perriflor.png" width="300px">
+    </div>
+
+    <style>
+        @media only screen and (max-width: 900px) {
+          img {
+            display: none;
+          }
+          div {
+            display: block;
+          }
+        }
+      </style>
+</div>
+<hr>
+</form>
+<div class="text-center"><a class="small" href="/">Volver</a></div>
+</div>
+</div>
+    </div>
+</div>
+</div>
+</div>
+<br><br>
+
+
+</body>
+
+
+<!-- Script que verifica que ningun campo quede en blanco-->
+<script>
+ const form = document.getElementById('miForm');
+ form.addEventListener('submit', (event) => {
+   const nombreyA = document.getElementById('nombre').value;
+   const telefono = document.getElementById('telefono').value;
+   const mail = document.getElementById('mail').value;
+
+ 
+   if (!nombre || !telefono|| !mail  ) {
+     event.preventDefault(); // Evita que se envíe el formulario
+     alert('Por favor complete todos los campos solicitados.');
+   }
+ });
+ 
+</script>
+
+</div>
+<%- include ('sweet-alert') %>
+</body>
+
+</html>

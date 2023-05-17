@@ -24,7 +24,7 @@
                   <div class="mb-3"><input class="form-control form-control-user" type="text" name="name"
                       placeholder="Nombre completo" required=""></div>
                   <div class="row mb-3">
-                    <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" name="pass"
+                    <div class="mb-3"><input class="form-control form-control-user" name="pass"
                         type="password" id="password" placeholder="Contraseña" required=""></div>
                     <div class="col-sm-6">
                      
@@ -38,19 +38,24 @@
                     </div>
                   </div>
                   <div class="row mb-3">
-                    <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="text"
-                        name="DNI" id="DNI" placeholder="DNI" required=""></div>
-                    <div class="col-sm-6"><input class="form-control form-control-user" type="tel" name="tel"
-                        id="tel" placeholder="Telefono" required=""></div>
+
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                      <input class="form-control form-control-user" type="text" name="DNI" id="DNI" placeholder="DNI" pattern="[0-9]{8}" title="Por favor ingrese un número DNI valido" required="">
+                    </div>
+
+                    <div class="col-sm-6">
+                      <input class="form-control form-control-user" type="text" name="tel" id="tel" placeholder="Telefono" required="">
+                    </div>
+
                   </div>
-                  <div class="row mb-3">
+
+                  <div class="row mb-2">
                     <div class="error-container" style="height: 30px; margin-bottom: 20px;">
                       <p id="emailDuplicateErrorMsg" class="text-danger" style="display: none;">Paragraph</p>
                       <p id="emailErrorMsg" class="text-danger" style="display: none;">Paragraph</p>
                       <p id="passwordErrorMsg" class="text-danger" style="display: none;">Paragraph</p>
                     </div>
-                  </div><button class="btn btn-primary d-block btn-user w-100" id="submitBtn"
-                    type="submit">Registrar</button>
+                  </div><button class="btn btn-primary d-block btn-user w-100" id="submitBtn" type="submit" disabled>Registrar</button>
                   <hr>
 
                 </form>
@@ -71,7 +76,20 @@
 
 </body>
 
+<!-- script telefono -->
+<script>
+  const telInput = document.getElementById('tel');
 
+  telInput.addEventListener('input', function() {
+    let telValue = this.value.replace(/\D/g, ''); // Eliminar cualquier carácter que no sea un número
+    telValue = telValue.substring(0, 10); // Limitar la cantidad máxima de caracteres a 15 (por ejemplo, para evitar que el usuario ingrese números de teléfono demasiado largos)
+    
+    const telFormatted = telValue.replace(/^(\d{2})(\d{4})(\d{4})$/, '$1$2$3'); // No agregar guiones
+    //const telFormatted = telValue.replace(/^(\d{2})(\d{4})(\d{5})$/, '+$1-$2-$3'); // Agregar los guiones en el formato deseado
+
+    this.value = telFormatted;
+  });
+</script>
 
 
 <!-- SCRIPT -->
@@ -120,7 +138,7 @@
     if (password.value.length >= 8)
       hideErrorMsg("password")
     else
-      displayErrorMsg("password", "La contraseña debe contener al menos 8 caracteres")
+      displayErrorMsg("password", "La contraseña debe tener 8 caracteres o mas")
   });
 
 
@@ -143,7 +161,7 @@
       const data = await response.json();
 
       if (data.exists) {
-        displayErrorMsg("email", "El correo electrónico ya está en uso");
+        displayErrorMsg("email", "El correo electrónico ya esta en uso");
       } else {
         hideErrorMsg("email");
         document.getElementById("emailDuplicateErrorMsg").style.display = "none";
@@ -153,6 +171,9 @@
       displayErrorMsg("email", "Correo invalido");
     }
   });
+
+
+
 
 </script>
 </div>

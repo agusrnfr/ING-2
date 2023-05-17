@@ -14,20 +14,15 @@ const validarLogin = async (req, res) => {
         const mail = req.body.mail;
         const pass = req.body.pass;
 
-        //campos incompletos
-        if (!mail || !pass) {
+        if (!mail || !pass) {//campos incompletos
             return;
         }
-
-        //buscar el usuario en la base de datos
         const usuarioEncontrado = await User.findOne({
             where: {
                 mail: mail,
                 pass: pass
             }
         });
-
-        //no existe ese usuario con esa contraseña
         if (!usuarioEncontrado) {
             res.render('login', {
                 alert: true,
@@ -59,6 +54,12 @@ const validarLogin = async (req, res) => {
     }
 };
 
+const deslogear = async (req, res) => {
+    if (session.loggedin) {
+        session.loggedin = false
+    }
+    res.redirect('/')
+};
 
 /**
  * MIDDLEWARE comprobar sesion:
@@ -86,12 +87,6 @@ const comprobar_sesion_admin = (req, res, next) => {
     res.redirect('/');
     }
 }
-const deslogear = async (req, res) => {
-    if (session.loggedin) {
-        session.loggedin = false
-    }
-    res.redirect('/')
-};
 
 module.exports = {
     validarLogin,
