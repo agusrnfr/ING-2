@@ -43,7 +43,7 @@ module.exports = {
       banda_horaria: 'Tarde',
       estado: 'Rechazado',
       practica: 'Vacuna A',
-      motivoDeRechazo: 'No se puede vacunar porque tiene una enfermedad',
+      motivoDeRechazo: '',
       UserId: 7,
       MascotumId: 10,
     }], {});
@@ -64,7 +64,7 @@ module.exports = {
       UserId: 3,
       MascotumId: 1,
     }], {});
-    for (let i = 0; i < 2; i++) {
+  /*  for (let i = 0; i < 2; i++) {
       let dueño = faker.datatype.number({ min: 3, max: 10 });
       if (excludeList.includes(dueño)) continue; // valido si el dueño está en la lista de exclusiones
       let mascota = await Mascota.findAll({ where: { UserId: dueño } });
@@ -76,9 +76,10 @@ module.exports = {
         practica: faker.random.arrayElement(['Consulta general', 'Vacuna A', 'Vacuna B', 'Desparasitacion', 'Castracion']),
         UserId: dueño,
         MascotumId: faker.random.arrayElement(mascota).id,
+        motivoDeRechazo:
       }], {});
     }
-      
+      */
   },
 
   down: async (queryInterface, Sequelize) => {

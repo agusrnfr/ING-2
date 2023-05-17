@@ -178,9 +178,10 @@ const mostrarTodosLosTurnos = async (req, res) => { // Muestra todos los turnos
                 { model: User, as: 'User', attributes: ['name', 'mail'] }]
         });
         const data = turnos.map(turno => {
+            const fechaHoraZonaHoraria = moment.tz(turno.fecha, 'America/Argentina/Buenos_Aires');
             return {
                 id: turno.id,
-                fecha: turno.fecha,
+                fecha: fechaHoraZonaHoraria.format('DD/MM/YYYY HH:mm'),
                 banda_horaria: turno.banda_horaria,
                 estado: turno.estado,
                 practica: turno.practica,
@@ -188,7 +189,8 @@ const mostrarTodosLosTurnos = async (req, res) => { // Muestra todos los turnos
                 MascotumId: turno.MascotumId,
                 nombre: turno['Mascotum.nombre'],
                 user: turno['User.name'],
-                mailUser: turno['User.mail']
+                mailUser: turno['User.mail'],
+                motivoDeRechazo: turno.motivoDeRechazo
             };
         }).sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
         res.render('turnos_listado.ejs', { data });
@@ -206,14 +208,16 @@ const mostrarMisTurnos = async (req, res) => { // Muestra los turnos del usuario
             where: { UserId: session.usuario.id }
         })
         const data = turnos.map(turno => {
+            const fechaHoraZonaHoraria = moment.tz(turno.fecha, 'America/Argentina/Buenos_Aires');
             return {
                 id: turno.id,
-                fecha: turno.fecha,
+                fecha: fechaHoraZonaHoraria.format('DD/MM/YYYY HH:mm'),
                 banda_horaria: turno.banda_horaria,
                 estado: turno.estado,
                 practica: turno.practica,
                 MascotumId: turno.MascotumId,
                 nombre: turno['Mascotum.nombre'],
+                motivoDeRechazo: turno.motivoDeRechazo
             };
         }).sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
         res.render('turnos_listado_cliente.ejs', { data });
@@ -299,8 +303,8 @@ const turnoGuardado = async (req, res) => { // Muestra la alerta de que se guard
                 alertTitle: "Solicitud exitosa",
                 alertMessage: mensajeDecodificado,
                 alertIcon: "success",
-                showConfirmButton: true,
-                timer: 1500,
+                showConfirmButton: false,
+                timer: 2000,
             });
         }
         else if (success == 'false') {
@@ -310,8 +314,8 @@ const turnoGuardado = async (req, res) => { // Muestra la alerta de que se guard
                 alertTitle: "Error",
                 alertMessage: mensajeDecodificado,
                 alertIcon: "error",
-                showConfirmButton: true,
-                timer: false,
+                showConfirmButton: false,
+                timer: 2000,
             });
         }
     }
@@ -323,27 +327,11 @@ const turnoGuardado = async (req, res) => { // Muestra la alerta de que se guard
             alertTitle: "Error",
             alertMessage: mensajeDecodificado,
             alertIcon: "error",
-            showConfirmButton: true,
-            timer: false,
+            showConfirmButton: false,
+            timer: 2000,
         });
     }
 }
-
-/* ATENCION, PARA MOSTRAR LA HORA CORRECTA QUE SE LE SETEO A UN TURNO HAY QUE HACER LO SIGUIENTE, YA QUE EN LA BD NO SE TIENE EL HORARIO LOCAL, SINO QUE SE TIENE EL HORARIO UTC
-const moment = require('moment-timezone');
-
-// fechaHora es la fecha y hora almacenada en la base de datos
-const fechaHora = '2022-05-12T15:30:00';
-
-// Convertir a la zona horaria deseada
-const fechaHoraZonaHoraria = moment.tz(fechaHora, 'America/Argentina/Buenos_Aires');
-
-// Formatear la fecha y hora en el formato deseado (por ejemplo, DD/MM/YYYY HH:mm:ss)
-const fechaHoraFormateada = fechaHoraZonaHoraria.format('DD/MM/YYYY HH:mm:ss');
-
-// Mostrar la fecha y hora formateada
-console.log(fechaHoraFormateada); // Salida: "12/05/2022 15:30:00"
-*/
 
 module.exports = {
     verificaciones,
