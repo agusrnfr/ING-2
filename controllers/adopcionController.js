@@ -234,11 +234,11 @@ const contactoAdoptante = async (req, res) => {
       alertIcon: 'success',
       showConfirmButton: false,
       timer: 1500,
-      ruta: 'adopciones',
+      ruta: 'adopciones',  
     });
     await transporter.sendMail({
       from: '"Me interesa adoptar" <veterinaria.omd@gmail.com>',
-      to: "laura.cuenca1@gmail.com", //deberia ser --> to: mailTurno,
+      to: "agusrojastfm@gmail.com", //deberia ser --> to: mailTurno,
       subject: "Me interesa adoptar a su perro",
       text: "Hola que tal? Me llamo "+ nombre + " me interesa adoptar a " + mascota +" que publico .Mi mail es: "+ mail + " ,mi telefono es " + telefono+ "y mis motivos para adoptarlo son: "+motivos,
       })
