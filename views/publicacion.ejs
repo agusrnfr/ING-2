@@ -16,7 +16,7 @@
             <div class="row justify-content-center">
               <div class="col-md-10 col-lg-5 col-xl-6 order-2 order-lg-1">
 
-                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Realiza tu publicacion</p>
+                <p class="text-center h1 fw-bold mb-5 mt-4">Realiza tu publicacion</p>
                 <form id= "myForm" action="/publicacion" method="POST">
 
                   <div class="row mb-3">
@@ -32,13 +32,17 @@
                             <option value="meses">Meses</option>
                             <option value="años">Años</option>
                           </select>
+                          <p id="mensajeMaximo" style="display: none; color: black;">El número máximo permitido es 11.</p>
+                          <p id="mensajeError" style="display: none; color: red;">El valor máximo permitido para meses es 11.</p>
                           <br>
                           <input class="form-control form-control-user" type="number" name="edad" id="edad" placeholder="Escribe la edad, solo el num" required="" min="1">
                         </div>
 
                         <label for="raza">Raza de la mascota:</label>
                         <div class="mb-3"><input class="form-control form-control-user" type="text" name="raza" id="raza"
-                          placeholder="Escribe la raza" required=""></div>
+                          placeholder="Escribe la raza" required="">
+                          <div id="mensajeError" style="display: none; color: red;">Por favor complete todos los campos solicitados.</div>
+                        </div>
 
                         <label for="color">Color de la mascota:</label>
                         <div class="mb-3"><input class="form-control form-control-user" type="text" name="color" id="color"
@@ -66,7 +70,7 @@
                           </select>
                         </div>
 
-                          <label for="caracteristicas">Caracteristicas adicionales :</label>
+                          <label for="caracteristicas">Caracteristicas adicionales : (opcional)</label>
                           <div class="mb-3">
                             <textarea class="form-control form-control-user" name="caracteristicas" id="caracteristicas" placeholder="Escribe las características" rows="5" cols="30"></textarea>
                           </div>
@@ -76,12 +80,12 @@
                   <hr>
 
                 </form>
-                <div class="text-center"><a class="small" href="/">Volver</a></div>
+                <div class="text-center"><a class="small" href="/adopciones">Volver</a></div>
               </div>
               <div
                 class="col-md-10 col-lg-6 col-xl-6 d-flex align-items-center order-1 order-lg-2 justify-content-center">
 
-                <img src="/img/perro_taza.png" width="350px" class="img-fluid" alt="Sample image">
+                <img src="/img/perricontento.png" width="300px" class="img-fluid" alt="Sample image" style="margin-top: -350px;">
 
               </div>
             </div>
@@ -99,6 +103,9 @@
 const form = document.getElementById('myForm');
 const edadInput = document.getElementById('edad');
 const tipoEdadInput = document.getElementById('tipo_edad');
+const mensajeMaximo = document.getElementById('mensajeMaximo');
+const mensajeError = document.getElementById('mensajeError');
+
 
 form.addEventListener('submit', (event) => {
   const nombre = document.getElementById('nombre').value;
@@ -112,7 +119,20 @@ form.addEventListener('submit', (event) => {
 
   if (!nombre || !edad || !raza || !color || !sexo || !origen || !vacunas || !tipo_edad) {
     event.preventDefault();
-    alert('Por favor complete todos los campos solicitados.');
+    mensajeError.style.display = 'block'; // Mostrar el mensaje de error
+  }
+});
+
+tipoEdadInput.addEventListener('change', () => {
+  const tipo_edad = tipoEdadInput.value;
+
+  if (tipo_edad === 'meses') {
+    mensajeMaximo.style.display = 'block';
+    mensajeError.style.display = 'none';
+    edadInput.value = ''; // Limpiar el campo de edad
+  } else {
+    mensajeMaximo.style.display = 'none';
+    mensajeError.style.display = 'none';
   }
 });
 
@@ -121,8 +141,12 @@ edadInput.addEventListener('input', () => {
   const tipo_edad = tipoEdadInput.value;
 
   if (tipo_edad === 'meses' && edad > 11) {
-    alert('El valor máximo permitido para meses es 11.');
+    mensajeMaximo.style.display = 'none';
+    mensajeError.style.display = 'block';
     edadInput.value = ''; // Limpiar el campo de edad si es mayor a 11 meses
+  } else {
+    mensajeMaximo.style.display = 'none';
+    mensajeError.style.display = 'none';
   }
 });
   

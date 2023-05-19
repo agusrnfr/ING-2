@@ -172,8 +172,8 @@ h3 {
 .card-img-top {
     display: block;
     margin: 0 auto;
-    max-width: 250px;
-    max-height: 250px;
+    max-width: 300px;
+    max-height: 300px;
 }
 
 .card-body {

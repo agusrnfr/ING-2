@@ -8,8 +8,6 @@
     <%- include ('header', {tituloweb: '¡Oh my dog! | Adopciones'}); %>
 </head>
 <body id="body">
-<br><br><br><br>
-<br>
 
 <% if (session && session.usuario && session.loggedin) { %>
   <div class="container text-end">
@@ -29,10 +27,11 @@
               <!-- Boton Cambiar Estado -->
               <% if (session.usuario && session.usuario.id === adopcion.UserId) { %>
                 <a id="adopto <%= adopcion.id %>" class="btn btn-primary mx-2 <% if (adopcion.se_adopto) { %> disabled <% } %>" 
-                  onclick="cambiarEstado(this, '<%= adopcion.id %>', '<%= adopcion.se_adopto ? true : false %>')">
-                  <%= adopcion.se_adopto ? 'Adoptado' : 'Cambiar Estado' %>
+                  onclick="cambiarEstado('adopto <%= adopcion.id %>', '<%= adopcion.id %>', '<%= adopcion.se_adopto ? true : false %>')">
+                  <span id="texto-adopto <%= adopcion.id %>"><%= adopcion.se_adopto ? 'Adoptado' : 'Cambiar Estado' %></span>
                 </a>
               <% } %>
+
 
               <h5 class="card-title d-flex justify-content-between align-items-center">
                 <%= adopcion.nombre %> <span class="emoji">&#x1F43E;</span>
@@ -43,15 +42,15 @@
             <p class="card-text">Color: <%= adopcion.color %></p>
             <p class="card-text">Sexo: <%= adopcion.sexo %></p>
             <p class="card-text">Origen: <%= adopcion.origen %></p>
-            <p class="card-text">Vacunas: <%= adopcion.vacunas %></p>
+            <p class="card-text">Vacunas: <%= adopcion.vacunas ? "Si" : "No"%> </p>
             <p class="card-text">Caracteristicas : <%= adopcion.caracteristicas %></p>
-            <p class="card-text">
+            <p class="card-text" id="parrafo-<%= adopcion.id %>">
               <%= adopcion.se_adopto ? "Adoptado" : " Por adoptar " %>
             </p>
 
             <% if (!session.usuario || (session.usuario && session.usuario.id !== adopcion.UserId)) { %>
               <% if (!adopcion.se_adopto) { %>
-                <a href="/contactoAdoptante" class="btn btn-primary">Contactar</a>
+                <a href="/contactoAdoptante?idAdopcion=<%= adopcion.id %>" class="btn btn-primary">Contactar</a>
               <% } %>
             <% } %>
 
@@ -67,14 +66,12 @@
 
  <div class="text-center"><a class="small" href="/table">Volver</a></div>
 
- <script>
-  async function cambiarEstado(boton, adopcionId, seAdopto) {
+<script>
+  async function cambiarEstado(elementId, adopcionId, seAdopto) {
     console.log(seAdopto);
     const url = '/adopcion/seAdopto';
     const nuevoEstado = !JSON.parse(seAdopto); // Cambia el estado actual al nuevo estado
     try {
-      console.log(boton.disabled)
-
       // Envía la solicitud AJAX al servidor para actualizar el estado en la base de datos
       const response = await fetch(url, {
         method: 'POST',
@@ -84,14 +81,21 @@
         }
       });
   
-  if (response.ok) {
-    boton.innerHTML = nuevoEstado ? 'Adoptado' : 'Cambiar Estado';
-    console.log(boton);
-    boton.disabled = true; // Deshabilita el botón para que no se pueda hacer clic nuevamente
-    console.log(boton.disabled);
-    }
+      if (response.ok) {
+       console.log(nuevoEstado);
+       const textoBoton = document.getElementById(`texto-${elementId}`);
+      textoBoton.innerHTML = nuevoEstado ? 'Adoptado' : 'Cambiar Estado';
 
+      const parrafo = document.getElementById(`parrafo-${adopcionId}`);
+      parrafo.innerHTML = nuevoEstado ? 'Adoptado' : 'Por adoptar';
 
+  // Deshabilitar el botón
+      const boton = document.getElementById(elementId);
+     if (boton) {
+    boton.classList.add('disabled');
+    boton.removeAttribute('onclick');
+  }
+}
       const data = await response.json();
       console.log('Respuesta del servidor:', data);
   
@@ -101,55 +105,8 @@
   }
   </script>
 
-<script>
-  async function cambiarEstado(boton, adopcionId, seAdopto) {
-  console.log(seAdopto);
-  const url = '/adopcion/seAdopto';
-  const nuevoEstado = !JSON.parse(seAdopto); // Cambia el estado actual al nuevo estado
-  try {
-    console.log(boton.disabled);
 
-    // Deshabilita el botón antes de realizar la solicitud fetch
-    boton.disabled = true;
-
-    // Envía la solicitud AJAX al servidor para actualizar el estado en la base de datos
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify({ id: adopcionId, se_adopto: nuevoEstado }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(response => {
-        if (response.ok) {
-          boton.innerHTML = nuevoEstado ? 'Adoptado' : 'Cambiar Estado';
-          console.log(boton);
-        } else {
-          // En caso de error, habilita el botón nuevamente
-          boton.disabled = false;
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('Respuesta del servidor:', data);
-      })
-      .catch(error => {
-        console.error('Error al realizar la solicitud:', error);
-        // En caso de error, habilita el botón nuevamente
-        boton.disabled = false;
-      });
-  } catch (error) {
-    console.error('Error al realizar la solicitud:', error);
-    // En caso de error, habilita el botón nuevamente
-    boton.disabled = false;
-  }
-}
-  </script>
-
-
-
-    <%- include ('sweet-alert') %>
+ <%- include ('sweet-alert') %>
 </body>
 
 </html>
-
