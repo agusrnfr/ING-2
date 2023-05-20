@@ -68,7 +68,6 @@
 
 <script>
   async function cambiarEstado(elementId, adopcionId, seAdopto) {
-    console.log(seAdopto);
     const url = '/adopcion/seAdopto';
     const nuevoEstado = !JSON.parse(seAdopto); // Cambia el estado actual al nuevo estado
     try {
@@ -82,7 +81,6 @@
       });
   
       if (response.ok) {
-       console.log(nuevoEstado);
        const textoBoton = document.getElementById(`texto-${elementId}`);
       textoBoton.innerHTML = nuevoEstado ? 'Adoptado' : 'Cambiar Estado';
 
@@ -97,7 +95,6 @@
   }
 }
       const data = await response.json();
-      console.log('Respuesta del servidor:', data);
   
     } catch (error) {
       console.error('Error al realizar la solicitud:', error);

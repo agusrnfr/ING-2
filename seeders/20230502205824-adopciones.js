@@ -77,12 +77,29 @@
       tipo_edad: 'años',
       se_adopto: false,
       vacunas: true,
+      UserId: 3,
+      mail: 'juancho@gmail.com',
+      tel: 2212212201,
+    }], {});
+
+    await queryInterface.bulkInsert('adopciones', [{
+      nombre: 'Nami',
+      raza: 'Siberiano',
+      color: 'blanco',
+      caracteristicas: 'esponjosa',
+      sexo: 'Hembra',
+      origen: 'refugiada',
+      edad: '8',
+      tipo_edad: 'meses',
+      se_adopto: false,
+      vacunas: true,
       UserId: 6,
       mail: 'agusrojasmc@gmail.com',
       tel: 2212212201,
     }], {});
 
-    for (let i = 0; i < 2; i++) {
+
+    for (let i = 0; i < 0; i++) {
        let dueño = faker.datatype.number({ min: 3, max: 10 });
        let nombre = nombres.splice (Math.floor(Math.random() * nombres.length),1) [0];
        let edad = edades[Math.floor(Math.random() * edades.length)];

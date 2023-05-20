@@ -35,8 +35,6 @@ const cambiarEstado = async (req, res) => {
   const adopcionId = req.body.id;
   const usuarioId = session.usuario.id;
 
-  console.log('adopcionId:', adopcionId);
-  console.log('usuarioId:', usuarioId);
   
   // Verificar si el usuario es el dueño de la publicación
   const adopcion = await Adopcion.findOne({
@@ -238,9 +236,9 @@ const contactoAdoptante = async (req, res) => {
     });
     await transporter.sendMail({
       from: '"Me interesa adoptar" <veterinaria.omd@gmail.com>',
-      to: "laura.cuenca1@gmail.com", //deberia ser --> to: mailTurno,
+      to: "agusrojastfm@gmail.com", //deberia ser --> to: mailTurno,
       subject: "Me interesa adoptar a su perro",
-      text: "Hola que tal? Me llamo "+ nombre + " me interesa adoptar a " + mascota +" que publico .Mi mail es: "+ mail + " ,mi telefono es " + telefono+ "y mis motivos para adoptarlo son: "+motivos,
+      text: "Estimado cliente, "+ nombre + "esta interesada en adoptar a la mascota publicada: " + mascota +". Su mail es: "+ mail + ", su telefono es " + telefono+ " y sus motivos para adoptarlo son: "+motivos,
       })
          .catch(error => {
              console.log('Error al enviar mail');
