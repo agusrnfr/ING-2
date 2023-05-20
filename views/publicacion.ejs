@@ -35,13 +35,13 @@
                           <p id="mensajeMaximo" style="display: none; color: black;">El número máximo permitido es 11.</p>
                           <p id="mensajeError" style="display: none; color: red;">El valor máximo permitido para meses es 11.</p>
                           <br>
-                          <input class="form-control form-control-user" type="number" name="edad" id="edad" placeholder="Escribe la edad, solo el num" required="" min="1">
+                          <input class="form-control form-control-user" type="number" name="edad" id="edad" placeholder="Escribe la edad, solo el num" required min=1>
                         </div>
 
                         <label for="raza">Raza de la mascota:</label>
                         <div class="mb-3"><input class="form-control form-control-user" type="text" name="raza" id="raza"
                           placeholder="Escribe la raza" required="">
-                          <div id="mensajeError" style="display: none; color: red;">Por favor complete todos los campos solicitados.</div>
+                          
                         </div>
 
                         <label for="color">Color de la mascota:</label>
@@ -74,6 +74,8 @@
                           <div class="mb-3">
                             <textarea class="form-control form-control-user" name="caracteristicas" id="caracteristicas" placeholder="Escribe las características" rows="5" cols="30"></textarea>
                           </div>
+
+                  <div id="mensajeError" style="display: none; color: red;">Por favor complete todos los campos solicitados.</div>        
 
                   </div><button class="btn btn-primary d-block btn-user w-100" id="submitBtn"
                     type="submit">Publicar</button>

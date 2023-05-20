@@ -235,10 +235,10 @@ const contactoAdoptante = async (req, res) => {
       ruta: 'adopciones',
     });
     await transporter.sendMail({
-      from: '"Me interesa adoptar" <veterinaria.omd@gmail.com>',
+      from: '"Interes en adopcion" <veterinaria.omd@gmail.com>',
       to: "agusrojastfm@gmail.com", //deberia ser --> to: mailTurno,
-      subject: "Me interesa adoptar a su perro",
-      text: "Estimado cliente, "+ nombre + "esta interesada en adoptar a la mascota publicada: " + mascota +". Su mail es: "+ mail + ", su telefono es " + telefono+ " y sus motivos para adoptarlo son: "+motivos,
+      subject: "Interes en adopcion",
+      text: "Estimado cliente, "+ nombre + " esta interesado en adoptar a la mascota publicada: " + mascota +". Su mail es: "+ mail + ", su telefono es " + telefono+ " y sus motivos para adoptarlo son: "+motivos,
       })
          .catch(error => {
              console.log('Error al enviar mail');

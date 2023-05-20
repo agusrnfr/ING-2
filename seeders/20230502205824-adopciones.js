@@ -77,8 +77,8 @@
       tipo_edad: 'años',
       se_adopto: false,
       vacunas: true,
-      UserId: 3,
-      mail: 'juancho@gmail.com',
+      UserId: 6,
+      mail: 'agusrojasmc@gmail.com',
       tel: 2212212201,
     }], {});
 
