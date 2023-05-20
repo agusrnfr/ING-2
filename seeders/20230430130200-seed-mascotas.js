@@ -65,7 +65,7 @@ module.exports = {
       fecha_nacimiento: moment().clone().subtract(1, 'months').toDate(),
       observaciones: 'Es muy cariñoso y le gusta jugar con la pelota',
       foto: null,
-      UserId: 4, //AGUSTIN
+      UserId: 3, //JUANCHO
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Rudo',
@@ -103,7 +103,7 @@ module.exports = {
       foto: null,
       UserId: 8,
     }], {});
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 0; i++) {
       const today = new Date();
       const minDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
       await queryInterface.bulkInsert('mascotas', [{
