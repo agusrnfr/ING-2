@@ -75,7 +75,7 @@
                             <textarea class="form-control form-control-user" name="caracteristicas" id="caracteristicas" placeholder="Escribe las características" rows="5" cols="30"></textarea>
                           </div>
 
-                  <div id="mensajeError" style="display: none; color: red;">Por favor complete todos los campos solicitados.</div>        
+                          <span id="mensaje" style="color: red;"></span>        
 
                   </div><button class="btn btn-primary d-block btn-user w-100" id="submitBtn"
                     type="submit">Publicar</button>
@@ -121,7 +121,8 @@ form.addEventListener('submit', (event) => {
 
   if (!nombre || !edad || !raza || !color || !sexo || !origen || !vacunas || !tipo_edad) {
     event.preventDefault();
-    mensajeError.style.display = 'block'; // Mostrar el mensaje de error
+    const mensajeElemento = document.getElementById('mensaje');
+     mensajeElemento.textContent = 'Por favor complete todos los campos solicitados.';
   }
 });
 

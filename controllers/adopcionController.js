@@ -225,6 +225,7 @@ const contactoAdoptante = async (req, res) => {
       nombre:"",
       mail:"",
       telefono: "",
+      session: session,
       adopcion: adopcion,
       alert: true,
       alertTitle: 'Mail Enviado!',
