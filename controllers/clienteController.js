@@ -78,38 +78,57 @@ const actualizarUsuario = async(req, res) => {
 
 }
 
-const actualizarPasswordUsuario = async(req, res) => {
-  const pass = req.body.pass;
-  if(!pass){
-    return false
-  }
-  const user = await User.findOne({
-    where: {id: req.params.id}
-  });
-
-  if(user == null){
-    console.error('Error al crear usuario, el usuario no existe');
+const actualizarPasswordUsuario = async (req, res) => {
+  const antiguaPass = req.body.pass;
+  const nuevaPass = req.body.pass2;
+  if (!nuevaPass || !antiguaPass) {
+    console.error('Campos incompletos');
     return false;
   }
-try{
-  User.findByPk(req.params.id) // Actualizar usuario
-  .then(user => {
-    user.pass = pass;
-    return user.save();
-  })
-    res.render('modificar_cliente.ejs', {
-      usuario: user,
-      alert: true,
-      alertTitle: "Perfil actualizado con éxito",
-      alertMessage: "",
-      alertIcon: "success",
-      showConfirmButton: false,
-      timer: 2000,
-    });
-  }catch(error){
-    console.error("error al actualizar");
+  const usuario = User.findOne({
+    where: { id: req.params.id }
+  });
+
+  if (usuario == null) {
+    console.error('Error, el usuario no existe');
+    return false;
   }
-}
+
+  try {
+    User.findByPk(req.params.id) // Actualizar usuario
+      .then(user => {
+        if (user.pass != antiguaPass) {
+          res.render('modificar_password_cliente.ejs', {
+            usuario: usuario,
+            alert: true,
+            alertTitle: 'La contraseña anterior es incorrecta',
+            alertMessage: '',
+            alertIcon: 'error',
+            showConfirmButton: false,
+            timer: 2000
+          });
+          return false;
+        }
+        // La contraseña es correcta, actualizarla
+        user.pass = nuevaPass;
+        user.save().then(() => {
+          res.render('modificar_password_cliente.ejs', {
+            usuario: usuario,
+            alert: true,
+            alertTitle: 'Perfil actualizado con éxito',
+            alertMessage: '',
+            alertIcon: 'success',
+            showConfirmButton: false,
+            timer: 2000
+          });
+        });
+      });
+  } catch (error) {
+    console.error('Error al actualizar la contraseña del cliente');
+    console.error(error);
+  }
+};
+
 
 const mostrarClienteModificarPassword = async(req, res) => {
   const usuario = await User.findByPk(req.params.id)
