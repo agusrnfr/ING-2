@@ -7,7 +7,7 @@ const { mostrarIndex } = require('../controllers/indexController');
 const { comprobar_sesion, comprobar_sesion_admin } = require('../controllers/loginController');
 const { verificaciones, solicitarTurno, mostrarTodosLosTurnos, mostrarMisTurnos, cambiarEstadoTurno, guardarTurno, turnoGuardado } = require('../controllers/turnosController');
 const { mostrarAgregarMascota, registrarMascota } = require('../controllers/mascotasController');
-const { mostrarCliente , mostrarClienteModificar , actualizarUsuario } = require('../controllers/clienteController')
+const { mostrarCliente , mostrarClienteModificar , actualizarUsuario , actualizarPasswordUsuario , mostrarClienteModificarPassword } = require('../controllers/clienteController')
 const { mostrarModificarPerfil , modificarMiPerfil } = require('../controllers/modificarPerfilController');
 const { mostrarAdopciones, cambiarEstado, mostrarPublicacion, guardarPublicacion, mostrarContacto, contactoAdoptante} = require('../controllers/adopcionController');
 
@@ -60,7 +60,9 @@ app.post('/agregar_mascota/cliente/:id', registrarMascota)
 //VER CLIENTE
 app.get('/ver_cliente/:id', comprobar_sesion_admin, mostrarCliente)
 app.get('/modificar/cliente/:id', comprobar_sesion_admin, mostrarClienteModificar)
+app.get('/modificar/cliente/password/:id', mostrarClienteModificarPassword)
 app.post('/modificar/cliente/:id',comprobar_sesion_admin, actualizarUsuario)
+app.post('/modificar/cliente/password/:id',comprobar_sesion_admin, actualizarPasswordUsuario)
 
 module.exports = app;
 
