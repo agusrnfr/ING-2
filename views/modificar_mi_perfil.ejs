@@ -39,7 +39,7 @@
       <label for="DNI">DNI*:</label>
 
       <% if (usuario.rol === 'cliente'){%>
-        <input class="form-control form-control-user" type="text" name="DNI" id="DNI" placeholder="DNI" required="" value="<%= usuario.DNI %>" required readonly style="background-color: #f1f1f1; cursor: not-allowed;">
+        <input class="form-control form-control-user" type="text" name="DNI" id="DNI" placeholder="DNI" required="" value="<%= usuario.DNI %>" required>
         <% } else { %>
           <input class="form-control form-control-user" type="text" name="DNI" id="DNI" placeholder="DNI" required="" value="<%= usuario.DNI %>" required>
     <% } %>
