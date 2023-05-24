@@ -8,7 +8,7 @@ const { comprobar_sesion, comprobar_sesion_admin } = require('../controllers/log
 const { verificaciones, solicitarTurno, mostrarTodosLosTurnos, mostrarMisTurnos, cambiarEstadoTurno, guardarTurno, turnoGuardado } = require('../controllers/turnosController');
 const { mostrarAgregarMascota, registrarMascota } = require('../controllers/mascotasController');
 const { mostrarCliente , mostrarClienteModificar , actualizarUsuario , actualizarPasswordUsuario , mostrarClienteModificarPassword } = require('../controllers/clienteController')
-const { mostrarModificarPerfil , modificarMiPerfil } = require('../controllers/modificarPerfilController');
+const { mostrarModificarPerfil , modificarMiPerfil , mostrarModificarMiPassword, modificarMiPassword} = require('../controllers/modificarPerfilController');
 const { mostrarAdopciones, cambiarEstado, mostrarPublicacion, guardarPublicacion, mostrarContacto, contactoAdoptante} = require('../controllers/adopcionController');
 
 //invocamos express
@@ -36,6 +36,9 @@ app.get('/trabajadores', mostrarTrabajadores)
 
 app.get('/modificar_mi_perfil',comprobar_sesion, mostrarModificarPerfil)
 app.post('/modificarMiPerfil', comprobar_sesion, modificarMiPerfil)
+
+app.get('/modificar_mi_password', comprobar_sesion, mostrarModificarMiPassword)
+app.post('/modificar_mi_password', comprobar_sesion, modificarMiPassword)
 
 //ADOPCION
 app.get('/adopciones',mostrarAdopciones)
