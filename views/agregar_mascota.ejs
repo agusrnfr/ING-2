@@ -22,25 +22,25 @@
                     <div class="alert alert-info" role="alert">Se agregara mascota a: <strong><%= usuario.name %></strong></div>
     <form method="POST">
         <div class="row mb-3">
-        <div class="mb-3"><input class="form-control form-control-user" type="text" name="nombre" placeholder="Nombre de la mascota" required=""></div>
+        <div class="mb-3"><input class="form-control form-control-user" type="text" name="nombre" placeholder="Nombre de la mascota*" required=""></div>
         
         <div class="col-sm-6 mb-3 mb-sm-3 mb-3">
         <select class="form-select" name="Sexo" required="">
-          <option value="" disabled selected>Sexo</option>
+          <option value="" disabled selected>Sexo*</option>
           <option value="Mañana">macho</option>
           <option value="Tarde">hembra</option>
         </select></div>
 
-        <div class="col-sm-6 mb-3 mb-sm-3"><input class="form-control form-control-user" type="text" name="raza"   placeholder="Raza" required=""></div>
+        <div class="col-sm-6 mb-3 mb-sm-3"><input class="form-control form-control-user" type="text" name="raza"   placeholder="Raza*" required=""></div>
         
         
-        <div class="mb-3"><input class="form-control form-control-user" type="text" name="color"   placeholder="Color" required=""></div>
-        <div>Fecha de nacimiento</div>
+        <div class="mb-3"><input class="form-control form-control-user" type="text" name="color"   placeholder="Color*" required=""></div>
+        <div>Fecha de nacimiento*</div>
         <div class="mb-3"><input class="form-control form-control-user" type="date" name="fecha_nacimiento"   placeholder="Fecha de nacimiento" required=""></div>
         <span id="fecha-invalida" class="text-danger" style="display:none;">Fecha inválida</span>
-        <div class="mb-3"><label for="input-file" class="form-label">Agregar fotografia (opcional)</label><input type="file" class="form-control" id="input-file" name="imagen">
+        <div class="mb-3"><label for="input-file" class="form-label">Agregar fotografia</label><input type="file" class="form-control" id="input-file" name="imagen">
         <br>    
-        <div><textarea class="form-control form-control-user" name="observaciones" placeholder="Observaciones (opcional)"></textarea></div>
+        <div><textarea class="form-control form-control-user" name="observaciones" placeholder="Observaciones"></textarea></div>
         <br>
         <button class="btn btn-primary d-block btn-user w-100" name="registrar_mascota" type="submit" id="registrar-btn">Registrar</button>
 
@@ -48,6 +48,7 @@
 </div>
 <hr>
 </form>
+<div class="text-center mb-2" style="font-size: smaller;">Los campos con (*) son obligatorios</div>
 <div class="text-center"><a class="small" href="/table">Volver</a></div>
 </div>
 </div>
