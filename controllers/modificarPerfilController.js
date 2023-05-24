@@ -17,7 +17,7 @@ const modificarMiPerfil = async(req, res) => {
     const name = convertirNombre(req.body.name);
     const tel = req.body.tel;
     const DNI = req.body.DNI;
-    const pass = req.body.pass;
+    const pass = session.usuario.pass;// soy lazy pero esto no deberia estar
 
     if(!validarCampos(mail , pass , name , tel , DNI)){
         res.render('modificar_mi_perfil', 

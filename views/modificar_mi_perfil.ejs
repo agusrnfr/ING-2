@@ -31,8 +31,6 @@
     <input class="form-control form-control-user" type="text" name="name" value="<%= usuario.name %>" placeholder="Nombre completo" required>
   </div>
   <div class="mb-3">
-      <label for="pass">Contraseña*:</label>
-      <input class="form-control form-control-user" name="pass" value="<%= usuario.pass %>" type="password" id="password" placeholder="Contraseña" required>
   </div>
   <div class="row mb-3">
     <div class="col-sm-6 mb-3 mb-sm-0">
@@ -49,6 +47,11 @@
       <input class="form-control form-control-user" type="tel" name="tel" value="<%= usuario.tel %>" id="tel" placeholder="Teléfono" required="">
     </div>
   </div>
+
+  <label>
+    <div class="text-center"><a class="btn btn-danger" href="/modificar_mi_password"><i class="bi bi-lock"></i> Modificar mi contraseña</a></div>
+  </label>
+  
   <div class="row mb-3">
     <div class="error-container" style="height: 30px; margin-bottom: 20px;">
       <p id="emailDuplicateErrorMsg" class="text-danger" style="display: none;"></p>
