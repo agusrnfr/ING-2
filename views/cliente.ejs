@@ -19,7 +19,7 @@
             <div class="card-body p-md-4">
               <div class="row justify-content-center">
                 
-                <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-3"><i class="bi bi-person-fill"></i> Ver cliente</p>
+                <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-3"><i class="bi bi-person-fill"></i> Detalle de cliente</p>
                 <div class="alert alert-info" role="alert">Se esta visualizando a: <strong><%= usuario.name %></strong></div>
                     <div>Correo: <%= usuario.mail %></div>
                     <div>Nombre completo: <%= usuario.name %></div>
@@ -34,6 +34,7 @@
                                       <th scope="col">Nombre</th>
                                       <th scope="col">Raza</th>
                                       <th scope="col">Edad en meses</th>
+                                      <th scope="col">Acciones</th>
                                     </tr>
                                   </thead>
                                   <tbody>
@@ -42,6 +43,7 @@
                                       <td><%= mascota.nombre %></td>
                                       <td><%= mascota.raza %></td>
                                       <td><%= calcularEdadMasco(mascota.fecha_nacimiento) %></td>
+                                      <td><button type="button" onclick="location.href='<%= `/ver_mascota/${mascota.id}` %>'" class="btn btn-outline-primary"><i class="bi bi-eye-fill"></i> Ver</button></td>
                                       </tr>
                                       <% }); %>
                                     </tbody>

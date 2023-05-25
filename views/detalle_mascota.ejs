@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <%- include ('header', {tituloweb: '¡Oh my dog! | Perfil cliente'}); %>
+    <%- include ('header', {tituloweb: '¡Oh my dog! | Detalle Mascota'}); %>
 </head>
 
 <body id="body">
@@ -19,36 +19,50 @@
             <div class="card-body p-md-4">
               <div class="row justify-content-center">
                 
-                <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-3"><i class="bi bi-star"></i> Ver mascota</p>
-                <div class="alert alert-info" role="alert">La mascota pertenece a: <strong><%= usuario.name %></strong></div>
+                <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-3"><i class=""></i>Detalle de mascota</p>
+                
                 <div class="col-md-7">
-                  <div>Nombre: <%= mascota.nombre %></div>
-                  <div>Dueño: <%= usuario.name %></div>
-                  <div>Sexo: <%= mascota.sexo %></div>
-                  <div>Raza: <%= mascota.raza %></div>
-                  <div>Color: <%= mascota.color %></div>
-                  <div>Fecha de nacimiento: 1/1/23 </div>
-                  <div>Observaciones: <%= mascota.observaciones %></div>
+                    <style>
+                        .pet-info {
+                          margin-bottom: 10px;
+                        }
+                        .pet-info strong {
+                          font-weight: bold;
+                          color: black;
+                        }
+                        .pet-info .quote {
+                            font-family: 'Times New Roman', Times, serif;
+                            font-style: italic;
+                            font-size: 1.2em;
+                            color: #333;
+                        }
+                      </style>
+                      <div class="container">
+                        <div class="pet-info">
+                          <span class="text-primary"><strong>Nombre de la mascota:</strong></span> <%= mascota.nombre %>
+                        </div>
+                        <div class="pet-info">
+                            <span class="text-primary"><strong>Dueño:</strong></span> <%= usuario.name %>
+                          </div>
+                        <div class="pet-info">
+                          <span class="text-primary"><strong>Sexo:</strong></span> hembra
+                        </div>
+                        <div class="pet-info">
+                          <span class="text-primary"><strong>Raza:</strong></span> <%= mascota.raza %>
+                        </div>
+                        <div class="pet-info">
+                          <span class="text-primary"><strong>Color:</strong></span> <%= mascota.color %>
+                        </div>
+                        <div class="pet-info">
+                          <span class="text-primary"><strong>Fecha de nacimiento:</strong></span> 1/1/23
+                        </div>
+                        <div class="pet-info">
+                          <span class="text-primary"><strong>Observaciones:</strong></span> <blockquote class="quote"><%= mascota.observaciones %></blockquote>
+                        </div>
+                      </div>
                   <br>
-                  <div>Libreta sanitaria:</div>
-                  <div>
-                                <table class="table" id="tabla1">
-                                <thead>
-                                  <tr>
-                                    <th scope="col">Practica</th>
-                                    <th scope="col">Fecha</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                    <% mascotas.forEach(mascota => { %>
-                                  <tr class="paginate">
-                                    <td><%= mascota.nombre %></td>
-                                    <td><%= mascota.raza %></td>
-                                    </tr>
-                                    <% }); %>
-                                  </tbody>
-                                </table>
-                  </div>
+                  
+                  <div><a class="btn btn-primary w-100" href="/"><i class="bi bi-journal-text"></i> Ver libreta sanitaria</a></div>
 
                 </div>
                   <div class="col-md-4">
@@ -56,10 +70,10 @@
                         <img src="/img/dogo_bañera.png" alt="Imagen de la mascota" style="width: 150px; height: 150px;">
                     </div>
                 </div>
+                <div class="text-center mt-5"><a class="small" href="/table">Volver</a></div>
             </div>
         </div>
 
-        <div class="text-center mt-5"><a class="small" href="/table">Volver</a></div>
     </div>
 </div>
 </div>
