@@ -38,8 +38,59 @@
                           Donar</button>
                         <% } %>
                           <% if (session.loggedin && session.usuario && session.usuario.rol=="admin" ) { %>
-                            <button type="button" class="btn btn-outline-success"><i class="bi bi-eye"></i>
+                            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
+                              data-bs-toggle="modal" data-bs-target="#mostarDonaciones<%= campVet.id %>"><i
+                                class="bi bi-eye"></i>
                               Donaciones</button>
+                            <div class="modal fade" id="mostarDonaciones<%= campVet.id %>" tabindex="-1"
+                              aria-labelledby="mostarDonaciones<%= campVet.id %>_Label" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="mostarDonaciones<%= campVet.id %>_Label">
+                                      Donaciones a la Veterinaria
+                                    </h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                      aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body row align-items-center">
+                                    <% if (!campVet.donaciones.length == 0) {%>
+                                    <div class="col">
+                                      <table class="table table-striped table-hover text-center">
+                                        <thead>
+                                          <tr>
+                                            <th scope="col">Fecha</th>
+                                            <th scope="col">Monto</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <% campVet.donaciones.forEach(donacion=> { %>
+                                            <tr>
+                                              <td>
+                                                <%= donacion.fecha %>
+                                              </td>
+                                              <td>
+                                                <%= donacion.monto %>
+                                              </td>
+                                            </tr>
+                                            <% }) %>
+                                            <tr>
+                                              <td colspan="2">
+                                                <h5 class="m-2">Total: $ <%= campVet.total %></h5>
+                                              </td>
+                                            </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                    <% } else { %>
+                                      <div class="col">
+                                        <h5 class="m-2 text-center">La campaña no tiene donaciones realizadas</h5>
+                                      </div>
+                                      <% } %>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                             <% } %>
                   </div>
                 </div>
@@ -60,22 +111,79 @@
                       </p>
                     </div>
                     <div class="m-1">
-                      <% if (session.loggedin && new Date(campania.fecha_fin) >= new Date()){ %>
-                        <button id="boton<%=btn_n%>" type="button" class="btn btn-outline-primary"><i
-                            class="bi bi-cash-stack"></i>
-                          Donar</button>
-                        <% } else { %>
-                          <button id="boton<%=btn_n%>" type="button" class="btn btn-outline-primary" disabled><i
+                      <% let partes=campania.fecha_fin.split('/'); let fechaFinFormatted=new Date(partes[2], partes[1] -
+                        1, partes[0]); let fechaActual=new Date(); fechaFinFormatted.setHours(0,0,0,0);
+                        fechaActual.setHours(0,0,0,0); %>
+                        <% if (session.loggedin && fechaFinFormatted.getTime()>= fechaActual.getTime()) { %>
+                          <button id="boton<%=btn_n%>" type="button" class="btn btn-outline-primary"><i
                               class="bi bi-cash-stack"></i>
                             Donar</button>
-                          <% } %>
-                            <% if (session.loggedin && session.usuario && session.usuario.rol=="admin" ) { %>
-                              <button type="button" class="btn btn-outline-success"><i class="bi bi-eye"></i>
-                                Donaciones</button>
-                              <% } %>
+                          <% } else { %>
+                            <button id="boton<%=btn_n%>" type="button" class="btn btn-outline-primary" disabled><i
+                                class="bi bi-cash-stack"></i>
+                              Donar</button>
+                            <% } %>
+                              <% if (session.loggedin && session.usuario && session.usuario.rol=="admin" ) { %>
+                                <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
+                                  data-bs-toggle="modal" data-bs-target="#mostarDonaciones<%= campania.id %>"><i
+                                    class="bi bi-eye"></i>
+                                  Donaciones</button>
+
+                                <div class="modal fade" id="mostarDonaciones<%= campania.id %>" tabindex="-1"
+                                  aria-labelledby="mostarDonaciones<%= campania.id %>_Label" aria-hidden="true">
+                                  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="mostarDonaciones<%= campania.id %>_Label">
+                                          Donaciones a la Campaña <%= campania.titulo %>
+                                        </h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                          aria-label="Close"></button>
+                                      </div>
+                                      <div class="modal-body row align-items-center">
+                                        <% if (!campania.donaciones.length == 0) {%>
+                                        <div class="col">
+                                          <table class="table table-striped table-hover text-center">
+                                            <thead>
+                                              <tr>
+                                                <th scope="col">Fecha</th>
+                                                <th scope="col">Monto</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                              <% campania.donaciones.forEach(donacion=> { %>
+                                                <tr>
+                                                  <td>
+                                                    <%= donacion.fecha %>
+                                                  </td>
+                                                  <td>
+                                                    <%= donacion.monto %>
+                                                  </td>
+                                                </tr>
+                                                <% }) %>
+                                                <tr>
+                                                  <td colspan="2">
+                                                    <h5 class="m-2">Total: $ <%= campania.total %></h5>
+                                                  </td>
+                                                </tr>
+                                            </tbody>
+                                          </table>
+                                        </div>
+                                        <% } else { %>
+                                          <div class="col">
+                                            <h5 class="m-2 text-center">La campaña no tiene donaciones realizadas</h5>
+                                          </div>
+                                          <% } %>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <% } %>
                     </div>
                     <div class="card-footer text-body-secondary">
-                      <%= campania.fecha_fin %>
+                      Esta campaña finaliza el <strong>
+                        <%= campania.fecha_fin %>
+                      </strong>
                     </div>
                   </div>
                 </div>

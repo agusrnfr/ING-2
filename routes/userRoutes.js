@@ -65,7 +65,6 @@ app.get('/modificar/cliente/:id', comprobar_sesion_admin, mostrarClienteModifica
 app.post('/modificar/cliente/:id',comprobar_sesion_admin, actualizarUsuario)
 
 //CAMPANIAS
-
 app.get('/campanias', mostrarCampanias);
 
 

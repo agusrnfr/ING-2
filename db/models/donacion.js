@@ -8,6 +8,10 @@ Donacion.init({
     type: DataTypes.FLOAT,
     allowNull: false,
   },
+  fecha: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
 }, {
   sequelize,
   modelName: 'Donacion',
