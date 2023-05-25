@@ -19,8 +19,11 @@ const registrarMascota = async (req, res) => {
     const color = req.body.color;
     const fecha_nacimiento = req.body.fecha_nacimiento;
     const foto = req.body.imagen;
-    const observaciones = req.body.observaciones;
+    let observaciones = req.body.observaciones;
     const UserId = req.params.id;
+
+    if(observaciones === "")
+        observaciones = "Ninguna"
 
     await Mascota.create({
         UserId: UserId,
