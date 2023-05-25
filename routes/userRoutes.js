@@ -10,6 +10,8 @@ const { mostrarAgregarMascota, registrarMascota } = require('../controllers/masc
 const { mostrarCliente , mostrarClienteModificar , actualizarUsuario } = require('../controllers/clienteController')
 const { mostrarModificarPerfil , modificarMiPerfil } = require('../controllers/modificarPerfilController');
 const { mostrarAdopciones, cambiarEstado, mostrarPublicacion, guardarPublicacion, mostrarContacto, contactoAdoptante} = require('../controllers/adopcionController');
+const { mostrarCampanias} = require('../controllers/campaniasController');
+
 
 //invocamos express
 const app = require('express').Router()
@@ -61,6 +63,11 @@ app.post('/agregar_mascota/cliente/:id', registrarMascota)
 app.get('/ver_cliente/:id', comprobar_sesion_admin, mostrarCliente)
 app.get('/modificar/cliente/:id', comprobar_sesion_admin, mostrarClienteModificar)
 app.post('/modificar/cliente/:id',comprobar_sesion_admin, actualizarUsuario)
+
+//CAMPANIAS
+
+app.get('/campanias', mostrarCampanias);
+
 
 module.exports = app;
 
