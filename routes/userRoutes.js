@@ -6,7 +6,7 @@ const { mostrarTrabajadores } = require('../controllers/trabajadorController');
 const { mostrarIndex } = require('../controllers/indexController');
 const { comprobar_sesion, comprobar_sesion_admin } = require('../controllers/loginController');
 const { verificaciones, solicitarTurno, mostrarTodosLosTurnos, mostrarMisTurnos, cambiarEstadoTurno, guardarTurno, turnoGuardado } = require('../controllers/turnosController');
-const { mostrarAgregarMascota, registrarMascota } = require('../controllers/mascotasController');
+const { mostrarAgregarMascota, registrarMascota , mostrarMascota } = require('../controllers/mascotasController');
 const { mostrarCliente , mostrarClienteModificar , actualizarUsuario , actualizarPasswordUsuario , mostrarClienteModificarPassword } = require('../controllers/clienteController')
 const { mostrarModificarPerfil , modificarMiPerfil , mostrarModificarMiPassword, modificarMiPassword} = require('../controllers/modificarPerfilController');
 const { mostrarAdopciones, cambiarEstado, mostrarPublicacion, guardarPublicacion, mostrarContacto, contactoAdoptante} = require('../controllers/adopcionController');
@@ -59,6 +59,7 @@ app.get('/turnos/turnoGuardado', comprobar_sesion, turnoGuardado);
 //MASCOTAS
 app.get('/agregar_mascota/cliente/:id', mostrarAgregarMascota)
 app.post('/agregar_mascota/cliente/:id', registrarMascota)
+app.get('/ver_mascota/:id', comprobar_sesion, mostrarMascota)
 
 //VER CLIENTE
 app.get('/ver_cliente/:id', comprobar_sesion_admin, mostrarCliente)
