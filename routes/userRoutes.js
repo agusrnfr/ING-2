@@ -10,6 +10,7 @@ const { mostrarAgregarMascota, registrarMascota , mostrarMascota } = require('..
 const { mostrarCliente , mostrarClienteModificar , actualizarUsuario , actualizarPasswordUsuario , mostrarClienteModificarPassword } = require('../controllers/clienteController')
 const { mostrarModificarPerfil , modificarMiPerfil , mostrarModificarMiPassword, modificarMiPassword} = require('../controllers/modificarPerfilController');
 const { mostrarAdopciones, cambiarEstado, mostrarPublicacion, guardarPublicacion, mostrarContacto, contactoAdoptante} = require('../controllers/adopcionController');
+const { mostrarCupones } = require('../controllers/cuponesController');
 
 //invocamos express
 const app = require('express').Router()
@@ -67,6 +68,7 @@ app.get('/modificar/cliente/:id', comprobar_sesion_admin, mostrarClienteModifica
 app.get('/modificar/cliente/password/:id', mostrarClienteModificarPassword)
 app.post('/modificar/cliente/:id',comprobar_sesion_admin, actualizarUsuario)
 app.post('/modificar/cliente/password/:id',comprobar_sesion_admin, actualizarPasswordUsuario)
+app.get('/ver_cliente/cupones/:id', comprobar_sesion, mostrarCupones)
 
 module.exports = app;
 
