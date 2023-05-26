@@ -9,8 +9,8 @@
     <div class="row m-4 justify-content-center align-items-center">
       <% if (session.loggedin && session.usuario && session.usuario.rol=="admin" ){ %>
         <div class="row row-cols-1 m-3 justify-content-center align-items-center">
-          <button type="button" class="btn btn-primary col-3"><i class="bi bi-chat-square-text"></i> Publicar
-            Campaña</button>
+          <a href="/campanias/publicarCampania" class="btn btn-primary col-3"><i class="bi bi-chat-square-text"></i> Publicar
+            Campaña</a>
         </div>
         <% } %>
           <% if (!data.length==0) { let btn_n=0; let campVet=data[0]; %>

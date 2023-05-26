@@ -19,11 +19,6 @@ module.exports = {
             descripcion: 'Ayuda a Bart a conseguir su operación',
             fecha_fin: moment().toDate(),
         }], {});
-        await queryInterface.bulkInsert('campanias', [{
-            titulo: 'Campaña para el refugio de Huellitas',
-            descripcion: 'Campaña para el refugio de Huellitas',
-            fecha_fin: moment('2024-01-12').toDate(),
-        }], {});
     },
 
     async down(queryInterface, Sequelize) {

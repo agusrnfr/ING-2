@@ -1,9 +1,27 @@
 const Campania = require('../db/models/campania');
 const Donacion = require('../db/models/donacion');
-const User = require('../db/models/user');
 const session = require('express-session');
 const moment = require('moment');
-//const { transporter } = require('../config/mailer');
+
+const verificacionesCampania = async (req, res, next) => {
+    const { titulo, descripcion, fecha_fin } = req.body;
+    if (!titulo) {
+        return res.redirect(`/campanias/publicacionGuardada?success=false&status=400&mensaje=${encodeURIComponent('Debe ingresar un título')}`);
+    }
+    if (!descripcion) {
+        return res.redirect(`/campanias/publicacionGuardada?success=false&status=400&mensaje=${encodeURIComponent('Debe ingresar una descripción')}`);
+    }
+    if (!fecha_fin) {
+        return res.redirect(`/campanias/publicacionGuardada?success=false&status=400&mensaje=${encodeURIComponent('Debe ingresar una fecha de finalización')}`);
+    }
+    if (titulo.trim.length > 256) {
+        return res.redirect(`/campanias/publicacionGuardada?success=false&status=400&mensaje=${encodeURIComponent('El título no puede tener más de 256 caracteres')}`);
+    }
+    if (descripcion.trim.length > 500) {
+        return res.redirect(`/campanias/publicacionGuardada?success=false&status=400&mensaje=${encodeURIComponent('La descripción no puede tener más de 500 caracteres')}`);
+    }
+    next();
+};
 
 const mostrarCampanias = async (req, res) => {
     try {
@@ -22,7 +40,7 @@ const mostrarCampanias = async (req, res) => {
                     };
                 })
                 .sort((a, b) => moment(a.fecha, 'DD/MM/YYYY').diff(moment(b.fecha, 'DD/MM/YYYY')));
-                ;
+            ;
             const total = donacionesCampania.reduce((acc, donacion) => acc + donacion.monto, 0);
             return {
                 id: campania.id,
@@ -41,6 +59,57 @@ const mostrarCampanias = async (req, res) => {
     }
 }
 
+const publicarCampania = async (req, res) => {
+    res.render('publicar_campania');
+}
+
+const guardarPublicacionCampania = async (req, res) => {
+    const { titulo, descripcion, fecha_fin } = req.body;
+    try {
+        await Campania.create({
+            titulo: titulo,
+            descripcion: descripcion,
+            fecha_fin: moment(fecha_fin).toDate(),
+        });
+        return res.redirect(`/campanias/publicacionGuardada?success=true&status=200&mensaje=${encodeURIComponent('La campaña se publicó correctamente')}`);
+    }
+    catch (error) {
+        console.log(error);
+        return res.redirect(`/campanias/publicacionGuardada?success=false&status=500&mensaje=${encodeURIComponent('Hubo un error al publicar la campaña')}`);
+    }
+}
+
+const publicacionGuardada = async (req, res) => { // Muestra la alerta de que se guardó correctamente el turno o que hubo un error
+    const success = req.query.success;
+    const mensajeDecodificado = decodeURIComponent(req.query.mensaje);
+    const status = Number(req.query.status);
+
+    if (success == 'true') {
+        res.status(status).render('publicar_campania', {
+            alert: true,
+            alertTitle: "Publicación exitosa",
+            alertMessage: mensajeDecodificado,
+            alertIcon: "success",
+            showConfirmButton: false,
+            timer: 2000,
+        });
+    }
+    else if (success == 'false') {
+        res.status(status).render('publicar_campania', {
+            alert: true,
+            alertTitle: "Error",
+            alertMessage: mensajeDecodificado,
+            alertIcon: "error",
+            showConfirmButton: false,
+            timer: 2000,
+        });
+    }
+}
+
 module.exports = {
     mostrarCampanias,
+    publicarCampania,
+    verificacionesCampania,
+    guardarPublicacionCampania,
+    publicacionGuardada,
 }
