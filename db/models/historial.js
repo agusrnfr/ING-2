@@ -16,7 +16,7 @@ Historial.init({
     },
     observacion: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     monto_abonado: {
         type: DataTypes.DOUBLE,

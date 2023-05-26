@@ -10,6 +10,8 @@ const { mostrarAgregarMascota, registrarMascota } = require('../controllers/masc
 const { mostrarCliente , mostrarClienteModificar , actualizarUsuario } = require('../controllers/clienteController')
 const { mostrarModificarPerfil , modificarMiPerfil } = require('../controllers/modificarPerfilController');
 const { mostrarAdopciones, cambiarEstado, mostrarPublicacion, guardarPublicacion, mostrarContacto, contactoAdoptante} = require('../controllers/adopcionController');
+const { mostrarHistorial , crearHistorial,mostrarCarga, mostrarLibreta} = require('../controllers/historialController');
+
 
 //invocamos express
 const app = require('express').Router()
@@ -36,6 +38,14 @@ app.get('/trabajadores', mostrarTrabajadores)
 
 app.get('/modificar_mi_perfil',comprobar_sesion, mostrarModificarPerfil)
 app.post('/modificarMiPerfil', comprobar_sesion, modificarMiPerfil)
+
+//HISTORIAL
+app.get('/historial', comprobar_sesion, mostrarHistorial)
+app.get('/registrarVisita/cliente/:id', comprobar_sesion_admin, mostrarCarga)
+app.post('/registrarVisita/cliente/:id', comprobar_sesion_admin, crearHistorial)
+
+//LIBRETA SANITARIA
+app.get('/libreta_sanitaria',comprobar_sesion, mostrarLibreta)
 
 //ADOPCION
 app.get('/adopciones',mostrarAdopciones)

@@ -1,0 +1,29 @@
+'use strict';
+const moment = require('moment');
+
+
+module.exports = {
+  up: async  (queryInterface, Sequelize) => {
+ 
+      await queryInterface.bulkInsert('historiales', [{
+      fecha: moment().add(8, 'days').toDate(),
+      practica: 'Consulta general',
+      observacion: 'Tiene muchas pulgas',
+      monto_abonado: '2000',
+      monto_beneficio: '400',
+      UserId: 3,
+      MascotumId: 3,
+      }], {});
+  
+  
+  },
+
+  async down (queryInterface, Sequelize) {
+    /**
+     * Add commands to revert seed here.
+     *
+     * Example:
+     * await queryInterface.bulkDelete('People', null, {});
+     */
+  }
+};
