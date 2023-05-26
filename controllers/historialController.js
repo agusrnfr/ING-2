@@ -4,6 +4,7 @@ const session = require('express-session');
 const Mascota = require('../db/models/mascota');
 const User = require('../db/models/user');
 const moment = require('moment');
+const Libreta = require('../db/models/libreta.js');
 
 
 let data;
@@ -71,19 +72,10 @@ const crearHistorial = async (req, res) => {
     const arrayMascota= await buscarMascotasCliente(id);
     let usuario = await User.findByPk(req.params.id)
 
-     if(!mascota || !practica || !monto ){
-        console.error('Error al crear publicación,campos incompletos');
-        if (!mascota) {
-            console.error('Campo mascota está vacío');
-        }
-        if (!practica) {
-            console.error('Campo practica está vacío');
-        }
-        if (!monto) {
-            console.error('Campo monto está vacío');
-        }
-        return;
+    if (practica == 'Vacuna A' || practica == 'Vacuna B' || practica == 'Desparacitacion'){
+        crearLibreta(fecha,mascota,practica, id)
     }
+
   
     Historial.create({
         fecha: fecha,
@@ -123,11 +115,52 @@ const crearHistorial = async (req, res) => {
     
   }
 
-  //Zona libreta baby
+//Zona libreta baby
 
-  const mostrarLibreta = (req,res) => {
-    res.render('libreta_sanitaria',{ session: session })
+const mostrarLibreta = async (req, res) => { // Muestra la libreta de la mascota
+    
+    try {
+        const libretas = await Libreta.findAll({
+            raw: true,
+            include: { model: Mascota, as: 'Mascotum', attributes: ['nombre'] },
+            // where: { UserId: session.usuario.id }
+        })
+        data = libretas.map(libreta => {
+            const fechaHoraZonaHoraria = moment.tz(visita.fecha, 'America/Argentina/Buenos_Aires');
+            return {
+                id: visita.id,
+                fecha: fechaHoraZonaHoraria.format('DD/MM/YYYY HH:mm'),
+                MascotumId: libreta.MascotumId,
+                nombre: libreta['Mascotum.nombre'],
+                practica: libreta.practica,
+            };
+        }).sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+        res.render('libreta_sanitaria', { data , session: session} );
+    }
+    catch (error) {
+        console.log(error);
+        res.status(500).render('libreta_sanitaria', { data: [] });
+    };
+};
+
+
+
+const crearLibreta = async(fecha, mascota, practica,id) =>{
+    try {
+        await Turno.create({
+            fecha: fecha,
+            practica: practica,
+            UserId: id,
+            MascotumId: mascota.id,
+        });
+        return true;
+
+    } catch (error) {
+        console.log(error);
+        throw new Error('Error al crear la libreta');
+    }
 }
+
   
 
 

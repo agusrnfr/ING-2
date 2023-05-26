@@ -10,9 +10,9 @@
         <div class="container-sm" style="max-width: 1200px;">
             <div class="card text-black" style="border-radius: 10px;">
                 <div class="table-responsive">
-                    <caption>
-                        <div style="text-align: center; font-weight: bold;">Historial de visitas</div>
-                      </caption>
+                     <caption>
+    <div style="text-align: center; font-weight: bold;">Historial de visitas</div>
+  </caption>
                     <table class="table" id="tabla1">
                         <thead class="table-secondary">
                             <tr>
@@ -21,7 +21,7 @@
                                 <th class="text-center" scope="col">Practica</th>
                                 <th class="text-center" scope="col">Observaciones</th>
                                 <th class="text-center" scope="col">Monto</th>
-                                <th class="col-2 text-center" scope="col">Monto Beneficio</th>
+                                <!-- <th class="col-2 text-center" scope="col">Monto Beneficio</th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -46,10 +46,6 @@
                                         <td class="text-center align-middle">
                                             <%= visita.monto_abonado %>
                                         </td>
-                                        <td class="text-center align-middle">
-                                            <%= visita.monto_beneficio %>
-                                        </td>
-
                                     </tr>
                                     <% }); %>
                                         <% } %>
