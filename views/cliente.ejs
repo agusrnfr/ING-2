@@ -21,12 +21,13 @@
                 
                 <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-3"><i class="bi bi-person-fill"></i> Detalle de cliente</p>
                 <div class="alert alert-info" role="alert">Se esta visualizando a: <strong><%= usuario.name %></strong></div>
-                    <div>Correo: <%= usuario.mail %></div>
-                    <div>Nombre completo: <%= usuario.name %></div>
-                    <div>Telefono: <%= usuario.tel %></div>
-                    <div>DNI: <%= usuario.DNI %></div>
-                    <div>Rol: <%= usuario.rol %></div>
-                    <div>Mascotas:</div>
+                <div>Correo: <%= usuario.mail %></div>
+                <div>Nombre completo: <%= usuario.name %></div>
+                <div>Telefono: <%= usuario.tel %></div>
+                <div>DNI: <%= usuario.DNI %></div>
+                <div>Rol: <%= usuario.rol %></div>
+                <div class="" style="margin-top: 10px; margin-bottom: 10px;"><a class="btn btn-info" href="/ver_cliente/cupones/<%= usuario.id %>"><i class="bi bi-piggy-bank"></i> Ver beneficios </a></div>
+                <div class="text-center">Mascotas</div>
                     <div>
                                   <table class="table" id="tabla1">
                                   <thead>
