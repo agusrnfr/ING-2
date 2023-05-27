@@ -15,7 +15,7 @@
                                     <div class="row mb-3">
                                         <div class="mb-3">
                                             <select class="form-select" name="practica" id="practica" required="">
-                                                <option value="" disabled selected>Práctica</option>
+                                                <option value="" disabled selected>Práctica (*) </option>
                                                 <option value="Consulta general">Consulta general</option>
                                                 <option value="Desparasitacion">Desparasitación</option>
                                                 <option value="Urgencia">Urgencia</option>
@@ -29,7 +29,7 @@
                                             <p class="text-danger m-0" id="textoEdadInvalida"></p>
                                         </div>
                                         <div class="mb-3" id="div_fecha" style="display: none;">
-                                            <label class="b"> Fecha de atencion </label>
+                                            <label class="b"> Fecha de atencion (*) </label>
                                             <% let fechaMinima=new Date(); fechaMinima.setDate(fechaMinima.getDate() +
                                                 1); fechaMinima=fechaMinima.toISOString().split("T")[0]; let
                                                 fechaMaxima=new Date();
@@ -41,7 +41,7 @@
                                         </div>
                                         <div class="mb-3">
                                             <select class="form-select" name="banda_horaria" required="">
-                                                <option value="" disabled selected>Banda horaria</option>
+                                                <option value="" disabled selected>Banda horaria (*) </option>
                                                 <option value="Mañana">Mañana</option>
                                                 <option value="Tarde">Tarde</option>
                                             </select>
@@ -55,7 +55,7 @@
                                         <div class="mb-3">
                                             <% if (mascotas.length> 0) { %>
                                                 <select id="mascota" class="form-select" name="mascota" required="">
-                                                    <option value="" disabled selected>Mascota</option>
+                                                    <option value="" disabled selected>Mascota (*) </option>
                                                     <% mascotas.forEach(function(mascota) { let
                                                         fechaCorta=mascota.fecha_nacimiento.toLocaleDateString("es-ES",
                                                         {day: "2-digit" , month:"2-digit", year:"numeric"}); %>
@@ -72,7 +72,7 @@
                                         </div>
                                         <div id="celoMascota" class="mb-3 text-center" style="display:none;">
                                             <label for="opcion1" class="form-label">¿La mascota tuvo su primer
-                                                celo?</label>
+                                                celo? (*) </label>
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="opcion" id="opcion1"
                                                     value="si">
@@ -91,6 +91,7 @@
                                     </div>
                                     <hr>
                                 </form>
+                                <div class="text-center mb-2" style="font-size: smaller;">Los campos con (*) son obligatorios</div>
                                 <div class="text-center"><a class="small" href="/">Volver</a></div>
                             </div>
                         </div>

@@ -28,6 +28,10 @@ Mascota.init({
     type: DataTypes.BLOB,
     allowNull: true,
   },
+  sexo: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 }, {
   sequelize,
   modelName: 'Mascota',

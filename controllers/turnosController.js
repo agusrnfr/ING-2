@@ -177,22 +177,24 @@ const mostrarTodosLosTurnos = async (req, res) => { // Muestra todos los turnos
                 { model: Mascota, as: 'Mascotum', attributes: ['nombre'] },
                 { model: User, as: 'User', attributes: ['name', 'mail'] }]
         });
-        const data = turnos.map(turno => {
-            const fechaHoraZonaHoraria = moment.tz(turno.fecha, 'America/Argentina/Buenos_Aires');
-            return {
-                id: turno.id,
-                fecha: fechaHoraZonaHoraria.format('DD/MM/YYYY HH:mm'),
-                banda_horaria: turno.banda_horaria,
-                estado: turno.estado,
-                practica: turno.practica,
-                UserId: turno.UserId,
-                MascotumId: turno.MascotumId,
-                nombre: turno['Mascotum.nombre'],
-                user: turno['User.name'],
-                mailUser: turno['User.mail'],
-                motivoDeRechazo: turno.motivoDeRechazo
-            };
-        }).sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+        const data = turnos
+            .map(turno => {
+                const fechaHoraZonaHoraria = moment.tz(turno.fecha, 'America/Argentina/Buenos_Aires');
+                return {
+                    id: turno.id,
+                    fecha: fechaHoraZonaHoraria.format('DD/MM/YYYY HH:mm'),
+                    banda_horaria: turno.banda_horaria,
+                    estado: turno.estado,
+                    practica: turno.practica,
+                    UserId: turno.UserId,
+                    MascotumId: turno.MascotumId,
+                    nombre: turno['Mascotum.nombre'],
+                    user: turno['User.name'],
+                    mailUser: turno['User.mail'],
+                    motivoDeRechazo: turno.motivoDeRechazo
+                };
+            })
+            .sort((a, b) => moment(a.fecha, 'DD/MM/YYYY HH:mm').diff(moment(b.fecha, 'DD/MM/YYYY HH:mm')));
         res.render('turnos_listado.ejs', { data });
     } catch (error) {
         console.log(error);
@@ -207,19 +209,21 @@ const mostrarMisTurnos = async (req, res) => { // Muestra los turnos del usuario
             include: { model: Mascota, as: 'Mascotum', attributes: ['nombre'] },
             where: { UserId: session.usuario.id }
         })
-        const data = turnos.map(turno => {
-            const fechaHoraZonaHoraria = moment.tz(turno.fecha, 'America/Argentina/Buenos_Aires');
-            return {
-                id: turno.id,
-                fecha: fechaHoraZonaHoraria.format('DD/MM/YYYY HH:mm'),
-                banda_horaria: turno.banda_horaria,
-                estado: turno.estado,
-                practica: turno.practica,
-                MascotumId: turno.MascotumId,
-                nombre: turno['Mascotum.nombre'],
-                motivoDeRechazo: turno.motivoDeRechazo
-            };
-        }).sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+        const data = turnos
+            .map(turno => {
+                const fechaHoraZonaHoraria = moment.tz(turno.fecha, 'America/Argentina/Buenos_Aires');
+                return {
+                    id: turno.id,
+                    fecha: fechaHoraZonaHoraria.format('DD/MM/YYYY HH:mm'),
+                    banda_horaria: turno.banda_horaria,
+                    estado: turno.estado,
+                    practica: turno.practica,
+                    MascotumId: turno.MascotumId,
+                    nombre: turno['Mascotum.nombre'],
+                    motivoDeRechazo: turno.motivoDeRechazo
+                };
+            })
+            .sort((a, b) => moment(a.fecha, 'DD/MM/YYYY HH:mm').diff(moment(b.fecha, 'DD/MM/YYYY HH:mm')));
         res.render('turnos_listado_cliente.ejs', { data });
     }
     catch (error) {
@@ -273,7 +277,7 @@ const cambiarEstadoTurno = async (req, res) => { // Cambia el estado del turno y
     if (result[0] === 0) {
         res.status(400).json('No se pudo actualizar el estado del turno'); //ERROR AL ACTUALIZAR EL ESTADO YA SEA PORQUE NO SE ENCONTRO O PORQUE EL ESTADO NO ES PENDIENTE
     } else {
-        
+
         await transporter.sendMail({
             from: '"Estado de turno actualizado" <veterinaria.omd@gmail.com>',
             to: "agusrojastfm@gmail.com", //deberia ser --> to: mailTurno,
@@ -283,7 +287,7 @@ const cambiarEstadoTurno = async (req, res) => { // Cambia el estado del turno y
             .catch(error => {
                 console.log('Error al enviar mail');
             });
-            
+
         res.status(200).json('Estado del turno actualizado correctamente');
     }
 }

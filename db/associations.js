@@ -1,7 +1,9 @@
 const Adopcion = require ('./models/adopcion.js');
 const Beneficio = require ('./models/beneficio.js');
 const Busqueda = require ('./models/busqueda.js');
+const Campania = require ('./models/campania.js');
 const Cruza = require ('./models/cruza.js');
+const Donacion = require('./models/donacion.js');
 const Historial = require ('./models/historial.js');
 const Libreta = require ('./models/libreta.js');
 const Mascota = require ('./models/mascota.js');
@@ -43,3 +45,6 @@ Cruza.belongsTo(User);
 
 Cruza.belongsTo(Mascota);
 Mascota.hasOne(Cruza)
+
+Campania.hasMany(Donacion);
+Donacion.belongsTo(Campania);

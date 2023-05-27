@@ -11,6 +11,8 @@ const { mostrarCliente , mostrarClienteModificar , actualizarUsuario , actualiza
 const { mostrarModificarPerfil , modificarMiPerfil , mostrarModificarMiPassword, modificarMiPassword} = require('../controllers/modificarPerfilController');
 const { mostrarAdopciones, cambiarEstado, mostrarPublicacion, guardarPublicacion, mostrarContacto, contactoAdoptante} = require('../controllers/adopcionController');
 const { mostrarCupones } = require('../controllers/cuponesController');
+const { mostrarCampanias, publicarCampania, verificacionesCampania, guardarPublicacionCampania, publicacionGuardada, verificacionesDonacion, realizarDonacion} = require('../controllers/campaniasController');
+
 
 //invocamos express
 const app = require('express').Router()
@@ -69,6 +71,14 @@ app.get('/modificar/cliente/password/:id', mostrarClienteModificarPassword)
 app.post('/modificar/cliente/:id',comprobar_sesion_admin, actualizarUsuario)
 app.post('/modificar/cliente/password/:id',comprobar_sesion_admin, actualizarPasswordUsuario)
 app.get('/ver_cliente/cupones/:id', comprobar_sesion, mostrarCupones)
+
+//CAMPANIAS
+app.get('/campanias', mostrarCampanias);
+app.get('/campanias/publicarCampania', comprobar_sesion_admin, publicarCampania);
+app.post('/campanias/publicarCampania', comprobar_sesion_admin, verificacionesCampania, guardarPublicacionCampania);
+app.get('/campanias/publicacionGuardada', comprobar_sesion_admin, publicacionGuardada);
+app.post('/campanias', verificacionesDonacion, realizarDonacion);
+
 
 module.exports = app;
 
