@@ -1,6 +1,5 @@
 const User = require('../db/models/user.js');
-const { convertirNombre } = require('./registerController.js');
-const { validarCampos } = require('./registerController.js');
+const session = require('express-session');
 
 const mostrarCupones = async(req, res) => {
     const usuario = await User.findByPk(req.params.id)
@@ -8,7 +7,8 @@ const mostrarCupones = async(req, res) => {
         res.send('Error: no existe el usuario')
         return
     }
-    return res.render('../views/cupones', { usuario: usuario.dataValues })
+    const cupones = await usuario.getBeneficios()
+    return res.render('../views/cupones', { usuario: usuario.dataValues , cupones , session })
   }
   
   module.exports = {

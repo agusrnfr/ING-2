@@ -11,7 +11,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Tu página</title>
     <style>
         body {
             background: #dedede;
@@ -51,73 +50,62 @@
         <h2 class="text-center">Cupones de descuento</h1>
         </div>
         <div class="container my-5">
+            <% if (cupones.length !== 0) { %>
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 Los siguientes cupones solo pueden ser utilizados por:  <strong><%= usuario.name %></strong> DNI: <strong><%= usuario.DNI %></strong>, verifique que la información sea correcta. 
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
+            <% } %>
             <div class="row">
-                <div class="col-sm-6">
-                    <div class="coupon bg-white rounded mb-3 d-flex justify-content-between">
-                        <div class="kiri p-3">
-                            <div class="icon-container ">
-                                <div class="icon-container_box">
-                                    <i class="bi bi-piggy-bank" style="font-size: 55px;"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tengah py-3 d-flex w-100 justify-content-start">
-                            <div>
-                                <h3 class="lead">Cupón de descuento </h3>
-                                <p class="text-muted mb-0">Acercate a la veterinaria para usarlo</p>
-                            </div>
-                        </div>
-                        <div class="kanan">
-                            <div class="info m-3 d-flex align-items-center">
-                                <div class="w-100">
-                                    <div class="block">
-                                        <span class="time font-weight-light">
-                                            <span>$3000</span>
-                                        </span>
+                <% cupones.forEach(cupon => { %>
+                                <div class="col-sm-6">
+                                    <div class="coupon bg-white rounded mb-3 d-flex justify-content-between">
+                                        <div class="kiri p-3">
+                                            <div class="icon-container ">
+                                                <div class="icon-container_box">
+                                                    <% var icono = ""; %>
+                                                    <% if ( cupon.monto_beneficio >= 0 &&  cupon.monto_beneficio <= 99) { %>
+                                                        <% icono = "bi bi-coin"; %>
+                                                      <% } else if ( cupon.monto_beneficio >= 100 && cupon.monto_beneficio <= 999) { %>
+                                                        <% icono = "bi bi-cash-coin"; %>
+                                                      <% } else if (cupon.monto_beneficio >= 1000) { %>
+                                                        <% icono = "bi bi-piggy-bank"; %>
+                                                      <% } %>
+                                                      <i class="<%= icono %>" style="font-size: 55px;"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tengah py-3 d-flex w-100 justify-content-start">
+                                            <div>
+                                                <h3 class="lead">Cupón de descuento  </h3>
+                                                <p class="text-muted mb-0">Acercate a la veterinaria para usarlo</p>
+                                            </div>
+                                        </div>
+                                        <div class="kanan">
+                                            <div class="info m-3 d-flex align-items-center">
+                                                <div class="w-100">
+                                                    <div class="block">
+                                                        <span class="time font-weight-light">
+                                                            <span>$<%= cupon.monto_beneficio %></span>
+                                                        </span>
+                                                    </div>
+                                                    <% if (session.usuario.rol === "admin") { %>
+                                                        <a href="https://www.totoprayogo.com" target="_blank" class="btn btn-sm btn-outline-danger btn-block">
+                                                          Usar cupón
+                                                        </a>
+                                                      <% } %>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <a href="https://www.totoprayogo.com" target="_blank" class="btn btn-sm btn-outline-danger btn-block">
-                                        Usar cupón
-                                    </a>
                                 </div>
-                            </div>
+                    <% }); %>
+                    <% if (cupones.length === 0) { %>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                          <strong>No tiene beneficios disponibles:</strong> Los beneficios se obtienen realizando donaciones en alguna campaña.
+                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="coupon bg-white rounded mb-3 d-flex justify-content-between">
-                        <div class="kiri p-3">
-                            <div class="icon-container ">
-                                <div class="icon-container_box">
-                                    <i class="bi bi-piggy-bank" style="font-size: 55px;"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tengah py-3 d-flex w-100 justify-content-start">
-                            <div>
-                                <h3 class="lead">Cupón de descuento  </h3>
-                                <p class="text-muted mb-0">Acercate a la veterinaria para usarlo</p>
-                            </div>
-                        </div>
-                        <div class="kanan">
-                            <div class="info m-3 d-flex align-items-center">
-                                <div class="w-100">
-                                    <div class="block">
-                                        <span class="time font-weight-light">
-                                            <span>$6000</span>
-                                        </span>
-                                    </div>
-                                    <a href="https://www.totoprayogo.com" target="_blank" class="btn btn-sm btn-outline-danger btn-block">
-                                        Usar cupón
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <% } %>
             </div>
         </div>
         <div class="text-center"><a class="small" href="/" style="color: white;">Volver</a></div>
