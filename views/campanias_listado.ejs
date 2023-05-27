@@ -9,7 +9,8 @@
     <div class="row m-4 justify-content-center align-items-center">
       <% if (session.loggedin && session.usuario && session.usuario.rol=="admin" ){ %>
         <div class="row row-cols-1 m-3 justify-content-center align-items-center">
-          <a href="/campanias/publicarCampania" class="btn btn-primary col-3"><i class="bi bi-chat-square-text"></i> Publicar
+          <a href="/campanias/publicarCampania" class="btn btn-primary col-3"><i class="bi bi-chat-square-text"></i>
+            Publicar
             Campaña</a>
         </div>
         <% } %>
@@ -29,14 +30,55 @@
                   </div>
                   <div class="m-1">
                     <% if (session.loggedin){ %>
-                      <button id="vetCamp" type="button" class="btn btn-outline-primary"><i
+                      <button id="vetCamp" type="button" data-bs-toggle="modal"
+                      data-bs-target="#realizarDonacion<%= campVet.id %>" class="btn btn-outline-primary"><i
                           class="bi bi-cash-stack"></i>
                         Donar</button>
                       <% } else { %>
-                        <button id="vetCamp" type="button" class="btn btn-outline-primary" disabled><i
+                        <button id="vetCamp" type="button" data-bs-toggle="modal"
+                        data-bs-target="#realizarDonacion<%= campVet.id %>" class="btn btn-outline-primary" disabled><i
                             class="bi bi-cash-stack"></i>
                           Donar</button>
                         <% } %>
+                        <div class="modal fade" id="realizarDonacion<%= campVet.id %>" tabindex="-1"
+                          aria-labelledby="realizarDonacion<%= campVet.id %>_Label" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="realizarDonacion<%= campVet.id %>_Label">
+                                  Realizar donación a la campaña "<%= campVet.titulo %>"
+                                </h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                  aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body row align-items-center">
+                                <div class="col-6">
+                                  <label for="monto_<%= campVet.id %>">Ingrese el monto a donar:
+                                  </label>
+                                </div>
+                                <div class="col-6">
+                                  <input class="form-control form-control-user m-1" type="number"
+                                    id="monto_<%= campVet.id %>" min="1" 
+                                    placeholder="Monto a abonar">
+                                </div>
+                                <div class="col-6">
+                                  <label for="tarjeta_<%= campVet.id %>">Ingrese número de tarjeta:
+                                  </label>
+                                </div>
+                                <div class="col-6">
+                                  <input class="form-control form-control-user m-1" type="text"
+                                    id="tarjeta_<%= campVet.id %>" placeholder="Tarjeta de crédito">
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                  data-bs-dismiss="modal">Cancelar</button>
+                                <button class="btn btn-primary" type="submit"
+                                  onclick="enviarFormulario(event, '<%= campVet.id %>', '<% session.loggedin %>')">Guardar</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                           <% if (session.loggedin && session.usuario && session.usuario.rol=="admin" ) { %>
                             <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
                               data-bs-toggle="modal" data-bs-target="#mostarDonaciones<%= campVet.id %>"><i
@@ -54,39 +96,40 @@
                                       aria-label="Close"></button>
                                   </div>
                                   <div class="modal-body row align-items-center">
-                                    <% if (!campVet.donaciones.length == 0) {%>
-                                    <div class="col">
-                                      <table class="table table-striped table-hover text-center">
-                                        <thead>
-                                          <tr>
-                                            <th scope="col">Fecha</th>
-                                            <th scope="col">Monto</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-                                          <% campVet.donaciones.forEach(donacion=> { %>
-                                            <tr>
-                                              <td>
-                                                <%= donacion.fecha %>
-                                              </td>
-                                              <td>
-                                                <%= donacion.monto %>
-                                              </td>
-                                            </tr>
-                                            <% }) %>
-                                            <tr>
-                                              <td colspan="2">
-                                                <h5 class="m-2">Total: $ <%= campVet.total %></h5>
-                                              </td>
-                                            </tr>
-                                        </tbody>
-                                      </table>
-                                    </div>
-                                    <% } else { %>
+                                    <% if (!campVet.donaciones.length==0) {%>
                                       <div class="col">
-                                        <h5 class="m-2 text-center">La campaña no tiene donaciones realizadas</h5>
+                                        <table class="table table-striped table-hover text-center">
+                                          <thead>
+                                            <tr>
+                                              <th scope="col">Fecha</th>
+                                              <th scope="col">Monto</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            <% campVet.donaciones.forEach(donacion=> { %>
+                                              <tr>
+                                                <td>
+                                                  <%= donacion.fecha %>
+                                                </td>
+                                                <td>
+                                                  <%= donacion.monto %>
+                                                </td>
+                                              </tr>
+                                              <% }) %>
+                                                <tr>
+                                                  <td colspan="2">
+                                                    <h5 class="m-2">Total: $ <%= campVet.total %>
+                                                    </h5>
+                                                  </td>
+                                                </tr>
+                                          </tbody>
+                                        </table>
                                       </div>
-                                      <% } %>
+                                      <% } else { %>
+                                        <div class="col">
+                                          <h5 class="m-2 text-center">La campaña no tiene donaciones realizadas</h5>
+                                        </div>
+                                        <% } %>
                                   </div>
                                 </div>
                               </div>
@@ -115,18 +158,58 @@
                         1, partes[0]); let fechaActual=new Date(); fechaFinFormatted.setHours(0,0,0,0);
                         fechaActual.setHours(0,0,0,0); %>
                         <% if (session.loggedin && fechaFinFormatted.getTime()>= fechaActual.getTime()) { %>
-                          <button id="boton<%=btn_n%>" type="button" class="btn btn-outline-primary"><i
+                          <button id="boton<%=btn_n%>" type="button" data-bs-toggle="modal"
+                            data-bs-target="#realizarDonacion<%= campania.id %>" class="btn btn-outline-primary"><i
                               class="bi bi-cash-stack"></i>
                             Donar</button>
                           <% } else { %>
-                            <button id="boton<%=btn_n%>" type="button" class="btn btn-outline-primary" disabled><i
-                                class="bi bi-cash-stack"></i>
+                            <button id="boton<%=btn_n%>" type="button" data-bs-toggle="modal"
+                              data-bs-target="#realizarDonacion<%= campania.id %>" class="btn btn-outline-primary"
+                              disabled><i class="bi bi-cash-stack"></i>
                               Donar</button>
                             <% } %>
+                                <div class="modal fade" id="realizarDonacion<%= campania.id %>" tabindex="-1"
+                                  aria-labelledby="realizarDonacion<%= campania.id %>_Label" aria-hidden="true">
+                                  <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="realizarDonacion<%= campania.id %>_Label">
+                                          Realizar donación a la campaña "<%= campania.titulo %>"
+                                        </h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                          aria-label="Close"></button>
+                                      </div>
+                                      <div class="modal-body row align-items-center">
+                                        <div class="col-6">
+                                          <label for="monto_<%= campania.id %>">Ingrese el monto a donar:
+                                          </label>
+                                        </div>
+                                        <div class="col-6">
+                                          <input class="form-control form-control-user m-1" type="number"
+                                            id="monto_<%= campania.id %>" min="1" 
+                                            placeholder="Monto a donar">
+                                        </div>
+                                        <div class="col-6">
+                                          <label for="tarjeta_<%= campania.id %>">Ingrese número de tarjeta:
+                                          </label>
+                                        </div>
+                                        <div class="col-6">
+                                          <input class="form-control form-control-user m-1" type="text"
+                                            id="tarjeta_<%= campania.id %>" placeholder="Tarjeta de crédito">
+                                        </div>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                          data-bs-dismiss="modal">Cancelar</button>
+                                        <button class="btn btn-primary" type="submit"
+                                          onclick="enviarFormulario(event, '<%= campania.id %>', '<%= session.loggedin %>')">Guardar</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
                               <% if (session.loggedin && session.usuario && session.usuario.rol=="admin" ) { %>
                                 <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
-                                  data-bs-toggle="modal" data-bs-target="#mostarDonaciones<%= campania.id %>"><i
-                                    class="bi bi-eye"></i>
+                                  data-bs-target="#mostarDonaciones<%= campania.id %>"><i class="bi bi-eye"></i>
                                   Donaciones</button>
 
                                 <div class="modal fade" id="mostarDonaciones<%= campania.id %>" tabindex="-1"
@@ -141,39 +224,40 @@
                                           aria-label="Close"></button>
                                       </div>
                                       <div class="modal-body row align-items-center">
-                                        <% if (!campania.donaciones.length == 0) {%>
-                                        <div class="col">
-                                          <table class="table table-striped table-hover text-center">
-                                            <thead>
-                                              <tr>
-                                                <th scope="col">Fecha</th>
-                                                <th scope="col">Monto</th>
-                                              </tr>
-                                            </thead>
-                                            <tbody>
-                                              <% campania.donaciones.forEach(donacion=> { %>
-                                                <tr>
-                                                  <td>
-                                                    <%= donacion.fecha %>
-                                                  </td>
-                                                  <td>
-                                                    <%= donacion.monto %>
-                                                  </td>
-                                                </tr>
-                                                <% }) %>
-                                                <tr>
-                                                  <td colspan="2">
-                                                    <h5 class="m-2">Total: $ <%= campania.total %></h5>
-                                                  </td>
-                                                </tr>
-                                            </tbody>
-                                          </table>
-                                        </div>
-                                        <% } else { %>
+                                        <% if (!campania.donaciones.length==0) {%>
                                           <div class="col">
-                                            <h5 class="m-2 text-center">La campaña no tiene donaciones realizadas</h5>
+                                            <table class="table table-striped table-hover text-center">
+                                              <thead>
+                                                <tr>
+                                                  <th scope="col">Fecha</th>
+                                                  <th scope="col">Monto</th>
+                                                </tr>
+                                              </thead>
+                                              <tbody>
+                                                <% campania.donaciones.forEach(donacion=> { %>
+                                                  <tr>
+                                                    <td>
+                                                      <%= donacion.fecha %>
+                                                    </td>
+                                                    <td>
+                                                      <%= donacion.monto %>
+                                                    </td>
+                                                  </tr>
+                                                  <% }) %>
+                                                    <tr>
+                                                      <td colspan="2">
+                                                        <h5 class="m-2">Total: $ <%= campania.total %>
+                                                        </h5>
+                                                      </td>
+                                                    </tr>
+                                              </tbody>
+                                            </table>
                                           </div>
-                                          <% } %>
+                                          <% } else { %>
+                                            <div class="col">
+                                              <h5 class="m-2 text-center">La campaña no tiene donaciones realizadas</h5>
+                                            </div>
+                                            <% } %>
                                       </div>
                                     </div>
                                   </div>
@@ -206,6 +290,69 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
       crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      function enviarFormulario(event, id,session) {
+
+        const monto = document.getElementById(`monto_${id}`).value;
+        const tarjeta = document.getElementById(`tarjeta_${id}`).value;
+
+        const data = {
+          id: id,
+          monto: monto,
+          tarjeta: tarjeta,
+        };
+
+        console.log(session)
+
+        fetch('/campanias', {
+           method: 'POST',
+           headers: {
+             'Content-Type': 'application/json'
+           },
+           body: JSON.stringify(data)
+         })
+           .then(function (response) {
+             if (response.ok) {
+               if (session) {
+                 Swal.fire({
+                   title: "Donación exitosa, usted posee el 20% de lo que donó en beneficio",
+                   icon: "success",
+                   timer: 2000,
+                   showConfirmButton: false,
+                 });
+               } else {
+                 Swal.fire({
+                   title: "Donación exitosa, muchas gracias",
+                   icon: "success",
+                   showConfirmButton: false,
+                   timer: 2000,
+                 });
+               }
+               document.getElementById(`monto_${id}`).value = "";
+               document.getElementById(`tarjeta_${id}`).value = "";
+             } else {
+               return response.text().then(function (mensajeDecodificado) {
+                mensajeDecodificado = mensajeDecodificado.replace(/['"]+/g, '');
+                 Swal.fire({
+                   title: mensajeDecodificado,
+                   icon: "error",
+                   showConfirmButton: false,
+                   timer: 2000,
+                 });
+               });
+             }
+           })
+           .catch(function (error) {
+             Swal.fire({
+               title: "Error",
+               text: "Ha ocurrido un error al enviar el formulario.",
+               icon: "error",
+             });
+           });
+      }
+
+    </script>
   </body>
 
   </html>

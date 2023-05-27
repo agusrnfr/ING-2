@@ -1,5 +1,6 @@
 const Campania = require('../db/models/campania');
 const Donacion = require('../db/models/donacion');
+const Beneficio = require('../db/models/beneficio');
 const session = require('express-session');
 const moment = require('moment');
 
@@ -106,10 +107,65 @@ const publicacionGuardada = async (req, res) => { // Muestra la alerta de que se
     }
 }
 
+const verificacionesDonacion = async (req, res, next) => {
+    const { id, monto, tarjeta } = req.body;
+    if (!id) {
+        return res.status(400).json('No se ingreso id de campaña');
+    }
+    const campania = await Campania.findOne({ where: { id: id } });
+    if (!campania) {
+        return res.status(404).json('No se encontró la campaña');
+    }
+    if (moment().startOf('day').isAfter(moment(campania.fecha_fin).startOf('day'))) {
+        return res.status(400).json('La campaña ya finalizó');
+    }
+    if (!monto) {
+        return res.status(400).json('Debe ingresar un monto');
+    }
+    if (monto <= 0) {
+        return res.status(400).json('El monto debe ser mayor a 0');
+    }
+    if (!tarjeta) {
+        return res.status(400).json('Debe ingresar una tarjeta');
+    }
+    if (tarjeta.length < 16 || tarjeta.length > 16) {
+        return res.status(400).json('Problemas con el pago: Tarjeta inválida');
+    }
+
+    next();
+}
+
+
+const realizarDonacion = async (req, res) => {
+    const id = req.body.id;
+    const monto = req.body.monto;
+    try {
+        await Donacion.create({
+            fecha: moment().toDate(),
+            monto: monto,
+            CampaniumId: id,
+        });
+        if (session.loggedin) {
+            await Beneficio.create({
+                monto_beneficio: monto * 0.2,
+                estado: false,
+                UserId: session.usuario.id,
+            });
+        }
+        res.status(200).json('Donación realizada correctamente');
+    }
+    catch (error) {
+        console.log(error);
+        res.status(500).json('Hubo un error al realizar la donación');
+    }
+}
+
 module.exports = {
     mostrarCampanias,
     publicarCampania,
     verificacionesCampania,
     guardarPublicacionCampania,
     publicacionGuardada,
+    verificacionesDonacion,
+    realizarDonacion,
 }
