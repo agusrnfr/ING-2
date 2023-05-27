@@ -8,7 +8,7 @@ Beneficio.init({
         type: DataTypes.DOUBLE,
         allowNull: false,
     },
-    estado: {
+    usado: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
     },

@@ -148,7 +148,7 @@ const realizarDonacion = async (req, res) => {
         if (session.loggedin) {
             await Beneficio.create({
                 monto_beneficio: monto * 0.2,
-                estado: false,
+                usado: false,
                 UserId: session.usuario.id,
             });
         }
