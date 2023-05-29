@@ -65,7 +65,7 @@ app.post('/agregar_mascota/cliente/:id', registrarMascota)
 app.get('/ver_mascota/:id', comprobar_sesion, mostrarMascota)
 
 //VER CLIENTE
-app.get('/ver_cliente/:id', comprobar_sesion_admin, mostrarCliente)
+app.get('/ver_cliente/:id', comprobar_sesion , mostrarCliente)
 app.get('/modificar/cliente/:id', comprobar_sesion_admin, mostrarClienteModificar)
 app.get('/modificar/cliente/password/:id', mostrarClienteModificarPassword)
 app.post('/modificar/cliente/:id',comprobar_sesion_admin, actualizarUsuario)
