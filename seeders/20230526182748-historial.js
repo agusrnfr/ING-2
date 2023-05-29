@@ -9,10 +9,10 @@ module.exports = {
       fecha: moment().add(8, 'days').toDate(),
       practica: 'Consulta general',
       observacion: 'Tiene muchas pulgas',
-      monto_abonado: '2000',
-      monto_beneficio: '400',
+      monto_abonado: '3700',
+      monto_beneficio: '3',
       UserId: 3,
-      MascotumId: 3,
+      MascotumId: 4,
       }], {});
   
   

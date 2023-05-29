@@ -21,14 +21,13 @@
                                 <th class="text-center" scope="col">Practica</th>
                                 <th class="text-center" scope="col">Observaciones</th>
                                 <th class="text-center" scope="col">Monto</th>
-                                <!-- <th class="col-2 text-center" scope="col">Monto Beneficio</th> -->
+                                 <th class="col-2 text-center" scope="col">Monto Beneficio</th> 
                             </tr>
                         </thead>
                         <tbody>
-                            <% if (!(data.length == 0)) { %>
-                                <% data.forEach(visita=> {
-                                    const fechaCorta = visita.fecha.split(" ")[0];
-                                    %>
+                                    <% if (data && data.length > 0) { %>
+                                         <% data.forEach(visita => { %>
+                                         <% const fechaCorta = visita.fecha.split(" ")[0]; %>
                                     <tr class="paginate">
                                         <td class="text-center align-middle">
                                             <%= fechaCorta %>
@@ -45,6 +44,10 @@
 
                                         <td class="text-center align-middle">
                                             <%= visita.monto_abonado %>
+                                        </td>
+
+                                        <td class="text-center align-middle">
+                                            <%= visita.monto_beneficio %>
                                         </td>
                                     </tr>
                                     <% }); %>

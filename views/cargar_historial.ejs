@@ -30,7 +30,7 @@
           <div class="mb-3">
             <% if (mascotas.length > 0) { %>
               <select id="mascota" class="form-select" name="mascota" required="">
-                <option value="" disabled selected>Mascota</option>
+                <option value="" disabled selected>Mascota (*)</option>
                 <% mascotas.forEach(function(mascota) { %>
                   <option value="<%= mascota.id %>">
                     <%= mascota.nombre %>
@@ -46,7 +46,7 @@
           
           <div class="mb-3">
             <select class="form-select" name="practica" id="practica" required="">
-                                                <option value="" disabled selected>Práctica</option>
+                                                <option value="" disabled selected>Práctica (*)</option>
                                                 <option value="Consulta general">Consulta general</option>
                                                 <option value="Desparasitacion">Desparasitación</option>
                                                 <option value="Urgencia">Urgencia</option>
@@ -56,13 +56,13 @@
                                             </select>
           </div>
 
-          <label for="color">Observaciones (opcional)</label>
+          <label for="color">Observaciones </label>
           <div class="mb-3">
           <textarea class="form-control form-control-user" name="observacion" id="observacion" 
            placeholder="Observacion General " rows="5" cols="30"></textarea></div>
 
 
-          <label for="color">Monto </label>
+          <label for="color">Monto (*)</label>
           <div class="mb-3">
             <input class="form-control form-control-user" 
                    name="monto" 
@@ -72,17 +72,28 @@
                    min= "1"
                    required="">
           </div>
-
-          <label for="color">Monto Beneficio </label>
+        
           <div class="mb-3">
-            <input class="form-control form-control-user" 
-                   name="monto_b" 
-                   type="number" 
-                   id="monto_b" 
-                   placeholder="Monto beneficio" 
-                   min ="1"
-                   required="">
+            <% if (beneficios.length > 0) { %>
+              <select id="monto_b" class="form-select" name="monto_b" required="">
+                <option value="" disabled selected>Monto Beneficio (*)</option>
+                <% beneficios.forEach(function(beneficio) { %>
+                  <% if (!beneficio.usado) { %>
+                    <option value="<%= beneficio.id %>">
+                      <%= beneficio.monto_beneficio %>
+                    </option>
+                  <% } %>
+                <% }); %>
+              </select>
+            <% } else { %>
+              <div class="alert alert-danger mb-3 text-center" role="alert">
+                <p class="text-danger m-0">No tiene cupones de beneficio.</p>
+              </div>
+            <% } %>
           </div>
+
+          <div class="text-center mb-2" style="font-size: smaller;">Los campos con (*) son
+            obligatorios</div>
 
         </div>
         <button class="btn btn-primary d-block btn-user w-100" name="registrar" type="submit">Registrar</button>
@@ -121,8 +132,9 @@
    const mascota = document.getElementById('mascota').value;
    const practica = document.getElementById('practica').value;
    const monto = document.getElementById('monto').value;
+   const monto_b = document.getElementById('monto_b').value;
  
-   if (!mascota || !practica|| !monto ) {
+   if (!mascota || !practica|| !monto || !monto_b) {
      event.preventDefault(); // Evita que se envíe el formulario
      const mensajeElemento = document.getElementById('mensaje');
      mensajeElemento.textContent = 'Por favor complete todos los campos solicitados.';

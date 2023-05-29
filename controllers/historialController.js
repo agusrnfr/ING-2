@@ -5,32 +5,48 @@ const Mascota = require('../db/models/mascota');
 const User = require('../db/models/user');
 const moment = require('moment');
 const Libreta = require('../db/models/libreta.js');
+const Beneficio= require('../db/models/beneficio.js');
 
+
+const getMonto = async (id) => {
+    try {
+      const beneficio = await Beneficio.findByPk(id);
+      return beneficio ? beneficio.monto_beneficio : null;
+    } catch (error) {
+      console.error(error);
+      throw new Error('Error al obtener el monto del beneficio');
+    }
+  };
 
 let data;
 
-const mostrarHistorial = async (req, res) => { // Muestra el historial del usuario logueado
-    
+const mostrarHistorial = async (req, res) => {
     try {
-        const visitas = await Historial.findAll({
-            raw: true,
-            include: { model: Mascota, as: 'Mascotum', attributes: ['nombre'] },
-            where: { UserId: session.usuario.id }
-        })
-        data = visitas.map(visita => {
-            const fechaHoraZonaHoraria = moment.tz(visita.fecha, 'America/Argentina/Buenos_Aires');
-            return {
-                id: visita.id,
-                fecha: fechaHoraZonaHoraria.format('DD/MM/YYYY HH:mm'),
-                MascotumId: visita.MascotumId,
-                nombre: visita['Mascotum.nombre'],
-                practica: visita.practica,
-                observacion: visita.observacion,
-                monto_abonado: visita.monto_abonado,
-                monto_beneficio: visita.monto_beneficio,
-            };
-        }).sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
-        res.render('historial', { data , session: session} );
+      const visitas = await Historial.findAll({
+        raw: true,
+        include: { model: Mascota, as: 'Mascotum', attributes: ['nombre'] },
+        where: { UserId: session.usuario.id }
+      });
+  
+      const dataPromises = visitas.map(async visita => {
+        const fechaHoraZonaHoraria = moment.tz(visita.fecha, 'America/Argentina/Buenos_Aires');
+        const montoBeneficio = await getMonto(visita.monto_beneficio);
+        return {
+          id: visita.id,
+          fecha: fechaHoraZonaHoraria.format('DD/MM/YYYY HH:mm'),
+          MascotumId: visita.MascotumId,
+          nombre: visita['Mascotum.nombre'],
+          practica: visita.practica,
+          observacion: visita.observacion,
+          monto_abonado: visita.monto_abonado,
+          monto_beneficio: montoBeneficio,
+        };
+      });
+  
+      const data = await Promise.all(dataPromises);
+  
+      const sortedData = data.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+      res.render('historial', { data: sortedData, session: session });
     }
     catch (error) {
         console.log(error);
@@ -48,12 +64,23 @@ const buscarMascotasCliente = async (id) => { // Busca las mascotas del cliente
     }
 };
 
+const buscarBeneficios = async (id) => { // Busca los cupones del cliente
+    try {
+        const usuario = await User.findByPk(id)
+        const beneficios =  await usuario.getBeneficios()
+        return beneficios;
+    } catch (error) {
+        console.log(error);
+        throw new Error('Error al buscar los cupones');
+    }
+};
 
 const mostrarCarga = async(req,res) => { //Muestra el formulario para carga de visitas
     let usuario = await User.findByPk(req.params.id)
 try {
+    const beneficios= await buscarBeneficios(usuario.id);
     const mascotas = await buscarMascotasCliente(usuario.id);
-    res.render('cargar_historial', { mascotas, usuario: usuario.dataValues});
+    res.render('cargar_historial', { mascotas, usuario: usuario.dataValues, beneficios});
 }
 catch (error) {
     console.log(error);
@@ -70,13 +97,19 @@ const crearHistorial = async (req, res) => {
     const monto_b = req.body.monto_b;
     const id = req.params.id;
     const arrayMascota= await buscarMascotasCliente(id);
+    const beneficios = await buscarBeneficios(id);
     let usuario = await User.findByPk(req.params.id)
 
     if (practica == 'Vacuna A' || practica == 'Vacuna B' || practica == 'Desparacitacion'){
         crearLibreta(fecha,mascota,practica, id)
     }
 
-  
+    const beneficio = await Beneficio.findByPk(monto_b); // buscando en 'Beneficio'
+     if (beneficio) {
+         beneficio.usado = true; // Actualiza el atributo 'usado' a true (o según tu lógica)
+         await beneficio.save(); // Guarda los cambios en la base de datos
+       }
+
     Historial.create({
         fecha: fecha,
         MascotumId: mascota,
@@ -91,6 +124,7 @@ const crearHistorial = async (req, res) => {
         res.render('cargar_historial',{
             usuario: (usuario && usuario.dataValues) ? usuario.dataValues : null,
             mascotas: arrayMascota,
+            beneficios,
             alert:true,
             alertTitle:"Registro de visita exitoso",
             alertMessage:"",
@@ -146,7 +180,7 @@ const mostrarLibreta = async (req, res) => { // Muestra la libreta de la mascota
 
 const crearLibreta = async(fecha, mascota, practica,id) =>{  //Deberia crear una columna en la libreta, todavia no lo hace
     try {
-        await Turno.create({
+        await Libreta.create({
             fecha: fecha,
             practica: practica,
             MascotumId: mascota.id,

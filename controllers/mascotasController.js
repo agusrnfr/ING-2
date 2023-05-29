@@ -63,10 +63,10 @@ const mostrarMascota = async (req, res) => {
     }
     const usuario = await User.findByPk(session.usuario.id)
     const mascotas = await usuario.getMascotas()
-    if(mascota.id in mascotas && session.usuario.rol !== 'admin'){
-        res.send('Acceso denegado')
-        return
-    }
+    // if(mascota.id in mascotas ){
+    //     res.send('Acceso denegado')
+    //     return
+    // }
     res.render('../views/detalle_mascota',{
         mascota: mascota.dataValues,
         usuario: usuario.dataValues,
