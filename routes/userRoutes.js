@@ -43,7 +43,7 @@ app.get('/modificar_mi_perfil',comprobar_sesion, mostrarModificarPerfil)
 app.post('/modificarMiPerfil', comprobar_sesion, modificarMiPerfil)
 
 //HISTORIAL
-app.get('/historial', comprobar_sesion, mostrarHistorial)
+app.get('/historial/:id', comprobar_sesion, mostrarHistorial)
 app.get('/registrarVisita/cliente/:id', comprobar_sesion_admin, mostrarCarga)
 app.post('/registrarVisita/cliente/:id', comprobar_sesion_admin, crearHistorial)
 

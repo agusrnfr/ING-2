@@ -22,10 +22,12 @@ let data;
 
 const mostrarHistorial = async (req, res) => {
     try {
+      const usuario = await User.findByPk(req.params.id)
       const visitas = await Historial.findAll({
         raw: true,
         include: { model: Mascota, as: 'Mascotum', attributes: ['nombre'] },
-        where: { UserId: session.usuario.id }
+        where: { UserId: usuario.id }
+        
       });
   
       const dataPromises = visitas.map(async visita => {
