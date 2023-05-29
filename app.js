@@ -62,4 +62,10 @@ exec('npx sequelize-cli db:seed:all', (err, stdout, stderr) => {
   }
 });
 
+// Sobrescribe el método 'error' del objeto 'console' para que se vea en rojo
+console.error = function (message) {
+  const chalk=require("chalk");
+  console.log(chalk.red(message));
+};
+
 module.exports = sequelize;

@@ -6,11 +6,14 @@ const { mostrarTrabajadores } = require('../controllers/trabajadorController');
 const { mostrarIndex } = require('../controllers/indexController');
 const { comprobar_sesion, comprobar_sesion_admin } = require('../controllers/loginController');
 const { verificaciones, solicitarTurno, mostrarTodosLosTurnos, mostrarMisTurnos, cambiarEstadoTurno, guardarTurno, turnoGuardado } = require('../controllers/turnosController');
-const { mostrarAgregarMascota, registrarMascota } = require('../controllers/mascotasController');
-const { mostrarCliente , mostrarClienteModificar , actualizarUsuario } = require('../controllers/clienteController')
-const { mostrarModificarPerfil , modificarMiPerfil } = require('../controllers/modificarPerfilController');
+const { mostrarAgregarMascota, registrarMascota , mostrarMascota } = require('../controllers/mascotasController');
+const { mostrarCliente , mostrarClienteModificar , actualizarUsuario , actualizarPasswordUsuario , mostrarClienteModificarPassword } = require('../controllers/clienteController')
+const { mostrarModificarPerfil , modificarMiPerfil , mostrarModificarMiPassword, modificarMiPassword} = require('../controllers/modificarPerfilController');
 const { mostrarAdopciones, cambiarEstado, mostrarPublicacion, guardarPublicacion, mostrarContacto, contactoAdoptante} = require('../controllers/adopcionController');
 const { mostrarHistorial , crearHistorial,mostrarCarga, mostrarLibreta} = require('../controllers/historialController');
+
+const { mostrarCupones } = require('../controllers/cuponesController');
+const { mostrarCampanias, publicarCampania, verificacionesCampania, guardarPublicacionCampania, publicacionGuardada, verificacionesDonacion, realizarDonacion} = require('../controllers/campaniasController');
 
 
 //invocamos express
@@ -47,6 +50,9 @@ app.post('/registrarVisita/cliente/:id', comprobar_sesion_admin, crearHistorial)
 //LIBRETA SANITARIA
 app.get('/libreta_sanitaria',comprobar_sesion, mostrarLibreta)
 
+app.get('/modificar_mi_password', comprobar_sesion, mostrarModificarMiPassword)
+app.post('/modificar_mi_password', comprobar_sesion, modificarMiPassword)
+
 //ADOPCION
 app.get('/adopciones',mostrarAdopciones)
 app.post('/adopcion/seAdopto',comprobar_sesion, cambiarEstado)
@@ -66,11 +72,23 @@ app.get('/turnos/turnoGuardado', comprobar_sesion, turnoGuardado);
 //MASCOTAS
 app.get('/agregar_mascota/cliente/:id', mostrarAgregarMascota)
 app.post('/agregar_mascota/cliente/:id', registrarMascota)
+app.get('/ver_mascota/:id', comprobar_sesion, mostrarMascota)
 
 //VER CLIENTE
 app.get('/ver_cliente/:id', comprobar_sesion_admin, mostrarCliente)
 app.get('/modificar/cliente/:id', comprobar_sesion_admin, mostrarClienteModificar)
+app.get('/modificar/cliente/password/:id', mostrarClienteModificarPassword)
 app.post('/modificar/cliente/:id',comprobar_sesion_admin, actualizarUsuario)
+app.post('/modificar/cliente/password/:id',comprobar_sesion_admin, actualizarPasswordUsuario)
+app.get('/ver_cliente/cupones/:id', comprobar_sesion, mostrarCupones)
+
+//CAMPANIAS
+app.get('/campanias', mostrarCampanias);
+app.get('/campanias/publicarCampania', comprobar_sesion_admin, publicarCampania);
+app.post('/campanias/publicarCampania', comprobar_sesion_admin, verificacionesCampania, guardarPublicacionCampania);
+app.get('/campanias/publicacionGuardada', comprobar_sesion_admin, publicacionGuardada);
+app.post('/campanias', verificacionesDonacion, realizarDonacion);
+
 
 module.exports = app;
 

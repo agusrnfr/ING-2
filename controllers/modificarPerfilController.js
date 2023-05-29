@@ -17,7 +17,7 @@ const modificarMiPerfil = async(req, res) => {
     const name = convertirNombre(req.body.name);
     const tel = req.body.tel;
     const DNI = req.body.DNI;
-    const pass = req.body.pass;
+    const pass = session.usuario.pass;// soy lazy pero esto no deberia estar
 
     if(!validarCampos(mail , pass , name , tel , DNI)){
         res.render('modificar_mi_perfil', 
@@ -75,7 +75,69 @@ const modificarMiPerfil = async(req, res) => {
 
 }
 
+const mostrarModificarMiPassword = async(req, res) => {
+  const usuario = await User.findByPk(session.usuario.id)
+  if(usuario === null){
+      res.send('No existe tu user, esto no deberia ocurrir')
+      return
+  }
+  return res.render('../views/modificar_mi_password', { usuario: session.usuario })
+}
+
+const modificarMiPassword = async (req, res) => {
+  const antiguaPass = req.body.pass;
+  const nuevaPass = req.body.pass2;
+  if (!nuevaPass || !antiguaPass) {
+    console.error('Campos incompletos');
+    return false;
+  }
+  const usuario = User.findOne({
+    where: { id: session.usuario.id }
+  });
+
+  if (usuario == null) {
+    console.error('Error, el usuario no existe');
+    return false;
+  }
+
+  try {
+    User.findByPk(session.usuario.id) // Actualizar usuario
+      .then(user => {
+        if (user.pass != antiguaPass) {
+          res.render('modificar_mi_password.ejs', {
+            usuario: usuario,
+            alert: true,
+            alertTitle: 'La contraseña anterior es incorrecta',
+            alertMessage: '',
+            alertIcon: 'error',
+            showConfirmButton: false,
+            timer: 2000
+          });
+          return false;
+        }
+        // La contraseña es correcta, actualizarla
+        user.pass = nuevaPass;
+        user.save().then(() => {
+          res.render('modificar_mi_password.ejs', {
+            usuario: usuario,
+            alert: true,
+            alertTitle: 'Perfil actualizado con éxito',
+            alertMessage: '',
+            alertIcon: 'success',
+            showConfirmButton: false,
+            timer: 2000
+          });
+        });
+      });
+  } catch (error) {
+    console.error('Error al actualizar la contraseña del cliente');
+    console.error(error);
+  }
+};
+
 module.exports = {
     mostrarModificarPerfil,
-    modificarMiPerfil
+    modificarMiPerfil,
+    mostrarModificarMiPassword,
+    modificarMiPassword,
 }

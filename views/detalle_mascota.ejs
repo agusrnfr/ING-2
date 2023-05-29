@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include ('header', {tituloweb: '¡Oh my dog! | Detalle Mascota'}); %>
+</head>
+
+<body id="body">
+
+    <div class="container h-100" style="margin-top: 20px;">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-lg-8 col-xl-8">
+          <div class="card text-black" style="border-radius: 25px;">
+            <div class="card-body p-md-4">
+              <div class="row justify-content-center">
+                
+                <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-3"><i class=""></i>Detalle de mascota</p>
+                
+                <div class="col-md-7">
+                    <style>
+                        .pet-info {
+                          margin-bottom: 10px;
+                        }
+                        .pet-info strong {
+                          font-weight: bold;
+                          color: black;
+                        }
+                        .pet-info .quote {
+                            font-family: 'Times New Roman', Times, serif;
+                            font-style: italic;
+                            font-size: 1.2em;
+                            color: #333;
+                        }
+                      </style>
+                      <div class="container">
+                        <div class="pet-info">
+                          <span class="text-primary"><strong>Nombre de la mascota:</strong></span> <%= mascota.nombre %>
+                        </div>
+                        <div class="pet-info">
+                            <span class="text-primary"><strong>Dueño:</strong></span> <%= usuario.name %>
+                          </div>
+                        <div class="pet-info">
+                          <span class="text-primary"><strong>Sexo:</strong></span> hembra
+                        </div>
+                        <div class="pet-info">
+                          <span class="text-primary"><strong>Raza:</strong></span> <%= mascota.raza %>
+                        </div>
+                        <div class="pet-info">
+                          <span class="text-primary"><strong>Color:</strong></span> <%= mascota.color %>
+                        </div>
+                        <div class="pet-info">
+                          <span class="text-primary"><strong>Fecha de nacimiento:</strong></span> 1/1/23
+                        </div>
+                        <div class="pet-info">
+                          <span class="text-primary"><strong>Observaciones:</strong></span> <blockquote class="quote"><%= mascota.observaciones %></blockquote>
+                        </div>
+                      </div>
+                  <br>
+                  
+                  <div><a class="btn btn-primary w-100" href="/"><i class="bi bi-journal-text"></i> Ver libreta sanitaria</a></div>
+
+                </div>
+                  <div class="col-md-4">
+                    <div class="d-flex justify-content-center align-items-center" style="height: 150px; border: 1px solid #ddd; padding: 10px;">
+                        <img src="/img/dogo_bañera.png" alt="Imagen de la mascota" style="width: 150px; height: 150px;">
+                    </div>
+                </div>
+                <div class="text-center mt-5"><a class="small" href="/table">Volver</a></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+    </div>
+</body>
+</html>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+<script>
+    $(document).ready(function () {
+        const tableRows = $('#tabla1 tbody tr').length;
+        const pagingEnable = tableRows > 50;
+        $('#tabla1').DataTable({
+            paging: pagingEnable,
+            ordering: false,
+            info: false,
+            lengthMenu: [
+                [5, 15, 50, -1],
+                [5, 15, 50, 'Todos'],
+            ],
+            pageLength: 50, // Establecer como la opción por defecto
+            searching: false, // deshabilita la función de búsqueda
+            language: {
+                paginate: { previous: 'Anterior', next: 'Siguiente', },
+                zeroRecords: 'La mascota no posee practicas registradas',
+                info: 'Mostrando pagina _PAGE_ de _PAGES_',
+                infoEmpty: 'La mascota no posee practicas registradas',
+                lengthMenu: 'Mostrar _MENU_ entradas'
+            },
+        });
+
+    });
+</script>

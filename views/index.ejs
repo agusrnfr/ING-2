@@ -36,6 +36,9 @@
 <div>
     <a href="/adopciones">Adopcion de perros</a>
 </div>
+<div>
+    <a href="/campanias">Campañas</a>
+</div>
 
 <% if (typeof session.usuario !== 'undefined' && (session.loggedin === true)) { %>
 <div>
@@ -64,6 +67,9 @@
 </div>
 <div>
     <a href="/turnos/misTurnos">Listar mis turnos</a>
+</div>
+<div>
+    <a href="/ver_cliente/cupones/<%= session.usuario.id %>">Ver mis beneficios</a>
 </div>
 <% } %>
 
