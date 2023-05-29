@@ -5,7 +5,7 @@ const { mostrarRegister, registrar, chequear_mail_duplicado } = require('../cont
 const { mostrarTrabajadores } = require('../controllers/trabajadorController');
 const { mostrarIndex } = require('../controllers/indexController');
 const { comprobar_sesion, comprobar_sesion_admin } = require('../controllers/loginController');
-const { verificaciones, solicitarTurno, mostrarTodosLosTurnos, mostrarMisTurnos, cambiarEstadoTurno, guardarTurno, turnoGuardado } = require('../controllers/turnosController');
+const { verificaciones, solicitarTurno, mostrarTodosLosTurnos, mostrarMisTurnos, cambiarEstadoTurno, guardarTurno, turnoGuardado ,mostrarTurnosDia} = require('../controllers/turnosController');
 const { mostrarAgregarMascota, registrarMascota , mostrarMascota } = require('../controllers/mascotasController');
 const { mostrarCliente , mostrarClienteModificar , actualizarUsuario , actualizarPasswordUsuario , mostrarClienteModificarPassword } = require('../controllers/clienteController')
 const { mostrarModificarPerfil , modificarMiPerfil , mostrarModificarMiPassword, modificarMiPassword} = require('../controllers/modificarPerfilController');
@@ -68,6 +68,7 @@ app.get('/turnos/listarTodosLosTurnos', comprobar_sesion_admin, mostrarTodosLosT
 app.get('/turnos/misTurnos', comprobar_sesion, mostrarMisTurnos);
 app.post('/turnos/listarTodosLosTurnos', comprobar_sesion_admin, cambiarEstadoTurno);
 app.get('/turnos/turnoGuardado', comprobar_sesion, turnoGuardado);
+app.get('/turnos_dia',comprobar_sesion_admin, mostrarTurnosDia);
 
 //MASCOTAS
 app.get('/agregar_mascota/cliente/:id', mostrarAgregarMascota)
