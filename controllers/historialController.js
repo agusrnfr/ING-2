@@ -118,7 +118,6 @@ const crearHistorial = async (req, res) => {
 //Zona libreta baby
 
 const mostrarLibreta = async (req, res) => { // Muestra la libreta de la mascota
-    
     try {
         const libretas = await Libreta.findAll({
             raw: true,
@@ -145,12 +144,11 @@ const mostrarLibreta = async (req, res) => { // Muestra la libreta de la mascota
 
 
 
-const crearLibreta = async(fecha, mascota, practica,id) =>{
+const crearLibreta = async(fecha, mascota, practica,id) =>{  //Deberia crear una columna en la libreta, todavia no lo hace
     try {
         await Turno.create({
             fecha: fecha,
             practica: practica,
-            UserId: id,
             MascotumId: mascota.id,
         });
         return true;
@@ -162,8 +160,6 @@ const crearLibreta = async(fecha, mascota, practica,id) =>{
 }
 
   
-
-
 module.exports = {
     mostrarHistorial,
     crearHistorial,
