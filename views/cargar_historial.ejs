@@ -27,33 +27,17 @@
 
                 <form id="miForm" action="/registrarVisita/cliente/<%= usuario.id %>" method="POST">
                   <div class="row mb-3">
+
+                    <label for="practica">Mascota</label>
                     <div class="mb-3">
-                      <% if (mascotas.length > 0) { %>
-                      <select id="mascota" class="form-select" name="mascota" required="">
-                        <option value="" disabled selected>Mascota (*)</option>
-                        <% mascotas.forEach(function(mascota) { %>
-                        <option value="<%= mascota.id %>">
-                          <%= mascota.nombre %>
-                        </option>
-                        <% }); %>
-                      </select>
-                      <% } else { %>
-                      <div class="alert alert-danger mb-3 text-center" role="alert">
-                        <p class="text-danger m-0">No tiene mascotas registradas.</p>
-                      </div>
-                      <% } %>
+                    <span class="form-control form-control-user" id="mascota" 
+                      readonly style="background-color: #f2f2f2; opacity: 0.7; pointer-events: none;"><%= nombreMascota %></span>
                     </div>
 
+                    <label for="practica">Práctica</label>
                     <div class="mb-3">
-                      <select class="form-select" name="practica" id="practica" required="">
-                        <option value="" disabled selected>Práctica (*)</option>
-                        <option value="Consulta general">Consulta general</option>
-                        <option value="Desparasitacion">Desparasitación</option>
-                        <option value="Urgencia">Urgencia</option>
-                        <option value="Castracion">Castración</option>
-                        <option value="Vacuna A">Vacuna A</option>
-                        <option value="Vacuna B">Vacuna B</option>
-                      </select>
+                    <span class="form-control form-control-user" id="practica" 
+                      readonly style="background-color: #f2f2f2; opacity: 0.7; pointer-events: none;"><%= practica %></span>
                     </div>
 
                     <label for="color">Observaciones </label>
@@ -143,7 +127,7 @@
     </div>
   </div>
 
-  <div class="text-center"><a class="small" href="/table">Volver</a></div>
+  <div class="text-center"><a class="small" href="/turnos_dia">Volver</a></div>
 </div>
 </div>
 </div>

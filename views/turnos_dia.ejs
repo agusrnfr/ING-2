@@ -1,7 +1,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-<%- include ('header', {tituloweb: '¡Oh my dog! | Turnos' }); %>
+<%- include ('header', {tituloweb: '¡Oh my dog! | Turnos del dia' }); %>
     </head>
     <!-- BODY -->
 
@@ -56,7 +56,7 @@
                                         </td>
 
                                         <td class="text-center align-middle">
-                                        <button type="button" onclick="location.href='<%= `/registrarVisita/cliente/${turno.UserId}` %>'" class="btn btn-outline-success">
+                                        <button type="button" onclick="location.href='<%= `/registrarVisita/cliente/${turno.UserId}?mascota=${turno.MascotumId}&practica=${turno.practica}` %>'" class="btn btn-outline-success">
                                         <i class="bi bi-house-add"></i> Registrar visita</button>
                                         </td>
                                         

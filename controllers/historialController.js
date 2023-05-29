@@ -80,9 +80,15 @@ const buscarBeneficios = async (id) => { // Busca los cupones del cliente
 const mostrarCarga = async(req,res) => { //Muestra el formulario para carga de visitas
     let usuario = await User.findByPk(req.params.id)
 try {
+    const mascotaId = req.query.mascota;
+    const mascota = await Mascota.findByPk(mascotaId);
+    const nombreMascota = mascota ? mascota.nombre : '';
+    let practica = req.query.practica || ''; // Obtener el valor del parámetro 'practica' o establecer un valor por defecto
+
     const beneficios= await buscarBeneficios(usuario.id);
     const mascotas = await buscarMascotasCliente(usuario.id);
-    res.render('cargar_historial', { mascotas, usuario: usuario.dataValues, beneficios});
+    res.render('cargar_historial', { mascotas, usuario: usuario.dataValues, beneficios, nombreMascota, practica});
+    
 }
 catch (error) {
     console.log(error);
