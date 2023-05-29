@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%- include ('header', {tituloweb: '¡Oh my dog! | Registrar visita'}); %>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body id="body">
@@ -77,6 +78,7 @@
             <% if (beneficios.length > 0) { %>
               <select id="monto_b" class="form-select" name="monto_b" required="">
                 <option value="" disabled selected>Monto Beneficio (*)</option>
+                <option value="ninguno">No elijo ningun beneficio</option>
                 <% beneficios.forEach(function(beneficio) { %>
                   <% if (!beneficio.usado) { %>
                     <option value="<%= beneficio.id %>">
@@ -92,16 +94,20 @@
             <% } %>
           </div>
 
+
           <div class="text-center mb-2" style="font-size: smaller;">Los campos con (*) son
             obligatorios</div>
 
+            <div id="mensaje"></div>
+
         </div>
-        <button class="btn btn-primary d-block btn-user w-100" name="registrar" type="submit">Registrar</button>
+        <button class="btn btn-primary d-block btn-user w-100" name="registrar" type="submit" >Registrar</button>
 
     </div>
     <div class="col-md-10 col-lg-6 col-xl-6 d-flex align-items-center order-1 order-lg-2 justify-content-center">
         <img src="/img/perriflor.png" width="300px">
     </div>
+  
 
     <style>
         @media only screen and (max-width: 900px) {
@@ -117,6 +123,27 @@
 <hr>
 </form>
 
+<div class="modal fade" id="modalWarning" tabindex="-1" role="dialog" aria-labelledby="modalWarningLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalWarningLabel">Advertencia</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>El monto seleccionado es <span id="montoSeleccionado"></span> y el monto de beneficio es <span id="montoMaxBeneficio"></span>.</p>
+        <p>El monto seleccionado es mayor que el beneficio disponible.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div class="text-center"><a class="small" href="/table">Volver</a></div>
 </div>
 </div>
@@ -124,23 +151,46 @@
 </div>
 </div>
 </div>
-<br><br>
+<br>
 
 <script>
- const form = document.getElementById('miForm');
- form.addEventListener('submit', (event) => {
-   const mascota = document.getElementById('mascota').value;
-   const practica = document.getElementById('practica').value;
-   const monto = document.getElementById('monto').value;
-   const monto_b = document.getElementById('monto_b').value;
- 
-   if (!mascota || !practica|| !monto || !monto_b) {
-     event.preventDefault(); // Evita que se envíe el formulario
-     const mensajeElemento = document.getElementById('mensaje');
-     mensajeElemento.textContent = 'Por favor complete todos los campos solicitados.';
-   }
- });
- 
+  const form = document.getElementById('miForm');
+  form.addEventListener('submit', (event) => {
+    const mascota = document.getElementById('mascota').value;
+    const practica = document.getElementById('practica').value;
+    const monto = document.getElementById('monto').value;
+    const monto_b = document.getElementById('monto_b').value;
+
+    // Verificar los campos antes de enviar el formulario
+    if (!mascota || !practica || !monto || !monto_b) {
+      event.preventDefault(); // Evitar que se envíe el formulario
+      const mensajeElemento = document.getElementById('mensaje');
+      mensajeElemento.textContent = 'Por favor complete todos los campos solicitados.';
+      return; // Detener la ejecución del script
+    }
+
+    // Obtener el monto seleccionado y convertirlo a número
+    var montoSeleccionado = Number(monto);
+
+    // Obtener el monto máximo de beneficio
+    var montoMaxBeneficio = 0;
+    var beneficiosSelect = document.getElementById('monto_b');
+    var beneficioSeleccionado = beneficiosSelect.options[beneficiosSelect.selectedIndex];
+
+    if (beneficioSeleccionado.value !== '' && beneficioSeleccionado.value !== 'ninguno') {
+      montoMaxBeneficio = Number(beneficioSeleccionado.innerText);
+    }
+
+    // Comparar el monto seleccionado con el monto máximo de beneficio
+    if (montoSeleccionado > montoMaxBeneficio) {
+      // Mostrar el modal de warning
+      $('#modalWarning').modal('show');
+      event.preventDefault(); // Detener el envío del formulario
+      return; // Detener la ejecución del script
+    }
+
+    // Si todos los campos son válidos, el formulario se enviará automáticamente
+  });
 </script>
 
 </body>

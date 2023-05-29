@@ -106,7 +106,7 @@ const crearHistorial = async (req, res) => {
 
     const beneficio = await Beneficio.findByPk(monto_b); // buscando en 'Beneficio'
      if (beneficio) {
-         beneficio.usado = true; // Actualiza el atributo 'usado' a true (o según tu lógica)
+         beneficio.usado = true; // Actualiza el atributo 'usado' a true 
          await beneficio.save(); // Guarda los cambios en la base de datos
        }
 

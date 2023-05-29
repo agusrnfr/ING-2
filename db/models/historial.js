@@ -24,7 +24,7 @@ Historial.init({
     },
     monto_beneficio: {
         type: DataTypes.DOUBLE,
-        allowNull: false,
+        allowNull: true,
     },
 }, {
     sequelize,
