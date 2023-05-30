@@ -27,11 +27,29 @@
               <!-- Boton Cambiar Estado -->
               <% if (session.usuario && session.usuario.id === adopcion.UserId) { %>
                 <a id="adopto <%= adopcion.id %>" class="btn btn-primary mx-2 <% if (adopcion.se_adopto) { %> disabled <% } %>" 
-                  onclick="cambiarEstado('adopto <%= adopcion.id %>', '<%= adopcion.id %>', '<%= adopcion.se_adopto ? true : false %>')">
+                  data-bs-toggle="modal" data-bs-target="#confirmacionModal_<%= adopcion.id %>">
                   <span id="texto-adopto <%= adopcion.id %>"><%= adopcion.se_adopto ? 'Adoptado' : 'Cambiar Estado' %></span>
                 </a>
               <% } %>
-
+              
+              <!-- Modal de confirmación -->
+              <div class="modal fade" id="confirmacionModal_<%= adopcion.id %>" tabindex="-1" aria-labelledby="confirmacionModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="confirmacionModalLabel">Confirmar Cambio de Estado</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <p>¿Estás seguro de que deseas cambiar el estado?</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                      <button type="button" class="btn btn-primary" onclick="cambiarEstado('adopto <%= adopcion.id %>', '<%= adopcion.id %>', '<%= adopcion.se_adopto ? true : false %>')">Confirmar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
               <h5 class="card-title d-flex justify-content-between align-items-center">
                 <%= adopcion.nombre %> <span class="emoji">&#x1F43E;</span>
@@ -66,7 +84,7 @@
 
  <div class="text-center"><a class="small" href="/">Volver</a></div>
 
-<script>
+ <script>
   async function cambiarEstado(elementId, adopcionId, seAdopto) {
     const url = '/adopcion/seAdopto';
     const nuevoEstado = !JSON.parse(seAdopto); // Cambia el estado actual al nuevo estado
@@ -79,28 +97,37 @@
           'Content-Type': 'application/json'
         }
       });
-  
+
       if (response.ok) {
-       const textoBoton = document.getElementById(`texto-${elementId}`);
-      textoBoton.innerHTML = nuevoEstado ? 'Adoptado' : 'Cambiar Estado';
+        const textoBoton = document.getElementById(`texto-${elementId}`);
+        textoBoton.innerHTML = nuevoEstado ? 'Adoptado' : 'Cambiar Estado';
 
-      const parrafo = document.getElementById(`parrafo-${adopcionId}`);
-      parrafo.innerHTML = nuevoEstado ? 'Adoptado' : 'Por adoptar';
+        const parrafo = document.getElementById(`parrafo-${adopcionId}`);
+        parrafo.innerHTML = nuevoEstado ? 'Adoptado' : 'Por adoptar';
 
-  // Deshabilitar el botón
-      const boton = document.getElementById(elementId);
-     if (boton) {
-    boton.classList.add('disabled');
-    boton.removeAttribute('onclick');
-  }
-}
-      const data = await response.json();
-  
+        // Deshabilitar el botón
+        const boton = document.getElementById(elementId);
+        if (boton) {
+          boton.classList.add('disabled');
+          boton.removeAttribute('onclick');
+        }
+        // const modal = bootstrap.Modal.getInstance(document.getElementById(`confirmacionModal_${adopcionId}`));
+        // modal.hide();
+
+        $('#confirmacionModal_' + adopcionId).modal('hide'); // Ocultar el modal manualmente usando jQuery
+        
+      }
     } catch (error) {
       console.error('Error al realizar la solicitud:', error);
     }
   }
-  </script>
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 
  <%- include ('sweet-alert') %>

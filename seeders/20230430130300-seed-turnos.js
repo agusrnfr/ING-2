@@ -47,6 +47,7 @@ module.exports = {
       UserId: 7,
       MascotumId: 10,
     }], {});
+
     await queryInterface.bulkInsert('turnos', [{
       fecha: moment('2023-06-01').toDate(),
       banda_horaria: 'Tarde',
@@ -56,6 +57,25 @@ module.exports = {
       UserId: 4,
       MascotumId: 2,
     }], {});
+
+    await queryInterface.bulkInsert('turnos', [{
+      fecha: moment().toDate(),
+      banda_horaria: 'Mañana',
+      estado: 'Aceptado',
+      practica: 'Consulta general',
+      UserId: 3,
+      MascotumId: 1,
+    }], {});
+
+    await queryInterface.bulkInsert('turnos', [{
+      fecha: moment().toDate(),
+      banda_horaria: 'Tarde',
+      estado: 'Aceptado',
+      practica: 'Consulta general',
+      UserId: 4,
+      MascotumId: 2,
+    }], {});
+
 /*     await queryInterface.bulkInsert('turnos', [{
       fecha: moment().add(124, 'days').toDate(),
       banda_horaria: 'Tarde',
