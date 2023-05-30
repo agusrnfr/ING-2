@@ -61,7 +61,7 @@ const mostrarMascota = async (req, res) => {
         res.send('Error: No existe esa mascota')
         return
     }
-    const usuario = await User.findByPk(session.usuario.id)
+    const usuario = await User.findByPk(mascota.UserId)
     const mascotas = await usuario.getMascotas()
     if(mascota.id in mascotas && session.usuario.rol !== 'admin'){
         res.send('Acceso denegado')

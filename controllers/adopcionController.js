@@ -233,7 +233,7 @@ const contactoAdoptante = async (req, res) => {
       alertIcon: 'success',
       showConfirmButton: false,
       timer: 1500,
-      ruta: 'adopciones',
+      ruta: 'adopciones',  
     });
     await transporter.sendMail({
       from: '"Interes en adopcion" <veterinaria.omd@gmail.com>',
