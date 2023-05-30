@@ -75,8 +75,21 @@ const mostrarMascota = async (req, res) => {
     })
 }
 
+const eliminarMascota = async (req, res) => {
+    const mascota = await Mascota.findByPk(req.params.id)
+    if(mascota == null){
+        res.send('Error: No existe esa mascota')
+        return
+    }
+    await mascota.update({ eliminada: true });
+    // Redireccionar a la misma página
+    res.redirect('back');
+}
+
+
 module.exports = {
     mostrarAgregarMascota,
     registrarMascota,
     mostrarMascota,
+    eliminarMascota,
 }

@@ -1,6 +1,7 @@
 const User = require('../db/models/user.js');
 const { convertirNombre } = require('./registerController.js');
 const { validarCampos } = require('./registerController.js');
+const session = require('express-session');
 
 const mostrarCliente = async(req, res) => {
     const usuario = await User.findByPk(req.params.id)
@@ -10,7 +11,7 @@ const mostrarCliente = async(req, res) => {
     }
     const { calcularEdadMasco } = require('./turnosController.js');
     const mascotas = await usuario.getMascotas()
-    return res.render('../views/cliente', { usuario: usuario.dataValues, mascotas , calcularEdadMasco })
+    return res.render('../views/cliente', { usuario: usuario.dataValues, mascotas , calcularEdadMasco , session })
 }
 
 const mostrarClienteModificar = async(req, res) => {
