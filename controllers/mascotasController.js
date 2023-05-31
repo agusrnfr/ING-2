@@ -75,6 +75,7 @@ const mostrarMascota = async (req, res) => {
         mascotas: mascotas,
     })
 }
+}
 
 const eliminarMascota = async (req, res) => {
     const mascota = await Mascota.findByPk(req.params.id)
