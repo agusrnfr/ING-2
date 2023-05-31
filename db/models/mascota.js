@@ -22,6 +22,7 @@ Mascota.init({
   },
   observaciones: {
     type: DataTypes.STRING,
+    defaultValue: "Ninguna",
     allowNull: true,
   },
   foto: {
@@ -32,10 +33,22 @@ Mascota.init({
     type: DataTypes.STRING,
     allowNull: false,
   },
+  eliminada: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull: false,
+  }
 }, {
   sequelize,
   modelName: 'Mascota',
   tableName: 'mascotas',
+});
+
+//eliminado logico
+Mascota.addScope('defaultScope', {
+  where: {
+    eliminada: false
+  }
 });
 
 module.exports = Mascota;

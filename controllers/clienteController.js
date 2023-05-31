@@ -1,6 +1,7 @@
 const User = require('../db/models/user.js');
 const { convertirNombre } = require('./registerController.js');
 const { validarCampos } = require('./registerController.js');
+const session = require('express-session');
 
 const mostrarCliente = async(req, res) => {
     const usuario = await User.findByPk(req.params.id)
@@ -10,7 +11,7 @@ const mostrarCliente = async(req, res) => {
     }
     const { calcularEdadMasco } = require('./turnosController.js');
     const mascotas = await usuario.getMascotas()
-    return res.render('../views/cliente', { usuario: usuario.dataValues, mascotas , calcularEdadMasco })
+    return res.render('../views/cliente', { usuario: usuario.dataValues, mascotas , calcularEdadMasco , session })
 }
 
 const mostrarClienteModificar = async(req, res) => {
@@ -90,7 +91,7 @@ const actualizarPasswordUsuario = async (req, res) => {
   });
 
   if (usuario == null) {
-    console.error('Error, el usuario no existe');
+    console.error('Error: el usuario no existe');
     return false;
   }
 
@@ -133,7 +134,7 @@ const actualizarPasswordUsuario = async (req, res) => {
 const mostrarClienteModificarPassword = async(req, res) => {
   const usuario = await User.findByPk(req.params.id)
   if(usuario === null){
-      console.error('no existe ese usuario :(')
+      console.error('Error: no existe ese usuario :(')
       return
   }
   return res.render('../views/modificar_password_cliente', { usuario: usuario.dataValues })
