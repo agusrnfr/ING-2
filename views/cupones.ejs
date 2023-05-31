@@ -77,8 +77,8 @@
                                         </div>
                                         <div class="tengah py-3 d-flex w-100 justify-content-start">
                                             <div>
-                                                <h3 class="lead">Cupón de descuento  </h3>
-                                                <p class="text-muted mb-0">Acercate a la veterinaria para usarlo</p>
+                                                <h3 class="lead">Cupón de descuento</h3>
+                                                <span>Acercate a la veterinaria para usarlo</span>
                                             </div>
                                         </div>
                                         <div class="kanan">
@@ -86,14 +86,10 @@
                                                 <div class="w-100">
                                                     <div class="block">
                                                         <span class="time font-weight-light">
-                                                            <span>$<%= cupon.monto_beneficio %></span>
+                                                            <span style="<%= cupon.usado === true ? 'text-decoration: line-through;' : '' %>">$<%= cupon.monto_beneficio %></span>
                                                         </span>
+                                                        <strong><%= cupon.usado === true ? 'Usado' : '' %></strong>
                                                     </div>
-                                                    <% if (session.usuario.rol === "admin") { %>
-                                                        <a href="https://www.totoprayogo.com" target="_blank" class="btn btn-sm btn-outline-danger btn-block">
-                                                          Usar cupón
-                                                        </a>
-                                                      <% } %>
                                                 </div>
                                             </div>
                                         </div>
@@ -108,6 +104,6 @@
                     <% } %>
             </div>
         </div>
-        <div class="text-center"><a class="small" href="/" style="color: white;">Volver</a></div>
+        <div class="text-center"><a class="small" href="#" style="color: white;" onclick="history.back(); return false;">Volver</a></div>
 </body>
 </html>

@@ -14,7 +14,8 @@ const validarLogin = async (req, res) => {
         const mail = req.body.mail;
         const pass = req.body.pass;
 
-        if (!mail || !pass) {//campos incompletos
+        if (!mail || !pass) {
+            console.error('Error: campos incompletos');
             return;
         }
         const usuarioEncontrado = await User.findOne({

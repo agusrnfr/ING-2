@@ -46,13 +46,22 @@
                                       <td><%= mascota.nombre %></td>
                                       <td><%= mascota.raza %></td>
                                       <td><%= calcularEdadMasco(mascota.fecha_nacimiento) %></td>
-                                      <td><button type="button" onclick="location.href='<%= `/ver_mascota/${mascota.id}` %>'" class="btn btn-outline-primary"><i class="bi bi-eye-fill"></i> Ver</button></td>
-                                      </tr>
+                                      <td>
+                                        <button type="button" onclick="location.href='<%= `/ver_mascota/${mascota.id}` %>'" class="btn btn-outline-primary d-inline mr-2">
+                                          <i class="bi bi-eye-fill"></i> Ver
+                                        </button>
+                                        <% if (session.usuario.rol === 'admin') { %>
+                                          <form method="POST" action="<%= `/eliminar_mascota/${mascota.id}` %>" class="d-inline" id="eliminarForm">
+                                            <button type="submit" class="btn btn-outline-danger" onclick="confirmarEliminar(event)">
+                                              <i class="bi bi-trash3-fill"></i> Eliminar
+                                            </button>
+                                          </form>
+                                        <% } %>
+                                      </td>
                                       <% }); %>
                                     </tbody>
                                   </table>
                     </div>
-
 <div class="text-center"><a class="small" href="/table">Volver</a></div>
 </div>
 </div>
@@ -60,9 +69,30 @@
 </div>
 </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.all.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+<script>
+  function confirmarEliminar(event, mascota) {
+    event.preventDefault(); // Evita que el formulario se envíe inmediatamente
+
+    Swal.fire({
+      title: 'Eliminar mascota',
+      text: '¿Estás seguro de que deseas eliminar esta mascota?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Eliminar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Si el usuario confirma, envía el formulario manualmente
+        document.getElementById('eliminarForm').submit();
+      }
+    });
+  }
+</script>
 <script>
     $(document).ready(function () {
         const tableRows = $('#tabla1 tbody tr').length;
