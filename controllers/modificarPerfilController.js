@@ -6,7 +6,7 @@ const { validarCampos } = require('./registerController.js');
 const mostrarModificarPerfil = async(req, res) => {
     const usuario = await User.findByPk(session.usuario.id)
     if(usuario === null){
-        res.send('No existe tu user, esto no deberia ocurrir')
+        console.error('Error: No existe tu user, esto nunca deberia ocurrir');
         return
     }
     return res.render('../views/modificar_mi_perfil', { usuario: session.usuario })
@@ -40,7 +40,7 @@ const modificarMiPerfil = async(req, res) => {
     });
 
     if(user && user_url && (user_url.mail != mail)){
-        console.error('Error al crear usuario,mail duplicado o el usuario no existe');
+        console.error('Error: Al crear usuario,mail duplicado o el usuario no existe');
         return false;
     }
 
@@ -70,7 +70,7 @@ const modificarMiPerfil = async(req, res) => {
       });
     })
     .catch(error => {
-      console.log("error al actualizar");
+      console.error('Error al actualizar el usuario');
     });
 
 }
@@ -78,7 +78,7 @@ const modificarMiPerfil = async(req, res) => {
 const mostrarModificarMiPassword = async(req, res) => {
   const usuario = await User.findByPk(session.usuario.id)
   if(usuario === null){
-      res.send('No existe tu user, esto no deberia ocurrir')
+      console.error('Error: No existe tu user, esto nunca deberia ocurrir');
       return
   }
   return res.render('../views/modificar_mi_password', { usuario: session.usuario })
@@ -88,7 +88,7 @@ const modificarMiPassword = async (req, res) => {
   const antiguaPass = req.body.pass;
   const nuevaPass = req.body.pass2;
   if (!nuevaPass || !antiguaPass) {
-    console.error('Campos incompletos');
+    console.error('Error: Campos incompletos');
     return false;
   }
   const usuario = User.findOne({
@@ -96,7 +96,7 @@ const modificarMiPassword = async (req, res) => {
   });
 
   if (usuario == null) {
-    console.error('Error, el usuario no existe');
+    console.error('Error: el usuario a modificar no existe');
     return false;
   }
 

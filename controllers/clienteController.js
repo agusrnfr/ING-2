@@ -91,7 +91,7 @@ const actualizarPasswordUsuario = async (req, res) => {
   });
 
   if (usuario == null) {
-    console.error('Error, el usuario no existe');
+    console.error('Error: el usuario no existe');
     return false;
   }
 
@@ -134,7 +134,7 @@ const actualizarPasswordUsuario = async (req, res) => {
 const mostrarClienteModificarPassword = async(req, res) => {
   const usuario = await User.findByPk(req.params.id)
   if(usuario === null){
-      console.error('no existe ese usuario :(')
+      console.error('Error: no existe ese usuario :(')
       return
   }
   return res.render('../views/modificar_password_cliente', { usuario: usuario.dataValues })
