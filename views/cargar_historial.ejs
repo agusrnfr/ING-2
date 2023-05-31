@@ -21,23 +21,25 @@
               <div class="col-md-10 col-lg-5 col-xl-6 order-2 order-lg-1">
                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Registrar visita</p>
 
-                <% if (usuario) { %>
+                <% if (usuario && usuario.name) { %>
                 <div class="alert alert-info" role="alert">Se registra una visita a: <strong><%= usuario.name %></strong></div>
                 <% } %>
 
                 <form id="miForm" action="/registrarVisita/cliente/<%= usuario.id %>" method="POST">
                   <div class="row mb-3">
 
-                    <label for="practica">Mascota</label>
+                    <label for="mascota">Mascota</label>
                     <div class="mb-3">
-                    <span class="form-control form-control-user" id="mascota" 
-                      readonly style="background-color: #f2f2f2; opacity: 0.7; pointer-events: none;"><%= nombreMascota %></span>
+                      <input type="text" class="form-control form-control-user" id="mascota" 
+                        name="mascota" readonly value="<%= nombreMascota %>"
+                        style="background-color: #f2f2f2; opacity: 0.7; pointer-events: none;">
                     </div>
-
+                    
                     <label for="practica">Práctica</label>
                     <div class="mb-3">
-                    <span class="form-control form-control-user" id="practica" 
-                      readonly style="background-color: #f2f2f2; opacity: 0.7; pointer-events: none;"><%= practica %></span>
+                      <input type="text" class="form-control form-control-user" id="practica" 
+                        name="practica" readonly value="<%= practica %>"
+                        style="background-color: #f2f2f2; opacity: 0.7; pointer-events: none;">
                     </div>
 
                     <label for="color">Observaciones </label>
@@ -82,7 +84,7 @@
               </div>
 
               <div class="col-md-10 col-lg-6 col-xl-6 d-flex align-items-center order-1 order-lg-2 justify-content-center">
-                <img src="/img/perriflor.png" width="300px">
+                <img src="/img/perritu.png" width="300px">
               </div>
             </div>
 
@@ -99,93 +101,99 @@
             </style>
           </div>
           <hr>
+          <div class="text-center"><a class="small" href="/turnos_dia">Volver</a></div>
         </div>
       </div>
     </div>
   </div>
   <br>
 
-  <div class="modal fade" id="modalWarning" tabindex="-1" role="dialog" aria-labelledby="modalWarningLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
+ 
+
+     <!-- Modal de confirmación -->
+   <div class="modal fade" id="modalWarning" tabindex="-1" aria-labelledby="modalWarningLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalWarningLabel">Advertencia</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>El monto seleccionado es <span id="montoSeleccionado"></span> y el monto de beneficio es <span
-              id="montoMaxBeneficio"></span>.</p>
-          <p>El monto seleccionado es mayor que el beneficio disponible.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalWarningLabel">Advertencia</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <p>El monto beneficio es mayor al de consulta, seguro quiere utilizarlo?</p>
+                  <p>Monto consulta: <span id="montoConsulta"></span></p>
+                  <p>Monto beneficio: <span id="montoBeneficio"></span></p>
+              </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnConfirmar" onclick="confirmarUtilizacion()">Confirmar</button>
+           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="text-center"><a class="small" href="/turnos_dia">Volver</a></div>
-</div>
-</div>
-</div>
-</div>
-</div>
 
-<br>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 <script>
   const form = document.getElementById('miForm');
   form.addEventListener('submit', (event) => {
-  const mascota = document.getElementById('mascota').value;
-  const practica = document.getElementById('practica').value;
-  const monto = document.getElementById('monto').value;
-  const monto_b = document.getElementById('monto_b').value;
+    const monto = document.getElementById('monto').value;
+    const monto_b = document.getElementById('monto_b').value;
 
-  // Verificar los campos antes de enviar el formulario
-  if (!mascota || !practica || !monto || !monto_b) {
-    event.preventDefault(); // Evitar que se envíe el formulario
+    // Verificar los campos antes de enviar el formulario
+    if (!monto || !monto_b) {
+      event.preventDefault(); // Evitar que se envíe el formulario
 
-    const mensajeElemento = document.getElementById('mensaje');
-    mensajeElemento.textContent = 'Por favor complete todos los campos solicitados.';
-    return; // Detener la ejecución del script
+      const mensajeElemento = document.getElementById('mensaje');
+      mensajeElemento.textContent = 'Por favor complete todos los campos solicitados.';
+      return; // Detener la ejecución del script
+    }
+
+    // Obtener el monto seleccionado y convertirlo a número
+    var montoSeleccionado = Number(monto);
+
+    // Obtener el monto máximo de beneficio
+    var montoMaxBeneficio = 0;
+    var beneficiosSelect = document.getElementById('monto_b');
+    var beneficioSeleccionado = beneficiosSelect.value;
+    var beneficioOption = beneficiosSelect.options[beneficiosSelect.selectedIndex];
+
+    if (beneficioSeleccionado !== '' && beneficioSeleccionado !== 'ninguno') {
+      montoMaxBeneficio = Number(beneficioSeleccionado);
+      beneficioSeleccionado = beneficioOption.textContent; // Obtener el texto del valor seleccionado
+    }
+
+    // Comparar el monto seleccionado con el monto máximo de beneficio
+    if (montoSeleccionado > montoMaxBeneficio) {
+      // Obtener los elementos <span> para los montos
+      var montoConsultaSpan = document.getElementById('montoConsulta');
+      var montoBeneficioSpan = document.getElementById('montoBeneficio');
+
+      // Asignar los valores de los montos a los <span>
+      montoConsultaSpan.textContent = montoSeleccionado;
+      montoBeneficioSpan.textContent = beneficioSeleccionado;
+
+      // Mostrar el modal de warning
+      $('#modalWarning').modal('show');
+      event.preventDefault();
+      return;
+    }
+  });
+  
+    function confirmarUtilizacion() {
+    // Enviar el formulario
+    document.getElementById('miForm').submit();
+
+    // Cerrar el modal (opcional)
+    $('#modalWarning').modal('hide');
   }
 
-  // // Obtener el monto seleccionado y convertirlo a número
-  // var montoSeleccionado = Number(monto);
-
-  // // Obtener el monto máximo de beneficio
-  // var montoMaxBeneficio = 0;
-  // var beneficiosSelect = document.getElementById('monto_b');
-  // var beneficioSeleccionado = beneficiosSelect.value;
-
-  // if (beneficioSeleccionado !== '' && beneficioSeleccionado !== 'ninguno') {
-  //   montoMaxBeneficio = Number(beneficioSeleccionado);
-  // }
-
-  // // Comparar el monto seleccionado con el monto máximo de beneficio
-  // if (montoSeleccionado > montoMaxBeneficio) {
-  //   // Mostrar el modal de warning
-  //   $('#modalWarning').modal('show');
-  //   event.preventDefault(); // Detener el envío del formulario
-  //   return; // Detener la ejecución del script
-  // }
-
-  // Si todos los campos son válidos, el formulario se enviará automáticamente
-});
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-  integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
-</body>
-
-</div>
 <%- include ('sweet-alert') %>
 </body>
 
