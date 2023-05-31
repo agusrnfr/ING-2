@@ -21,7 +21,7 @@ module.exports = {
             UserId: 3,
         }], {});
         await queryInterface.bulkInsert('beneficios', [{
-            monto_beneficio: 250,
+            monto_beneficio: 200,
             usado: false,
             UserId: 3,
         }], {});

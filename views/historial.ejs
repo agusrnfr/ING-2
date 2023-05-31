@@ -25,6 +25,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <% let indice = 0; %>
                                     <% if (data && data.length > 0) { %>
                                          <% data.forEach(visita => { %>
                                          <% const fechaCorta = visita.fecha.split(" ")[0]; %>
@@ -43,23 +44,26 @@
                                         </td>
 
                                         <td class="text-center align-middle">
-                                            <div class="card">
-                                                  <button class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#collapseContent" aria-expanded="false" aria-controls="collapseContent">
-                                                    <i class="bi bi-cash"></i> Ver más</button>
+                                        <div class="card">
+                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#collapseContent<%= indice %>" aria-expanded="false" aria-controls="collapseContent">
+                                            <i class="bi bi-cash"></i> Ver más</button>
                                                   
-                                                <div id="collapseContent" class="collapse">
-                                                  <div class="card-body">
-                                                    <!-- Contenido adicional -->
-                                                    <p>Monto consulta:  $<%= visita.monto_abonado %></p>
-                                                    <p>Monto Beneficio: $<%= visita.monto_beneficio %></p>
+                                            <div id="collapseContent<%= indice %>" class="collapse">
+                                                <!-- Contenido colapsable del botón -->
+                                              <div class="card-body">
+                                                   <p>Monto consulta: $<%= visita.monto_abonado %></p>
+                                                   <p>Monto Beneficio: $<%= visita.monto_beneficio %></p>
                                                     <p>--------------------------------------</p>
+                                                    <% if (visita.monto_abonado >= visita.monto_beneficio) { %>
                                                     <p>Total $<%= visita.monto_abonado - visita.monto_beneficio %></p>
-                                                  </div>
-                                                </div>
-                                              </div>
+                                                    <% } else { %>
+                                                        <p>Total $0</p>
+                                                     <% } %>
+                                            </div>
+                                            </div>
                                         </td>
-
                                     </tr>
+                                    <% indice++; %>
                                     <% }); %>
                                         <% } %>
                            

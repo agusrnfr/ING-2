@@ -96,9 +96,16 @@ catch (error) {
 }
 };
 
-const crearHistorial = async (req, res) => {  
+
+const crearHistorial = async (req, res) => {  //Crea un historial
     const fecha= new Date();
-    const mascota = req.body.mascota;
+    const nombreMascota = req.body.mascota;
+    const mascota = await Mascota.findOne({
+        where: {
+          nombre: nombreMascota
+        }
+      });
+
     const practica = req.body.practica;
     const observacion = req.body.observacion;
     const monto = req.body.monto;
@@ -120,7 +127,7 @@ const crearHistorial = async (req, res) => {
 
     Historial.create({
         fecha: fecha,
-        MascotumId: mascota,
+        MascotumId: mascota.id,
         practica: practica,
         observacion: observacion,
         monto_abonado: monto,
@@ -133,13 +140,15 @@ const crearHistorial = async (req, res) => {
             usuario: (usuario && usuario.dataValues) ? usuario.dataValues : null,
             mascotas: arrayMascota,
             beneficios,
+            nombreMascota,
+            practica,
             alert:true,
             alertTitle:"Registro de visita exitoso",
             alertMessage:"",
             alertIcon:"success",
             showConfirmButton:false,
             timer:1500,
-            ruta: 'table'
+            ruta: 'turnos_dia'
         })
     })
   
