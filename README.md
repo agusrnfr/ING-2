@@ -33,7 +33,7 @@ ___________________
 
 Run:
 
-1- nodemon app
+1- node app
 
 
 ## :handshake: Contact
