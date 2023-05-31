@@ -25,7 +25,7 @@ ___________________
 
 Mount DB:
 
-1- install xaamp
+1- install xaamp or similar tool
 
 2- create a db called veterinaria_db
 
