@@ -52,7 +52,9 @@
                                                 <!-- Contenido colapsable del botón -->
                                               <div class="card-body">
                                                    <p>Monto consulta: $<%= visita.monto_abonado %></p>
+                                                   <% if (visita.monto_beneficio && visita.monto_beneficio > 0) { %>
                                                    <p>Monto Beneficio: $<%= visita.monto_beneficio %></p>
+                                                   <% } %>
                                                     <p>--------------------------------------</p>
                                                     <% if (visita.monto_abonado >= visita.monto_beneficio) { %>
                                                     <p>Total $<%= visita.monto_abonado - visita.monto_beneficio %></p>
@@ -71,7 +73,7 @@
                     </table>
                 </div>
                 <div class="text-center">
-                    <a href="/">Volver</a>
+                    <a href="#" onclick="history.back(); return false;">Volver</a></div>
                 </div>
             </div>
         </div>
