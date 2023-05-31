@@ -337,6 +337,48 @@ const turnoGuardado = async (req, res) => { // Muestra la alerta de que se guard
     }
 }
 
+const mostrarTurnosDia = async (req, res) => {
+    try {
+        const turnos = await Turno.findAll({
+            raw: true,
+            include: [
+                { model: Mascota, as: 'Mascotum', attributes: ['nombre'] },
+                { model: User, as: 'User', attributes: ['name', 'mail'] }
+            ]
+        });
+
+        const fechaActual = moment().format('DD/MM/YYYY'); // Obtener la fecha actual en formato DD/MM/YYYY
+
+        const data = turnos
+            .map(turno => {
+                const fechaHoraZonaHoraria = moment.tz(turno.fecha, 'America/Argentina/Buenos_Aires');
+                const fechaTurno = fechaHoraZonaHoraria.format('DD/MM/YYYY');
+
+                if (fechaTurno === fechaActual) { // Filtrar solo los turnos del día actual
+                    return {
+                        id: turno.id,
+                        fecha: fechaHoraZonaHoraria.format('DD/MM/YYYY HH:mm'),
+                        banda_horaria: turno.banda_horaria,
+                        estado: turno.estado,
+                        practica: turno.practica,
+                        UserId: turno.UserId,
+                        MascotumId: turno.MascotumId,
+                        nombre: turno['Mascotum.nombre'],
+                        user: turno['User.name'],
+                    };
+                }
+                return null; // Si no es un turno del día actual, retornar null
+            })
+            .filter(turno => turno !== null) // Filtrar los elementos null del array
+
+            .sort((a, b) => moment(a.fecha, 'DD/MM/YYYY HH:mm').diff(moment(b.fecha, 'DD/MM/YYYY HH:mm')));
+
+        res.render('turnos_dia', { data });
+    } catch (error) {
+        console.log(error);
+        res.status(500).render('turnos_dia', { data: [] });
+    }
+};
 module.exports = {
     verificaciones,
     solicitarTurno,
@@ -346,4 +388,5 @@ module.exports = {
     cambiarEstadoTurno,
     turnoGuardado,
     calcularEdadMasco,
+    mostrarTurnosDia,
 }

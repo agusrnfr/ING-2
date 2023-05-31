@@ -16,7 +16,7 @@ Historial.init({
     },
     observacion: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     monto_abonado: {
         type: DataTypes.DOUBLE,
@@ -24,7 +24,7 @@ Historial.init({
     },
     monto_beneficio: {
         type: DataTypes.DOUBLE,
-        allowNull: false,
+        allowNull: true,
     },
 }, {
     sequelize,

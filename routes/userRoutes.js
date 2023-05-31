@@ -5,11 +5,13 @@ const { mostrarRegister, registrar, chequear_mail_duplicado } = require('../cont
 const { mostrarTrabajadores } = require('../controllers/trabajadorController');
 const { mostrarIndex } = require('../controllers/indexController');
 const { comprobar_sesion, comprobar_sesion_admin } = require('../controllers/loginController');
-const { verificaciones, solicitarTurno, mostrarTodosLosTurnos, mostrarMisTurnos, cambiarEstadoTurno, guardarTurno, turnoGuardado } = require('../controllers/turnosController');
 const { mostrarAgregarMascota, registrarMascota , mostrarMascota , eliminarMascota} = require('../controllers/mascotasController');
+const { verificaciones, solicitarTurno, mostrarTodosLosTurnos, mostrarMisTurnos, cambiarEstadoTurno, guardarTurno, turnoGuardado ,mostrarTurnosDia} = require('../controllers/turnosController');
 const { mostrarCliente , mostrarClienteModificar , actualizarUsuario , actualizarPasswordUsuario , mostrarClienteModificarPassword } = require('../controllers/clienteController')
 const { mostrarModificarPerfil , modificarMiPerfil , mostrarModificarMiPassword, modificarMiPassword} = require('../controllers/modificarPerfilController');
 const { mostrarAdopciones, cambiarEstado, mostrarPublicacion, guardarPublicacion, mostrarContacto, contactoAdoptante} = require('../controllers/adopcionController');
+const { mostrarHistorial , crearHistorial,mostrarCarga, mostrarLibreta} = require('../controllers/historialController');
+
 const { mostrarCupones } = require('../controllers/cuponesController');
 const { mostrarCampanias, publicarCampania, verificacionesCampania, guardarPublicacionCampania, publicacionGuardada, verificacionesDonacion, realizarDonacion} = require('../controllers/campaniasController');
 
@@ -40,6 +42,14 @@ app.get('/trabajadores', mostrarTrabajadores)
 app.get('/modificar_mi_perfil',comprobar_sesion, mostrarModificarPerfil)
 app.post('/modificarMiPerfil', comprobar_sesion, modificarMiPerfil)
 
+//HISTORIAL
+app.get('/historial/:id', comprobar_sesion, mostrarHistorial)
+app.get('/registrarVisita/cliente/:id', comprobar_sesion_admin, mostrarCarga)
+app.post('/registrarVisita/cliente/:id', comprobar_sesion_admin, crearHistorial)
+
+//LIBRETA SANITARIA
+app.get('/libreta_sanitaria',comprobar_sesion, mostrarLibreta)
+
 app.get('/modificar_mi_password', comprobar_sesion, mostrarModificarMiPassword)
 app.post('/modificar_mi_password', comprobar_sesion, modificarMiPassword)
 
@@ -58,6 +68,7 @@ app.get('/turnos/listarTodosLosTurnos', comprobar_sesion_admin, mostrarTodosLosT
 app.get('/turnos/misTurnos', comprobar_sesion, mostrarMisTurnos);
 app.post('/turnos/listarTodosLosTurnos', comprobar_sesion_admin, cambiarEstadoTurno);
 app.get('/turnos/turnoGuardado', comprobar_sesion, turnoGuardado);
+app.get('/turnos_dia',comprobar_sesion_admin, mostrarTurnosDia);
 
 //MASCOTAS
 app.get('/agregar_mascota/cliente/:id', mostrarAgregarMascota)

@@ -28,9 +28,9 @@
     </div>
 
 <% } %>
-
+<br>
 <div>
-    ________________ 
+    <h5>Servicios</h5>
 </div>
 
 <div>
@@ -41,10 +41,15 @@
 </div>
 
 <% if (typeof session.usuario !== 'undefined' && (session.loggedin === true)) { %>
-<div>
-    _______usuarios only_________ 
-</div>
 
+ <div>
+    <a href="/turnos">Solicitar un turno</a>
+ </div>
+<br>
+
+<div>
+    <h5>Mi perfil</h5>
+</div>
 <div>
     <a href="/ver_cliente/<%= session.usuario.id %>">Ver mi perfil</a>
 </div>
@@ -53,25 +58,35 @@
     <a href="/modificar_mi_perfil">Modificar mi perfil</a>
 </div>
 
+<!-- <div>
+    <a href="/ver_mascota/<%= session.usuario.id %>">Mis mascotas</a>
+</div> -->
+
 <div>
-    <a href="/turnos">Solicitar un turno</a>
+    <a href="/historial/<%= session.usuario.id %>">Historial de visitas</a>
 </div>
-<div>
-    <a href="/turnos/misTurnos">Listar mis turnos</a>
-</div>
+
 <div>
     <a href="/ver_cliente/cupones/<%= session.usuario.id %>">Ver mis beneficios</a>
 </div>
+
+<div>
+    <a href="/turnos/misTurnos">Listar mis turnos</a>
+</div><br>
 <% } %>
 
 
 <% if (typeof session.usuario !== 'undefined' && (session.loggedin === true) &&(session.usuario.rol === 'admin')) { %>
-<div>
-    ________admin only__________ 
-</div>
+    <div>
+        <h5>Administrador</h5>
+    </div>
 
 <div>
     <a href="/table">Lista de clientes</a>
+</div>
+
+<div>
+    <a href="/turnos_dia">Listar turnos del dia</a>
 </div>
 
 <div>

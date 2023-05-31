@@ -21,11 +21,11 @@
 
                   <div class="row mb-3">
 
-                        <label for="nombre">Nombre de la mascota:</label>
+                        <label for="nombre">Nombre de la mascota: (*)</label>
                         <div class="mb-3"><input class="form-control form-control-user" type="text" name="nombre" id="nombre"
                         placeholder="Escribe el nombre" required=""></div>
 
-                        <label for="sexo">Edad de la mascota</label>
+                        <label for="sexo">Edad de la mascota (*)</label>
                         <div class="mb-3">
                           <select class="form-control form-control-user"name="tipo_edad" id="tipo_edad">
                             <option value="">Elige el tipo</option>
@@ -38,16 +38,16 @@
                           <input class="form-control form-control-user" type="number" name="edad" id="edad" placeholder="Escribe la edad, solo el num" required min=1>
                         </div>
 
-                        <label for="raza">Raza de la mascota:</label>
+                        <label for="raza">Raza de la mascota: (*)</label>
                         <div class="mb-3"><input class="form-control form-control-user" type="text" name="raza" id="raza"
                           placeholder="Escribe la raza" required="">
                         </div>
 
-                        <label for="color">Color de la mascota:</label>
+                        <label for="color">Color de la mascota: (*)</label>
                         <div class="mb-3"><input class="form-control form-control-user" type="text" name="color" id="color"
                           placeholder="Escribe el color" required="" ></div>
 
-                          <label for="sexo">Sexo de la mascota:</label>
+                          <label for="sexo">Sexo de la mascota: (*)</label>
                           <div class="mb-3">
                             <select class="form-control form-control-user" name="sexo" id="sexo" required="">
                               <option value="">Elige un sexo</option>
@@ -56,11 +56,11 @@
                             </select>
                           </div>
 
-                        <label for="origen">Origen de la mascota:</label>
+                        <label for="origen">Origen de la mascota: (*)</label>
                         <div class="mb-3"><input class="form-control form-control-user" type="text" name="origen" id="origen"
                           placeholder="Ej: refugiado, encontrado" required=""></div>
 
-                          <label for="vacunas">¿La mascota está vacunada?</label>
+                          <label for="vacunas">¿La mascota está vacunada? (*)</label>
                           <div class="mb-3">
                           <select class="form-control form-control-user" name="vacunas" id="vacunas" required="">
                             <option value="">Elige una opcion</option>
@@ -69,7 +69,7 @@
                           </select>
                         </div>
 
-                          <label for="caracteristicas">Caracteristicas adicionales : (opcional)</label>
+                          <label for="caracteristicas">Caracteristicas adicionales :</label>
                           <div class="mb-3">
                             <textarea class="form-control form-control-user" name="caracteristicas" id="caracteristicas" placeholder="Escribe las características" rows="5" cols="30"></textarea>
                           </div>
@@ -81,6 +81,7 @@
                   <hr>
 
                 </form>
+                <div class="text-center mb-2" style="font-size: smaller;">Los campos con (*) son obligatorios</div>
                 <div class="text-center"><a class="small" href="/adopciones">Volver</a></div>
               </div>
               <div
