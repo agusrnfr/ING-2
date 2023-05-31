@@ -27,7 +27,7 @@
                         </thead>
                         <tbody>
                             <% if (!data.length==0) { %>
-                                <% data.forEach(turno=> {
+                                <% data.forEach((turno, index) => {
                                     const fechaCorta = turno.fecha.split(" ")[0];
                                     const horario = turno.fecha.split(" ")[1];
                                     const estado = turno.estado.toLowerCase();
@@ -59,7 +59,7 @@
                                         </td>
 
                                         <td class="text-center align-middle">
-                                        <button type="button" onclick="location.href='<%= `/registrarVisita/cliente/${turno.UserId}?mascota=${turno.MascotumId}&practica=${turno.practica}` %>'" class="btn btn-outline-success">
+                                        <button id="btnRegistrar<%= index %>" type="button" onclick="location.href='<%= `/registrarVisita/cliente/${turno.UserId}?mascota=${turno.MascotumId}&practica=${turno.practica}` %>'" class="btn btn-outline-success">
                                         <i class="bi bi-house-add"></i> Registrar visita</button>
                                         </td>
                                         
@@ -109,6 +109,16 @@
 
             });
         </script>
+        <script>
+         function registrarVisita(url) {
+    // Desactivar el botón
+         const btnRegistrar = document.getElementById('btnRegistrar'+ index);
+         btnRegistrar.disabled = true;
+
+    // Redirigir a la URL
+    location.href = url;
+  }
+</script>
     </body>
 
     </html>

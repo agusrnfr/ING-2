@@ -6,7 +6,6 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/css/bootstrap.min.css">
   <%- include ('header', {tituloweb: '¡Oh my dog! | Registrar visita'}); %>
 </head>
 
@@ -61,7 +60,7 @@
                         <option value="ninguno">No elijo ningun beneficio</option>
                         <% beneficios.forEach(function(beneficio) { %>
                         <% if (!beneficio.usado) { %>
-                        <option value="<%= beneficio.id %>">
+                        <option value="<%= beneficio.monto_beneficio %>">
                           <%= beneficio.monto_beneficio %>
                         </option>
                         <% } %>
@@ -79,7 +78,7 @@
                     <div id="mensaje"></div>
                   </div>
 
-                  <button class="btn btn-primary d-block btn-user w-100" name="registrar" type="submit">Registrar</button>
+                  <button id="registrar" class="btn btn-primary d-block btn-user w-100" name="registrar" type="submit">Registrar</button>
                 </form>
               </div>
 
@@ -135,63 +134,73 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
 integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
 crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-  const form = document.getElementById('miForm');
-  form.addEventListener('submit', (event) => {
+  const btnEnviar = document.getElementById("registrar");
+
+  function montosVacios() {
     const monto = document.getElementById('monto').value;
     const monto_b = document.getElementById('monto_b').value;
 
-    // Verificar los campos antes de enviar el formulario
+    // Verificar si los campos están vacíos
     if (!monto || !monto_b) {
-      event.preventDefault(); // Evitar que se envíe el formulario
-
       const mensajeElemento = document.getElementById('mensaje');
       mensajeElemento.textContent = 'Por favor complete todos los campos solicitados.';
-      return; // Detener la ejecución del script
+      return true; // Campos vacíos, retorna true
     }
 
-    // Obtener el monto seleccionado y convertirlo a número
-    var montoSeleccionado = Number(monto);
+    return false; // Campos completados, retorna false
+  }
 
-    // Obtener el monto máximo de beneficio
-    var montoMaxBeneficio = 0;
-    var beneficiosSelect = document.getElementById('monto_b');
-    var beneficioSeleccionado = beneficiosSelect.value;
-    var beneficioOption = beneficiosSelect.options[beneficiosSelect.selectedIndex];
+  function compararMontos() {
+  let monto = document.getElementById('monto').value;
+  let monto_b_select = document.getElementById('monto_b');
+  let monto_b = monto_b_select.options[monto_b_select.selectedIndex].value;
 
-    if (beneficioSeleccionado !== '' && beneficioSeleccionado !== 'ninguno') {
-      montoMaxBeneficio = Number(beneficioSeleccionado);
-      beneficioSeleccionado = beneficioOption.textContent; // Obtener el texto del valor seleccionado
-    }
+  // Convertir los valores a números
+  monto = Number(monto);
+  monto_b = parseFloat(monto_b);
 
-    // Comparar el monto seleccionado con el monto máximo de beneficio
-    if (montoSeleccionado > montoMaxBeneficio) {
+  console.log("monto:", monto);
+  console.log("monto_b:", monto_b);
+    // Comparar los montos
+    if (monto_b > monto) {
+      console.log("El monto beneficio es mayor que monto");
+
       // Obtener los elementos <span> para los montos
-      var montoConsultaSpan = document.getElementById('montoConsulta');
-      var montoBeneficioSpan = document.getElementById('montoBeneficio');
+      const montoConsultaSpan = document.getElementById('montoConsulta');
+      const montoBeneficioSpan = document.getElementById('montoBeneficio');
 
       // Asignar los valores de los montos a los <span>
-      montoConsultaSpan.textContent = montoSeleccionado;
-      montoBeneficioSpan.textContent = beneficioSeleccionado;
+      montoConsultaSpan.textContent = monto;
+      montoBeneficioSpan.textContent = monto_b;
 
       // Mostrar el modal de warning
       $('#modalWarning').modal('show');
-      event.preventDefault();
-      return;
-    }
-  });
-  
-    function confirmarUtilizacion() {
-    // Enviar el formulario
-    document.getElementById('miForm').submit();
 
-    // Cerrar el modal (opcional)
-    $('#modalWarning').modal('hide');
+      return true; // Monto menor que el monto beneficio
+    }
+
+    return false; // Monto válido, retorna false
   }
 
+  function confirmarUtilizacion() {
+    // Cerrar el modal
+    $('#modalWarning').modal('hide');
+
+    // Enviar el formulario
+    document.getElementById('miForm').submit();
+  }
+
+  btnEnviar.onclick = function (event) {
+    // Si los montos están vacíos o se debe mostrar el modal de warning, se cancela el envío del formulario
+    if (montosVacios() || compararMontos()) {
+      event.preventDefault(); // Cancelar el envío del formulario
+      return false; // Retornar false para evitar que se envíe el formulario
+    }
+  };
 </script>
 
 <%- include ('sweet-alert') %>
