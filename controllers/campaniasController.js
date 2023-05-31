@@ -108,7 +108,7 @@ const publicacionGuardada = async (req, res) => { // Muestra la alerta de que se
 }
 
 const verificacionesDonacion = async (req, res, next) => {
-    const { id, monto, tarjeta } = req.body;
+    const { id, monto, tarjeta, fechaVenc, codigo, nombre} = req.body;
     if (!id) {
         return res.status(400).json('No se ingreso id de campaña');
     }
@@ -116,20 +116,46 @@ const verificacionesDonacion = async (req, res, next) => {
     if (!campania) {
         return res.status(404).json('No se encontró la campaña');
     }
-    if (moment().startOf('day').isAfter(moment(campania.fecha_fin).startOf('day'))) {
-        return res.status(400).json('La campaña ya finalizó');
-    }
     if (!monto) {
         return res.status(400).json('Debe ingresar un monto');
-    }
-    if (monto <= 0) {
-        return res.status(400).json('El monto debe ser mayor a 0');
     }
     if (!tarjeta) {
         return res.status(400).json('Debe ingresar una tarjeta');
     }
+    if (!fechaVenc) {
+        return res.status(400).json('Debe ingresar una fecha de vencimiento');
+    }
+    if (!codigo) {
+        return res.status(400).json('Debe ingresar un código de seguridad');
+    }
+    if (!nombre) {
+        return res.status(400).json('Debe ingresar un nombre');
+    }
+    if (moment().startOf('day').isAfter(moment(campania.fecha_fin).startOf('day'))) {
+        return res.status(400).json('La campaña ya finalizó');
+    }
+    if (monto <= 0) {
+        return res.status(400).json('El monto debe ser mayor a 0');
+    }
+    if (monto > 15000){
+        return res.status(400).json('El monto no puede ser mayor a $15.000');
+    }
     if (tarjeta.length < 16 || tarjeta.length > 16) {
         return res.status(400).json('Problemas con el pago: Tarjeta inválida');
+    }
+    if (tarjeta % 2 !== 0) {
+        return res.status(400).json('Problemas con el pago: Saldo insuficiente');
+    }
+    if (moment().startOf('month').isAfter(fechaVenc)) {
+        return res.status(400).json('Problemas con el pago: Fecha de vencimiento inválida');
+    }
+
+    if (codigo.length < 3 || codigo.length > 3) {
+        return res.status(400).json('Problemas con el pago: Código de seguridad inválido');
+    }
+    const nombreRegex = /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+\s[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+$/;
+    if (nombre.length < 5 || nombre.length > 50 || !nombreRegex.test(nombre)) {
+        return res.status(400).json('Problemas con el pago: Nombre inválido');
     }
 
     next();

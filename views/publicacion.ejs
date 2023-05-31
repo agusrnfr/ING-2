@@ -41,7 +41,6 @@
                         <label for="raza">Raza de la mascota: (*)</label>
                         <div class="mb-3"><input class="form-control form-control-user" type="text" name="raza" id="raza"
                           placeholder="Escribe la raza" required="">
-                          
                         </div>
 
                         <label for="color">Color de la mascota: (*)</label>
@@ -75,7 +74,7 @@
                             <textarea class="form-control form-control-user" name="caracteristicas" id="caracteristicas" placeholder="Escribe las características" rows="5" cols="30"></textarea>
                           </div>
 
-                          <span id="mensaje" style="color: red;"></span>        
+                          <span id="mensaje" style="color: red;"></span>
 
                   </div><button class="btn btn-primary d-block btn-user w-100" id="submitBtn"
                     type="submit">Publicar</button>
@@ -123,7 +122,7 @@ form.addEventListener('submit', (event) => {
   if (!nombre || !edad || !raza || !color || !sexo || !origen || !vacunas || !tipo_edad) {
     event.preventDefault();
     const mensajeElemento = document.getElementById('mensaje');
-     mensajeElemento.textContent = 'Por favor complete todos los campos solicitados.';
+    mensajeElemento.textContent = 'Por favor complete todos los campos solicitados.';
   }
 });
 

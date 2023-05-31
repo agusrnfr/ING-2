@@ -67,6 +67,23 @@
     }], {});
 
     await queryInterface.bulkInsert('adopciones', [{
+      nombre: 'Nami',
+      raza: 'siberiano',
+      color: 'blanco con gris',
+      caracteristicas: 'juguetona',
+      sexo: 'Hembra',
+      origen: 'Rescatada',
+      edad: '2',
+      tipo_edad: 'Años',
+      se_adopto: false,
+      vacunas: true,
+      UserId: 6,
+      mail: 'agusrojasmc@gmail.com',
+      tel: 2212212201,
+    }], {});
+
+
+    await queryInterface.bulkInsert('adopciones', [{
       nombre: 'Umi',
       raza: 'cruza',
       color: 'gris',
@@ -82,54 +99,37 @@
       tel: 2116032221,
     }], {});
 
-    await queryInterface.bulkInsert('adopciones', [{
-      nombre: 'Nami',
-      raza: 'Siberiano',
-      color: 'blanco',
-      caracteristicas: 'esponjosa',
-      sexo: 'Hembra',
-      origen: 'refugiada',
-      edad: '8',
-      tipo_edad: 'meses',
-      se_adopto: false,
-      vacunas: true,
-      UserId: 6,
-      mail: 'agusrojasmc@gmail.com',
-      tel: 2212212201,
-    }], {});
+  //   for (let i = 0; i < 1; i++) {
+  //      let dueño = faker.datatype.number({ min: 3, max: 10 });
+  //      let nombre = nombres.splice (Math.floor(Math.random() * nombres.length),1) [0];
+  //      let edad = edades[Math.floor(Math.random() * edades.length)];
+  //      let tipo_edad = tipos[Math.floor(Math.random() * tipos.length)];
+  //      let sexo = sexos[Math.floor(Math.random() * sexos.length)];
+  //      let origen = origenes[Math.floor(Math.random() * origenes.length)];
+  //      let caracteristicas = caracteristica[Math.floor(Math.random() * caracteristica.length)];
+  //      let raza = razas[Math.floor(Math.random() * razas.length)];
+  //      let color = colores[Math.floor(Math.random() * colores.length)];
+  //      let seAdopto = seAdoptoOptions[Math.floor(Math.random() * seAdoptoOptions.length)];
+  //      let vacunas = vacunasv[Math.floor(Math.random() * vacunasv.length)];
+  //      let mail = faker.internet.email();
+  //      let tel = faker.phone.phoneNumber();
 
-
-    for (let i = 0; i < 0; i++) {
-       let dueño = faker.datatype.number({ min: 3, max: 10 });
-       let nombre = nombres.splice (Math.floor(Math.random() * nombres.length),1) [0];
-       let edad = edades[Math.floor(Math.random() * edades.length)];
-       let tipo_edad = tipos[Math.floor(Math.random() * tipos.length)];
-       let sexo = sexos[Math.floor(Math.random() * sexos.length)];
-       let origen = origenes[Math.floor(Math.random() * origenes.length)];
-       let caracteristicas = caracteristica[Math.floor(Math.random() * caracteristica.length)];
-       let raza = razas[Math.floor(Math.random() * razas.length)];
-       let color = colores[Math.floor(Math.random() * colores.length)];
-       let seAdopto = seAdoptoOptions[Math.floor(Math.random() * seAdoptoOptions.length)];
-       let vacunas = vacunasv[Math.floor(Math.random() * vacunasv.length)];
-       let mail = faker.internet.email();
-       let tel = faker.phone.phoneNumber();
-
-    await queryInterface.bulkInsert('adopciones',[{
-      nombre: nombre,
-      raza: raza,
-      color: color,
-      caracteristicas: caracteristicas,
-      sexo: sexo,
-      origen: origen,
-      edad:edad,
-      tipo_edad: tipo_edad,
-      se_adopto: seAdopto,
-      vacunas: vacunas,
-      UserId: dueño,
-      mail: mail,
-      tel: tel,
-   }], {});
-  }
+  //   await queryInterface.bulkInsert('adopciones',[{
+  //     nombre: nombre,
+  //     raza: raza,
+  //     color: color,
+  //     caracteristicas: caracteristicas,
+  //     sexo: sexo,
+  //     origen: origen,
+  //     edad:edad,
+  //     tipo_edad: tipo_edad,
+  //     se_adopto: seAdopto,
+  //     vacunas: vacunas,
+  //     UserId: dueño,
+  //     mail: mail,
+  //     tel: tel,
+  //  }], {});
+  // }
 },
 
   down: async (queryInterface, Sequelize) => {
