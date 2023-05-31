@@ -140,11 +140,11 @@ const mostrarContacto = async (req, res) => {
     let telefono = '';
 
     const idAdopcion = req.query.idAdopcion;
-    if (typeof idAdopcion === 'undefined') {
-      return res.status(400).send('El ID de la adopción no está definido');
-    }
     
     const adopcion = await obtenerAdopcionPorId(idAdopcion);
+    if (!adopcion) {
+      return res.status(400).send('El ID de la adopción no está definido');
+    }
 
     if (session && session.usuario && session.loggedin) {
       // Si el usuario ha iniciado sesión, pre-cargamos los datos del usuario
