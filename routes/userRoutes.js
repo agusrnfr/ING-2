@@ -48,7 +48,7 @@ app.get('/registrarVisita/cliente/:id', comprobar_sesion_admin, mostrarCarga)
 app.post('/registrarVisita/cliente/:id', comprobar_sesion_admin, crearHistorial)
 
 //LIBRETA SANITARIA
-app.get('/libreta_sanitaria',comprobar_sesion, mostrarLibreta)
+app.get('/libreta_sanitaria/:id',comprobar_sesion, mostrarLibreta)
 
 app.get('/modificar_mi_password', comprobar_sesion, mostrarModificarMiPassword)
 app.post('/modificar_mi_password', comprobar_sesion, modificarMiPassword)

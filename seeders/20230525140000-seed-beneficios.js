@@ -11,6 +11,12 @@ module.exports = {
             UserId: 3,
         }], {});
         await queryInterface.bulkInsert('beneficios', [{
+            monto_beneficio: 200,
+            usado: false,
+            UserId: 3,
+        }], {});
+   
+        await queryInterface.bulkInsert('beneficios', [{
             monto_beneficio: 10000,
             usado: false,
             UserId: 3,
@@ -20,13 +26,8 @@ module.exports = {
             usado: true,
             UserId: 3,
         }], {});
-        await queryInterface.bulkInsert('beneficios', [{
-            monto_beneficio: 200,
-            usado: false,
-            UserId: 3,
-        }], {});
-    },
 
+    },
     async down(queryInterface, Sequelize) {
         // Comandos para revertir la inserción de datos
     }
