@@ -8,9 +8,13 @@ const Libreta = require('../db/models/libreta.js');
 const Beneficio= require('../db/models/beneficio.js');
 
 
-const getMonto = async (id) => {
+const getMonto = async (monto) => {
     try {
-      const beneficio = await Beneficio.findByPk(id);
+      const beneficio = await Beneficio.findOne({
+        where: {
+          monto_beneficio: monto
+        }
+      });
       return beneficio ? beneficio.monto_beneficio : null;
     } catch (error) {
       console.error(error);
@@ -48,6 +52,7 @@ const mostrarHistorial = async (req, res) => {
       const data = await Promise.all(dataPromises);
   
       const sortedData = data.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+      
       res.render('historial', { data: sortedData, session: session });
     }
     catch (error) {
@@ -114,16 +119,20 @@ const crearHistorial = async (req, res) => {  //Crea un historial
     const arrayMascota= await buscarMascotasCliente(id);
     const beneficios = await buscarBeneficios(id);
     let usuario = await User.findByPk(req.params.id)
+    const beneficio = await Beneficio.findOne({
+        where: {
+          monto_beneficio: monto_b
+        }
+      });
+
+      if (beneficio) {
+        beneficio.usado = true; // Actualiza el atributo 'usado' a true 
+        await beneficio.save(); // Guarda los cambios en la base de datos
+      }
 
     if (practica == 'Vacuna A' || practica == 'Vacuna B' || practica == 'Desparacitacion'){
         crearLibreta(fecha,mascota,practica, id)
     }
-
-    const beneficio = await Beneficio.findByPk(monto_b); // buscando en 'Beneficio'
-     if (beneficio) {
-         beneficio.usado = true; // Actualiza el atributo 'usado' a true 
-         await beneficio.save(); // Guarda los cambios en la base de datos
-       }
 
     Historial.create({
         fecha: fecha,
@@ -195,7 +204,7 @@ const mostrarLibreta = async (req, res) => { // Muestra la libreta de la mascota
 
 
 
-const crearLibreta = async(fecha, mascota, practica,id) =>{  //Deberia crear una columna en la libreta, todavia no lo hace
+const crearLibreta = async(fecha, mascota, practica,id) =>{  //Crea el historial
     try {
         await Libreta.create({
             fecha: fecha,
