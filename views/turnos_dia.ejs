@@ -17,8 +17,8 @@
                         <thead class="table-secondary">
                             <tr>
                                 <th class="text-center" scope="col">Fecha</th>
-                                <th class="text-center" scope="col">Banda Horaria</th>
                                 <th class="text-center" scope="col">Cliente</th>
+                                <th class="text-center" scope="col">Banda Horaria</th>
                                 <th class="text-center" scope="col">Practica</th>
                                 <th class="text-center" scope="col">Mascota</th>
                                 <th class="text-center" scope="col">Estado</th>
@@ -26,8 +26,10 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <% let turnoId = 0; %>
+
                             <% if (!data.length==0) { %>
-                                <% data.forEach((turno, index) => {
+                                <% data.forEach((turno) => {
                                     const fechaCorta = turno.fecha.split(" ")[0];
                                     const horario = turno.fecha.split(" ")[1];
                                     const estado = turno.estado.toLowerCase();
@@ -38,12 +40,13 @@
                                         <td class="text-center align-middle">
                                             <%= fechaCorta %>
                                         </td>
-                                        <td class="text-center align-middle">
-                                            <%= turno.banda_horaria %>
-                                        </td>
 
                                         <td class="text-center align-middle">
                                             <%= turno.user %>
+                                        </td>
+
+                                        <td class="text-center align-middle">
+                                            <%= turno.banda_horaria %>
                                         </td>
 
                                         <td class="text-center align-middle">
@@ -58,12 +61,16 @@
                                             </div>
                                         </td>
 
-                                        <td class="text-center align-middle">
-                                        <button id="btnRegistrar<%= index %>" type="button" onclick="location.href='<%= `/registrarVisita/cliente/${turno.UserId}?mascota=${turno.MascotumId}&practica=${turno.practica}` %>'" class="btn btn-outline-success">
-                                        <i class="bi bi-house-add"></i> Registrar visita</button>
-                                        </td>
+
+                                       <td class="text-center align-middle">
+                                       <button id="btnRegistrar<%= turnoId %>" type="button" onclick="location.href='<%= `/registrarVisita/cliente/${turno.UserId}?mascota=${turno.MascotumId}&practica=${turno.practica}` %>'" class="btn btn-outline-success">
+                                         <input type="checkbox" id="checkIngreso<%= turnoId %>" onclick="marcarCasilla('checkIngreso<%= turnoId %>')">
+                                         <i class="bi bi-house-add"></i> Registrar visita
+                                      </button>
+                                      </td>
                                         
                                     </tr>
+                                    <% turnoId++; %>
                                     <% }); %>
                                         <% } %>
                         </tbody>
@@ -109,16 +116,21 @@
 
             });
         </script>
-        <script>
-         function registrarVisita(url) {
-    // Desactivar el botón
-         const btnRegistrar = document.getElementById('btnRegistrar'+ index);
-         btnRegistrar.disabled = true;
 
-    // Redirigir a la URL
-    location.href = url;
+ <script>
+  function marcarCasilla(checkboxId) {
+    
+    var checkbox = document.getElementById(checkboxId);
+    console.log(checkbox)
+    if (checkbox.checked) {
+      checkbox.checked = true;
+      alert("La casilla está marcada");
+    } else {
+      checkbox.checked = false;
+      console.log("La casilla no está marcada");
+    }
   }
 </script>
-    </body>
 
-    </html>
+    </body>
+</html>

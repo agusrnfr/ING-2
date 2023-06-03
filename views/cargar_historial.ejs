@@ -40,16 +40,16 @@
                         style="background-color: #f2f2f2; opacity: 0.7; pointer-events: none;">
                     </div>
 
-                    <label for="color">Observaciones </label>
+                    <label for="observacion">Observaciones </label>
                     <div class="mb-3">
                       <textarea class="form-control form-control-user" name="observacion" id="observacion"
                         placeholder="Observacion General " rows="5" cols="30"></textarea>
                     </div>
 
-                    <label for="color">Monto (*)</label>
+                    <label for="monto">Monto (*)</label>
                     <div class="mb-3">
                       <input class="form-control form-control-user" name="monto" type="number" id="monto"
-                        placeholder="Monto que abono" min="1" required="">
+                        placeholder="Monto que abono" min="0.01" step="0.01" required>
                     </div>
 
                     <div class="mb-3">
@@ -108,7 +108,7 @@
 
  
 
-     <!-- Modal de confirmación -->
+     <!-- Modal de confirmación monto < monto_b-->
    <div class="modal fade" id="modalWarning" tabindex="-1" aria-labelledby="modalWarningLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -129,12 +129,31 @@
       </div>
     </div>
 
+    <!-- Modal de confirmación de envio-->
+    <div class="modal fade" id="modalConfirmacion" tabindex="-1" aria-labelledby="modalConfirmacionLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalConfirmacionLabel">Confirmacion de registro</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿ Desea registrar esta visita ?</p>
+                </div>
+                  <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                  <button type="button" class="btn btn-primary" id="btnConfirmar" onclick="confirmarUtilizacion()">Confirmar</button>
+             </div>
+          </div>
+        </div>
+      </div>
 
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
 integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
 crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.bundle.min.js"></script> -->
 
 <script>
   const btnEnviar = document.getElementById("registrar");
@@ -148,16 +167,32 @@ crossorigin="anonymous"></script>
     const mensajeElemento = document.getElementById('mensaje');
     mensajeElemento.style.color = 'red';
     mensajeElemento.textContent = 'Por favor complete todos los campos solicitados.';
-    return true; 
-  }
+    setTimeout(function() {
+     mensajeElemento.textContent = '';
+       }, 5000); 
+  return true; 
+}
 
   // Verificar si el monto es menor o igual a 0
   if (parseFloat(monto) <= 0) {
     const mensajeElemento = document.getElementById('mensaje');
     mensajeElemento.style.color = 'red';
     mensajeElemento.textContent = 'El monto de consulta debe ser mayor a 0.';
-    return true; 
-  }
+    setTimeout(function() {
+     mensajeElemento.textContent = '';
+   }, 5000); 
+  return true; 
+}
+
+  if (!/^\d+(\.\d{1,2})?$/.test(monto)) { 
+    const mensajeElemento = document.getElementById('mensaje');
+    mensajeElemento.style.color = 'red';
+    mensajeElemento.textContent = 'El monto de consulta solo admite 2 decimales';
+    setTimeout(function() {
+     mensajeElemento.textContent = '';
+   }, 5000); 
+  return true; 
+}
 
     return false; 
   }
@@ -197,17 +232,25 @@ crossorigin="anonymous"></script>
   function confirmarUtilizacion() {
     // Cerrar el modal
     $('#modalWarning').modal('hide');
+    $('#modalConfirmacion').modal('hide');
 
     // Enviar el formulario
     document.getElementById('miForm').submit();
   }
 
+  function confirmarRegistro(){
+    $('#modalConfirmacion').modal('show');
+
+  }
+
 
   btnEnviar.onclick = function (event) {
     // Si los montos están vacíos o se debe mostrar el modal de warning, se cancela el envío del formulario
+    event.preventDefault();
     if (montosVacios() || compararMontos() ) {
-      event.preventDefault(); // Cancelar el envío del formulario
-      return false; // Retornar false para evitar que se envíe el formulario
+      return false; 
+    }else {
+      confirmarRegistro();
     }
   };
 

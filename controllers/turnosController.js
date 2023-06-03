@@ -349,6 +349,8 @@ const mostrarTurnosDia = async (req, res) => {
 
         const fechaActual = moment().format('DD/MM/YYYY'); // Obtener la fecha actual en formato DD/MM/YYYY
 
+
+        const index= 0
         const data = turnos
             .map(turno => {
                 const fechaHoraZonaHoraria = moment.tz(turno.fecha, 'America/Argentina/Buenos_Aires');
@@ -373,7 +375,7 @@ const mostrarTurnosDia = async (req, res) => {
 
             .sort((a, b) => moment(a.fecha, 'DD/MM/YYYY HH:mm').diff(moment(b.fecha, 'DD/MM/YYYY HH:mm')));
 
-        res.render('turnos_dia', { data });
+        res.render('turnos_dia', { data, index });
     } catch (error) {
         console.log(error);
         res.status(500).render('turnos_dia', { data: [] });
