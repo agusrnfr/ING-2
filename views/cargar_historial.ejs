@@ -146,6 +146,7 @@ crossorigin="anonymous"></script>
     // Verificar si los campos están vacíos
   if (!monto || !monto_b) {
     const mensajeElemento = document.getElementById('mensaje');
+    mensajeElemento.style.color = 'red';
     mensajeElemento.textContent = 'Por favor complete todos los campos solicitados.';
     return true; 
   }
@@ -153,6 +154,7 @@ crossorigin="anonymous"></script>
   // Verificar si el monto es menor o igual a 0
   if (parseFloat(monto) <= 0) {
     const mensajeElemento = document.getElementById('mensaje');
+    mensajeElemento.style.color = 'red';
     mensajeElemento.textContent = 'El monto de consulta debe ser mayor a 0.';
     return true; 
   }
