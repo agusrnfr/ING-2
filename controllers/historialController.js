@@ -6,6 +6,7 @@ const User = require('../db/models/user');
 const moment = require('moment');
 const Libreta = require('../db/models/libreta.js');
 const Beneficio= require('../db/models/beneficio.js');
+const puppeteer = require('puppeteer');
 
 
 const getMonto = async (monto) => {
@@ -213,7 +214,7 @@ const mostrarLibreta = async (req, res) => {
 
 
 
-const crearLibreta = async(fecha, mascota, practica,id) =>{  //Crea el historial
+const crearLibreta = async(fecha, mascota, practica,id) =>{  //Crea la libreta
     try {
         await Libreta.create({
             fecha: fecha,
@@ -227,6 +228,26 @@ const crearLibreta = async(fecha, mascota, practica,id) =>{  //Crea el historial
         throw new Error('Error al crear la libreta');
     }
 }
+
+// const createPDF = async (req,res) => {
+//     const browser = await puppeteer.launch();
+//     const page = await browser.newPage();
+//     const id = req.params.id; 
+
+//      const url = `http://localhost:3000/libreta_sanitaria/${id}`;
+  
+//     // Carga el contenido del archivo EJS en la página
+//     // await page.goto('http://localhost:3000/libreta_sanitaria/:id', { waitUntil: 'networkidle0' });
+  
+//     // Genera el archivo PDF a partir del contenido de la página
+//     // await page.pdf({ path: 'ruta/del/archivo.pdf', format: 'A4' });
+  
+//     // Cierra el navegador
+//     await browser.close();
+//   };
+  
+//   // Llama a la función para crear el PDF
+//   createPDF();
 
   
 module.exports = {

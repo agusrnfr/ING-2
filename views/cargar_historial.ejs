@@ -144,13 +144,20 @@ crossorigin="anonymous"></script>
     const monto_b = document.getElementById('monto_b').value;
 
     // Verificar si los campos están vacíos
-    if (!monto || !monto_b) {
-      const mensajeElemento = document.getElementById('mensaje');
-      mensajeElemento.textContent = 'Por favor complete todos los campos solicitados.';
-      return true; // Campos vacíos, retorna true
-    }
+  if (!monto || !monto_b) {
+    const mensajeElemento = document.getElementById('mensaje');
+    mensajeElemento.textContent = 'Por favor complete todos los campos solicitados.';
+    return true; 
+  }
 
-    return false; // Campos completados, retorna false
+  // Verificar si el monto es menor o igual a 0
+  if (parseFloat(monto) <= 0) {
+    const mensajeElemento = document.getElementById('mensaje');
+    mensajeElemento.textContent = 'El monto de consulta debe ser mayor a 0.';
+    return true; 
+  }
+
+    return false; 
   }
 
   function compararMontos() {
@@ -193,13 +200,16 @@ crossorigin="anonymous"></script>
     document.getElementById('miForm').submit();
   }
 
+
   btnEnviar.onclick = function (event) {
     // Si los montos están vacíos o se debe mostrar el modal de warning, se cancela el envío del formulario
-    if (montosVacios() || compararMontos()) {
+    if (montosVacios() || compararMontos() ) {
       event.preventDefault(); // Cancelar el envío del formulario
       return false; // Retornar false para evitar que se envíe el formulario
     }
   };
+
+
 </script>
 
 <%- include ('sweet-alert') %>
