@@ -134,3 +134,9 @@ a {
     color: black;
     text-decoration: none !important;
 }
+
+.caption-heading {
+    text-align: center;
+    font-weight: bold;
+    margin: 10px;
+  }
