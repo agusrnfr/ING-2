@@ -179,39 +179,38 @@ const crearHistorial = async (req, res) => {  //Crea un historial
 //Zona libreta baby
 
 const mostrarLibreta = async (req, res) => {
-    try {
-        const mascotaId = req.params.id;
-        const mascota = await Mascota.findByPk(mascotaId);
+  try {
+      const mascotaId = req.params.id;
+      const mascota = await Mascota.findByPk(mascotaId);
 
-        if (!mascota) {
-            // Si la mascota no se encuentra, puedes manejar el caso de error o redirigir a una página de error
-            return res.render('error', { error: 'Mascota no encontrada' });
-        }
+      if (!mascota) {
+          // Si la mascota no se encuentra, puedes manejar el caso de error o redirigir a una página de error
+          return res.render('error', { error: 'Mascota no encontrada' });
+      }
 
-        const libretas = await Libreta.findAll({
-            raw: true,
-            include: { model: Mascota, as: 'Mascotum', attributes: ['nombre'] },
-        });
+      const libretas = await Libreta.findAll({
+          raw: true,
+          where: { MascotumId: mascotaId }, // Filtrar por el ID de la mascota
+          include: { model: Mascota, as: 'Mascotum', attributes: ['nombre'] },
+      });
 
-        const data = libretas.map(libreta => {
-            const fechaHoraZonaHoraria = moment.tz(libreta.fecha, 'America/Argentina/Buenos_Aires');
-            return {
-                id: req.params.id,
-                fecha: fechaHoraZonaHoraria.format('DD/MM/YYYY HH:mm'),
-                MascotumId: libreta.MascotumId,
-                nombre: libreta['Mascotum.nombre'],
-                practica: libreta.practica,
-            };
-        }).sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+      const data = libretas.map(libreta => {
+          const fechaHoraZonaHoraria = moment.tz(libreta.fecha, 'America/Argentina/Buenos_Aires');
+          return {
+              id: req.params.id,
+              fecha: fechaHoraZonaHoraria.format('DD/MM/YYYY HH:mm'),
+              MascotumId: libreta.MascotumId,
+              nombre: libreta['Mascotum.nombre'],
+              practica: libreta.practica,
+          };
+      }).sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
 
-        res.render('libreta_sanitaria', { data, mascota, session: session });
-    }
-    catch (error) {
-        console.log(error);
-        res.status(500).render('libreta_sanitaria', { data: [] });
-    }
+      res.render('libreta_sanitaria', { data, mascota, session: session });
+  } catch (error) {
+      console.log(error);
+      res.status(500).render('libreta_sanitaria', { data: [] });
+  }
 };
-
 
 
 const crearLibreta = async(fecha, mascota, practica,id) =>{  //Crea la libreta
