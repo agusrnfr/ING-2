@@ -10,7 +10,7 @@ module.exports = {
       practica: 'Consulta general',
       observacion: 'Tiene muchas pulgas',
       monto_abonado: '3700',
-      monto_beneficio: '3',
+      monto_beneficio: '3000',
       UserId: 3,
       MascotumId: 4,
       }], {});

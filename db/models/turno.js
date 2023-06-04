@@ -24,6 +24,11 @@ Turno.init({
         type: DataTypes.TEXT,
         allowNull: true,
     },
+    visitado: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        allowNull: false,
+    },
 }, {
     sequelize,
     modelName: 'Turno',

@@ -344,7 +344,8 @@ const mostrarTurnosDia = async (req, res) => {
             include: [
                 { model: Mascota, as: 'Mascotum', attributes: ['nombre'] },
                 { model: User, as: 'User', attributes: ['name', 'mail'] }
-            ]
+            ],
+            where: { estado: 'aceptado' }
         });
 
         const fechaActual = moment().format('DD/MM/YYYY'); // Obtener la fecha actual en formato DD/MM/YYYY
@@ -365,20 +366,36 @@ const mostrarTurnosDia = async (req, res) => {
                         MascotumId: turno.MascotumId,
                         nombre: turno['Mascotum.nombre'],
                         user: turno['User.name'],
+                        visitado: turno.visitado,
                     };
                 }
-                return null; // Si no es un turno del día actual, retornar null
+                return null; 
             })
-            .filter(turno => turno !== null) // Filtrar los elementos null del array
+            .filter(turno => turno !== null) 
+            .sort((a, b) => {
+                const valorBandaHoraria = bandaHoraria => {
+                    if (bandaHoraria === 'mañana') {
+                        return 1;
+                    }
+                    return 2; 
+                };
+                
+                // Ordenar primero por banda horaria y luego por horario
+                const resultado = valorBandaHoraria(a.banda_horaria) - valorBandaHoraria(b.banda_horaria);
+                if (resultado === 0) {
+                    return moment(a.fecha, 'DD/MM/YYYY HH:mm').diff(moment(b.fecha, 'DD/MM/YYYY HH:mm'));
+                }
+                return resultado;
+            });
 
-            .sort((a, b) => moment(a.fecha, 'DD/MM/YYYY HH:mm').diff(moment(b.fecha, 'DD/MM/YYYY HH:mm')));
-
-        res.render('turnos_dia', { data });
+        const index = 0;
+        res.render('turnos_dia', { data, index });
     } catch (error) {
         console.log(error);
         res.status(500).render('turnos_dia', { data: [] });
     }
 };
+
 module.exports = {
     verificaciones,
     solicitarTurno,

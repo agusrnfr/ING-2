@@ -27,12 +27,9 @@
                 <div>DNI: <%= usuario.DNI %></div>
                 <div>Rol: <%= usuario.rol %></div>
 
-                <div class="" style="margin-top: 10px; margin-bottom: 10px;">
-                  <a class="btn btn-outline-primary" href="/historial/<%= usuario.id %>"><i class="bi bi-house-add"></i> Historial de visitas</a>
-                </div>
-
-                <div class="" style="margin-top: 10px; margin-bottom: 10px;">
-                  <a class="btn btn-outline-primary" href="/ver_cliente/cupones/<%= usuario.id %>"><i class="bi bi-piggy-bank"></i> Ver beneficios actuales</a>
+                <div style="margin-top: 10px; margin-bottom: 20px;">
+                  <a class="btn btn-outline-primary float-left" href="/historial/<%= usuario.id %>"><i class="bi bi-house-add"></i> Historial de visitas</a>
+                  <a class="btn btn-outline-primary float-right" href="/ver_cliente/cupones/<%= usuario.id %>"><i class="bi bi-piggy-bank"></i> Ver beneficios actuales</a>
                 </div>
 
                 <div class="text-center">Mascotas</div>
@@ -68,7 +65,7 @@
                                     </tbody>
                                   </table>
                     </div>
-<div class="text-center"><a class="small" href="/table">Volver</a></div>
+                    <div class="text-center"><a class="small" href="#" onclick="history.back(); return false;">Volver</a></div>
 </div>
 </div>
     </div>

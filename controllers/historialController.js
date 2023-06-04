@@ -6,11 +6,17 @@ const User = require('../db/models/user');
 const moment = require('moment');
 const Libreta = require('../db/models/libreta.js');
 const Beneficio= require('../db/models/beneficio.js');
+const Turno = require('../db/models/turno')
+//const puppeteer = require('puppeteer');
 
 
-const getMonto = async (id) => {
+const getMonto = async (monto) => {
     try {
-      const beneficio = await Beneficio.findByPk(id);
+      const beneficio = await Beneficio.findOne({
+        where: {
+          monto_beneficio: monto
+        }
+      });
       return beneficio ? beneficio.monto_beneficio : null;
     } catch (error) {
       console.error(error);
@@ -48,6 +54,7 @@ const mostrarHistorial = async (req, res) => {
       const data = await Promise.all(dataPromises);
   
       const sortedData = data.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+
       res.render('historial', { data: sortedData, session: session });
     }
     catch (error) {
@@ -78,6 +85,7 @@ const buscarBeneficios = async (id) => { // Busca los cupones del cliente
 };
 
 const mostrarCarga = async(req,res) => { //Muestra el formulario para carga de visitas
+    const turno = await Turno.findByPk(req.query.turno_id)
     let usuario = await User.findByPk(req.params.id)
 try {
     const mascotaId = req.query.mascota;
@@ -87,7 +95,7 @@ try {
 
     const beneficios= await buscarBeneficios(usuario.id);
     const mascotas = await buscarMascotasCliente(usuario.id);
-    res.render('cargar_historial', { mascotas, usuario: usuario.dataValues, beneficios, nombreMascota, practica});
+    res.render('cargar_historial', { mascotas, usuario: usuario.dataValues, beneficios, nombreMascota, practica , turno });
     
 }
 catch (error) {
@@ -105,7 +113,11 @@ const crearHistorial = async (req, res) => {  //Crea un historial
           nombre: nombreMascota
         }
       });
-
+    const turno = await Turno.findByPk(req.query.turno_id)
+    if (turno) {
+      turno.visitado = true;
+      await turno.save();
+    }
     const practica = req.body.practica;
     const observacion = req.body.observacion;
     const monto = req.body.monto;
@@ -114,16 +126,20 @@ const crearHistorial = async (req, res) => {  //Crea un historial
     const arrayMascota= await buscarMascotasCliente(id);
     const beneficios = await buscarBeneficios(id);
     let usuario = await User.findByPk(req.params.id)
+    const beneficio = await Beneficio.findOne({
+        where: {
+          monto_beneficio: monto_b
+        }
+      });
 
-    if (practica == 'Vacuna A' || practica == 'Vacuna B' || practica == 'Desparacitacion'){
+      if (beneficio) {
+        beneficio.usado = true; // Actualiza el atributo 'usado' a true 
+        await beneficio.save(); // Guarda los cambios en la base de datos
+      }
+
+    if (practica == 'Vacuna A' || practica == 'Vacuna B' || practica == 'Desparasitacion'){
         crearLibreta(fecha,mascota,practica, id)
     }
-
-    const beneficio = await Beneficio.findByPk(monto_b); // buscando en 'Beneficio'
-     if (beneficio) {
-         beneficio.usado = true; // Actualiza el atributo 'usado' a true 
-         await beneficio.save(); // Guarda los cambios en la base de datos
-       }
 
     Historial.create({
         fecha: fecha,
@@ -136,20 +152,21 @@ const crearHistorial = async (req, res) => {  //Crea un historial
     })
     
     .then( Historial => {
-        res.render('cargar_historial',{
-            usuario: (usuario && usuario.dataValues) ? usuario.dataValues : null,
-            mascotas: arrayMascota,
-            beneficios,
-            nombreMascota,
-            practica,
-            alert:true,
-            alertTitle:"Registro de visita exitoso",
-            alertMessage:"",
-            alertIcon:"success",
-            showConfirmButton:false,
-            timer:1500,
-            ruta: 'turnos_dia'
-        })
+      res.render('cargar_historial', {
+        turno: turno,
+        usuario: (usuario && usuario.dataValues) ? usuario.dataValues : null,
+        mascotas: arrayMascota,
+        beneficios,
+        nombreMascota,
+        practica,
+        alert: true,
+        alertTitle: "Registro de visita exitoso",
+        alertMessage: "",
+        alertIcon: "success",
+        showConfirmButton: false,
+        timer: 1500,
+        ruta: 'turnos_dia',
+      });
     })
   
     .catch(error => {
@@ -168,34 +185,42 @@ const crearHistorial = async (req, res) => {  //Crea un historial
 
 //Zona libreta baby
 
-const mostrarLibreta = async (req, res) => { // Muestra la libreta de la mascota
-    try {
-        const libretas = await Libreta.findAll({
-            raw: true,
-            include: { model: Mascota, as: 'Mascotum', attributes: ['nombre'] },
-            // where: { UserId: session.usuario.id }
-        })
-        data = libretas.map(libreta => {
-            const fechaHoraZonaHoraria = moment.tz(visita.fecha, 'America/Argentina/Buenos_Aires');
-            return {
-                id: visita.id,
-                fecha: fechaHoraZonaHoraria.format('DD/MM/YYYY HH:mm'),
-                MascotumId: libreta.MascotumId,
-                nombre: libreta['Mascotum.nombre'],
-                practica: libreta.practica,
-            };
-        }).sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
-        res.render('libreta_sanitaria', { data , session: session} );
-    }
-    catch (error) {
-        console.log(error);
-        res.status(500).render('libreta_sanitaria', { data: [] });
-    };
+const mostrarLibreta = async (req, res) => {
+  try {
+      const mascotaId = req.params.id;
+      const mascota = await Mascota.findByPk(mascotaId);
+
+      if (!mascota) {
+          // Si la mascota no se encuentra, puedes manejar el caso de error o redirigir a una página de error
+          return res.render('error', { error: 'Mascota no encontrada' });
+      }
+
+      const libretas = await Libreta.findAll({
+          raw: true,
+          where: { MascotumId: mascotaId }, // Filtrar por el ID de la mascota
+          include: { model: Mascota, as: 'Mascotum', attributes: ['nombre'] },
+      });
+
+      const data = libretas.map(libreta => {
+          const fechaHoraZonaHoraria = moment.tz(libreta.fecha, 'America/Argentina/Buenos_Aires');
+          return {
+              id: req.params.id,
+              fecha: fechaHoraZonaHoraria.format('DD/MM/YYYY HH:mm'),
+              MascotumId: libreta.MascotumId,
+              nombre: libreta['Mascotum.nombre'],
+              practica: libreta.practica,
+          };
+      }).sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+
+      res.render('libreta_sanitaria', { data, mascota, session: session });
+  } catch (error) {
+      console.log(error);
+      res.status(500).render('libreta_sanitaria', { data: [] });
+  }
 };
 
 
-
-const crearLibreta = async(fecha, mascota, practica,id) =>{  //Deberia crear una columna en la libreta, todavia no lo hace
+const crearLibreta = async(fecha, mascota, practica,id) =>{  //Crea la libreta
     try {
         await Libreta.create({
             fecha: fecha,
@@ -209,6 +234,26 @@ const crearLibreta = async(fecha, mascota, practica,id) =>{  //Deberia crear una
         throw new Error('Error al crear la libreta');
     }
 }
+
+// const createPDF = async (req,res) => {
+//     const browser = await puppeteer.launch();
+//     const page = await browser.newPage();
+//     const id = req.params.id; 
+
+//      const url = `http://localhost:3000/libreta_sanitaria/${id}`;
+  
+//     // Carga el contenido del archivo EJS en la página
+//     // await page.goto('http://localhost:3000/libreta_sanitaria/:id', { waitUntil: 'networkidle0' });
+  
+//     // Genera el archivo PDF a partir del contenido de la página
+//     // await page.pdf({ path: 'ruta/del/archivo.pdf', format: 'A4' });
+  
+//     // Cierra el navegador
+//     await browser.close();
+//   };
+  
+//   // Llama a la función para crear el PDF
+//   createPDF();
 
   
 module.exports = {

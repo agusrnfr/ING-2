@@ -23,6 +23,10 @@ app.use(session({
   saveUninitialized: 'true',
 }));
 
+//defines constantes para usar en todo el proyecto
+const constants = require('./constants');
+global.constants = constants;
+
 //para que las vistas(html/ejs) los busque en la carpeta views(pages).
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
