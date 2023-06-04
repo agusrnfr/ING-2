@@ -16,9 +16,9 @@
                     <table class="table" id="tabla1">
                         <thead class="table-secondary">
                             <tr>
-                                <th class="text-center" scope="col">Fecha</th>
                                 <th class="text-center" scope="col">Cliente</th>
                                 <th class="text-center" scope="col">Banda Horaria</th>
+                                <th class="text-center" scope="col">Horario</th>
                                 <th class="text-center" scope="col">Practica</th>
                                 <th class="text-center" scope="col">Mascota</th>
                                 <th class="text-center" scope="col">Estado</th>
@@ -36,10 +36,6 @@
                                     const cellClass = estado === "aceptado" ? "alert-success" : estado === "rechazado" ?
                                     "alert-danger" : "alert-info";
                                     %>
-                                    <tr class="paginate">
-                                        <td class="text-center align-middle">
-                                            <%= fechaCorta %>
-                                        </td>
 
                                         <td class="text-center align-middle">
                                             <%= turno.user %>
@@ -48,6 +44,12 @@
                                         <td class="text-center align-middle">
                                             <%= turno.banda_horaria %>
                                         </td>
+
+                                        <td class="text-center align-middle">
+                                        <div class="alert alert-dark m-0 small">
+                                                    Horario asignado: <%= horario %>
+                                                </div>
+                                            </td>
 
                                         <td class="text-center align-middle">
                                             <%= turno.practica %>
