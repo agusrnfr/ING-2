@@ -366,6 +366,7 @@ const mostrarTurnosDia = async (req, res) => {
                         MascotumId: turno.MascotumId,
                         nombre: turno['Mascotum.nombre'],
                         user: turno['User.name'],
+                        visitado: turno.visitado,
                     };
                 }
                 return null; 

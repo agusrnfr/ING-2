@@ -6,7 +6,8 @@ const User = require('../db/models/user');
 const moment = require('moment');
 const Libreta = require('../db/models/libreta.js');
 const Beneficio= require('../db/models/beneficio.js');
-const puppeteer = require('puppeteer');
+const Turno = require('../db/models/turno')
+//const puppeteer = require('puppeteer');
 
 
 const getMonto = async (monto) => {
@@ -84,6 +85,7 @@ const buscarBeneficios = async (id) => { // Busca los cupones del cliente
 };
 
 const mostrarCarga = async(req,res) => { //Muestra el formulario para carga de visitas
+    const turno = await Turno.findByPk(req.query.turno_id)
     let usuario = await User.findByPk(req.params.id)
 try {
     const mascotaId = req.query.mascota;
@@ -93,7 +95,7 @@ try {
 
     const beneficios= await buscarBeneficios(usuario.id);
     const mascotas = await buscarMascotasCliente(usuario.id);
-    res.render('cargar_historial', { mascotas, usuario: usuario.dataValues, beneficios, nombreMascota, practica});
+    res.render('cargar_historial', { mascotas, usuario: usuario.dataValues, beneficios, nombreMascota, practica , turno });
     
 }
 catch (error) {
@@ -111,7 +113,11 @@ const crearHistorial = async (req, res) => {  //Crea un historial
           nombre: nombreMascota
         }
       });
-
+    const turno = await Turno.findByPk(req.query.turno_id)
+    if (turno) {
+      turno.visitado = true;
+      await turno.save();
+    }
     const practica = req.body.practica;
     const observacion = req.body.observacion;
     const monto = req.body.monto;
@@ -146,20 +152,21 @@ const crearHistorial = async (req, res) => {  //Crea un historial
     })
     
     .then( Historial => {
-        res.render('cargar_historial',{
-            usuario: (usuario && usuario.dataValues) ? usuario.dataValues : null,
-            mascotas: arrayMascota,
-            beneficios,
-            nombreMascota,
-            practica,
-            alert:true,
-            alertTitle:"Registro de visita exitoso",
-            alertMessage:"",
-            alertIcon:"success",
-            showConfirmButton:false,
-            timer:1500,
-            ruta: 'turnos_dia'
-        })
+      res.render('cargar_historial', {
+        turno: turno,
+        usuario: (usuario && usuario.dataValues) ? usuario.dataValues : null,
+        mascotas: arrayMascota,
+        beneficios,
+        nombreMascota,
+        practica,
+        alert: true,
+        alertTitle: "Registro de visita exitoso",
+        alertMessage: "",
+        alertIcon: "success",
+        showConfirmButton: false,
+        timer: 1500,
+        ruta: 'turnos_dia',
+      });
     })
   
     .catch(error => {

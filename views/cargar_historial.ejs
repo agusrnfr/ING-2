@@ -22,8 +22,7 @@
                 <% if (usuario && usuario.name) { %>
                 <div class="alert alert-info" role="alert">Se registra una visita a: <strong><%= usuario.name %></strong></div>
                 <% } %>
-
-                <form id="miForm" action="/registrarVisita/cliente/<%= usuario.id %>" method="POST">
+                <form id="miForm" action="/registrarVisita/cliente/<%= usuario.id %>?mascota=<%= turno.MascotumId %>&practica=<%= turno.practica %>&turno_id=<%= turno.id %>" method="POST">
                   <div class="row mb-3">
 
                     <label for="mascota">Mascota</label>
