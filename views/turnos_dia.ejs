@@ -4,66 +4,75 @@
 <%- include ('header', {tituloweb: '¡Oh my dog! | Turnos del dia' }); %>
     </head>
     <!-- BODY -->
+<style>
+    .btn-disabled-gray {
+    background-color: gray;
+    color: white;
+}
+</style>
 
     <body id="body">
         <br>
         <div class="container-sm" style="max-width: 1200px;">
             <div class="card text-black" style="border-radius: 10px;">
                 <div class="table-responsive">
+                    <% const fechaCorta = data.length > 0 ? data[0].fecha.split(" ")[0] : ''; %>
                     <caption>
-                        <div style="text-align: center; font-weight: bold;">Turnos del dia</div>
+                        <div class="caption-heading">Turnos del dia: <%= fechaCorta %></div>
                       </caption>
                     <table class="table" id="tabla1">
                         <thead class="table-secondary">
                             <tr>
-                                <th class="text-center" scope="col">Fecha</th>
                                 <th class="text-center" scope="col">Banda Horaria</th>
+                                <th class="text-center" scope="col">Horario</th>
                                 <th class="text-center" scope="col">Cliente</th>
                                 <th class="text-center" scope="col">Practica</th>
                                 <th class="text-center" scope="col">Mascota</th>
-                                <th class="text-center" scope="col">Estado</th>
-                                <th class="text-center" scope="col">Registrar visita</th>
+                                <th class="text-center" scope="col">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <% let turnoId = 0; %>
+
                             <% if (!data.length==0) { %>
-                                <% data.forEach((turno, index) => {
-                                    const fechaCorta = turno.fecha.split(" ")[0];
+                                <% data.forEach((turno) => {
                                     const horario = turno.fecha.split(" ")[1];
                                     const estado = turno.estado.toLowerCase();
                                     const cellClass = estado === "aceptado" ? "alert-success" : estado === "rechazado" ?
                                     "alert-danger" : "alert-info";
                                     %>
-                                    <tr class="paginate">
-                                        <td class="text-center align-middle">
-                                            <%= fechaCorta %>
-                                        </td>
+
                                         <td class="text-center align-middle">
                                             <%= turno.banda_horaria %>
                                         </td>
-
+                                        
                                         <td class="text-center align-middle">
-                                            <%= turno.user %>
+                                            <div class="alert alert-dark m-0 small">
+                                                <%= horario %>
+                                            </div>
                                         </td>
+                                        
+                                        <td class="text-center align-middle">
+                                                <a href="/ver_cliente/<%= turno.UserId %>"><%= turno.user %></a>
+                                            </td>
 
                                         <td class="text-center align-middle">
                                             <%= turno.practica %>
                                         </td>
                                         <td class="text-center align-middle">
-                                            <%= turno.nombre %>
-                                        </td>
-                                        <td class="text-center align-middle">
-                                            <div class="alert <%= cellClass %> m-0">
-                                                <%= turno.estado %>
-                                            </div>
+                                            <a href="/ver_mascota/<%= turno.MascotumId %>"><%= turno.nombre %></a>
                                         </td>
 
-                                        <td class="text-center align-middle">
-                                        <button id="btnRegistrar<%= index %>" type="button" onclick="location.href='<%= `/registrarVisita/cliente/${turno.UserId}?mascota=${turno.MascotumId}&practica=${turno.practica}` %>'" class="btn btn-outline-success">
-                                        <i class="bi bi-house-add"></i> Registrar visita</button>
-                                        </td>
+                                       <td class="text-center align-middle">
+                                        <button id="btnRegistrar<%= turnoId %>" class="btn btn-outline-success" name="registrar" onclick="location.href='<%= `/registrarVisita/cliente/${turno.UserId}?mascota=${turno.MascotumId}&practica=${turno.practica}&turno_id=${turno.id}` %>'" type="button" <% if (turno.visitado === 1) { %>disabled style="background-color: gray; color: white; border-color: gray"<% } %>>
+                                            <i class="bi bi-house-add"></i> Registrar visita
+                                        </button>
+                                        
+                                      </button>
+                                      </td>
                                         
                                     </tr>
+                                    <% turnoId++; %>
                                     <% }); %>
                                         <% } %>
                         </tbody>
@@ -109,16 +118,13 @@
 
             });
         </script>
-        <script>
-         function registrarVisita(url) {
-    // Desactivar el botón
-         const btnRegistrar = document.getElementById('btnRegistrar'+ index);
-         btnRegistrar.disabled = true;
 
-    // Redirigir a la URL
-    location.href = url;
-  }
-</script>
+        <% function formatDate(date) { %>
+            <% const year = date.getFullYear(); %>
+            <% const month = date.getMonth() + 1; %>
+            <% const day = date.getDate(); %>
+            <% return `${day.toString().padStart(2, '0')}-${month.toString().padStart(2, '0')}-${year}`; %>
+        <% } %>
+
     </body>
-
-    </html>
+</html>
