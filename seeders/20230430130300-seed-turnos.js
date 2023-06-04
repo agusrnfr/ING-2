@@ -71,7 +71,7 @@ module.exports = {
       fecha: moment().hour(9).minute(30).toDate(),
       banda_horaria: 'Mañana',
       estado: 'Aceptado',
-      practica: 'Desparacitacion',
+      practica: 'Desparasitacion',
       UserId: 3,
       MascotumId: 1,
     }], {});

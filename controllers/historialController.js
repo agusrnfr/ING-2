@@ -137,7 +137,7 @@ const crearHistorial = async (req, res) => {  //Crea un historial
         await beneficio.save(); // Guarda los cambios en la base de datos
       }
 
-    if (practica == 'Vacuna A' || practica == 'Vacuna B' || practica == 'Desparacitacion'){
+    if (practica == 'Vacuna A' || practica == 'Vacuna B' || practica == 'Desparasitacion'){
         crearLibreta(fecha,mascota,practica, id)
     }
 
