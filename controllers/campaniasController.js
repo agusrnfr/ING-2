@@ -140,22 +140,22 @@ const verificacionesDonacion = async (req, res, next) => {
     if (monto > 15000){
         return res.status(400).json('El monto no puede ser mayor a $15.000');
     }
-    if (tarjeta.length < 16 || tarjeta.length > 16) {
+    if (tarjeta.length < 16 || tarjeta.length > 16 || !tarjeta.match(/^[0-9]+$/)) {
         return res.status(400).json('Problemas con el pago: Tarjeta inválida');
-    }
-    if (tarjeta % 2 !== 0) {
-        return res.status(400).json('Problemas con el pago: Saldo insuficiente');
     }
     if (moment().startOf('month').isAfter(fechaVenc)) {
         return res.status(400).json('Problemas con el pago: Fecha de vencimiento inválida');
     }
 
-    if (codigo.length < 3 || codigo.length > 3) {
+    if (codigo.length < 3 || codigo.length > 3 || !codigo.match(/^[0-9]+$/)) {
         return res.status(400).json('Problemas con el pago: Código de seguridad inválido');
     }
     const nombreRegex = /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+\s[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+$/;
     if (nombre.length < 5 || nombre.length > 50 || !nombreRegex.test(nombre)) {
         return res.status(400).json('Problemas con el pago: Nombre inválido');
+    }
+    if (tarjeta % 2 !== 0) {
+        return res.status(400).json('Problemas con el pago: Saldo insuficiente');
     }
 
     next();
