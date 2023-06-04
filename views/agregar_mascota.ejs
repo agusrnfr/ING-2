@@ -25,13 +25,23 @@
         <div class="mb-3"><input class="form-control form-control-user" type="text" name="nombre" placeholder="Nombre de la mascota*" required=""></div>
         
         <div class="col-sm-6 mb-3 mb-sm-3 mb-3">
-        <select class="form-select" name="Sexo" required="">
+        <select class="form-select" name="sexo" required="">
           <option value="" disabled selected>Sexo*</option>
-          <option value="Mañana">macho</option>
-          <option value="Tarde">hembra</option>
+          <option value="macho">macho</option>
+          <option value="hembra">hembra</option>
         </select></div>
 
-        <div class="col-sm-6 mb-3 mb-sm-3"><input class="form-control form-control-user" type="text" name="raza"   placeholder="Raza*" required=""></div>
+        <div class="col-sm-6 mb-3 mb-sm-3">
+          <div class="mb-3">
+            <select class="form-control form-control-user" name="raza" id="raza" required>
+              <option value="" selected disabled>Selecciona una raza</option>
+              <% Object.values(locals.RAZAS).forEach(function(raza) { %>
+                <option value="<%= raza %>"><%= raza %></option>
+              <% }); %>
+            </select>
+          </div>
+        </div>
+        
         
         
         <div class="mb-3"><input class="form-control form-control-user" type="text" name="color"   placeholder="Color*" required=""></div>

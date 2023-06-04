@@ -23,9 +23,9 @@ app.use(session({
   saveUninitialized: 'true',
 }));
 
-//defines constantes para usar en todo el proyecto
-const constants = require('./constants');
-global.constants = constants;
+// Establecer las variables globales en app.locals para los ejs y archivos
+require('./globals.js');
+app.locals.RAZAS = RAZAS;
 
 //para que las vistas(html/ejs) los busque en la carpeta views(pages).
 app.set('views', path.join(__dirname, 'views'))

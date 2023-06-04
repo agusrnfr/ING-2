@@ -18,6 +18,7 @@ const registrarMascota = async (req, res) => {
     const raza = req.body.raza;
     const color = req.body.color;
     const fecha_nacimiento = req.body.fecha_nacimiento;
+    const sexo = req.body.sexo
     const foto = req.body.imagen;
     let observaciones = req.body.observaciones;
     const UserId = req.params.id;
@@ -29,6 +30,7 @@ const registrarMascota = async (req, res) => {
         UserId: UserId,
         nombre: nombre,
         raza: raza,
+        sexo: sexo,
         color: color,
         fecha_nacimiento: fecha_nacimiento,
         observaciones: observaciones,
@@ -44,6 +46,7 @@ const registrarMascota = async (req, res) => {
         })
     })
     .catch(error => {
+        console.log(error)
         res.render('agregar_mascota',{
             alert:true,
             alertTitle:"Registracion fallida",

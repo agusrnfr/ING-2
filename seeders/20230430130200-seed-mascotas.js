@@ -1,4 +1,5 @@
 'use strict';
+require('../globals.js');
 module.exports = {
   /** @type {import('sequelize-cli').Migration} */
   async up(queryInterface, Sequelize) {
@@ -6,7 +7,7 @@ module.exports = {
     const faker = require('faker');
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Luna',
-      raza: 'Golden Retriever',
+      raza: RAZAS.GOLDEN_RETRIEVER,
       color: 'Dorado',
       fecha_nacimiento: moment('2018-07-15').toDate(),
       observaciones: 'Tiene una mancha blanca en la pata izquierda',
@@ -15,7 +16,7 @@ module.exports = {
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Diana',
-      raza: 'Pitbull',
+      raza: RAZAS.PITBULL,
       color: 'Blanco',
       fecha_nacimiento: moment('2019-05-17').toDate(),
       observaciones: 'Es juguetona y le gusta correr',
@@ -24,7 +25,7 @@ module.exports = {
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Leona',
-      raza: 'Cruza',
+      raza: RAZAS.CRUZA,
       color: 'Negra',
       fecha_nacimiento: moment('2018-01-12').toDate(),
       observaciones: 'Es panzona y le gusta dormir',
@@ -33,7 +34,7 @@ module.exports = {
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Mimi',
-      raza: 'Caniche',
+      raza: RAZAS.CANICHE,
       color: 'Blanca',
       fecha_nacimiento: moment('2018-01-12').toDate(),
       observaciones: 'Ladra mucho y le gusta comer',
@@ -42,7 +43,7 @@ module.exports = {
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Bart',
-      raza: 'Salchicha',
+      raza: RAZAS.SALCHICHA,
       color: 'Marron',
       fecha_nacimiento: moment('2018-01-12').toDate(),
       observaciones: 'Es muy cariñoso y le gusta jugar con la pelota',
@@ -51,7 +52,7 @@ module.exports = {
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Chuchi',
-      raza: 'Salchicha',
+      raza: RAZAS.SALCHICHA,
       color: 'Marron',
       fecha_nacimiento: moment().clone().subtract(5, 'months').toDate(),
       observaciones: 'Es muy cariñoso y le gusta jugar con la pelota',
@@ -60,7 +61,7 @@ module.exports = {
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Vani',
-      raza: 'Pitbull',
+      raza: RAZAS.PITBULL,
       color: 'Negro',
       fecha_nacimiento: moment().clone().subtract(1, 'months').toDate(),
       observaciones: 'Es muy cariñoso y le gusta jugar con la pelota',
@@ -69,7 +70,7 @@ module.exports = {
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Rudo',
-      raza: 'Golden Retriever',
+      raza: RAZAS.GOLDEN_RETRIEVER,
       color: 'Negro',
       fecha_nacimiento: moment().clone().subtract(3, 'months').toDate(),
       observaciones: 'Es muy cariñoso y le gusta jugar con la pelota',
@@ -78,7 +79,7 @@ module.exports = {
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Syndra',
-      raza: 'Cruza',
+      raza: RAZAS.CRUZA,
       color: 'Negro',
       fecha_nacimiento: moment().clone().subtract(6, 'months').toDate(),
       observaciones: 'Es muy cariñoso y le gusta jugar con la pelota',
@@ -87,7 +88,7 @@ module.exports = {
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Salem',
-      raza: 'Cruza',
+      raza: RAZAS.CRUZA,
       color: 'Negro',
       fecha_nacimiento: moment().clone().subtract(3, 'months').toDate(),
       observaciones: 'Es muy cariñoso y le gusta jugar con la pelota',
@@ -96,7 +97,7 @@ module.exports = {
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Stevie',
-      raza: 'Golden Retriever',
+      raza: RAZAS.GOLDEN_RETRIEVER,
       color: 'Amarillo',
       fecha_nacimiento: moment().clone().subtract(5, 'months').toDate(),
       observaciones: 'Es muy cariñoso y activo',
@@ -108,7 +109,7 @@ module.exports = {
       const minDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
       await queryInterface.bulkInsert('mascotas', [{
         nombre: faker.name.firstName(),
-        raza: faker.random.arrayElement(['Golden Retriever', 'Caniche', 'Labrador', 'Bulldog', 'Pitbull', 'Pastor Aleman', 'Cruza']),
+        raza: faker.random.arrayElement([RAZAS.GOLDEN_RETRIEVER, RAZAS.CANICHE, RAZAS.LABRADOR , RAZAS.BULLDOG, RAZAS.PITBULL, RAZAS.PASTOR_ALEMAN, RAZAS.CRUZA]),
         color: faker.random.arrayElement(['Negro', 'Blanco', 'Amarillo', 'Marron', 'Blanco y Negro', 'Amarillo y Marron', 'Gris', 'Gris y Blanco']),
         fecha_nacimiento: faker.date.between(minDate, today),
         observaciones: faker.random.arrayElement(['Es muy jugueton', 'Es muy nervioso', 'Agresivo', 'Calmado']),
