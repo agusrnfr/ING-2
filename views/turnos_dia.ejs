@@ -21,7 +21,6 @@
                                 <th class="text-center" scope="col">Horario</th>
                                 <th class="text-center" scope="col">Practica</th>
                                 <th class="text-center" scope="col">Mascota</th>
-                                <th class="text-center" scope="col">Estado</th>
                                 <th class="text-center" scope="col">Registrar visita</th>
                             </tr>
                         </thead>
@@ -57,12 +56,6 @@
                                         <td class="text-center align-middle">
                                             <%= turno.nombre %>
                                         </td>
-                                        <td class="text-center align-middle">
-                                            <div class="alert <%= cellClass %> m-0">
-                                                <%= turno.estado %>
-                                            </div>
-                                        </td>
-
 
                                        <td class="text-center align-middle">
                                        <button id="btnRegistrar<%= turnoId %>" type="button" onclick="location.href='<%= `/registrarVisita/cliente/${turno.UserId}?mascota=${turno.MascotumId}&practica=${turno.practica}` %>'" class="btn btn-outline-success">

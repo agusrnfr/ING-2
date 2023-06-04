@@ -21,6 +21,13 @@ module.exports = {
             usado: false,
             UserId: 3,
         }], {});
+
+        await queryInterface.bulkInsert('beneficios', [{
+            monto_beneficio: 2000,
+            usado: false,
+            UserId: 3,
+        }], {});
+
         await queryInterface.bulkInsert('beneficios', [{
             monto_beneficio: 3000,
             usado: true,

@@ -372,14 +372,19 @@ const mostrarTurnosDia = async (req, res) => {
             })
             .filter(turno => turno !== null) 
             .sort((a, b) => {
-                
                 const valorBandaHoraria = bandaHoraria => {
                     if (bandaHoraria === 'mañana') {
                         return 1;
                     }
                     return 2; 
                 };
-                return valorBandaHoraria(a.banda_horaria) - valorBandaHoraria(b.banda_horaria);
+                
+                // Ordenar primero por banda horaria y luego por horario
+                const resultado = valorBandaHoraria(a.banda_horaria) - valorBandaHoraria(b.banda_horaria);
+                if (resultado === 0) {
+                    return moment(a.fecha, 'DD/MM/YYYY HH:mm').diff(moment(b.fecha, 'DD/MM/YYYY HH:mm'));
+                }
+                return resultado;
             });
 
         const index = 0;
