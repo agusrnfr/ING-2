@@ -20,7 +20,7 @@ module.exports = {
       color: 'Blanco',
       fecha_nacimiento: moment('2019-05-17').toDate(),
       observaciones: 'Es juguetona y le gusta correr',
-      
+      foto: null,
       UserId: 4,
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
@@ -29,7 +29,7 @@ module.exports = {
       color: 'Negra',
       fecha_nacimiento: moment('2018-01-12').toDate(),
       observaciones: 'Es panzona y le gusta dormir',
-      
+      foto: null,
       UserId: 6,
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
