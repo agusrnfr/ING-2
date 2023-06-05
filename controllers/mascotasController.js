@@ -19,10 +19,11 @@ const registrarMascota = async (req, res) => {
     const color = req.body.color;
     const fecha_nacimiento = req.body.fecha_nacimiento;
     const sexo = req.body.sexo
-    const foto = req.body.imagen;
+    let foto = req.file.path;
     let observaciones = req.body.observaciones;
     const UserId = req.params.id;
 
+    foto = req.file.path.replace("public", "")//para q se guarde bien el path
     if(observaciones === "")
         observaciones = "Ninguna"
 
@@ -30,6 +31,7 @@ const registrarMascota = async (req, res) => {
         UserId: UserId,
         nombre: nombre,
         raza: raza,
+        foto: foto,
         sexo: sexo,
         color: color,
         fecha_nacimiento: fecha_nacimiento,
