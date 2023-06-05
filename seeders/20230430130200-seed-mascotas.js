@@ -11,7 +11,7 @@ module.exports = {
       color: 'Dorado',
       fecha_nacimiento: moment('2018-07-15').toDate(),
       observaciones: 'Tiene una mancha blanca en la pata izquierda',
-      foto: null,
+      foto: '/img/profile_pets/imagen-1685981294467',
       UserId: 3,
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
@@ -20,7 +20,7 @@ module.exports = {
       color: 'Blanco',
       fecha_nacimiento: moment('2019-05-17').toDate(),
       observaciones: 'Es juguetona y le gusta correr',
-      foto: null,
+      
       UserId: 4,
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
@@ -29,7 +29,7 @@ module.exports = {
       color: 'Negra',
       fecha_nacimiento: moment('2018-01-12').toDate(),
       observaciones: 'Es panzona y le gusta dormir',
-      foto: null,
+      
       UserId: 6,
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
@@ -38,7 +38,7 @@ module.exports = {
       color: 'Blanca',
       fecha_nacimiento: moment('2018-01-12').toDate(),
       observaciones: 'Ladra mucho y le gusta comer',
-      foto: null,
+      foto: '/img/profile_pets/imagen-1685981332488',
       UserId: 3, //JUANCHO
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
@@ -65,7 +65,7 @@ module.exports = {
       color: 'Negro',
       fecha_nacimiento: moment().clone().subtract(1, 'months').toDate(),
       observaciones: 'Es muy cariñoso y le gusta jugar con la pelota',
-      foto: null,
+      foto: '/img/profile_pets/imagen-1685981344093',
       UserId: 3, //JUANCHO
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
@@ -74,7 +74,7 @@ module.exports = {
       color: 'Negro',
       fecha_nacimiento: moment().clone().subtract(3, 'months').toDate(),
       observaciones: 'Es muy cariñoso y le gusta jugar con la pelota',
-      foto: null,
+      foto: '/img/profile_pets/imagen-1685981322357',
       UserId: 3,
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
@@ -101,7 +101,7 @@ module.exports = {
       color: 'Amarillo',
       fecha_nacimiento: moment().clone().subtract(5, 'months').toDate(),
       observaciones: 'Es muy cariñoso y activo',
-      foto: null,
+      foto: '/img/profile_pets/imagen-1685981322357',
       UserId: 8,
     }], {});
     for (let i = 0; i < 0; i++) {

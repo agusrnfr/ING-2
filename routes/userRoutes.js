@@ -19,6 +19,19 @@ const { mostrarCampanias, publicarCampania, verificacionesCampania, guardarPubli
 //invocamos express
 const app = require('express').Router()
 
+//manejo de imagenes de perfil
+const multer = require('multer');
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/img/profile_pets'); // Donde se guardan
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + '-' + Date.now()); // Para que no se repitan
+  }
+});
+
+const upload = multer({ storage: storage });
+
 ////////////////////   RUTAS     //////////////////////////
 
 app.get('/', mostrarIndex)
@@ -72,7 +85,7 @@ app.get('/turnos_dia',comprobar_sesion_admin, mostrarTurnosDia);
 
 //MASCOTAS
 app.get('/agregar_mascota/cliente/:id', mostrarAgregarMascota)
-app.post('/agregar_mascota/cliente/:id', registrarMascota)
+app.post('/agregar_mascota/cliente/:id', upload.single('imagen'), registrarMascota)
 app.get('/ver_mascota/:id', comprobar_sesion, mostrarMascota)
 app.post('/eliminar_mascota/:id', comprobar_sesion_admin, eliminarMascota)
 
