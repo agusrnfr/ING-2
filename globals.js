@@ -19,3 +19,14 @@ global.RAZAS = {
   ROTTWEILER: 'Rottweiler',
   SALCHICHA: 'Salchicha',
 };
+global.USER_IDS ={
+  LUCIA: 1,
+  PEDRO: 2,
+  JUANCHO: 3,
+  AGUSTIN: 4,
+  NAMI: 5,
+  AGUSTINA:6,
+  CORDELIA: 7,
+  MISTY:8,
+  LDR:9,
+};

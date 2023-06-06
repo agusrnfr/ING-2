@@ -12,7 +12,7 @@ module.exports = {
       fecha_nacimiento: moment('2018-07-15').toDate(),
       observaciones: 'Tiene una mancha blanca en la pata izquierda',
       foto: '/img/profile_pets/imagen-1685981294467',
-      UserId: 3,
+      UserId: USER_IDS.JUANCHO,
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Diana',
@@ -21,7 +21,7 @@ module.exports = {
       fecha_nacimiento: moment('2019-05-17').toDate(),
       observaciones: 'Es juguetona y le gusta correr',
       foto: null,
-      UserId: 4,
+      UserId: USER_IDS.AGUSTIN,
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Leona',
@@ -30,16 +30,16 @@ module.exports = {
       fecha_nacimiento: moment('2018-01-12').toDate(),
       observaciones: 'Es panzona y le gusta dormir',
       foto: null,
-      UserId: 6,
+      UserId: USER_IDS.AGUSTINA,
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Mimi',
-      raza: RAZAS.CANICHE,
+      raza: RAZAS.CHIHUAHUA,
       color: 'Blanca',
       fecha_nacimiento: moment('2018-01-12').toDate(),
       observaciones: 'Ladra mucho y le gusta comer',
       foto: '/img/profile_pets/imagen-1685981332488',
-      UserId: 3, //JUANCHO
+      UserId: USER_IDS.JUANCHO,
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Bart',
@@ -48,7 +48,7 @@ module.exports = {
       fecha_nacimiento: moment('2018-01-12').toDate(),
       observaciones: 'Es muy cariñoso y le gusta jugar con la pelota',
       foto: null,
-      UserId: 5, //NAMI
+      UserId: USER_IDS.NAMI,
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Chuchi',
@@ -57,16 +57,16 @@ module.exports = {
       fecha_nacimiento: moment().clone().subtract(5, 'months').toDate(),
       observaciones: 'Es muy cariñoso y le gusta jugar con la pelota',
       foto: null,
-      UserId: 6, //AGUSTINA
+      UserId: USER_IDS.AGUSTINA,
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Vani',
-      raza: RAZAS.PITBULL,
+      raza: RAZAS.BULLDOG,
       color: 'Negro',
       fecha_nacimiento: moment().clone().subtract(1, 'months').toDate(),
       observaciones: 'Es muy cariñoso y le gusta jugar con la pelota',
       foto: '/img/profile_pets/imagen-1685981344093',
-      UserId: 3, //JUANCHO
+      UserId: USER_IDS.JUANCHO,
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Rudo',
@@ -75,7 +75,7 @@ module.exports = {
       fecha_nacimiento: moment().clone().subtract(3, 'months').toDate(),
       observaciones: 'Es muy cariñoso y le gusta jugar con la pelota',
       foto: '/img/profile_pets/imagen-1685981322357',
-      UserId: 3,
+      UserId: USER_IDS.JUANCHO,
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Syndra',
@@ -84,7 +84,7 @@ module.exports = {
       fecha_nacimiento: moment().clone().subtract(6, 'months').toDate(),
       observaciones: 'Es muy cariñoso y le gusta jugar con la pelota',
       foto: null,
-      UserId: 6,
+      UserId: USER_IDS.AGUSTINA,
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Salem',
@@ -93,7 +93,7 @@ module.exports = {
       fecha_nacimiento: moment().clone().subtract(3, 'months').toDate(),
       observaciones: 'Es muy cariñoso y le gusta jugar con la pelota',
       foto: null,
-      UserId: 7,
+      UserId: USER_IDS.CORDELIA,
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Stevie',
@@ -102,7 +102,7 @@ module.exports = {
       fecha_nacimiento: moment().clone().subtract(5, 'months').toDate(),
       observaciones: 'Es muy cariñoso y activo',
       foto: '/img/profile_pets/imagen-1685981322357',
-      UserId: 8,
+      UserId: USER_IDS.MISTY,
     }], {});
     for (let i = 0; i < 0; i++) {
       const today = new Date();
