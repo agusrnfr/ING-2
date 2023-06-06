@@ -82,6 +82,7 @@ const mostrarMascota = async (req, res) => {
 }
 
 const eliminarMascota = async (req, res) => {
+    console.log(req.params.id)
     const mascota = await Mascota.findByPk(req.params.id)
     if(mascota == null){
         res.send('Error: No existe esa mascota')
