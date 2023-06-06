@@ -7,7 +7,7 @@
    up: async (queryInterface, Sequelize) => {
     const excludeList = [4, 5];
     const nombres= ['Negro','Umi','Kira','Milaneso','Bobi','Eren','Zoro','Nami'];
-    const razas = ['Mestizo', 'Labrador', 'Caniche', 'Bulldog'];
+    const RAZA = ['Mestizo', 'Labrador', 'Caniche', 'Bulldog'];
     const colores = ['Negro', 'Marrón', 'Blanco', 'Gris'];
     const caracteristica = ['Juguetón', 'Cariñoso', 'Guardián', 'Activo', 'Asustadizo','Serio'];
     const sexos = ['Macho', 'Hembra'];
@@ -107,7 +107,7 @@
   //      let sexo = sexos[Math.floor(Math.random() * sexos.length)];
   //      let origen = origenes[Math.floor(Math.random() * origenes.length)];
   //      let caracteristicas = caracteristica[Math.floor(Math.random() * caracteristica.length)];
-  //      let raza = razas[Math.floor(Math.random() * razas.length)];
+  //      let raza = RAZA[Math.floor(Math.random() * RAZA.length)];
   //      let color = colores[Math.floor(Math.random() * colores.length)];
   //      let seAdopto = seAdoptoOptions[Math.floor(Math.random() * seAdoptoOptions.length)];
   //      let vacunas = vacunasv[Math.floor(Math.random() * vacunasv.length)];

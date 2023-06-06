@@ -406,4 +406,5 @@ module.exports = {
     turnoGuardado,
     calcularEdadMasco,
     mostrarTurnosDia,
+    crearTurnoBD,
 }

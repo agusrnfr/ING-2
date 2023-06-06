@@ -107,37 +107,38 @@ catch (error) {
 
 const crearHistorial = async (req, res) => {  //Crea un historial
     const fecha= new Date();
-    const nombreMascota = req.body.mascota;
-    const mascota = await Mascota.findOne({
-        where: {
-          nombre: nombreMascota
-        }
-      });
     const turno = await Turno.findByPk(req.query.turno_id)
-    if (turno) {
-      turno.visitado = true;
-      await turno.save();
+    const mascota = await Mascota.findByPk(turno.MascotumId)
+    const usuario = await User.findByPk(turno.UserId)
+    if(!turno){
+      console.error("Error: No se encontro el turno")
+      return
     }
+    if(!mascota){
+      console.error("Error: No se encontro la mascota asociada al turno")
+      return
+    }
+    if(!usuario){
+      console.error("Error: no se encontro al usuario asociado al turno")
+      return
+    }
+    turno.visitado = true; //sirve para deshabilitar el boton de registrar
+    await turno.save();
+
     const practica = req.body.practica;
     const observacion = req.body.observacion;
     const monto = req.body.monto;
     const monto_b = req.body.monto_b;
     const id = req.params.id;
-    const arrayMascota= await buscarMascotasCliente(id);
-    const beneficios = await buscarBeneficios(id);
-    let usuario = await User.findByPk(req.params.id)
-    const beneficio = await Beneficio.findOne({
-        where: {
-          monto_beneficio: monto_b
-        }
-      });
+    const mascotas = await usuario.getMascotas()
+    const beneficios = await usuario.getBeneficios()
+    const beneficio = beneficios.find((beneficio) => beneficio.monto_beneficio === monto_b);
+    if(beneficio){
+      beneficio.usado = true;
+      await beneficio.save();
+    }
 
-      if (beneficio) {
-        beneficio.usado = true; // Actualiza el atributo 'usado' a true 
-        await beneficio.save(); // Guarda los cambios en la base de datos
-      }
-
-    if (practica == 'Vacuna A' || practica == 'Vacuna B' || practica == 'Desparasitacion'){
+    if (global.PRACTICAS_QUE_GENERAN_LIBRETA.includes(practica)){
         crearLibreta(fecha,mascota,practica, id)
     }
 
@@ -151,13 +152,13 @@ const crearHistorial = async (req, res) => {  //Crea un historial
         UserId: id,   
     })
     
-    .then( Historial => {
+    .then( async Historial => {
       res.render('cargar_historial', {
         turno: turno,
         usuario: (usuario && usuario.dataValues) ? usuario.dataValues : null,
-        mascotas: arrayMascota,
+        mascotas: mascotas,
         beneficios,
-        nombreMascota,
+        nombreMascota: mascota.name,
         practica,
         alert: true,
         alertTitle: "Registro de visita exitoso",
@@ -167,20 +168,25 @@ const crearHistorial = async (req, res) => {  //Crea un historial
         timer: 1500,
         ruta: 'turnos_dia',
       });
+        const { crearTurnoBD } = require('./turnosController')
+        if(practica === global.PRACTICA.VACUNA_A){
+          const libretas = await Libreta.findAll({where:{ practica : global.PRACTICA.VACUNA_A }})
+          if(libretas.length <= 2){ //cuando llega aca ya se dio la dosis
+            await crearTurnoBD(fecha, turno.banda_horaria, turno.practica, turno.UserId, mascota)
+          }
+        }
+        if(practica === global.PRACTICA.VACUNA_B){
+          const libretas = await Libreta.findAll({where:{ practica : global.PRACTICA.VACUNA_B }})
+          console.log(libretas.length)
+          if(libretas.length <= 2){
+            await crearTurnoBD(fecha, turno.banda_horaria, turno.practica, turno.UserId, mascota)
+          }
+        } 
     })
   
     .catch(error => {
-      console.error(error);
-        res.render('cargar_historial',{
-            alert:true,
-            alertTitle:"Falla en carga de datos",
-            alertMessage:"",
-            alertIcon:"error",
-            showConfirmButton:false,
-            timer:2000,
-        })
-    });
-    
+      console.error("Error: en la carga de turno "+ error);
+      })
   }
 
 //Zona libreta baby

@@ -25,7 +25,7 @@ app.use(session({
 
 // Establecer las variables globales en app.locals para los ejs y archivos
 require('./globals.js');
-app.locals.RAZAS = RAZAS;
+app.locals.RAZA = RAZA;
 
 //para que las vistas(html/ejs) los busque en la carpeta views(pages).
 app.set('views', path.join(__dirname, 'views'))
