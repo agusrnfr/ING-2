@@ -171,13 +171,13 @@ const crearHistorial = async (req, res) => {  //Crea un historial
         const { crearTurnoBD } = require('./turnosController')
         if(practica === global.PRACTICA.VACUNA_A){
           const dosis_dadas_A = await Libreta.findAll({where:{ practica : global.PRACTICA.VACUNA_A }})
-          if(dosis_dadas_A.length <= 2){ //cuando llega aca ya se dio la dosis
+          if(dosis_dadas_A.length < 2){ //cuando llega aca ya se dio la dosis
             await crearTurnoBD(fecha, turno.banda_horaria, turno.practica, turno.UserId, mascota)
           }
         }
         if(practica === global.PRACTICA.VACUNA_B){
           const dosis_dadas_B = await Libreta.findAll({where:{ practica : global.PRACTICA.VACUNA_B }})
-          if(dosis_dadas_B.length <= 2){
+          if(dosis_dadas_B.length < 2){
             await crearTurnoBD(fecha, turno.banda_horaria, turno.practica, turno.UserId, mascota)
           }
         } 
