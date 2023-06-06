@@ -1,3 +1,5 @@
+//----manejo de imagenes de perfil , middleware upload--//
+
 const multer = require('multer');
 
 const storage = multer.diskStorage({
