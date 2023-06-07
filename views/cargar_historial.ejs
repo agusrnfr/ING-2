@@ -53,22 +53,22 @@
 
                     <div class="mb-3">
                       <% if (beneficios.length > 0) { %>
-                      <select id="monto_b" class="form-select" name="monto_b" required="">
-                        <option value="" disabled selected>Monto Beneficio (*)</option>
-                        <option value="ninguno">Ninguno</option>
-                        <% beneficios.forEach(function(beneficio) { %>
-                        <% if (!beneficio.usado) { %>
-                        <option value="<%= beneficio.monto_beneficio %>">
-                          <%= beneficio.monto_beneficio %>
-                        </option>
+                        <select id="monto_b" class="form-select" name="monto_b" required="">
+                          <option value="" disabled selected>Monto Beneficio (*)</option>
+                          <option value="ninguno">Ninguno</option>
+                          <% beneficios.forEach(function(beneficio) { %>
+                            <% if (!beneficio.usado) { %>
+                              <option value="<%= beneficio.monto_beneficio %>">
+                                <%= beneficio.monto_beneficio %>
+                              </option>
+                            <% } %>
+                          <% }); %>
+                        </select>
+                        <% } else { %>
+                          <select id="monto_b" class="form-select" name="monto_b" required="" style="background-color: #f2f2f2; opacity: 0.7; pointer-events: none;">
+                            <option value="ninguno" selected>Ninguno</option>
+                          </select>
                         <% } %>
-                        <% }); %>
-                      </select>
-                      <% } else { %>
-                      <div class="alert alert-danger mb-3 text-center" role="alert">
-                        <p class="text-danger m-0">Ninguno</p>
-                      </div>
-                      <% } %>
                     </div>
 
                     <div class="text-center mb-2" style="font-size: smaller;">Los campos con (*) son obligatorios</div>
@@ -117,6 +117,7 @@
               </div>
               <div class="modal-body">
                   <p>El monto beneficio es mayor al de consulta, seguro quiere utilizarlo?</p>
+                  <p><strong>El cliente va a perder lo que resta del beneficio</strong></p>
                   <p>Monto consulta: <span id="montoConsulta"></span></p>
                   <p>Monto beneficio: <span id="montoBeneficio"></span></p>
               </div>
