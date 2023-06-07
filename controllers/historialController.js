@@ -131,8 +131,8 @@ const crearHistorial = async (req, res) => {  //Crea un historial
     const monto_b = req.body.monto_b;
     const id = req.params.id;
     const mascotas = await usuario.getMascotas()
-    const beneficios = await usuario.getBeneficios()
-    const beneficio = beneficios.find((beneficio) => beneficio.monto_beneficio === monto_b);
+    const beneficios = await usuario.getBeneficios();
+    const beneficio = beneficios.find((b) => b.monto_beneficio == monto_b);
     if(beneficio){
       beneficio.usado = true;
       await beneficio.save();
