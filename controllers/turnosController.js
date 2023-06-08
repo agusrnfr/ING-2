@@ -106,7 +106,7 @@ const solicitarTurno = async (req, res) => { // Muestra el formulario para solic
 };
 
 const calcularFechaVacuna = (fecha, practica, mascota, banda_horaria) => { // Calcula la fecha de la vacuna
-    const edadMascota = calcularEdadMasco(mascota.fecha_nacimiento); // Calcula la edad de la mascota en meses
+    const edadMascota = calcularEdadMasco(mascota.fechaNacimiento); // Calcula la edad de la mascota en meses
     if (practica == 'Vacuna A' && edadMascota < 4) { // Si la mascota tiene menos de 4 meses, se le asigna la fecha de la vacuna A a 21 días de la fecha actual
         fecha = moment().add(21, 'days').startOf('day');
         if (fecha.day() == 6 && banda_horaria.toLowerCase() == 'tarde') { // Si la fecha es sábado y la banda horaria es tarde, se le asigna la fecha de la vacuna A a 23 días de la fecha actual
