@@ -169,16 +169,17 @@ const crearHistorial = async (req, res) => {  //Crea un historial
         ruta: 'turnos_dia',
       });
         const { crearTurnoBD } = require('./turnosController')
+        const mascotaObj = { 
+          id: mascota.id,
+          nombre: mascota.nombre,
+          fechaNacimiento: mascota.fecha_nacimiento
+        };
+
         if(practica === global.PRACTICA.VACUNA_A){
           const dosis_dadas_A = await Libreta.findAll({
             where:{ practica : global.PRACTICA.VACUNA_A,
                     MascotumId: mascota.id}})
-          if(dosis_dadas_A.length < 2){ //cuando llega aca ya se dio la dosis
-            const mascotaObj = { 
-              id: mascota.id,
-              nombre: mascota.nombre,
-              fechaNacimiento: mascota.fecha_nacimiento
-            };
+          if(dosis_dadas_A.length < 2){ //cuando llega aca ya se dio la dosis 
             await crearTurnoBD(fecha, turno.banda_horaria, turno.practica, turno.UserId, mascotaObj)
           }
         }
@@ -188,11 +189,6 @@ const crearHistorial = async (req, res) => {  //Crea un historial
                     MascotumId: mascota.id}
             })
           if(dosis_dadas_B.length < 2){
-            const mascotaObj = { 
-              id: mascota.id,
-              nombre: mascota.nombre,
-              fechaNacimiento: mascota.fecha_nacimiento
-            };
             await crearTurnoBD(fecha, turno.banda_horaria, turno.practica, turno.UserId, mascotaObj)
           }
         } 
