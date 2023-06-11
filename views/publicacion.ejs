@@ -39,8 +39,13 @@
                         </div>
 
                         <label for="raza">Raza de la mascota: (*)</label>
-                        <div class="mb-3"><input class="form-control form-control-user" type="text" name="raza" id="raza"
-                          placeholder="Escribe la raza" required="">
+                        <div class="mb-3">
+                          <select class="form-control form-control-user" name="raza" id="raza" required>
+                            <option value="" selected disabled>Selecciona una raza</option>
+                            <% Object.values(locals.RAZAS).forEach(function(raza) { %>
+                              <option value="<%= raza %>"><%= raza %></option>
+                            <% }); %>
+                          </select>
                         </div>
 
                         <label for="color">Color de la mascota: (*)</label>
