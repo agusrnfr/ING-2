@@ -107,14 +107,14 @@ module.exports = {
     }], {});
 
 
-    await queryInterface.bulkInsert('turnos', [{
-      fecha:  moment().hour(14).minute(30).toDate(),
-      banda_horaria: 'Tarde',
-      estado: 'Aceptado',
-      practica: 'Consulta general',
-      UserId: 4,
-      MascotumId: 2,
-    }], {});
+    // await queryInterface.bulkInsert('turnos', [{
+    //   fecha:  moment().hour(14).minute(30).toDate(),
+    //   banda_horaria: 'Tarde',
+    //   estado: 'Aceptado',
+    //   practica: 'Consulta general',
+    //   UserId: 4,
+    //   MascotumId: 2,
+    // }], {});
 
 /*     await queryInterface.bulkInsert('turnos', [{
       fecha: moment().add(124, 'days').toDate(),

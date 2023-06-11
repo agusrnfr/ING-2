@@ -108,15 +108,15 @@
  
 
      <!-- Modal de confirmación monto < monto_b-->
-   <div class="modal fade" id="modalWarning" tabindex="-1" aria-labelledby="modalWarningLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+   <div class="modal fade" id="modalWarning" tabindex="-1" aria-labelledby="modalWarningLabel" aria-hidden="true" style="text-align: center;">
+    <div class="modal-dialog modal-dialog-centered" >
       <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalWarningLabel">Advertencia</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="modal-header" style="text-align: center;">
+            <h5 class="modal-title text-center" id="modalWarningLabel">Advertencia</h5>
+            <button type="button"class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <div class="modal-body">
-                  <p>El monto beneficio es mayor al de consulta, seguro quiere utilizarlo?</p>
+              <div class="modal-body " style="text-align: center;">
+                  <p>¿El monto beneficio es mayor al de consulta, seguro quiere utilizarlo?</p>
                   <p><strong>El cliente va a perder lo que resta del beneficio</strong></p>
                   <p>Monto consulta: <span id="montoConsulta"></span></p>
                   <p>Monto beneficio: <span id="montoBeneficio"></span></p>
@@ -133,12 +133,12 @@
     <div class="modal fade" id="modalConfirmacion" tabindex="-1" aria-labelledby="modalConfirmacionLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="modalConfirmacionLabel">Confirmacion de registro</h5>
+            <div class="modal-header" style="text-align: center;">
+              <h5 class="modal-title  text-center" id="modalConfirmacionLabel">Confirmacion de registro</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <p>¿ Desea registrar esta visita ?</p>
+                <div class="modal-body" style="text-align: center;">
+                    <p>¿Desea registrar esta visita?</p>
                 </div>
                   <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>

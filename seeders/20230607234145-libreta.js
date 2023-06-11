@@ -6,7 +6,7 @@
    async up (queryInterface, Sequelize) {
 
        await queryInterface.bulkInsert('libretas', [{
-       fecha: moment().subtract(18, 'days').toDate(),
+       fecha: moment().subtract(1, 'year').toDate(),
        practica: 'Vacuna A',
        MascotumId: 1,
        }], {});
