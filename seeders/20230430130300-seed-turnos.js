@@ -58,8 +58,11 @@ module.exports = {
       MascotumId: 2,
     }], {});
 
+
+    // Turnos del dia
+
     await queryInterface.bulkInsert('turnos', [{
-      fecha: moment().hour(9).minute(30).toDate(),
+      fecha: moment().hour(9).minute(0).toDate(),
       banda_horaria: 'Mañana',
       estado: 'Aceptado',
       practica: 'Consulta general',
@@ -68,7 +71,7 @@ module.exports = {
     }], {});
 
     await queryInterface.bulkInsert('turnos', [{
-      fecha: moment().hour(9).minute(30).toDate(),
+      fecha: moment().hour(9).minute(0).toDate(),
       banda_horaria: 'Mañana',
       estado: 'Aceptado',
       practica: 'Desparasitacion',
@@ -77,7 +80,7 @@ module.exports = {
     }], {});
 
     await queryInterface.bulkInsert('turnos', [{
-      fecha:  moment().hour(10).minute(30).toDate(),
+      fecha:  moment().hour(9).minute(30).toDate(),
       banda_horaria: 'Mañana',
       estado: 'Aceptado',
       practica: 'Vacuna A',
@@ -89,9 +92,9 @@ module.exports = {
       fecha: moment().hour(9).minute(30).toDate(),
       banda_horaria: 'Mañana',
       estado: 'Aceptado',
-      practica: 'Vacuna B',
+      practica: 'Vacuna A',
       UserId: 3,
-      MascotumId: 1,
+      MascotumId: 8,
     }], {});
 
     await queryInterface.bulkInsert('turnos', [{
@@ -100,8 +103,9 @@ module.exports = {
       estado: 'Aceptado',
       practica: 'Vacuna B',
       UserId: 3,
-      MascotumId: 7,
+      MascotumId: 1,
     }], {});
+
 
     await queryInterface.bulkInsert('turnos', [{
       fecha:  moment().hour(14).minute(30).toDate(),

@@ -9,8 +9,8 @@ module.exports = {
       fecha: moment().subtract(18, 'days').toDate(),
       practica: 'Vacuna A',
       observacion: '-',
-      monto_abonado: '3700',
-      monto_beneficio: '3000',
+      monto_abonado: '6700',
+      monto_beneficio: '2000',
       UserId: 3,
       MascotumId: 1,
       }], {});
