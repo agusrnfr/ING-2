@@ -45,7 +45,7 @@
                             <span class="text-primary"><strong>Dueño:</strong></span> <%= usuario.name %>
                           </div>
                         <div class="pet-info">
-                          <span class="text-primary"><strong>Sexo:</strong></span> hembra
+                          <span class="text-primary"><strong>Sexo:</strong></span> <%= mascota.sexo %>
                         </div>
                         <div class="pet-info">
                           <span class="text-primary"><strong>Raza:</strong></span> <%= mascota.raza %>
@@ -54,7 +54,9 @@
                           <span class="text-primary"><strong>Color:</strong></span> <%= mascota.color %>
                         </div>
                         <div class="pet-info">
-                          <span class="text-primary"><strong>Fecha de nacimiento:</strong></span> 1/1/23
+                          <span class="text-primary"><strong>Fecha de nacimiento:</strong></span>
+                          <% const fechaNacimiento = new Date(mascota.fecha_nacimiento); %>
+                          <%= `${fechaNacimiento.getDate()}/${fechaNacimiento.getMonth() + 1}/${fechaNacimiento.getFullYear()}` %>
                         </div>
                         <div class="pet-info">
                           <span class="text-primary"><strong>Observaciones:</strong></span> <blockquote class="quote"><%= mascota.observaciones %></blockquote>

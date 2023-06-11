@@ -7,109 +7,109 @@ module.exports = {
     const faker = require('faker');
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Luna',
-      raza: RAZAS.GOLDEN_RETRIEVER,
+      raza: RAZA.GOLDEN_RETRIEVER,
       color: 'Dorado',
       fecha_nacimiento: moment('2018-07-15').toDate(),
       observaciones: 'Tiene una mancha blanca en la pata izquierda',
       foto: '/img/profile_pets/imagen-1685981294467',
-      UserId: 3,
+      UserId: USER_ID.JUANCHO,
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Diana',
-      raza: RAZAS.PITBULL,
+      raza: RAZA.PITBULL,
       color: 'Blanco',
       fecha_nacimiento: moment('2019-05-17').toDate(),
       observaciones: 'Es juguetona y le gusta correr',
       foto: null,
-      UserId: 4,
+      UserId: USER_ID.AGUSTIN,
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Leona',
-      raza: RAZAS.CRUZA,
+      raza: RAZA.CRUZA,
       color: 'Negra',
       fecha_nacimiento: moment('2018-01-12').toDate(),
       observaciones: 'Es panzona y le gusta dormir',
       foto: null,
-      UserId: 6,
+      UserId: USER_ID.AGUSTINA,
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Mimi',
-      raza: RAZAS.CANICHE,
+      raza: RAZA.CHIHUAHUA,
       color: 'Blanca',
       fecha_nacimiento: moment('2018-01-12').toDate(),
       observaciones: 'Ladra mucho y le gusta comer',
       foto: '/img/profile_pets/imagen-1685981332488',
-      UserId: 3, //JUANCHO
+      UserId: USER_ID.JUANCHO,
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Bart',
-      raza: RAZAS.SALCHICHA,
+      raza: RAZA.SALCHICHA,
       color: 'Marron',
       fecha_nacimiento: moment('2018-01-12').toDate(),
       observaciones: 'Es muy cariñoso y le gusta jugar con la pelota',
       foto: null,
-      UserId: 5, //NAMI
+      UserId: USER_ID.NAMI,
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Chuchi',
-      raza: RAZAS.SALCHICHA,
+      raza: RAZA.SALCHICHA,
       color: 'Marron',
       fecha_nacimiento: moment().clone().subtract(5, 'months').toDate(),
       observaciones: 'Es muy cariñoso y le gusta jugar con la pelota',
       foto: null,
-      UserId: 6, //AGUSTINA
+      UserId: USER_ID.AGUSTINA,
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Vani',
-      raza: RAZAS.PITBULL,
+      raza: RAZA.BULLDOG,
       color: 'Negro',
       fecha_nacimiento: moment().clone().subtract(1, 'months').toDate(),
       observaciones: 'Es muy cariñoso y le gusta jugar con la pelota',
       foto: '/img/profile_pets/imagen-1685981344093',
-      UserId: 3, //JUANCHO
+      UserId: USER_ID.JUANCHO,
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Rudo',
-      raza: RAZAS.GOLDEN_RETRIEVER,
+      raza: RAZA.GOLDEN_RETRIEVER,
       color: 'Negro',
       fecha_nacimiento: moment().clone().subtract(3, 'months').toDate(),
       observaciones: 'Es muy cariñoso y le gusta jugar con la pelota',
       foto: '/img/profile_pets/imagen-1685981322357',
-      UserId: 3,
+      UserId: USER_ID.JUANCHO,
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Syndra',
-      raza: RAZAS.CRUZA,
+      raza: RAZA.CRUZA,
       color: 'Negro',
       fecha_nacimiento: moment().clone().subtract(6, 'months').toDate(),
       observaciones: 'Es muy cariñoso y le gusta jugar con la pelota',
       foto: null,
-      UserId: 6,
+      UserId: USER_ID.AGUSTINA,
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Salem',
-      raza: RAZAS.CRUZA,
+      raza: RAZA.CRUZA,
       color: 'Negro',
       fecha_nacimiento: moment().clone().subtract(3, 'months').toDate(),
       observaciones: 'Es muy cariñoso y le gusta jugar con la pelota',
       foto: null,
-      UserId: 7,
+      UserId: USER_ID.CORDELIA,
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Stevie',
-      raza: RAZAS.GOLDEN_RETRIEVER,
+      raza: RAZA.GOLDEN_RETRIEVER,
       color: 'Amarillo',
       fecha_nacimiento: moment().clone().subtract(5, 'months').toDate(),
       observaciones: 'Es muy cariñoso y activo',
       foto: '/img/profile_pets/imagen-1685981322357',
-      UserId: 8,
+      UserId: USER_ID.MISTY,
     }], {});
     for (let i = 0; i < 0; i++) {
       const today = new Date();
       const minDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
       await queryInterface.bulkInsert('mascotas', [{
         nombre: faker.name.firstName(),
-        raza: faker.random.arrayElement([RAZAS.GOLDEN_RETRIEVER, RAZAS.CANICHE, RAZAS.LABRADOR , RAZAS.BULLDOG, RAZAS.PITBULL, RAZAS.PASTOR_ALEMAN, RAZAS.CRUZA]),
+        raza: faker.random.arrayElement([RAZA.GOLDEN_RETRIEVER, RAZA.CANICHE, RAZA.LABRADOR , RAZA.BULLDOG, RAZA.PITBULL, RAZA.PASTOR_ALEMAN, RAZA.CRUZA]),
         color: faker.random.arrayElement(['Negro', 'Blanco', 'Amarillo', 'Marron', 'Blanco y Negro', 'Amarillo y Marron', 'Gris', 'Gris y Blanco']),
         fecha_nacimiento: faker.date.between(minDate, today),
         observaciones: faker.random.arrayElement(['Es muy jugueton', 'Es muy nervioso', 'Agresivo', 'Calmado']),
