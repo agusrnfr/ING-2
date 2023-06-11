@@ -38,7 +38,7 @@
                                             <%= fechaCorta %>
                                         </td>
                                         <td class="text-center align-middle">
-                                            <%= turno.user %>
+                                            <a href="/ver_cliente/<%= turno.UserId %>"><%= turno.user %></a>
                                         </td>
                                         <td class="text-center align-middle">
                                             <%= turno.mailUser %>
@@ -50,7 +50,7 @@
                                             <%= turno.practica %>
                                         </td>
                                         <td class="text-center align-middle">
-                                            <%= turno.nombre %>
+                                            <a href="/ver_mascota/<%= turno.MascotumId %>"><%= turno.nombre %></a>
                                         </td>
                                         <td class="text-center align-middle" id="estado<%= celdaEstado %>">
                                             <% if (estado==="pendiente" ) { const idTurno=turno.id; const
