@@ -66,12 +66,12 @@ module.exports = {
       banda_horaria: 'Mañana',
       estado: 'Aceptado',
       practica: 'Consulta general',
-      UserId: 3,
-      MascotumId: 1,
+      UserId: 4,
+      MascotumId: 2,
     }], {});
 
     await queryInterface.bulkInsert('turnos', [{
-      fecha: moment().hour(9).minute(0).toDate(),
+      fecha: moment().hour(9).minute(30).toDate(),
       banda_horaria: 'Mañana',
       estado: 'Aceptado',
       practica: 'Desparasitacion',

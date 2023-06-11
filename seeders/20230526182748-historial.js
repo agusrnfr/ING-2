@@ -6,7 +6,7 @@ module.exports = {
   up: async  (queryInterface, Sequelize) => {
 
     await queryInterface.bulkInsert('historiales', [{
-      fecha: moment().subtract(18, 'days').toDate(),
+      fecha: moment().subtract(1, 'year').toDate(),
       practica: 'Vacuna A',
       observacion: '-',
       monto_abonado: '6700',
