@@ -407,4 +407,5 @@ module.exports = {
     calcularEdadMasco,
     mostrarTurnosDia,
     crearTurnoBD,
+    buscarMascotasCliente,
 }

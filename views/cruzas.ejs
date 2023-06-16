@@ -1,0 +1,113 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<%- include ('header', {tituloweb: '¡Oh my dog! | Turnos ' }); %>
+
+    <body id="body">
+
+        <div class="container h-50 mt-4">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col-lg-12 col-xl-8">
+                    <div class="card text-black mb-3" style="border-radius: 25px;">
+                        <div class="card-body p-md-4">
+                            <div class="row justify-content-center">
+                                <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-3">Cruzas caninas <i
+                                        class="bi bi-chat-heart"></i></i></p>
+                                <div class="col-md-6">
+                                    <% if (mascotas.length> 0) { %>
+                                        <div class="row mb-3 h-100">
+                                            <div class="mb-3">
+                                                <select id="mascota" class="form-select form-select-lg text-center">
+                                                    <option value="" disabled selected>Mascota</option>
+                                                    <% mascotas.forEach(mascota=> {%>
+                                                        <option value="<%= mascota.id %>">
+                                                            <%= mascota.nombre %>
+                                                        </option>
+                                                        <% }); %>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <button type="button" class="btn btn-outline-danger btn-lg p-1 w-100"
+                                                    onclick="verPublicacion()"><i class="bi bi-chat-square-heart"></i>
+                                                    Mi publicación</button>
+                                            </div>
+                                            <div class="mb-3">
+                                                <button type="button" class="btn btn-outline-danger btn-lg p-1 w-100"
+                                                    onclick="publicarMascota()"><i class="bi bi-envelope-heart"></i>
+                                                    Realizar
+                                                    publicación</button>
+                                            </div>
+                                            <div class="mb-3">
+                                                <button type="button" class="btn btn-outline-danger btn-lg p-1 w-100"
+                                                    onclick="verRecomendaciones()"><i class="bi bi-search-heart"></i>
+                                                    Ver
+                                                    recomendaciones</button>
+                                            </div>
+                                        </div>
+                                        <% } else { %>
+                                            <div class="row mb-3 h-100 align-items-center">
+                                                <div class="alert alert-danger mb-3 text-center" role="alert">
+                                                    <p class="text-danger m-0">No tiene mascotas registradas. </p>
+                                                </div>
+                                            </div>
+                                            <% } %>
+                                </div>
+                                <div
+                                    class="col-md-10 col-lg-6 col-xl-6 d-flex align-items-center order-1 order-lg-2 justify-content-center">
+                                    <img src="/img/cruza.png" alt="Foto perrito" class="img-fluid" width="300px">
+                                </div>
+                                <style>
+                                    @media only screen and (max-width: 1000px) {
+                                        img {
+                                            display: none;
+                                        }
+
+                                        div {
+                                            display: block;
+                                        }
+                                    }
+                                </style>
+                            </div>
+                            <hr>
+                            <div class="text-center"><a class="small" href="/">Volver</a></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            //  disabled style="background-color: gray; color: white; border-color: gray"
+            function publicarMascota() {
+                var mascota = document.getElementById("mascota").value;
+                if (mascota != "") {
+                    window.location.href = "/cruzas/publicarMascota/" + mascota;
+                } else {
+                    Swal.fire({
+                        title: "¡Oh no!",
+                        text: "Debe seleccionar una mascota",
+                        icon: "warning",
+                        timer: 2000,
+                        showConfirmButton: false,
+                    });
+                }
+            }
+            function verRecomendaciones() {
+                var mascota = document.getElementById("mascota").value;
+                if (mascota != "") {
+                    window.location.href = "/cruzas/verRecomendaciones/" + mascota;
+                } else {
+                    Swal.fire({
+                        title: "¡Oh no!",
+                        text: "Debe seleccionar una mascota",
+                        icon: "warning",
+                        timer: 2000,
+                        showConfirmButton: false,
+                    });
+                }
+            }
+        </script>
+
+    </body>
+    <%- include ('sweet-alert') %>
+
+    </html>

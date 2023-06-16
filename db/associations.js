@@ -40,9 +40,6 @@ Perdida.belongsTo(User);
 User.hasMany(Adopcion);
 Adopcion.belongsTo(User);
 
-User.hasMany(Cruza);
-Cruza.belongsTo(User);
-
 Cruza.belongsTo(Mascota);
 Mascota.hasOne(Cruza)
 

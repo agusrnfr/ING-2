@@ -12,10 +12,6 @@ Cruza.init({
         type: DataTypes.DATE,
         allowNull: false,
     },
-    sexo: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
     mail: {
         type: DataTypes.STRING,
         allowNull: false,
