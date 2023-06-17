@@ -7,10 +7,20 @@ const { buscarMascotasCliente } = require('./turnosController');
 const moment = require('moment');
 const { transporter } = require('../config/mailer');
 
+async function buscarMascotasClientesConPublicacionCruza(UserId) {
+    const mascotas = await buscarMascotasCliente(UserId);
+    for (let i = 0; i < mascotas.length; i++) {
+        const tienePublicacion = await Cruza.findOne({ where: { MascotumId: mascotas[i].id } });
+        mascotas[i].tienePublicacion = !!tienePublicacion;
+      }
+    return mascotas;
+}
+
+
 const mostrarIndexCruzas = async (req, res) => {
     const UserId = session.usuario.id;
     try {
-        const mascotas = await buscarMascotasCliente(UserId);
+        const mascotas = await buscarMascotasClientesConPublicacionCruza(UserId);
         res.render('cruzas', { mascotas });
     }
     catch (error) {
@@ -90,7 +100,7 @@ const guardarPublicacionCruza = async (req, res) => {
         const UserId = session.usuario.id;
 
         try {
-            const mascotas = await buscarMascotasCliente(UserId);
+            const mascotas = await buscarMascotasClientesConPublicacionCruza(UserId);
             if (success == 'true') {
                 res.status(status).render('cruzas', {
                     mascotas,

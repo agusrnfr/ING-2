@@ -18,25 +18,30 @@
                                                 <select id="mascota" class="form-select form-select-lg text-center">
                                                     <option value="" disabled selected>Mascota</option>
                                                     <% mascotas.forEach(mascota=> {%>
-                                                        <option value="<%= mascota.id %>">
-                                                            <%= mascota.nombre %>
+                                                        <option value="<%= mascota.id %>" <% if
+                                                            (mascota.tienePublicacion) { %>data-publicacion="true"<% }
+                                                                %> >
+                                                                <%= mascota.nombre %>
                                                         </option>
                                                         <% }); %>
                                                 </select>
                                             </div>
                                             <div class="mb-3">
-                                                <button type="button" class="btn btn-outline-danger btn-lg p-1 w-100"
+                                                <button type="button" id="verPerfil"
+                                                    class="btn btn-outline-danger btn-lg p-1 w-100"
                                                     onclick="verPublicacion()"><i class="bi bi-chat-square-heart"></i>
                                                     Mi publicación</button>
                                             </div>
                                             <div class="mb-3">
-                                                <button type="button" class="btn btn-outline-danger btn-lg p-1 w-100"
+                                                <button type="button" id="publicar"
+                                                    class="btn btn-outline-danger btn-lg p-1 w-100"
                                                     onclick="publicarMascota()"><i class="bi bi-envelope-heart"></i>
                                                     Realizar
                                                     publicación</button>
                                             </div>
                                             <div class="mb-3">
-                                                <button type="button" class="btn btn-outline-danger btn-lg p-1 w-100"
+                                                <button type="button" id="verRecomendaciones"
+                                                    class="btn btn-outline-danger btn-lg p-1 w-100"
                                                     onclick="verRecomendaciones()"><i class="bi bi-search-heart"></i>
                                                     Ver
                                                     recomendaciones</button>
@@ -76,11 +81,55 @@
         </div>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
-            //  disabled style="background-color: gray; color: white; border-color: gray"
-            function publicarMascota() {
-                var mascota = document.getElementById("mascota").value;
+
+            function mascotaTienePublicacion(mascota){
+                const tienePublicacion = document.querySelector('option[value="' + mascota + '"]').getAttribute('data-publicacion');
+                return tienePublicacion;
+            }
+
+            function verPublicacion() {
+                const mascota = document.getElementById("mascota").value;
                 if (mascota != "") {
-                    window.location.href = "/cruzas/publicarMascota/" + mascota;
+                    const tienePublicacion = mascotaTienePublicacion(mascota)
+                    if (tienePublicacion === "true") {
+                        window.location.href = "/cruzas/verPublicacionDeMascota/" + mascota;
+                    }
+                    else{
+                        Swal.fire({
+                            title: "¡Oh no!",
+                            text: "La mascota no tiene una publicación",
+                            icon: "warning",
+                            timer: 2000,
+                            showConfirmButton: false,
+                        });
+                    }
+                }
+                else {
+                    Swal.fire({
+                        title: "¡Oh no!",
+                        text: "Debe seleccionar una mascota",
+                        icon: "warning",
+                        timer: 2000,
+                        showConfirmButton: false,
+                    });
+                }
+            }
+
+            function publicarMascota() {
+                const mascota = document.getElementById("mascota").value;
+                if (mascota != "") {
+                    const tienePublicacion = mascotaTienePublicacion(mascota)
+                    if (tienePublicacion === "true") {
+                        Swal.fire({
+                            title: "¡Oh no!",
+                            text: "La mascota ya tiene una publicación",
+                            icon: "warning",
+                            timer: 2000,
+                            showConfirmButton: false,
+                        });
+                    } else {
+                        window.location.href = "/cruzas/publicarMascota/" + mascota;
+                    }
                 } else {
                     Swal.fire({
                         title: "¡Oh no!",
@@ -92,9 +141,21 @@
                 }
             }
             function verRecomendaciones() {
-                var mascota = document.getElementById("mascota").value;
+                const mascota = document.getElementById("mascota").value;
                 if (mascota != "") {
-                    window.location.href = "/cruzas/verRecomendaciones/" + mascota;
+                    const tienePublicacion = mascotaTienePublicacion(mascota)
+                    if (tienePublicacion === "true") {
+                        window.location.href = "/cruzas/verRecomendaciones/" + mascota;
+                    }
+                    else{
+                        Swal.fire({
+                            title: "¡Oh no!",
+                            text: "Para ver las recomendaciones se debe realizar al menos una publicación",
+                            icon: "warning",
+                            timer: 2000,
+                            showConfirmButton: false,
+                        });
+                    }
                 } else {
                     Swal.fire({
                         title: "¡Oh no!",
@@ -110,4 +171,4 @@
     </body>
     <%- include ('sweet-alert') %>
 
-    </html>
+        </html>
