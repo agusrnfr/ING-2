@@ -31,136 +31,128 @@
                       </p>
                     </div>
                     <div class="m-1">
-                      <% if (session.loggedin){ %>
-                        <button id="vetCamp" type="button" data-bs-toggle="modal"
-                          data-bs-target="#realizarDonacion<%= campVet.id %>" class="btn btn-outline-primary"><i
-                            class="bi bi-cash-stack"></i>
-                          Donar</button>
-                        <% } else { %>
-                          <button id="vetCamp" type="button" data-bs-toggle="modal"
-                            data-bs-target="#realizarDonacion<%= campVet.id %>" class="btn btn-outline-primary"
-                            disabled><i class="bi bi-cash-stack"></i>
-                            Donar</button>
-                          <% } %>
-                            <div class="modal fade" id="realizarDonacion<%= campVet.id %>" tabindex="-1"
-                              aria-labelledby="realizarDonacion<%= campVet.id %>_Label" aria-hidden="true">
-                              <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="realizarDonacion<%= campVet.id %>_Label">
-                                      Realizar donación a la campaña "<%= campVet.titulo %>"
-                                    </h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                      aria-label="Close"></button>
-                                  </div>
-                                  <div class="modal-body row align-items-center">
-                                    <div class="col-6 align-items-start">
-                                      <label for="monto_<%= campVet.id %>">Monto a donar:
-                                      </label>
-                                    </div>
-                                    <div class="col-6">
-                                      <input class="form-control form-control-user m-1" type="number"
-                                        id="monto_<%= campVet.id %>" min="1" placeholder="Ejemplo: 100">
-                                    </div>
-                                    <div class="col-6">
-                                      <label for="tarjeta_<%= campVet.id %>">Número de tarjeta:
-                                      </label>
-                                    </div>
-                                    <div class="col-6">
-                                      <input class="form-control form-control-user m-1" type="text"
-                                        id="tarjeta_<%= campVet.id %>" autocomplete="cc-number"
-                                        placeholder="xxxxxxxxxxxxxxxx" maxlength="16">
-                                    </div>
-                                    <div class="col-6">
-                                      <label for="fechaVenc_<%= campVet.id %>">Fecha de vencimiento:
-                                      </label>
-                                    </div>
-                                    <div class="col-6">
-                                      <input class="form-control form-control-user m-1" type="month"
-                                        id="fechaVenc_<%= campVet.id %>" min="<%=fechaMinima%>">
-                                    </div>
-                                    <div class="col-6">
-                                      <label for="codigo_<%= campVet.id %>">Código de seguridad:
-                                      </label>
-                                    </div>
-                                    <div class="col-6">
-                                      <input class="form-control form-control-user m-1" type="text"
-                                        id="codigo_<%= campVet.id %>" placeholder="xxx" pattern="\d*" maxlength="3">
-                                    </div>
-                                    <div class="col-6">
-                                      <label for="nombre_<%= campVet.id %>">Nombre de dueño de tarjeta:
-                                      </label>
-                                    </div>
-                                    <div class="col-6">
-                                      <input class="form-control form-control-user m-1" type="text"
-                                        id="nombre_<%= campVet.id %>" placeholder="Ejemplo: Juan Pérez">
-                                    </div>
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                      data-bs-dismiss="modal">Cancelar</button>
-                                    <button class="btn btn-primary" type="submit"
-                                      onclick="enviarFormulario(event, '<%= campVet.id %>', '<%= session.loggedin %>')">Guardar</button>
-                                  </div>
-                                </div>
+                      <button id="vetCamp" type="button" data-bs-toggle="modal"
+                        data-bs-target="#realizarDonacion<%= campVet.id %>" class="btn btn-outline-primary"><i
+                          class="bi bi-cash-stack"></i>
+                        Donar</button>
+                      <div class="modal fade" id="realizarDonacion<%= campVet.id %>" tabindex="-1"
+                        aria-labelledby="realizarDonacion<%= campVet.id %>_Label" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h1 class="modal-title fs-5" id="realizarDonacion<%= campVet.id %>_Label">
+                                Realizar donación a la campaña "<%= campVet.titulo %>"
+                              </h1>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body row align-items-center">
+                              <div class="col-6 align-items-start">
+                                <label for="monto_<%= campVet.id %>">Monto a donar:
+                                </label>
+                              </div>
+                              <div class="col-6">
+                                <input class="form-control form-control-user m-1" type="number"
+                                  id="monto_<%= campVet.id %>" min="1" placeholder="Ejemplo: 100">
+                              </div>
+                              <div class="col-6">
+                                <label for="tarjeta_<%= campVet.id %>">Número de tarjeta:
+                                </label>
+                              </div>
+                              <div class="col-6">
+                                <input class="form-control form-control-user m-1" type="text"
+                                  id="tarjeta_<%= campVet.id %>" autocomplete="cc-number" placeholder="xxxxxxxxxxxxxxxx"
+                                  maxlength="16">
+                              </div>
+                              <div class="col-6">
+                                <label for="fechaVenc_<%= campVet.id %>">Fecha de vencimiento:
+                                </label>
+                              </div>
+                              <div class="col-6">
+                                <input class="form-control form-control-user m-1" type="month"
+                                  id="fechaVenc_<%= campVet.id %>" min="<%=fechaMinima%>">
+                              </div>
+                              <div class="col-6">
+                                <label for="codigo_<%= campVet.id %>">Código de seguridad:
+                                </label>
+                              </div>
+                              <div class="col-6">
+                                <input class="form-control form-control-user m-1" type="text"
+                                  id="codigo_<%= campVet.id %>" placeholder="xxx" pattern="\d*" maxlength="3">
+                              </div>
+                              <div class="col-6">
+                                <label for="nombre_<%= campVet.id %>">Nombre de dueño de tarjeta:
+                                </label>
+                              </div>
+                              <div class="col-6">
+                                <input class="form-control form-control-user m-1" type="text"
+                                  id="nombre_<%= campVet.id %>" placeholder="Ejemplo: Juan Pérez">
                               </div>
                             </div>
-                            <% if (session.loggedin && session.usuario && session.usuario.rol=="admin" ) { %>
-                              <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
-                                data-bs-toggle="modal" data-bs-target="#mostarDonaciones<%= campVet.id %>"><i
-                                  class="bi bi-eye"></i>
-                                Donaciones</button>
-                              <div class="modal fade" id="mostarDonaciones<%= campVet.id %>" tabindex="-1"
-                                aria-labelledby="mostarDonaciones<%= campVet.id %>_Label" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h1 class="modal-title fs-5" id="mostarDonaciones<%= campVet.id %>_Label">
-                                        Donaciones a la Veterinaria
-                                      </h1>
-                                      <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body row align-items-center">
-                                      <% if (!campVet.donaciones.length==0) {%>
-                                        <div class="col">
-                                          <table class="table table-striped table-hover text-center">
-                                            <thead>
-                                              <tr>
-                                                <th scope="col">Fecha</th>
-                                                <th scope="col">Monto</th>
-                                              </tr>
-                                            </thead>
-                                            <tbody>
-                                              <% campVet.donaciones.forEach(donacion=> { %>
-                                                <tr>
-                                                  <td>
-                                                    <%= donacion.fecha %>
-                                                  </td>
-                                                  <td>
-                                                    <%= donacion.monto %>
-                                                  </td>
-                                                </tr>
-                                                <% }) %>
-                                                  <tr>
-                                                    <td colspan="2">
-                                                      <h5 class="m-2">Total: $ <%= campVet.total %>
-                                                      </h5>
-                                                    </td>
-                                                  </tr>
-                                            </tbody>
-                                          </table>
-                                        </div>
-                                        <% } else { %>
-                                          <div class="col">
-                                            <h5 class="m-2 text-center">La campaña no tiene donaciones realizadas</h5>
-                                          </div>
-                                          <% } %>
-                                    </div>
-                                  </div>
-                                </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                              <button class="btn btn-primary" type="submit"
+                                onclick="enviarFormulario(event, '<%= campVet.id %>', '<%= session.loggedin %>')">Guardar</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <% if (session.loggedin && session.usuario && session.usuario.rol=="admin" ) { %>
+                        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
+                          data-bs-toggle="modal" data-bs-target="#mostarDonaciones<%= campVet.id %>"><i
+                            class="bi bi-eye"></i>
+                          Donaciones</button>
+                        <div class="modal fade" id="mostarDonaciones<%= campVet.id %>" tabindex="-1"
+                          aria-labelledby="mostarDonaciones<%= campVet.id %>_Label" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="mostarDonaciones<%= campVet.id %>_Label">
+                                  Donaciones a la Veterinaria
+                                </h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                  aria-label="Close"></button>
                               </div>
-                              <% } %>
+                              <div class="modal-body row align-items-center">
+                                <% if (!campVet.donaciones.length==0) {%>
+                                  <div class="col">
+                                    <table class="table table-striped table-hover text-center">
+                                      <thead>
+                                        <tr>
+                                          <th scope="col">Fecha</th>
+                                          <th scope="col">Monto</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <% campVet.donaciones.forEach(donacion=> { %>
+                                          <tr>
+                                            <td>
+                                              <%= donacion.fecha %>
+                                            </td>
+                                            <td>
+                                              <%= donacion.monto %>
+                                            </td>
+                                          </tr>
+                                          <% }) %>
+                                            <tr>
+                                              <td colspan="2">
+                                                <h5 class="m-2">Total: $ <%= campVet.total %>
+                                                </h5>
+                                              </td>
+                                            </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                  <% } else { %>
+                                    <div class="col">
+                                      <h5 class="m-2 text-center">La campaña no tiene donaciones realizadas</h5>
+                                    </div>
+                                    <% } %>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <% } %>
                     </div>
                   </div>
                 </div>
@@ -197,7 +189,7 @@
                           </p>
                         </div>
                         <div class="m-1">
-                          <% if (session.loggedin && fechaFinFormatted.getTime()>= fechaActual.getTime()) { %>
+                          <% if (fechaFinFormatted.getTime()>= fechaActual.getTime()) { %>
                             <button id="boton<%=btn_n%>" type="button" data-bs-toggle="modal"
                               data-bs-target="#realizarDonacion<%= campania.id %>" class="btn btn-outline-primary"><i
                                 class="bi bi-cash-stack"></i>
@@ -396,7 +388,7 @@
         })
           .then(function (response) {
             if (response.ok) {
-              if (session) {
+              if (session === "true") {
                 Swal.fire({
                   title: "Donación exitosa, usted posee el 20% de lo que donó en beneficio",
                   icon: "success",
