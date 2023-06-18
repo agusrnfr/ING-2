@@ -239,8 +239,8 @@
         <script>
             $(document).ready(function () {
                 const tableRows = $('#tabla1 tbody tr').length;
-                const pagingEnable = tableRows > 50;
-                var tabla = $('#tabla1').DataTable({
+                const pagingEnable = tableRows > 5;
+                $('#tabla1').DataTable({
                     paging: pagingEnable,
                     ordering: true,
                     info: false,
@@ -248,8 +248,8 @@
                         [5, 15, 50, -1],
                         [5, 15, 50, 'Todos'],
                     ],
-                    pageLength: 50, // Establecer como la opción por defecto
-                    searching: false, // deshabilita la función de búsqueda
+                    pageLength: 5, // Establecer como la opción por defecto
+                    searching: true, // deshabilita la función de búsqueda
                     language: {
                         paginate: { previous: 'Anterior', next: 'Siguiente', },
                         zeroRecords: 'No hay turnos solicitados',
