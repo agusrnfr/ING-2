@@ -1,5 +1,5 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-<%- include ('header', {tituloweb: '¡Oh my dog! | Turnos ' }); %>
+<%- include ('header', {tituloweb: '¡Oh my dog! | Publicar Cruza ' }); %>
 
     <body id="body">
 
@@ -9,30 +9,36 @@
                     <div class="card text-black mb-3" style="border-radius: 25px;">
                         <div class="card-body p-md-4">
                             <div class="row justify-content-center">
-                                <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-3">Publicar cruza <i class="bi bi-bookmark-heart-fill"></i></p>
-                                <% if (mascota != null && usuario != null) { %>
-                                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                       Se esta realizando publicación de cruza para la mascota  <strong><%= mascota.nombre %> </strong> del usuario <strong><%= usuario.name %></strong>
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                      </div>
-                                    <% } %>
+                                <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-3">Publicar cruza <i
+                                        class="bi bi-bookmark-heart-fill"></i></p>
+                                <div class="alert alert-warning text-center" role="alert">
+                                    Se esta realizando publicación de cruza para la mascota <strong>
+                                        <%= mascota.nombre %>
+                                    </strong> del usuario <strong>
+                                        <%= usuario.name %>
+                                    </strong>
+                                </div>
                                 <div class="col-md-6"> <!-- Columna del formulario -->
                                     <form method="POST">
                                         <div class="row mb-3 h-100">
                                             <div class="mb-3">
-                                                <label for="texto_libre" class="b"> Texto libre</label>
+                                                <label for="texto_libre" class="b"> Texto libre (*) </label>
                                                 <textarea class="form-control form-control-user" name="texto_libre"
-                                                    placeholder="Información adicional" maxlength="500" ></textarea>
+                                                    placeholder="Información adicional" maxlength="500" required></textarea>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="telefono" class="b"> Teléfono de contacto (*) </label>
-                                                <input class="form-control form-control-user" type="text" name="telefono" pattern="[0-9]{10}"
-                                                    placeholder="Teléfono" maxlength="10" value="<%= usuario.tel %>" required title="Ingrese un número de teléfono válido">
+                                                <input class="form-control form-control-user" type="text"
+                                                    name="telefono" pattern="[0-9]{10}" placeholder="Teléfono"
+                                                    maxlength="10" value="<%= usuario.tel %>" required
+                                                    title="Ingrese un número de teléfono válido">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="correo" class="b"> Correo de contacto (*) </label>
                                                 <input class="form-control form-control-user" type="email" name="correo"
-                                                    placeholder="Correo electrónico" value="<%= usuario.mail %>" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Ingrese un correo electrónico válido">
+                                                    placeholder="Correo electrónico" value="<%= usuario.mail %>"
+                                                    required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                                                    title="Ingrese un correo electrónico válido">
 
                                             </div>
                                             <div class="mb-3" id="div_fecha">
@@ -53,21 +59,22 @@
                                         </div>
                                     </form>
                                 </div>
-                                <div class="col-md-10 col-lg-6 col-xl-6 d-flex align-items-center order-1 order-lg-2 justify-content-center">
+                                <div
+                                    class="col-md-10 col-lg-6 col-xl-6 d-flex align-items-center order-1 order-lg-2 justify-content-center">
                                     <img src="/img/perrito_cruza.png" alt="Foto perrito" class="img-fluid"
                                         width="300px">
                                 </div>
                                 <style>
                                     @media only screen and (max-width: 1000px) {
-                                      img {
-                                        display: none;
-                                      }
-                              
-                                      div {
-                                        display: block;
-                                      }
+                                        img {
+                                            display: none;
+                                        }
+
+                                        div {
+                                            display: block;
+                                        }
                                     }
-                                  </style>
+                                </style>
                             </div>
                             <hr>
                             <div class="text-center mb-2" style="font-size: smaller;">Los campos con (*) son
