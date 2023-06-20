@@ -4,26 +4,50 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trabajadores</title>
-    <%-include ('header', {tituloweb: '¡Oh my dog! | Trabajadores'}); %>
+    <%- include ('header', {tituloweb: '¡Oh my dog! | Servicios'}); %>
 </head>
 <body id="body">
-    
+
+  <div class="row" style="margin: 35px;">
+    <h2 class="text-center">Paseadores | Cuidadores</h2>
+    <% data.filter(trabajador => trabajador.servicio.includes('Paseador') || trabajador.servicio.includes('Cuidador')).forEach(trabajador => { %>
+      <div class="card" style="width: 300px; height: 250px; margin: 15px;">
+        <div class="card-body">
+          <h5 class="card-title">
+            <%= trabajador.nombre %> <span class="emoji">&#x1F9AE;</span>
+          </h5>
+          <br>
+          <% let serviciosConcatenados = trabajador.servicio.split(',').map(servicio => servicio.trim()).join(', '); %>
+          <p class="card-text"><strong>Servicio:</strong> <%= serviciosConcatenados %></p>
+          <p class="card-text"><strong>Zona:</strong> <%= trabajador.zona %></p>
+        </div>
+        <a href="<%=`/contactar/trabajador/${trabajador.id}`%>" class="btn btn-primary">Contactar</a>
+        <br>
+      </div>
+    <% }); %> 
+
+  </div>
     <div class="row" style="margin: 35px;">
-        <strong><p style="font-size: 20px;"> </p></strong>
-        <% data.forEach(trabajador => { %>
-            
-                <div class="card" style="width: 18rem;margin: 5px;">
-                <div class="card-body">
-                <h5 class="card-title"> <%= trabajador.nombre %> </h5>
-                <p class="card-text"><%= trabajador.apellido %></p>
-                <a href="<%=`/contactar/trabajador/${trabajador.id}`%>" class="btn btn-primary">Contactar</a>
-                </div>
-                </div>
-          <% }); %> 
+        <h2 class="text-center">Guarderías</h2>
+        <% data.filter(trabajador => trabajador.servicio === 'Guarderia').forEach(trabajador => { %>
+          <div class="card" style="width: 300px; height: 250px; margin: 15px;">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <%= trabajador.nombre %> <span class="emoji">&#x1F3E1;</span>
+                  </h5>
+              <br>
+              <p class="card-text"><strong>Servicio:</strong> <%= trabajador.servicio %></p>
+              <p class="card-text"><strong>Zona:</strong> <%= trabajador.zona %></p>
+            </div>
+            <a href="<%=`/contactar/trabajador/${trabajador.id}`%>" class="btn btn-primary">Contactar</a>
+            <br>
+          </div>
+        <% }); %> 
     </div>
 
+    <div class="text-center">
+        <a class="small" href="/" style="color: white;">Volver</a>
+    </div>
 
 </body>
-
 </html>

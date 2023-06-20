@@ -1,19 +1,43 @@
-// 'use strict';
-// const faker = require('faker');
+ 'use strict';
 
-// /** @type {import('sequelize-cli').Migration} */
-// module.exports = {
-//   async up (queryInterface, Sequelize) {
-//     for (let i = 0; i < 5; i++) {
-//       await queryInterface.bulkInsert('trabajadores', [{
-//         nombre: faker.name.firstName(),
-//         apellido: faker.name.lastName(),
-//         zona: "Ensenada",
-//       }], {});
-//     }
-//   },
+ /** @type {import('sequelize-cli').Migration} */
+ module.exports = {
+   async up (queryInterface, Sequelize) {
 
-//   async down (queryInterface, Sequelize) {
-//     // Comandos para revertir la inserción de datos
-//   }
-// };
+    
+    await queryInterface.bulkInsert('trabajadores', [{
+     nombre: "Nicolas Robin",
+     servicio: "Paseador",
+     zona: "Tolosa",
+     estado: true,
+    }], {});
+
+
+    await queryInterface.bulkInsert('trabajadores', [{
+     nombre: "Jessica Vaisman",
+     servicio: "Cuidador,Paseador",
+     zona: "Centro",
+     estado: true,
+      }], {});
+
+    await queryInterface.bulkInsert('trabajadores', [{
+     nombre: "Victoria Paz",
+     servicio: "Paseador",
+     zona: "Barrio Aeropuerto",
+     estado: true,
+    }], {});
+
+    await queryInterface.bulkInsert('trabajadores', [{
+     nombre: "Patitas Felices",
+     servicio: "Guarderia",
+     zona: "Barrio Malvinas",
+     estado: true,
+    }], {});
+
+},
+
+   async down (queryInterface, Sequelize) {
+     // Comandos para revertir la inserción de datos
+   }
+
+ };
