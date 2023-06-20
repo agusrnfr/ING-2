@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%- include ('header', {tituloweb: '¡Oh my dog! | Registrar Trabajador'}); %>
+</head>
+
+<body id="body">
+  <div class="container h-100 mt-4">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-12 col-xl-8">
+        <div class="card text-black" style="border-radius: 25px;">
+          <div class="card-body p-md-5 p-lg-5">
+            <div class="row justify-content-center">
+              <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 ">Registrar Trabajador</p>
+
+              <div class="col-md-10 col-lg-5 col-xl-6 order-2 order-lg-1">
+
+                <form id="myForm" action="/registrar_trabajador" method="POST">
+                  <div class="row mb-3">
+                    
+
+                    <label for="monto">Nombre y Apellido (*)</label>
+                    <div class="mb-3">
+                      <input class="form-control form-control-user" name="nombre" type="text" id="nombre"
+                        placeholder="Ingrese nombre y apellido del trabajador" required=" ">
+                    </div>
+
+                    <label for="servicio">Tipo de servicio (*)</label>
+                    <div class="mb-3">
+                      <input type="checkbox" name="servicio" id="paseador" value="Paseador">
+                      <label for="paseador">Paseador</label>
+                      <br>
+                      <input type="checkbox" name="servicio" id="cuidador" value="Cuidador">
+                      <label for="cuidador">Cuidador</label>
+                      <br>
+                      <input type="checkbox" name="servicio" id="guarderia" value="Guardería">
+                      <label for="guarderia">Guardería</label>
+                    </div>
+
+                    <label for="zona">Zona (*)</label>
+                    <div class="mb-3">
+                      <select class="form-control form-control-user" name="zona" id="zona" required>
+                        <option value="">Seleccione la zona</option>
+                        <option value="Centro">Centro</option>
+                        <option value="La Loma">La Loma</option>
+                        <option value="Tolosa">Tolosa</option>
+                        <option value="Los Hornos">Los Hornos</option>
+                        <option value="Gonnet">Gonnet</option>
+                        <option value="Villa Elisa">Villa Elisa</option>
+                        <option value="City Bell">City Bell</option>
+                        <option value="Ringuelet">Ringuelet</option>
+                        <option value="Villa Castells">Villa Castells</option>
+                        <option value="Altos de San Lorenzo">Altos de San Lorenzo</option>
+                        <option value="Barrio Norte">Barrio Norte</option>
+                        <option value="Barrio Hipódromo">Barrio Hipódromo</option>
+                        <option value="Barrio Meridiano V">Barrio Meridiano V</option>
+                        <option value="Barrio Aeropuerto">Barrio Aeropuerto</option>
+                        <option value="Barrio Malvinas">Barrio Malvinas</option>
+                        <option value="Barrio El Retiro">Barrio El Retiro</option>
+                        <option value="Barrio Hipódromo">Barrio Hipódromo</option>
+                        <option value="Barrio Universitario">Barrio Universitario</option>
+                        <option value="Barrio El Mondongo">Barrio El Mondongo</option>
+                        <option value="Barrio El Carmen">Barrio El Carmen</option>
+                      </select>
+                    </div>
+
+                    <input type="hidden" name="estado" value="true">
+
+                    
+                    <div class="text-center mb-2" style="font-size: smaller;">Los campos con (*) son obligatorios</div>
+
+                    <div id="mensaje"></div>
+                  </div>
+
+                  <button id="registrar" class="btn btn-primary d-block btn-user w-100" name="registrar" type="submit">Registrar</button>
+                </form>
+              </div>
+
+              <div class="col-md-10 col-lg-6 col-xl-6 d-flex align-items-center order-1 order-lg-2 justify-content-center">
+                <img src="/img/perritu.png" width="300px">
+              </div>
+            </div>
+
+            <style>
+              @media only screen and (max-width: 900px) {
+                img {
+                  display: none;
+                }
+
+                div {
+                  display: block;
+                }
+              }
+            </style>
+          </div>
+          <hr>
+          <div class="text-center"><a class="small" href="/">Volver</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+
+    <!-- Modal de confirmación de envio-->
+    <div class="modal fade" id="modalConfirmacion" tabindex="-1" aria-labelledby="modalConfirmacionLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="text-align: center;">
+              <h5 class="modal-title  text-center" id="modalConfirmacionLabel">Confirmacion de registro</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="text-align: center;">
+                    <p>¿Desea registrar esta trabajador?</p>
+                </div>
+                  <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                  <button type="button" class="btn btn-primary" id="btnConfirmar" onclick="confirmarUtilizacion()">Confirmar</button>
+             </div>
+          </div>
+        </div>
+    </div>
+  
+<script>
+const form = document.getElementById('myForm');
+const nombreInput = document.getElementById('nombre');
+const zonaInput = document.getElementById('zona');
+
+form.addEventListener('submit', (event) => {
+  const nombre = nombreInput.value;
+  const servicioInputs = document.querySelectorAll('input[name="servicio"]:checked');
+  const serviciosSeleccionados = Array.from(servicioInputs).map(input => input.value);
+  const zona = zonaInput.value;
+  const estado = true; 
+
+  if (!nombre || serviciosSeleccionados.length === 0 || !zona) {
+    event.preventDefault();
+    const mensajeElemento = document.getElementById('mensaje');
+    mensajeElemento.textContent = 'Por favor complete todos los campos solicitados.';
+  } else {
+    mostrarModalConfirmacion(nombre, serviciosSeleccionados, zona, estado);
+  }
+});
+
+function mostrarModalConfirmacion(nombre, servicios, zona, estado) {
+  const modalConfirmacion = new bootstrap.Modal(document.getElementById('modalConfirmacion'));
+  modalConfirmacion.show();
+}
+
+function confirmarUtilizacion() {
+  form.submit();
+}
+</script>
+
+<%- include ('sweet-alert') %>
+</body>
+
+</html>

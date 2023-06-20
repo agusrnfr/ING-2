@@ -8,14 +8,20 @@ Trabajador.init({
     type: DataTypes.STRING,
     allowNull: false,
   },
-  apellido: {
+  servicio: {
     type: DataTypes.STRING,
-    allowNull: true,
+    allowNull: false,
   },
   zona: {
     type: DataTypes.STRING,
     allowNull: false,
   },
+
+  estado: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+  },
+
 }, {
   sequelize,
   modelName: 'Trabajador',
