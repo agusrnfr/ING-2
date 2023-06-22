@@ -57,11 +57,11 @@
           <% } %>
         </div>
 
-        <a class="carousel-control-prev" href="#trabajadores-carousel" role="button" data-slide="prev">
+        <a class="carousel-control-prev carousel-control-prev-t" href="#trabajadores-carousel" role="button" data-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="sr-only"></span>
         </a>
-        <a class="carousel-control-next" href="#trabajadores-carousel" role="button" data-slide="next">
+        <a class="carousel-control-next carousel-control-next-t" href="#trabajadores-carousel" role="button" data-slide="next">
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="sr-only"></span>
         </a>
@@ -116,11 +116,11 @@
           <% } %>
         </div>
 
-        <a class="carousel-control-prev" href="#guarderias-carousel" role="button" data-slide="prev">
+        <a class="carousel-control-prev carousel-control-prev-g" href="#guarderias-carousel" role="button" data-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="sr-only"></span>
         </a>
-        <a class="carousel-control-next" href="#guarderias-carousel" role="button" data-slide="next">
+        <a class="carousel-control-next carousel-control-next-g" href="#guarderias-carousel" role="button" data-slide="next">
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="sr-only"></span>
         </a>
@@ -142,87 +142,75 @@
   </div>
 
   <script>
-  var currentPage = 0;
-  var numPages = $('#trabajadores-carousel').data('num-pages');
+    $(document).ready(function () {
+  var currentPageTrabajadores = 0;
+  var numPagesTrabajadores = $('#trabajadores-carousel').data('num-pages');
 
-  $(document).ready(function () {
-    $('.carousel-control-prev').click(function () {
-      currentPage = (currentPage - 1 + numPages) % numPages;
-      updatePage();
-      $('#trabajadores-carousel').carousel('prev');
-    });
+  var currentPageGuarderias = 0;
+  var numPagesGuarderias = $('#guarderias-carousel').data('num-pages');
 
-    $('.carousel-control-next').click(function () {
-      currentPage = (currentPage + 1) % numPages;
-      updatePage();
-      $('#trabajadores-carousel').carousel('next');
-    });
+  // Función para actualizar la página actual y las clases 'active' en los indicadores
+  function updatePage(carouselId, currentPage, numPages) {
+    // Actualizar las clases 'active' en los indicadores
+    $(carouselId + ' .carousel-indicators li').removeClass('active');
+    $(carouselId + ' .carousel-indicators li[data-slide-to="' + currentPage + '"]').addClass('active');
+  }
 
-    // Habilitar navegación entre páginas al hacer clic en los indicadores
-    $('.carousel-indicators li').click(function () {
-      var targetPage = $(this).data('slide-to');
-      currentPage = targetPage;
-      updatePage();
-      $('#trabajadores-carousel').carousel(targetPage);
-    });
-
-    // Actualizar la página actual cuando se cambie de diapositiva
-    $('#trabajadores-carousel').on('slid.bs.carousel', function (e) {
-      var currentSlide = $(e.relatedTarget);
-      currentPage = currentSlide.index();
-      updatePage();
-    });
-
-    // Función para actualizar la página actual y las clases 'active' en los indicadores
-    function updatePage() {
-      // Actualizar las clases 'active' en los indicadores
-      $('.carousel-indicators li').removeClass('active');
-      $('.carousel-indicators li[data-slide-to="' + currentPage + '"]').addClass('active');
-    }
+  $('.carousel-control-prev-t').click(function () {
+    currentPageTrabajadores = (currentPageTrabajadores - 1 + numPagesTrabajadores) % numPagesTrabajadores;
+    updatePage('#trabajadores-carousel', currentPageTrabajadores, numPagesTrabajadores);
+    $('#trabajadores-carousel').carousel('prev');
   });
-</script>
 
-<script>
-var currentPageGuarderias = 0;
-var numPagesGuarderias = $('#guarderias-carousel').data('num-pages');
+  $('.carousel-control-next-t').click(function () {
+    currentPageTrabajadores = (currentPageTrabajadores + 1) % numPagesTrabajadores;
+    updatePage('#trabajadores-carousel', currentPageTrabajadores, numPagesTrabajadores);
+    $('#trabajadores-carousel').carousel('next');
+  });
 
-$(document).ready(function () {
-  $('.carousel-control-prev').click(function () {
+  $('.carousel-control-prev-g').click(function () {
     currentPageGuarderias = (currentPageGuarderias - 1 + numPagesGuarderias) % numPagesGuarderias;
-    updatePageGuarderias();
+    updatePage('#guarderias-carousel', currentPageGuarderias, numPagesGuarderias);
     $('#guarderias-carousel').carousel('prev');
   });
 
-  $('.carousel-control-next').click(function () {
+  $('.carousel-control-next-g').click(function () {
     currentPageGuarderias = (currentPageGuarderias + 1) % numPagesGuarderias;
-    updatePageGuarderias();
+    updatePage('#guarderias-carousel', currentPageGuarderias, numPagesGuarderias);
     $('#guarderias-carousel').carousel('next');
   });
 
   // Habilitar navegación entre páginas al hacer clic en los indicadores
   $('.carousel-indicators li').click(function () {
-    var targetPageGuarderias = $(this).data('slide-to');
-    currentPageGuarderias = targetPageGuarderias;
-    updatePageGuarderias();
-    $('#guarderias-carousel').carousel(targetPageGuarderias);
+    var targetPage = $(this).data('slide-to');
+    var carouselId = '#' + $(this).closest('.carousel-indicators').data('target');
+
+    if (carouselId === '#trabajadores-carousel') {
+      currentPageTrabajadores = targetPage;
+      updatePage(carouselId, currentPageTrabajadores, numPagesTrabajadores);
+      $('#trabajadores-carousel').carousel(targetPage);
+    } else if (carouselId === '#guarderias-carousel') {
+      currentPageGuarderias = targetPage;
+      updatePage(carouselId, currentPageGuarderias, numPagesGuarderias);
+      $('#guarderias-carousel').carousel(targetPage);
+    }
   });
 
   // Actualizar la página actual cuando se cambie de diapositiva
+  $('#trabajadores-carousel').on('slid.bs.carousel', function (e) {
+    var currentSlide = $(e.relatedTarget);
+    currentPageTrabajadores = currentSlide.index();
+    updatePage('#trabajadores-carousel', currentPageTrabajadores, numPagesTrabajadores);
+  });
+
   $('#guarderias-carousel').on('slid.bs.carousel', function (e) {
     var currentSlideGuarderias = $(e.relatedTarget);
     currentPageGuarderias = currentSlideGuarderias.index();
-    updatePageGuarderias();
+    updatePage('#guarderias-carousel', currentPageGuarderias, numPagesGuarderias);
   });
-
-  // Función para actualizar la página actual y las clases 'active' en los indicadores
-  function updatePageGuarderias() {
-    // Actualizar las clases 'active' en los indicadores
-    $('.carousel-indicators li').removeClass('active');
-    $('.carousel-indicators li[data-slide-to="' + currentPageGuarderias + '"]').addClass('active');
-  }
 });
 </script>
-
+ 
 </body>
 
 </html>
