@@ -124,13 +124,19 @@
           </div>
         </div>
     </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+  crossorigin="anonymous"></script>
   
 <script>
-const form = document.getElementById('myForm');
-const nombreInput = document.getElementById('nombre');
-const zonaInput = document.getElementById('zona');
 
-form.addEventListener('submit', (event) => {
+const btnEnviar = document.getElementById("registrar");
+
+function camposVacios(){
+  const nombreInput = document.getElementById('nombre');
+  const zonaInput = document.getElementById('zona');
   const nombre = nombreInput.value;
   const servicioInputs = document.querySelectorAll('input[name="servicio"]:checked');
   const serviciosSeleccionados = Array.from(servicioInputs).map(input => input.value);
@@ -141,19 +147,33 @@ form.addEventListener('submit', (event) => {
     event.preventDefault();
     const mensajeElemento = document.getElementById('mensaje');
     mensajeElemento.textContent = 'Por favor complete todos los campos solicitados.';
-  } else {
-    mostrarModalConfirmacion(nombre, serviciosSeleccionados, zona, estado);
-  }
-});
+    return true;
+  } 
 
-function mostrarModalConfirmacion(nombre, servicios, zona, estado) {
-  const modalConfirmacion = new bootstrap.Modal(document.getElementById('modalConfirmacion'));
-  modalConfirmacion.show();
+  return false;
 }
 
 function confirmarUtilizacion() {
-  form.submit();
-}
+    // Cerrar el modal
+    $('#modalConfirmacion').modal('hide');
+
+    // Enviar el formulario
+    document.getElementById('myForm').submit();
+  }
+
+  function confirmarRegistro(){
+    $('#modalConfirmacion').modal('show');
+  }
+
+btnEnviar.onclick = function (event) {
+    
+    event.preventDefault();
+    if (camposVacios() ) {
+      return false; 
+    }else {
+      confirmarRegistro();
+    }
+  };
 </script>
 
 <%- include ('sweet-alert') %>

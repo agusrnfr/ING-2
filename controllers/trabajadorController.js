@@ -53,8 +53,20 @@ const mostrarTrabajadores = async (req, res) => {
   if (trabajadores.length === 0) {
     return res.send('No hay trabajadores cargados');
   }
+
   const trabajadoresOrdenados = ordenarTrabajadoresPorServicio(trabajadores);
-  res.render('trabajadores', { data: trabajadoresOrdenados });
+  const guarderias = trabajadoresOrdenados.filter(trabajador => trabajador.servicio === 'Guarderia');
+  const otrosTrabajadores = trabajadoresOrdenados.filter(trabajador => trabajador.servicio !== 'Guarderia');
+
+  const numPagesGuarderias = Math.ceil(guarderias.length / 4);
+  const numPagesOtrosTrabajadores = Math.ceil(otrosTrabajadores.length / 4);
+
+  res.render('trabajadores', {
+    guarderias,
+    otrosTrabajadores,
+    numPagesGuarderias,
+    numPagesOtrosTrabajadores,
+  });
 };
 
 async function getAllTrabajadoresDisponibles() {

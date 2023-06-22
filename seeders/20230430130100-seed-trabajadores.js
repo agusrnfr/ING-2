@@ -12,6 +12,27 @@
      estado: true,
     }], {});
 
+    await queryInterface.bulkInsert('trabajadores', [{
+      nombre: "Nicolas Robin",
+      servicio: "Paseador",
+      zona: "Tolosa",
+      estado: true,
+     }], {});
+
+     await queryInterface.bulkInsert('trabajadores', [{
+      nombre: "Nicolas Robin",
+      servicio: "Paseador",
+      zona: "Tolosa",
+      estado: true,
+     }], {});
+
+     await queryInterface.bulkInsert('trabajadores', [{
+      nombre: "Nicolas Robin",
+      servicio: "Paseador",
+      zona: "Tolosa",
+      estado: true,
+     }], {});
+ 
 
     await queryInterface.bulkInsert('trabajadores', [{
      nombre: "Jessica Vaisman",
@@ -33,6 +54,42 @@
      zona: "Barrio Malvinas",
      estado: true,
     }], {});
+
+    await queryInterface.bulkInsert('trabajadores', [{
+      nombre: "Patitas Felices",
+      servicio: "Guarderia",
+      zona: "Barrio Malvinas",
+      estado: true,
+     }], {});
+
+     await queryInterface.bulkInsert('trabajadores', [{
+      nombre: "Patitas Felices",
+      servicio: "Guarderia",
+      zona: "Barrio Malvinas",
+      estado: true,
+     }], {});
+
+     await queryInterface.bulkInsert('trabajadores', [{
+      nombre: "Patitas Felices",
+      servicio: "Guarderia",
+      zona: "Barrio Malvinas",
+      estado: true,
+     }], {});
+
+     await queryInterface.bulkInsert('trabajadores', [{
+      nombre: "Patitas Felices",
+      servicio: "Guarderia",
+      zona: "Barrio Malvinas",
+      estado: true,
+     }], {});
+
+     await queryInterface.bulkInsert('trabajadores', [{
+      nombre: "Patitas Felices",
+      servicio: "Guarderia",
+      zona: "Barrio Malvinas",
+      estado: true,
+     }], {});
+ 
 
 },
 
