@@ -2,7 +2,7 @@ const { mostrarCamposContactoTrabajador, contactar } = require('../controllers/c
 const { mostrarTablaUsers, filtrar } = require('../controllers/userController');
 const { validarLogin, mostrarLogin, deslogear } = require('../controllers/loginController');
 const { mostrarRegister, registrar, chequear_mail_duplicado } = require('../controllers/registerController');
-const { mostrarTrabajadores, mostrarCargaTrabajador, guardarTrabajador} = require('../controllers/trabajadorController');
+const { mostrarTrabajadores, mostrarCargaTrabajador, guardarTrabajador,mostrarPaseadores, mostrarGuarderias} = require('../controllers/trabajadorController');
 const { mostrarIndex } = require('../controllers/indexController');
 const { comprobar_sesion, comprobar_sesion_admin } = require('../controllers/loginController');
 const { mostrarAgregarMascota, registrarMascota , mostrarMascota , eliminarMascota} = require('../controllers/mascotasController');
@@ -45,6 +45,8 @@ app.post('/chequear_mail_duplicado', chequear_mail_duplicado)
 app.get('/cargar_trabajador',comprobar_sesion_admin, mostrarCargaTrabajador)
 app.post('/registrar_trabajador',comprobar_sesion_admin, guardarTrabajador)
 app.get('/trabajadores', mostrarTrabajadores)
+app.get('/paseadores',mostrarPaseadores)
+app.get('/guarderias',mostrarGuarderias)
 
 app.get('/modificar_mi_perfil',comprobar_sesion, mostrarModificarPerfil)
 app.post('/modificarMiPerfil', comprobar_sesion, modificarMiPerfil)

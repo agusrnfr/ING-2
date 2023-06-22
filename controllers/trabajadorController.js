@@ -1,5 +1,6 @@
 'use strict';
 const Trabajador = require('../db/models/trabajador.js');
+const session = require('express-session');
 
 const guardarTrabajador = (req, res) => {
   const nombre = req.body.nombre;
@@ -55,9 +56,9 @@ const mostrarTrabajadores = async (req, res) => {
   }
 
   const trabajadoresOrdenados = ordenarTrabajadoresPorServicio(trabajadores);
-  const guarderias = trabajadoresOrdenados.filter(trabajador => trabajador.servicio === 'Guarderia');
-  const otrosTrabajadores = trabajadoresOrdenados.filter(trabajador => trabajador.servicio !== 'Guarderia');
-
+  const guarderias = filtroGuarderias(trabajadoresOrdenados);
+  const otrosTrabajadores = filtroTrabajadores(trabajadoresOrdenados);
+  
   const numPagesGuarderias = Math.ceil(guarderias.length / 4);
   const numPagesOtrosTrabajadores = Math.ceil(otrosTrabajadores.length / 4);
 
@@ -68,6 +69,16 @@ const mostrarTrabajadores = async (req, res) => {
     numPagesOtrosTrabajadores,
   });
 };
+
+function filtroGuarderias(trabajadoresOrdenados){
+  const guarderias = trabajadoresOrdenados.filter(trabajador => trabajador.servicio === 'Guarderia');
+  return guarderias;
+}
+
+function filtroTrabajadores(trabajadoresOrdenados){
+  const otrosTrabajadores = trabajadoresOrdenados.filter(trabajador => trabajador.servicio !== 'Guarderia');
+return otrosTrabajadores;
+}
 
 async function getAllTrabajadoresDisponibles() {
   const trabajadores = await Trabajador.findAll({ where: { estado: true } });
@@ -101,9 +112,33 @@ function ordenarTrabajadoresPorServicio(trabajadores) {
   });
 }
 
+const mostrarPaseadores = async(req,res) => {
+  const trabajadores = await getAllTrabajadoresDisponibles();
+  if (trabajadores.length === 0) {
+    return res.send('No hay trabajadores cargados');
+  }
+  const trabajadoresOrdenados = ordenarTrabajadoresPorServicio(trabajadores);
+  const otrosTrabajadores = filtroTrabajadores(trabajadoresOrdenados);
+
+  res.render('paseadores', {otrosTrabajadores, session: session })
+}
+
+const mostrarGuarderias = async(req,res) => {
+  const trabajadores = await getAllTrabajadoresDisponibles();
+  if (trabajadores.length === 0) {
+    return res.send('No hay trabajadores cargados');
+  }
+  const trabajadoresOrdenados = ordenarTrabajadoresPorServicio(trabajadores);
+  const guarderias = filtroGuarderias(trabajadoresOrdenados);
+
+  res.render('guarderias',{guarderias, session: session })
+}
+
 module.exports = {
   getAllTrabajadoresDisponibles,
   mostrarTrabajadores,
   mostrarCargaTrabajador,
   guardarTrabajador,
+  mostrarPaseadores,
+  mostrarGuarderias,
 };

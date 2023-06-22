@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include ('header', {tituloweb: '¡Oh my dog! | Guarderias'}); %>
+</head>
+<body id="body">
+
+    
+
+    <div class="row" style="margin: 30px;">
+        <h2 class="text-center">Guarderías</h2>
+        <strong><p style="font-size: 20px;"></p></strong>
+        <% if (guarderias.length > 0) { %>
+          <% guarderias.forEach((trabajador) => { %>
+            <div class="card" style="width: 300px; height: 250px; margin: 10px;">
+              <div class="card-body">
+
+<% if (typeof session.usuario !== 'undefined' && (session.loggedin === true) &&(session.usuario.rol === 'admin')) { %>
+                <a href="#" class="btn btn-primary">Disponible</a>
+                <% } %>
+
+                <h5 class="card-title">
+                  <%= trabajador.nombre %> <span class="emoji">&#x1F3E1;</span>
+                </h5>
+                <br>
+                <% let serviciosConcatenados = trabajador.servicio.split(',').map(servicio => servicio.trim()).join(', '); %>
+                <p class="card-text"><strong>Servicio:</strong> <%= serviciosConcatenados %></p>
+                <p class="card-text"><strong>Zona:</strong> <%= trabajador.zona %></p>
+              </div>
+              <a href="<%=`/contactar/trabajador/${trabajador.id}`%>" class="btn btn-primary">Contactar</a>
+              <br>
+            </div>
+          <% }) %>
+        <% } else { %>
+          <p style="text-align: center;">No hay publicaciones de paseadores disponibles.</p>
+        <% } %>
+      </div>
+
+ <div class="text-center">
+    <a class="small" href="/trabajadores" style="color: white;">Volver</a>
+  </div>
+
+ <script>
+  async function cambiarEstado(elementId, adopcionId, seAdopto) {
+    const url = '/adopcion/seAdopto';
+    const nuevoEstado = !JSON.parse(seAdopto); // Cambia el estado actual al nuevo estado
+    try {
+      // Envía la solicitud AJAX al servidor para actualizar el estado en la base de datos
+      const response = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify({ id: adopcionId, se_adopto: nuevoEstado }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        const textoBoton = document.getElementById(`texto-${elementId}`);
+        textoBoton.innerHTML = nuevoEstado ? 'Adoptado' : 'Cambiar Estado';
+
+        const parrafo = document.getElementById(`parrafo-${adopcionId}`);
+        parrafo.innerHTML = nuevoEstado ? 'Adoptado' : 'Por adoptar';
+
+        // Deshabilitar el botón
+        const boton = document.getElementById(elementId);
+        if (boton) {
+          boton.classList.add('disabled');
+          boton.removeAttribute('onclick');
+        }
+        // const modal = bootstrap.Modal.getInstance(document.getElementById(`confirmacionModal_${adopcionId}`));
+        // modal.hide();
+
+        $('#confirmacionModal_' + adopcionId).modal('hide'); // Ocultar el modal manualmente usando jQuery
+        
+      }
+    } catch (error) {
+      console.error('Error al realizar la solicitud:', error);
+    }
+  }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
