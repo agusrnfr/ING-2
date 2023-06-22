@@ -18,10 +18,31 @@
             <div class="card" style="width: 300px; height: 250px; margin: 10px;">
               <div class="card-body">
 
-<% if (typeof session.usuario !== 'undefined' && (session.loggedin === true) &&(session.usuario.rol === 'admin')) { %>
-                <a href="#" class="btn btn-primary">Disponible</a>
-                <% } %>
-
+            <% if (typeof session.usuario !== 'undefined' && (session.loggedin === true) &&(session.usuario.rol === 'admin')) { %>
+                <a id="trab<%= trabajador.id %>" class="btn btn-primary" 
+                     data-bs-toggle="modal" data-bs-target="#confirmacionModal_<%= trabajador.id %>">
+                    <span id="texto-trab <%= trabajador.id %>"><%= trabajador.estado ? 'Disponible' : 'No Disponible' %></span>
+                </a>
+             <% } %>
+    
+            <!-- Modal de confirmación -->
+             <div class="modal fade" id="confirmacionModal_<%= trabajador.id %>" tabindex="-1" aria-labelledby="confirmacionModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="confirmacionModalLabel">Confirmar Cambio de Estado</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                 <div class="modal-body">
+                    <p>¿Estás seguro de que deseas cambiar el estado?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="cambiarEstado('trab <%= trabajador.id %>', '<%= trabajador.id %>', '<%= trabajador.estado ? true : false %>')">Confirmar</button>
+               </div>
+              </div>
+             </div>
+           </div>
                 <h5 class="card-title">
                   <%= trabajador.nombre %> <span class="emoji">&#x1F3E1;</span>
                 </h5>

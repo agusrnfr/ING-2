@@ -17,9 +17,30 @@
               <div class="card-body">
 
         <% if (typeof session.usuario !== 'undefined' && (session.loggedin === true) &&(session.usuario.rol === 'admin')) { %>
-                <a href="#" class="btn btn-primary">Disponible</a>
+                <a id="trab<%= trabajador.id %>" class="btn btn-primary" 
+                    data-bs-toggle="modal" data-bs-target="#confirmacionModal_<%= trabajador.id %>">
+                    <span id="texto-trab <%= trabajador.id %>"><%= trabajador.estado ? 'Disponible' : 'No Disponible' %></span>
+                  </a>
                 <% } %>
 
+                    <!-- Modal de confirmación -->
+                    <div class="modal fade" id="confirmacionModal_<%= trabajador.id %>" tabindex="-1" aria-labelledby="confirmacionModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="confirmacionModalLabel">Confirmar Cambio de Estado</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                                <p>¿Estás seguro de que deseas cambiar el estado?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                             <button type="button" class="btn btn-primary" onclick="cambiarEstado('trab <%= trabajador.id %>', '<%= trabajador.id %>', '<%= trabajador.estado ? true : false %>')">Confirmar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
                 <h5 class="card-title">
                   <%= trabajador.nombre %> <span class="emoji">&#x1F9AE;</span>
                 </h5>
@@ -41,15 +62,17 @@
     <a class="small" href="/trabajadores" style="color: white;">Volver</a>
   </div>
 
+
+
  <script>
-  async function cambiarEstado(elementId, adopcionId, seAdopto) {
-    const url = '/adopcion/seAdopto';
-    const nuevoEstado = !JSON.parse(seAdopto); // Cambia el estado actual al nuevo estado
+  async function cambiarEstado(elementId, trabId, estado) {
+    const url = '/trabajador/estado';
+    const nuevoEstado = !JSON.parse(estado); // Cambia el estado actual al nuevo estado
     try {
       // Envía la solicitud AJAX al servidor para actualizar el estado en la base de datos
       const response = await fetch(url, {
         method: 'POST',
-        body: JSON.stringify({ id: adopcionId, se_adopto: nuevoEstado }),
+        body: JSON.stringify({ id: trabId, estado: nuevoEstado }),
         headers: {
           'Content-Type': 'application/json'
         }
@@ -58,9 +81,6 @@
       if (response.ok) {
         const textoBoton = document.getElementById(`texto-${elementId}`);
         textoBoton.innerHTML = nuevoEstado ? 'Adoptado' : 'Cambiar Estado';
-
-        const parrafo = document.getElementById(`parrafo-${adopcionId}`);
-        parrafo.innerHTML = nuevoEstado ? 'Adoptado' : 'Por adoptar';
 
         // Deshabilitar el botón
         const boton = document.getElementById(elementId);

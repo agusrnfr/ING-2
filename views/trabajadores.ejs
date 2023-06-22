@@ -17,6 +17,7 @@
 <body id="body">
 
   <div class="container-fluid">
+    <% if (otrosTrabajadores.length > 0) { %>
     <div class="row p-2">
 
       <h2 class="text-center">Paseadores | Cuidadores</h2>
@@ -77,8 +78,16 @@
       </div>
     </div>
   </div>
+  <% } else { %>
+    <div class="row p-2">
+      <h2 class="text-center">Paseadores | Cuidadores</h2>
+      <p style="text-align: center;">No hay publicaciones de paseadores disponibles.</p>
+    </div>
+  <% } %>
+</div>
 
   <div class="container-fluid">
+    <% if (guarderias.length > 0) { %>
     <div class="row p-2">
       <h2 class="text-center">Guarderías</h2>
       <div class="text-center">
@@ -136,6 +145,13 @@
       </div>
     </div>
   </div>
+  <% } else { %>
+    <div class="row p-2">
+      <h2 class="text-center">Guarderías</h2>
+      <p style="text-align: center;">No hay publicaciones de guarderias disponibles.</p>
+    </div>
+  <% } %>
+</div>
 
   <div class="text-center">
     <a class="small" href="/" style="color: white;">Volver</a>

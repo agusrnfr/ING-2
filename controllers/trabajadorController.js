@@ -50,24 +50,35 @@ const mostrarCargaTrabajador = (req,res) => {
 }
 
 const mostrarTrabajadores = async (req, res) => {
+  try{
   const trabajadores = await getAllTrabajadoresDisponibles();
-  if (trabajadores.length === 0) {
-    return res.send('No hay trabajadores cargados');
-  }
-
   const trabajadoresOrdenados = ordenarTrabajadoresPorServicio(trabajadores);
   const guarderias = filtroGuarderias(trabajadoresOrdenados);
   const otrosTrabajadores = filtroTrabajadores(trabajadoresOrdenados);
   
   const numPagesGuarderias = Math.ceil(guarderias.length / 4);
   const numPagesOtrosTrabajadores = Math.ceil(otrosTrabajadores.length / 4);
-
+  if (trabajadores.length === 0) {
+    res.render('trabajadores',{
+      guarderias,
+      otrosTrabajadores,
+      numPagesGuarderias,
+      numPagesOtrosTrabajadores,
+    });
+  }
+  else{
   res.render('trabajadores', {
     guarderias,
     otrosTrabajadores,
     numPagesGuarderias,
     numPagesOtrosTrabajadores,
   });
+}
+  }
+  catch (error){
+    console.error(error);
+    res.send('Hubo un error al cargar las publicaciones de servicios de trabajo.');
+  }
 };
 
 function filtroGuarderias(trabajadoresOrdenados){
