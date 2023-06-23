@@ -8,6 +8,10 @@ Trabajador.init({
     type: DataTypes.STRING,
     allowNull: false,
   },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   servicio: {
     type: DataTypes.STRING,
     allowNull: false,

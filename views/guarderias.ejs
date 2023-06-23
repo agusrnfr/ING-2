@@ -66,7 +66,7 @@
 
  <script>
   async function cambiarEstado(elementId, adopcionId, seAdopto) {
-    const url = '/adopcion/seAdopto';
+    const url = '/cambiarEstado';
     const nuevoEstado = !JSON.parse(seAdopto); // Cambia el estado actual al nuevo estado
     try {
       // Envía la solicitud AJAX al servidor para actualizar el estado en la base de datos

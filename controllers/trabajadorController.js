@@ -4,18 +4,20 @@ const session = require('express-session');
 
 const guardarTrabajador = (req, res) => {
   const nombre = req.body.nombre;
+  const email = req.body.email;
   const servicios = Array.isArray(req.body.servicio) ? [...req.body.servicio] : [req.body.servicio];
   const servicio = servicios.join(',');
   const zona = req.body.zona;
   const estado = req.body.estado;
 
-  if (!nombre || !servicio || !zona) {
+  if (!nombre || !email|| !servicio || !zona) {
     console.error('Error al guardar trabajador, campos incompletos');
     return;
   }
 
   Trabajador.create({
     nombre: nombre,
+    email: email,
     servicio: servicio,
     zona: zona,
     estado: estado,
@@ -145,6 +147,34 @@ const mostrarGuarderias = async(req,res) => {
   res.render('guarderias',{guarderias, session: session })
 }
 
+const cambiarEstadoTrabajador = async (req, res) => {
+  const adopcionId = req.body.id;
+  const usuarioId = session.usuario.id;
+
+  const trabajador = await Trabajador.findOne({
+    where: {
+      id: adopcionId,
+      UserId: usuarioId
+    }
+  });
+  
+  if (trabajador) {
+    try {
+      await Trabajador.update(
+        { estado: !trabajador.estado },
+        { where: { id: adopcionId } }
+      );
+  
+      res.json({ success: true }); // Envía una respuesta JSON indicando que el cambio de estado se realizó correctamente
+    } catch (error) {
+      console.error(error);
+      res.json({ success: false }); // Envía una respuesta JSON indicando que hubo un error al cambiar el estado
+    }
+  } else {
+    res.json({ success: false }); // Envía una respuesta JSON indicando que el usuario no es el dueño de la publicación
+  }
+}
+
 module.exports = {
   getAllTrabajadoresDisponibles,
   mostrarTrabajadores,
@@ -152,4 +182,5 @@ module.exports = {
   guardarTrabajador,
   mostrarPaseadores,
   mostrarGuarderias,
+  cambiarEstadoTrabajador,
 };

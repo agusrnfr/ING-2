@@ -30,6 +30,12 @@
                         placeholder="Ingrese nombre y apellido del trabajador" required=" ">
                     </div>
 
+                    <label for="monto">Email (*)</label>
+                    <div class="mb-3">
+                      <input class="form-control form-control-user" name="email" type= "email" id="email"
+                        placeholder="Ingrese el email del trabajador" required=" ">
+                    </div>
+
                     <label for="servicio">Tipo de servicio (*)</label>
                     <div class="mb-3">
                       <input type="checkbox" name="servicio" id="cuidador" value="Cuidador">
@@ -74,6 +80,7 @@
                     <div class="text-center mb-2" style="font-size: smaller;">Los campos con (*) son obligatorios</div>
 
                     <div id="mensaje"></div>
+                    <div id="mensajeGuarderia"></div>
                   </div>
 
                   <button id="registrar" class="btn btn-primary d-block btn-user w-100" name="registrar" type="submit">Registrar</button>
@@ -136,6 +143,7 @@ const btnEnviar = document.getElementById("registrar");
 
 function camposVacios(){
   const nombreInput = document.getElementById('nombre');
+  const email = document.getElementById('email');
   const zonaInput = document.getElementById('zona');
   const nombre = nombreInput.value;
   const servicioInputs = document.querySelectorAll('input[name="servicio"]:checked');
@@ -143,7 +151,7 @@ function camposVacios(){
   const zona = zonaInput.value;
   const estado = true; 
 
-  if (!nombre || serviciosSeleccionados.length === 0 || !zona) {
+  if (!nombre || !email|| serviciosSeleccionados.length === 0 || !zona) {
     event.preventDefault();
     const mensajeElemento = document.getElementById('mensaje');
     mensajeElemento.textContent = 'Por favor complete todos los campos solicitados.';
@@ -152,7 +160,24 @@ function camposVacios(){
 
   return false;
 }
+function checkGuarderia() {
+  var guarderiaCheckbox = document.getElementById("guarderia");
+  var cuidadorCheckbox = document.getElementById("cuidador");
+  var paseadorCheckbox = document.getElementById("paseador");
+  
 
+  if (guarderiaCheckbox.checked) {
+    cuidadorCheckbox.checked = false;
+    paseadorCheckbox.checked = false;
+    cuidadorCheckbox.disabled = true;
+    paseadorCheckbox.disabled = true;
+    
+  } else {
+    cuidadorCheckbox.disabled = false;
+    paseadorCheckbox.disabled = false;
+    
+  }
+}
 function confirmarUtilizacion() {
     // Cerrar el modal
     $('#modalConfirmacion').modal('hide');
@@ -165,15 +190,22 @@ function confirmarUtilizacion() {
     $('#modalConfirmacion').modal('show');
   }
 
-btnEnviar.onclick = function (event) {
-    
-    event.preventDefault();
-    if (camposVacios() ) {
-      return false; 
-    }else {
-      confirmarRegistro();
-    }
-  };
+  btnEnviar.onclick = function (event) {
+  event.preventDefault();
+  var guarderiaCheckbox = document.getElementById("guarderia");
+  var cuidadorCheckbox = document.getElementById("cuidador");
+  var paseadorCheckbox = document.getElementById("paseador");
+  var mensajeGuarderia= document.getElementById('mensajeGuarderia');
+
+  if (guarderiaCheckbox.checked && (cuidadorCheckbox.checked || paseadorCheckbox.checked)) {
+    mensajeGuarderia.textContent = "La opción de Guardería solo puede ser seleccionada sin otros roles.";
+    return false;
+  } else if (camposVacios()) {
+    return false;
+  } else {
+    confirmarRegistro();
+  }
+};
 </script>
 
 <%- include ('sweet-alert') %>
