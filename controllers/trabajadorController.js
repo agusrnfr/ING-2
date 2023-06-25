@@ -94,7 +94,7 @@ return otrosTrabajadores;
 }
 
 async function getAllTrabajadoresDisponibles() {
-  const trabajadores = await Trabajador.findAll({ where: { estado: true } });
+  const trabajadores = await Trabajador.findAll ({ where: { estado: true } });
   return trabajadores;
 }
 
@@ -109,24 +109,39 @@ function ordenarTrabajadoresPorServicio(trabajadores) {
       'cuidador,paseador': 3
     };
 
-    if (serviciosA.length === 1 && serviciosB.length === 1) {
-      // Ambos tienen solo un rol, se ordenan por el orden definido en el objeto ordenServicio
-      return ordenServicio[serviciosA[0]] - ordenServicio[serviciosB[0]];
-    } else if (serviciosA.length === 1) {
-      // A tiene solo un rol, se coloca antes que B
-      return -1;
-    } else if (serviciosB.length === 1) {
-      // B tiene solo un rol, se coloca antes que A
-      return 1;
+    const estadoA = a.estado ? 1 : 0;
+    const estadoB = b.estado ? 1 : 0;
+
+    if (estadoA === estadoB) {
+      // Ambos tienen el mismo estado, se verifica el estado "disponible" o "no disponible"
+      if (estadoA === 1) {
+        // Ambos están disponibles, se procede a comparar los servicios
+        if (serviciosA.length === 1 && serviciosB.length === 1) {
+          // Ambos tienen solo un rol, se ordenan por el orden definido en el objeto ordenServicio
+          return ordenServicio[serviciosA[0]] - ordenServicio[serviciosB[0]];
+        } else if (serviciosA.length === 1) {
+          // A tiene solo un rol, se coloca antes que B
+          return -1;
+        } else if (serviciosB.length === 1) {
+          // B tiene solo un rol, se coloca antes que A
+          return 1;
+        } else {
+          // Ambos tienen ambos roles, se ordenan por el orden definido en el objeto ordenServicio
+          return ordenServicio[serviciosA[0]] - ordenServicio[serviciosB[0]];
+        }
+      } else {
+        // Ambos están no disponibles, se mantiene el orden actual
+        return 0;
+      }
     } else {
-      // Ambos tienen ambos roles, se ordenan por el orden definido en el objeto ordenServicio
-      return ordenServicio[serviciosA[0]] - ordenServicio[serviciosB[0]];
+      // Diferentes estados, se coloca al final el estado "no disponible"
+      return estadoB - estadoA;
     }
   });
 }
 
 const mostrarPaseadores = async(req,res) => {
-  const trabajadores = await getAllTrabajadoresDisponibles();
+  const trabajadores = await Trabajador.findAll();
   if (trabajadores.length === 0) {
     return res.send('No hay trabajadores cargados');
   }
@@ -137,7 +152,7 @@ const mostrarPaseadores = async(req,res) => {
 }
 
 const mostrarGuarderias = async(req,res) => {
-  const trabajadores = await getAllTrabajadoresDisponibles();
+  const trabajadores = await Trabajador.findAll();
   if (trabajadores.length === 0) {
     return res.send('No hay trabajadores cargados');
   }
@@ -148,13 +163,10 @@ const mostrarGuarderias = async(req,res) => {
 }
 
 const cambiarEstadoTrabajador = async (req, res) => {
-  const adopcionId = req.body.id;
-  const usuarioId = session.usuario.id;
-
+  const trabajadorId = req.body.id;
   const trabajador = await Trabajador.findOne({
     where: {
-      id: adopcionId,
-      UserId: usuarioId
+      id: trabajadorId
     }
   });
   
@@ -162,7 +174,7 @@ const cambiarEstadoTrabajador = async (req, res) => {
     try {
       await Trabajador.update(
         { estado: !trabajador.estado },
-        { where: { id: adopcionId } }
+        { where: { id: trabajadorId } }
       );
   
       res.json({ success: true }); // Envía una respuesta JSON indicando que el cambio de estado se realizó correctamente

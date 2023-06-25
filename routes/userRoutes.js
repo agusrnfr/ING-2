@@ -45,7 +45,7 @@ app.post('/chequear_mail_duplicado', chequear_mail_duplicado)
 app.get('/cargar_trabajador',comprobar_sesion_admin, mostrarCargaTrabajador)
 app.post('/registrar_trabajador',comprobar_sesion_admin, guardarTrabajador)
 app.get('/trabajadores', mostrarTrabajadores)
-app.post('/cambiarEstado', comprobar_sesion_admin,cambiarEstadoTrabajador)
+app.post('/trabajador/estado', comprobar_sesion_admin,cambiarEstadoTrabajador)
 app.get('/paseadores',mostrarPaseadores)
 app.get('/guarderias',mostrarGuarderias)
 
