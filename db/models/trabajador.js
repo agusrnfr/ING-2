@@ -8,14 +8,24 @@ Trabajador.init({
     type: DataTypes.STRING,
     allowNull: false,
   },
-  apellido: {
+  email: {
     type: DataTypes.STRING,
-    allowNull: true,
+    allowNull: false,
+  },
+  servicio: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
   zona: {
     type: DataTypes.STRING,
     allowNull: false,
   },
+
+  estado: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+  },
+
 }, {
   sequelize,
   modelName: 'Trabajador',

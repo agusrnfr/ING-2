@@ -1,29 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trabajadores</title>
-    <%-include ('header', {tituloweb: '¡Oh my dog! | Trabajadores'}); %>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%- include ('header', {tituloweb: '¡Oh my dog! | Servicios'}); %>
+
+  <!-- Agregar las bibliotecas de Bootstrap y jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+    crossorigin="anonymous"></script>
 </head>
+
 <body id="body">
-    
-    <div class="row" style="margin: 35px;">
-        <strong><p style="font-size: 20px;"> </p></strong>
-        <% data.forEach(trabajador => { %>
-            
-                <div class="card" style="width: 18rem;margin: 5px;">
-                <div class="card-body">
-                <h5 class="card-title"> <%= trabajador.nombre %> </h5>
-                <p class="card-text"><%= trabajador.apellido %></p>
-                <a href="<%=`/contactar/trabajador/${trabajador.id}`%>" class="btn btn-primary">Contactar</a>
-                </div>
-                </div>
-          <% }); %> 
+
+  <div class="container-fluid">
+    <% if (otrosTrabajadores.length > 0) { %>
+    <div class="row p-2">
+
+      <h2 class="text-center">Paseadores | Cuidadores</h2>
+
+      <div class="text-center">
+        <a class="small" href="/paseadores" style="color: white;">Ver Todo</a>
+      </div>
+
+      <div id="trabajadores-carousel" class="carousel slide" data-ride="carousel" data-num-pages="<%= numPagesOtrosTrabajadores %>">
+        <div class="carousel-inner">
+          <% let currentPage = 0;
+          for (let i = 0; i < numPagesOtrosTrabajadores; i++) {
+            const isActive = (i === 0) ? 'active' : '';
+            const isCurrent = (i === currentPage) ? 'current' : '';
+            %>          
+            <div class="carousel-item <%= isActive %>">
+              <div class="row justify-content-center">
+                <% const startIndex = i * 4;
+                const endIndex = Math.min(startIndex + 4, otrosTrabajadores.length);
+                const dataPage = otrosTrabajadores.slice(startIndex, endIndex);
+                dataPage.forEach((trabajador) => { %>
+                  <div class="card" style="width: 300px; height: 250px; margin: 10px;">
+                    <div class="card-body">
+                      <h5 class="card-title">
+                        <%= trabajador.nombre %> <span class="emoji">&#x1F9AE;</span>
+                      </h5>
+                      <br>
+                      <% let serviciosConcatenados = trabajador.servicio.split(',').map(servicio => servicio.trim()).join(', '); %>
+                      <p class="card-text"><strong>Servicio:</strong> <%= serviciosConcatenados %></p>
+                      <p class="card-text"><strong>Zona:</strong> <%= trabajador.zona %></p>
+                    </div>
+                    <a href="<%=`/contactar/trabajador/${trabajador.id}`%>" class="btn btn-primary">Contactar</a>
+                    <br>
+                  </div>
+                <% }) %>
+              </div>
+            </div>
+          <% } %>
+        </div>
+
+        <a class="carousel-control-prev carousel-control-prev-t" href="#trabajadores-carousel" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only"></span>
+        </a>
+        <a class="carousel-control-next carousel-control-next-t" href="#trabajadores-carousel" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only"></span>
+        </a>
+
+        <ol class="carousel-indicators">
+          <% for (let i = 0; i < numPagesOtrosTrabajadores; i++) {
+            const isActive = (i === 0) ? 'active' : '';
+            const isCurrent = (i === currentPage) ? 'current' : '';
+            %>
+            <li data-target="#trabajadores-carousel" data-slide-to="<%= i %>" class="<%= isActive %> <%= isCurrent %>"></li>
+          <% } %>
+        </ol>
+      </div>
     </div>
+  </div>
+  <% } else { %>
+    <div class="row p-2">
+      <h2 class="text-center">Paseadores | Cuidadores</h2>
+      <p style="text-align: center;">No hay publicaciones de paseadores disponibles.</p>
+    </div>
+  <% } %>
+</div>
 
+  <div class="container-fluid">
+    <% if (guarderias.length > 0) { %>
+    <div class="row p-2">
+      <h2 class="text-center">Guarderías</h2>
+      <div class="text-center">
+        <a class="small" href="/guarderias" style="color: white;">Ver Todo</a>
+      </div>
 
+      <div id="guarderias-carousel" class="carousel slide" data-ride="carousel" data-num-pages="<%= numPagesGuarderias %>">
+        <div class="carousel-inner">
+          <% let currentPageGuarderias = 0;
+          for (let i = 0; i < numPagesGuarderias; i++) {
+            const isActiveGuarderias = (i === 0) ? 'active' : '';
+            const isCurrentGuarderias = (i === currentPageGuarderias) ? 'current' : '';
+          %>
+          <div class="carousel-item <%= isActiveGuarderias %>">
+            <div class="row justify-content-center">
+              <% const startIndex = i * 4;
+              const endIndex = Math.min(startIndex + 4, guarderias.length);
+              const dataPage = guarderias.slice(startIndex, endIndex);
+              dataPage.forEach((guarderia) => { %>
+              <div class="card" style="width: 300px; height: 250px; margin: 10px;">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <%= guarderia.nombre %> <span class="emoji">&#x1F3E1;</span>
+                  </h5>
+                  <br>
+                  <p class="card-text"><strong>Servicio:</strong> <%= guarderia.servicio %></p>
+                  <p class="card-text"><strong>Zona:</strong> <%= guarderia.zona %></p>
+                </div>
+                <a href="<%=`/contactar/trabajador/${guarderia.id}`%>" class="btn btn-primary">Contactar</a>
+                <br>
+              </div>
+              <% }) %>
+            </div>
+          </div>
+          <% } %>
+        </div>
+
+        <a class="carousel-control-prev carousel-control-prev-g" href="#guarderias-carousel" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only"></span>
+        </a>
+        <a class="carousel-control-next carousel-control-next-g" href="#guarderias-carousel" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only"></span>
+        </a>
+
+        <ol class="carousel-indicators">
+          <% for (let i = 0; i < numPagesGuarderias; i++) {
+            const isActiveGuarderias = (i === 0) ? 'active' : '';
+            const isCurrentGuarderias = (i === currentPageGuarderias) ? 'current' : '';
+          %>
+          <li data-target="#guarderias-carousel" data-slide-to="<%= i %>" class="<%= isActiveGuarderias %> <%= isCurrentGuarderias %>"></li>
+          <% } %>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <% } else { %>
+    <div class="row p-2">
+      <h2 class="text-center">Guarderías</h2>
+      <p style="text-align: center;">No hay publicaciones de guarderias disponibles.</p>
+    </div>
+  <% } %>
+</div>
+
+  <div class="text-center">
+    <a class="small" href="/" style="color: white;">Volver</a>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+  var currentPageTrabajadores = 0;
+  var numPagesTrabajadores = $('#trabajadores-carousel').data('num-pages');
+
+  var currentPageGuarderias = 0;
+  var numPagesGuarderias = $('#guarderias-carousel').data('num-pages');
+
+  // Función para actualizar la página actual y las clases 'active' en los indicadores
+  function updatePage(carouselId, currentPage, numPages) {
+    // Actualizar las clases 'active' en los indicadores
+    $(carouselId + ' .carousel-indicators li').removeClass('active');
+    $(carouselId + ' .carousel-indicators li[data-slide-to="' + currentPage + '"]').addClass('active');
+  }
+
+  $('.carousel-control-prev-t').click(function () {
+    currentPageTrabajadores = (currentPageTrabajadores - 1 + numPagesTrabajadores) % numPagesTrabajadores;
+    updatePage('#trabajadores-carousel', currentPageTrabajadores, numPagesTrabajadores);
+    $('#trabajadores-carousel').carousel('prev');
+  });
+
+  $('.carousel-control-next-t').click(function () {
+    currentPageTrabajadores = (currentPageTrabajadores + 1) % numPagesTrabajadores;
+    updatePage('#trabajadores-carousel', currentPageTrabajadores, numPagesTrabajadores);
+    $('#trabajadores-carousel').carousel('next');
+  });
+
+  $('.carousel-control-prev-g').click(function () {
+    currentPageGuarderias = (currentPageGuarderias - 1 + numPagesGuarderias) % numPagesGuarderias;
+    updatePage('#guarderias-carousel', currentPageGuarderias, numPagesGuarderias);
+    $('#guarderias-carousel').carousel('prev');
+  });
+
+  $('.carousel-control-next-g').click(function () {
+    currentPageGuarderias = (currentPageGuarderias + 1) % numPagesGuarderias;
+    updatePage('#guarderias-carousel', currentPageGuarderias, numPagesGuarderias);
+    $('#guarderias-carousel').carousel('next');
+  });
+
+  // Habilitar navegación entre páginas al hacer clic en los indicadores
+  $('.carousel-indicators li').click(function () {
+    var targetPage = $(this).data('slide-to');
+    var carouselId = '#' + $(this).closest('.carousel-indicators').data('target');
+
+    if (carouselId === '#trabajadores-carousel') {
+      currentPageTrabajadores = targetPage;
+      updatePage(carouselId, currentPageTrabajadores, numPagesTrabajadores);
+      $('#trabajadores-carousel').carousel(targetPage);
+    } else if (carouselId === '#guarderias-carousel') {
+      currentPageGuarderias = targetPage;
+      updatePage(carouselId, currentPageGuarderias, numPagesGuarderias);
+      $('#guarderias-carousel').carousel(targetPage);
+    }
+  });
+
+  // Actualizar la página actual cuando se cambie de diapositiva
+  $('#trabajadores-carousel').on('slid.bs.carousel', function (e) {
+    var currentSlide = $(e.relatedTarget);
+    currentPageTrabajadores = currentSlide.index();
+    updatePage('#trabajadores-carousel', currentPageTrabajadores, numPagesTrabajadores);
+  });
+
+  $('#guarderias-carousel').on('slid.bs.carousel', function (e) {
+    var currentSlideGuarderias = $(e.relatedTarget);
+    currentPageGuarderias = currentSlideGuarderias.index();
+    updatePage('#guarderias-carousel', currentPageGuarderias, numPagesGuarderias);
+  });
+});
+</script>
+ 
 </body>
 
 </html>
