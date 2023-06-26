@@ -10,6 +10,8 @@
      email: "nicoRobin@gmail.com",
      servicio: "Paseador",
      zona: "Tolosa",
+     dias: "Lunes, Martes",
+     horario: "9:0, 14:00",
      estado: true,
     }], {});
 
@@ -18,6 +20,8 @@
       email: "nicoRobin@gmail.com",
       servicio: "Paseador",
       zona: "Tolosa",
+      dias: "Lunes, Martes",
+      horario: "9:0, 14:00",
       estado: true,
      }], {});
 
@@ -26,6 +30,8 @@
       email: "nicoRobin@gmail.com",
       servicio: "Paseador",
       zona: "Tolosa",
+      dias: "Lunes, Martes",
+      horario: "9:0, 14:00",
       estado: true,
      }], {});
 
@@ -34,6 +40,8 @@
       email: "nicoRobin@gmail.com",
       servicio: "Paseador",
       zona: "Tolosa",
+      dias: "Lunes, Martes",
+      horario: "9:0, 14:00",
       estado: true,
      }], {});
  
@@ -43,6 +51,8 @@
      email: "jessVaisman@gmail.com",
      servicio: "Cuidador,Paseador",
      zona: "Centro",
+     dias: "Lunes, Martes",
+     horario: "9:0, 14:00",
      estado: true,
       }], {});
 
@@ -51,6 +61,8 @@
      email: "vickypeace@gmail.com",
      servicio: "Paseador",
      zona: "Barrio Aeropuerto",
+     dias: "Lunes, Martes",
+     horario: "9:0, 14:00",
      estado: true,
     }], {});
 
@@ -59,6 +71,8 @@
      email: "patitasFe@gmail.com",
      servicio: "Guarderia",
      zona: "Barrio Malvinas",
+     dias: "Lunes, Martes, Jueves",
+     horario: "9:0, 14:00",
      estado: true,
     }], {});
 
@@ -67,6 +81,8 @@
       email: "patitasFe@gmail.com",
       servicio: "Guarderia",
       zona: "Barrio Malvinas",
+      dias: "Lunes, Martes, Jueves",
+      horario: "9:0, 14:00",
       estado: true,
      }], {});
 
@@ -75,6 +91,8 @@
       email: "patitasFe@gmail.com",
       servicio: "Guarderia",
       zona: "Barrio Malvinas",
+      dias: "Lunes, Martes, Jueves",
+      horario: "9:0, 14:00",
       estado: true,
      }], {});
 
@@ -83,25 +101,10 @@
       email: "patitasFe@gmail.com",
       servicio: "Guarderia",
       zona: "Barrio Malvinas",
+      dias: "Lunes, Martes, Jueves",
+      horario: "9:0, 14:00",
       estado: true,
      }], {});
-
-     await queryInterface.bulkInsert('trabajadores', [{
-      nombre: "Patitas Felices",
-      email: "patitasFe@gmail.com",
-      servicio: "Guarderia",
-      zona: "Barrio Malvinas",
-      estado: true,
-     }], {});
-
-     await queryInterface.bulkInsert('trabajadores', [{
-      nombre: "Patitas Felices",
-      email: "patitasFe@gmail.com",
-      servicio: "Guarderia",
-      zona: "Barrio Malvinas",
-      estado: true,
-     }], {});
- 
 
 },
 

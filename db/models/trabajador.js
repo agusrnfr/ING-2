@@ -25,6 +25,14 @@ Trabajador.init({
     type: DataTypes.BOOLEAN,
     allowNull: false,
   },
+  dias: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  horario: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 
 }, {
   sequelize,

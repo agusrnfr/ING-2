@@ -5,12 +5,16 @@ const session = require('express-session');
 const guardarTrabajador = (req, res) => {
   const nombre = req.body.nombre;
   const email = req.body.email;
-  const servicios = Array.isArray(req.body.servicio) ? [...req.body.servicio] : [req.body.servicio];
-  const servicio = servicios.join(',');
+  const servicio= req.body.servicio;
   const zona = req.body.zona;
-  const estado = req.body.estado;
+  const estado = true;
+  const dias = req.body.dias;
+  const horario = req.body.horario;
 
-  if (!nombre || !email|| !servicio || !zona) {
+  console.log(dias)
+  console.log(horario)
+
+  if (!nombre || !email|| !servicio || !zona ) {
     console.error('Error al guardar trabajador, campos incompletos');
     return;
   }
@@ -21,6 +25,8 @@ const guardarTrabajador = (req, res) => {
     servicio: servicio,
     zona: zona,
     estado: estado,
+    dias: dias,
+    horario: horario,
   })
     .then((Trabajador) => {
       res.render('cargar_trabajador', {
@@ -35,10 +41,11 @@ const guardarTrabajador = (req, res) => {
     })
     .catch((error) => {
       console.error('Error al crear trabajador:', error);
+      console.log(error);
       res.render('cargar_trabajador', {
         alert: true,
         alertTitle: 'Registro de trabajador fallido',
-        alertMessage: '',
+        alertMessage:'',
         alertIcon: 'error',
         showConfirmButton: false,
         timer: 2000,
@@ -54,7 +61,7 @@ const mostrarCargaTrabajador = (req,res) => {
 const mostrarTrabajadores = async (req, res) => {
   try{
   const trabajadores = await getAllTrabajadoresDisponibles();
-  const trabajadoresOrdenados = ordenarTrabajadoresPorServicio(trabajadores);
+  const trabajadoresOrdenados = ordenarTrabajadoresPorEstado(trabajadores);
   const guarderias = filtroGuarderias(trabajadoresOrdenados);
   const otrosTrabajadores = filtroTrabajadores(trabajadoresOrdenados);
   
@@ -98,45 +105,12 @@ async function getAllTrabajadoresDisponibles() {
   return trabajadores;
 }
 
-function ordenarTrabajadoresPorServicio(trabajadores) {
+function ordenarTrabajadoresPorEstado(trabajadores) {
   return trabajadores.sort((a, b) => {
-    const serviciosA = a.servicio.split(',').map(servicio => servicio.trim().toLowerCase());
-    const serviciosB = b.servicio.split(',').map(servicio => servicio.trim().toLowerCase());
-
-    const ordenServicio = {
-      cuidador: 1,
-      paseador: 2,
-      'cuidador,paseador': 3
-    };
-
     const estadoA = a.estado ? 1 : 0;
     const estadoB = b.estado ? 1 : 0;
 
-    if (estadoA === estadoB) {
-      // Ambos tienen el mismo estado, se verifica el estado "disponible" o "no disponible"
-      if (estadoA === 1) {
-        // Ambos están disponibles, se procede a comparar los servicios
-        if (serviciosA.length === 1 && serviciosB.length === 1) {
-          // Ambos tienen solo un rol, se ordenan por el orden definido en el objeto ordenServicio
-          return ordenServicio[serviciosA[0]] - ordenServicio[serviciosB[0]];
-        } else if (serviciosA.length === 1) {
-          // A tiene solo un rol, se coloca antes que B
-          return -1;
-        } else if (serviciosB.length === 1) {
-          // B tiene solo un rol, se coloca antes que A
-          return 1;
-        } else {
-          // Ambos tienen ambos roles, se ordenan por el orden definido en el objeto ordenServicio
-          return ordenServicio[serviciosA[0]] - ordenServicio[serviciosB[0]];
-        }
-      } else {
-        // Ambos están no disponibles, se mantiene el orden actual
-        return 0;
-      }
-    } else {
-      // Diferentes estados, se coloca al final el estado "no disponible"
-      return estadoB - estadoA;
-    }
+    return estadoB - estadoA;
   });
 }
 
@@ -145,7 +119,7 @@ const mostrarPaseadores = async(req,res) => {
   if (trabajadores.length === 0) {
     return res.send('No hay trabajadores cargados');
   }
-  const trabajadoresOrdenados = ordenarTrabajadoresPorServicio(trabajadores);
+  const trabajadoresOrdenados = ordenarTrabajadoresPorEstado(trabajadores);
   const otrosTrabajadores = filtroTrabajadores(trabajadoresOrdenados);
 
   res.render('paseadores', {otrosTrabajadores, session: session })
@@ -156,7 +130,7 @@ const mostrarGuarderias = async(req,res) => {
   if (trabajadores.length === 0) {
     return res.send('No hay trabajadores cargados');
   }
-  const trabajadoresOrdenados = ordenarTrabajadoresPorServicio(trabajadores);
+  const trabajadoresOrdenados = ordenarTrabajadoresPorEstado(trabajadores);
   const guarderias = filtroGuarderias(trabajadoresOrdenados);
 
   res.render('guarderias',{guarderias, session: session })

@@ -16,7 +16,7 @@
 
         <% if ((typeof session.usuario !== 'undefined' && session.usuario.rol === 'admin') || (!session.usuario || (session.usuario && session.usuario.rol !== 'admin' && trabajador.estado))) { %>
             
-          <div class="card" style="width: 300px; height: 250px; margin: 10px;">
+          <div class="card" style="width: 300px; height: 300px; margin: 10px;">
               <div class="card-body">
                 
                   <% if (typeof session.usuario !== 'undefined' && (session.loggedin === true) &&(session.usuario.rol === 'admin')) { %>
@@ -48,8 +48,12 @@
                 </h5>
                 <br>
                 <% let serviciosConcatenados = trabajador.servicio.split(',').map(servicio => servicio.trim()).join(', '); %>
-                <p class="card-text"><strong>Servicio:</strong> <%= serviciosConcatenados %></p>
+                
+                <p class="card-text"><strong>Servicio:</strong> <%= trabajador.servicio %></p>
                 <p class="card-text"><strong>Zona:</strong> <%= trabajador.zona %></p>
+                <p class="card-text"><strong>Dias Disponibles:</strong> <%= trabajador.dias %></p>
+                <p class="card-text"><strong>Horarios:</strong> <%= trabajador.horario %></p>
+
               </div>
               <a href="<%=`/contactar/trabajador/${trabajador.id}`%>" class="btn btn-primary">Contactar</a>
               <br>
