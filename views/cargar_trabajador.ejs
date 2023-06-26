@@ -151,7 +151,7 @@ function camposVacios(){
   const zona = zonaInput.value;
   const estado = true; 
 
-  if (!nombre || !email|| serviciosSeleccionados.length === 0 || !zona) {
+  if (!nombre || !email.value.trim() || serviciosSeleccionados.length === 0 || !zona) {
     event.preventDefault();
     const mensajeElemento = document.getElementById('mensaje');
     mensajeElemento.textContent = 'Por favor complete todos los campos solicitados.';
