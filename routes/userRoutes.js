@@ -1,4 +1,4 @@
-const { mostrarCamposContactoTrabajador, contactar } = require('../controllers/contactarTrabajadorController');
+const { mostrarContactoTrabajador, contactar } = require('../controllers/contactarTrabajadorController');
 const { mostrarTablaUsers, filtrar } = require('../controllers/userController');
 const { validarLogin, mostrarLogin, deslogear } = require('../controllers/loginController');
 const { mostrarRegister, registrar, chequear_mail_duplicado } = require('../controllers/registerController');
@@ -27,9 +27,6 @@ const upload = require('./multer');
 
 app.get('/', mostrarIndex)
 
-app.get('/contactar/trabajador/:id', mostrarCamposContactoTrabajador)
-app.post('/contactar/trabajador/:id', contactar)
-
 app.get('/table', comprobar_sesion_admin, mostrarTablaUsers)
 //app.post('/table',comprobar_sesion, filtrar)
 
@@ -48,6 +45,8 @@ app.get('/trabajadores', mostrarTrabajadores)
 app.post('/trabajador/estado', comprobar_sesion_admin,cambiarEstadoTrabajador)
 app.get('/paseadores',mostrarPaseadores)
 app.get('/guarderias',mostrarGuarderias)
+app.get('/contactar/trabajador/:id', mostrarContactoTrabajador)
+app.post('/contactar/trabajador/:id', contactar)
 
 app.get('/modificar_mi_perfil',comprobar_sesion, mostrarModificarPerfil)
 app.post('/modificarMiPerfil', comprobar_sesion, modificarMiPerfil)
