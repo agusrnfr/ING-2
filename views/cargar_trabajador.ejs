@@ -70,25 +70,25 @@
 
                     <label for="servicio">Dias disponibles (*)</label>
                     <div class="mb-3">
-                      <input type="checkbox" name="dia[]" id="domingo" value="domingo">
+                      <input type="checkbox" name="dia" id="domingo" value="domingo">
                       <label for="domingo">Domingo</label>
                       <br>
-                      <input type="checkbox" name="dia[]" id="lunes" value="lunes">
+                      <input type="checkbox" name="dia" id="lunes" value="lunes">
                       <label for="lunes">Lunes</label>
                       <br>
-                      <input type="checkbox" name="dia[]" id="martes" value="martes">
+                      <input type="checkbox" name="dia" id="martes" value="martes">
                       <label for="martes">Martes</label>
                       <br>
-                      <input type="checkbox" name="dia[]" id="miercoles" value="miercoles">
+                      <input type="checkbox" name="dia" id="miercoles" value="miercoles">
                       <label for="miercoles">Miercoles</label>
                       <br>
-                      <input type="checkbox" name="dia[]" id="jueves" value="jueves">
+                      <input type="checkbox" name="dia" id="jueves" value="jueves">
                       <label for="jueves">Jueves</label>
                       <br>
-                      <input type="checkbox" name="dia[]" id="viernes" value="viernes">
+                      <input type="checkbox" name="dia" id="viernes" value="viernes">
                       <label for="viernes">Viernes</label>
                       <br>
-                      <input type="checkbox" name="dia[]" id="sabado" value="sabado">
+                      <input type="checkbox" name="dia" id="sabado" value="sabado">
                       <label for="sabado">Sabado</label>
                       <br>
                     </div>
@@ -181,10 +181,12 @@ function camposVacios() {
   const horaFin = horaFinInput.value;
 
   const horario = horaInicio + ',' + horaFin;
+  console.log(horario)
 
    // Obtener los checkboxes de los días
-   const diasInputs = document.querySelectorAll('input[name="dia[]"]:checked');
+   const diasInputs = document.querySelectorAll('input[name="dia"]:checked');
    const dias = Array.from(diasInputs).map((input) => input.value).join(',');
+   console.log(dias)
 
   if (!nombre || !email.trim() || !servicio || !zona || !horaInicio || !horaFin || dias.length === 0) {
     const mensajeElemento = document.getElementById('mensaje');
