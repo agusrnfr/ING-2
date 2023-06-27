@@ -8,11 +8,12 @@ const guardarTrabajador = (req, res) => {
   const servicio= req.body.servicio;
   const zona = req.body.zona;
   const estado = true;
-  const dias = req.body.dias;
-  const horario = req.body.horario;
+  const diasArray = Array.isArray(req.body.dia) ? [...req.body.dia] : [req.body.dia];
+  const dias = diasArray.join(',');
+  const horaInicio = req.body.horaInicio;
+  const horaFin = req.body.horaFin;
 
-  console.log(dias)
-  console.log(horario)
+  const horario= horaInicio+ ','+ horaFin;
 
   if (!nombre || !email|| !servicio || !zona ) {
     console.error('Error al guardar trabajador, campos incompletos');
