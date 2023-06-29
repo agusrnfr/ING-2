@@ -41,17 +41,6 @@
                                                     title="Ingrese un correo electrónico válido">
 
                                             </div>
-                                            <div class="mb-3" id="div_fecha">
-                                                <label for="fecha_celo" class="b"> Fecha de celo (*) </label>
-                                                <% let fechaMinima=new Date(); fechaMinima.setDate(fechaMinima.getDate()
-                                                    + 1); fechaMinima=fechaMinima.toISOString().split("T")[0]; let
-                                                    fechaMaxima=new Date();
-                                                    fechaMaxima.setFullYear(fechaMaxima.getFullYear() + 5);
-                                                    fechaMaxima=fechaMaxima.toISOString().split("T")[0]; %>
-                                                    <input class="form-control form-control-user" type="date"
-                                                        name="fecha_celo" min="<%= fechaMinima %>"
-                                                        max="<%= fechaMaxima %>" required>
-                                            </div>
                                             <div class="mb-3">
                                                 <button class="btn btn-primary d-block btn-user w-100" type="submit"
                                                     id="enviar_turno">Publicar</button>

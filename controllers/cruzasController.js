@@ -1,4 +1,4 @@
-const Turno = require('../db/models/turno');
+const { Op } = require('sequelize');
 const Mascota = require('../db/models/mascota');
 const Cruza = require('../db/models/cruza');
 const User = require('../db/models/user');
@@ -45,20 +45,19 @@ const publicarMascotaCruza = async (req, res) => {
 const verificacionesCruza = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const { telefono, correo, fecha_celo } = req.body;
-        const mascota = await Mascota.findOne({ where: { id: id } });
-        const cruza = await Cruza.findOne({ where: { MascotumId: id } });
+        const { texto_libre, telefono, correo } = req.body;
+        const cruza = await Cruza.findOne({ where: { MascotumId: id } })
         if (cruza) {
             return res.redirect(`/cruzas/publicacionGuardada?success=false&status=500&mensaje=${encodeURIComponent('Ya existe una publicación para esta mascota')}`);
+        }
+        if (!texto_libre) {
+            return res.redirect(`/cruzas/publicacionGuardada?success=false&status=500&mensaje=${encodeURIComponent('Debe ingresar un texto libre')}`);
         }
         if (!telefono) {
             return res.redirect(`/cruzas/publicacionGuardada?success=false&status=500&mensaje=${encodeURIComponent('Debe ingresar un teléfono')}`);
         }
         if (!correo) {
             return res.redirect(`/cruzas/publicacionGuardada?success=false&status=500&mensaje=${encodeURIComponent('Debe ingresar un correo')}`);
-        }
-        if (!fecha_celo) {
-            return res.redirect(`/cruzas/publicacionGuardada?success=false&status=500&mensaje=${encodeURIComponent('Debe ingresar una fecha de celo')}`);
         }
         next(); // Si pasa todas las verificaciones, pasa a la siguiente función
     }
@@ -70,14 +69,13 @@ const verificacionesCruza = async (req, res, next) => {
 const guardarPublicacionCruza = async (req, res) => {
     try {
         const { id } = req.params;
-        const { texto_libre, telefono, correo, fecha_celo } = req.body;
+        const { texto_libre, telefono, correo } = req.body;
         const mascota = await Mascota.findByPk(id);
         if (mascota) {
             await Cruza.create({
                 texto_libre: texto_libre,
                 tel: telefono,
                 mail: correo,
-                fecha_celo: moment(fecha_celo).toDate(),
                 MascotumId: id,
                 se_muestra: true,
             });
@@ -159,18 +157,16 @@ const mostrarPublicacionMascota = async (req, res) => {
             where: { MascotumId: id },
             raw: true,
             include: [
-                { model: Mascota, attributes: ['nombre', 'sexo', 'foto','raza'] }]
+                { model: Mascota, attributes: ['nombre', 'sexo', 'foto', 'raza'] }]
         });
         if (!cruza) {
             return res.redirect(`/cruzas/publicacionGuardada?success=false&status=500&mensaje=${encodeURIComponent('No se encontró publicación')}`);
         }
-        const fechaHoraZonaHoraria = moment.tz(cruza.fecha_celo, 'America/Argentina/Buenos_Aires');
         res.render('verPerfilCruza', {
             cruza: {
                 texto_libre: cruza.texto_libre,
                 tel: cruza.tel,
                 mail: cruza.mail,
-                fecha_celo: fechaHoraZonaHoraria.format('DD/MM/YYYY'),
                 nombre: cruza['Mascotum.nombre'],
                 sexo: cruza['Mascotum.sexo'],
                 foto: cruza['Mascotum.foto'],
@@ -185,6 +181,62 @@ const mostrarPublicacionMascota = async (req, res) => {
 }
 
 
+async function obtenerSexoRazaMascota(id) {
+    const mascota = await Mascota.findOne({
+        where: { id: id },
+        raw: true,
+        attributes: ['sexo', 'raza', 'UserId'],
+    });
+
+    return {
+        sexo: mascota.sexo,
+        raza: mascota.raza,
+        UserId: mascota.UserId,
+    }
+}
+
+const mostrarRecomendacionesCruza = async (req, res) => { //muestra la lista de cruzas de la misma raza y sexo opuesto
+    try {
+        const { id } = req.params;
+        const mascota = await obtenerSexoRazaMascota(id);
+
+        const cruzas = await Cruza.findAll({
+            where: {
+                se_muestra: true,
+            },
+            include: [
+                {
+                    model: Mascota,
+                    attributes: ['nombre', 'sexo', 'foto', 'raza', 'UserId'],
+                    where: {
+                        sexo: mascota.sexo === 'Macho' ? 'Hembra' : 'Macho',
+                        raza: mascota.raza,
+                        UserId: {
+                            [Op.ne]: mascota.UserId,
+                        },
+                    },
+                },
+            ],
+            raw: true,
+        });
+
+        res.render('recomendacionesCruza', {
+            cruzas: cruzas.map(cruza => {
+                return {
+                    nombre: cruza['Mascotum.nombre'],
+                    sexo: cruza['Mascotum.sexo'],
+                    foto: cruza['Mascotum.foto'],
+                    texto_libre: cruza.texto_libre,
+                    MascotumId: cruza.MascotumId,
+                }
+            }),
+        });
+    }
+    catch (error) {
+        console.log(error);
+        res.status(500).render('recomendacionesCruza', { cruzas: [] });
+    }
+}
 
 module.exports = {
     mostrarIndexCruzas,
@@ -194,4 +246,5 @@ module.exports = {
     verificacionesCruza,
     verificarPerroEsDeUsuario,
     mostrarPublicacionMascota,
+    mostrarRecomendacionesCruza,
 }

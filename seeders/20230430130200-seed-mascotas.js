@@ -87,7 +87,7 @@ module.exports = {
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Syndra',
-      raza: RAZA.CRUZA,
+      raza: RAZA.GOLDEN_RETRIEVER,
       color: 'Negro',
       sexo: 'Hembra',
       fecha_nacimiento: moment().clone().subtract(6, 'months').toDate(),
@@ -106,13 +106,23 @@ module.exports = {
       UserId: USER_ID.CORDELIA,
     }], {});
     await queryInterface.bulkInsert('mascotas', [{
+      nombre: 'Krypto',
+      raza: RAZA.GOLDEN_RETRIEVER,
+      color: 'Amarillo',
+      sexo: 'Macho',
+      fecha_nacimiento: moment().clone().subtract(5, 'months').toDate(),
+      observaciones: 'Es muy cariñoso y activo',
+      foto: '/img/profile_pets/krypto.jpg',
+      UserId: USER_ID.CORDELIA,
+    }], {});
+    await queryInterface.bulkInsert('mascotas', [{
       nombre: 'Stevie',
       raza: RAZA.GOLDEN_RETRIEVER,
       color: 'Amarillo',
       sexo: 'Macho',
       fecha_nacimiento: moment().clone().subtract(5, 'months').toDate(),
       observaciones: 'Es muy cariñoso y activo',
-      foto: '/img/profile_pets/imagen-1685981322357',
+      foto: '/img/profile_pets/stevie.jpg',
       UserId: USER_ID.MISTY,
     }], {});
     for (let i = 0; i < 0; i++) {

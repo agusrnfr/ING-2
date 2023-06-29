@@ -8,10 +8,6 @@ Cruza.init({
         type: DataTypes.TEXT,
         allowNull: false,
     },
-    fecha_celo: {
-        type: DataTypes.DATE,
-        allowNull: false,
-    },
     mail: {
         type: DataTypes.STRING,
         allowNull: false,

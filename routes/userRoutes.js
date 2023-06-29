@@ -15,7 +15,7 @@ const { mostrarHistorial , crearHistorial,mostrarCarga, mostrarLibreta} = requir
 const { mostrarCupones } = require('../controllers/cuponesController');
 const { mostrarCampanias, publicarCampania, verificacionesCampania, guardarPublicacionCampania, publicacionGuardada, verificacionesDonacion, realizarDonacion} = require('../controllers/campaniasController');
 
-const { mostrarIndexCruzas, publicarMascotaCruza, guardarPublicacionCruza, publicacionGuardadaCruza, verificacionesCruza, verificarPerroEsDeUsuario, mostrarPublicacionMascota } = require('../controllers/cruzasController');
+const { mostrarIndexCruzas, publicarMascotaCruza, guardarPublicacionCruza, publicacionGuardadaCruza, verificacionesCruza, verificarPerroEsDeUsuario, mostrarPublicacionMascota, mostrarRecomendacionesCruza } = require('../controllers/cruzasController');
 
 //invocamos express
 const app = require('express').Router()
@@ -105,8 +105,8 @@ app.get('/cruzas', comprobar_sesion, mostrarIndexCruzas);
 app.get('/cruzas/publicarMascota/:id', comprobar_sesion, verificarPerroEsDeUsuario, publicarMascotaCruza);
 app.post('/cruzas/publicarMascota/:id', comprobar_sesion, verificarPerroEsDeUsuario, verificacionesCruza, guardarPublicacionCruza);
 app.get('/cruzas/publicacionGuardada', comprobar_sesion, publicacionGuardadaCruza);
-//app.get('/cruzas/verRecomendaciones/:id', comprobar_sesion, verificarPerroEsDeUsuario, mostrarRecomendaciones);
-app.get('/cruzas/verPublicacionDeMascota/:id', comprobar_sesion, verificarPerroEsDeUsuario, mostrarPublicacionMascota);
+app.get('/cruzas/verRecomendaciones/:id', comprobar_sesion, verificarPerroEsDeUsuario, mostrarRecomendacionesCruza);
+app.get('/cruzas/verPublicacionDeMascota/:id', comprobar_sesion, mostrarPublicacionMascota);
 
 module.exports = app;
 
