@@ -78,7 +78,78 @@
                       </div>
                     </div>
                   </div>
-                  <br>
+                  <!-- tabla -->
+
+                  <div class="table-responsive">
+                    <caption>
+                    <div class="caption-heading">Historial de visitas</div>
+                   </caption>
+                   <table class="table" id="tabla1">
+                       <thead class="table-secondary">
+                           <tr>
+                               <th class="text-center" scope="col">Fecha</th>
+                               <th class="text-center" scope="col">Mascota</th>
+                               <th class="text-center" scope="col">Practica</th>
+                               <th class="text-center" scope="col">Observaciones</th>
+                               <th class="text-center" scope="col">Monto de la consulta</th>
+
+                           </tr>
+                       </thead>
+                       <tbody>
+                           <% let indice = 0; %>
+                                   <% if (practicas && practicas.length > 0) { %>
+                                        <% practicas.forEach(historial=> { %>
+                                        <% const fechaCorta = visita.fecha.split(" ")[0]; %>
+                                   <tr class="paginate">
+                                       <td class="text-center align-middle">
+                                           <%= fechaCorta %>
+                                       </td>
+                                       <td class="text-center align-middle">
+                                           <%= visita.nombre %>
+                                       </td>
+                                       <td class="text-center align-middle">
+                                           <%= visita.practica %>
+                                       </td>
+                                       <td class="text-center align-middle">
+                                           <%= visita.observacion %>
+                                       </td>
+
+                                       <td class="text-center align-middle">
+                                           <div class="card">
+                                             <button class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#collapseContent<%= indice %>" aria-expanded="false" aria-controls="collapseContent">
+                                               <i class="bi bi-cash"></i> Ver más
+                                             </button>
+                                         
+                                             <div id="collapseContent<%= indice %>" class="collapse">
+                                               <!-- Contenido colapsable del botón -->
+                                               <div class="card-body">
+                                                 <p>Monto consulta: $<%= visita.monto_abonado %></p>
+                                                 <% if (visita.monto_beneficio > 0) { %>
+                                                   <p>Monto Beneficio: $<%= visita.monto_beneficio %></p>
+                                                   <% } %>
+                                                   <p>--------------------------------------</p>
+                                                   <% if (visita.monto_abonado >= visita.monto_beneficio) { %>
+                                                     <p>Total $<%= visita.monto_abonado - visita.monto_beneficio %></p>
+                                                   <% } else { %>
+                                                     <p>Total $0</p>
+                                                   <% } %>
+                                                 
+                                               </div>
+                                             </div>
+                                           </div>
+                                         </td>
+
+                                   </tr>
+                                   <% indice++; %>
+                                   <% }); %>
+                                       <% } %>
+                          
+                       </tbody>
+                   </table>
+                  </div>
+                 <!--   fin tabla -->
+                
+                 
             </div>
             <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                 <div class="col-5 m-1">
@@ -102,5 +173,62 @@
 
 </div>
         <div class="text-center"><a class="small" style="color: white;" href="/">Volver</a></div>
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+        <style>
+            .dataTables_wrapper .search-container {
+                text-align: center;
+                margin-top: 25px;
+                margin-bottom: 25px;
+            }
+        
+            .dataTables_wrapper .dataTables_filter {
+                display: inline-block;
+            }
+        </style>
+                <style>
+                  .dataTables_empty {
+                      text-align: center;
+                      color: #9e1f1f;
+                      font-style: italic;
+                  }
+              </style>
+        <script>
+          $(document).ready(function () {
+              const tableRows = $('#tabla1 tbody tr').length;
+              const pagingEnable = tableRows > 50;
+              $('#tabla1').DataTable({
+                  paging: pagingEnable,
+                  ordering: false,
+                  dom: '<"top"i>rt<"search-container"lf><"bottom"lp><"clear">',
+                  info: false,
+                  columns: [
+                      { "searchable": false },
+                      { "searchable": true }, //nombre mascota,
+                      { "searchable": false }, 
+                      { "searchable": false }, 
+                      { "searchable": false },
+                  ],
+                  lengthMenu: [
+                      [5, 15, 50, -1],
+                      [5, 15, 50, 'Todos'],
+                  ],
+                  pageLength: 50, // Establecer como la opción por defecto
+                  searching: true, // deshabilita la función de búsqueda
+                  language: {
+                      paginate: { previous: 'Anterior', next: 'Siguiente', },
+                      zeroRecords: 'No hay datos registrados para el mes elegido',
+                      info: 'Mostrando pagina _PAGE_ de _PAGES_',
+                      infoEmpty: 'No hay datos registrados para el mes elegido',
+                      search: 'Buscar por nombre de mascota',
+                      lengthMenu: 'Mostrar _MENU_ entradas',
+                  },
+
+              });
+
+          });
+      </script>
 </body>
 </html>
