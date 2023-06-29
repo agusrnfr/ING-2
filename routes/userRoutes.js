@@ -17,6 +17,7 @@ const { mostrarCampanias, publicarCampania, verificacionesCampania, guardarPubli
 
 const { mostrarIndexCruzas, publicarMascotaCruza, guardarPublicacionCruza, publicacionGuardadaCruza, verificacionesCruza, verificarPerroEsDeUsuario, mostrarPublicacionMascota } = require('../controllers/cruzasController');
 
+const { mostrarReportes} = require('../controllers/reportesController');
 //invocamos express
 const app = require('express').Router()
 
@@ -107,6 +108,9 @@ app.post('/cruzas/publicarMascota/:id', comprobar_sesion, verificarPerroEsDeUsua
 app.get('/cruzas/publicacionGuardada', comprobar_sesion, publicacionGuardadaCruza);
 //app.get('/cruzas/verRecomendaciones/:id', comprobar_sesion, verificarPerroEsDeUsuario, mostrarRecomendaciones);
 app.get('/cruzas/verPublicacionDeMascota/:id', comprobar_sesion, verificarPerroEsDeUsuario, mostrarPublicacionMascota);
+
+//REPORTES
+app.get('/reportes', comprobar_sesion, comprobar_sesion_admin, mostrarReportes);
 
 module.exports = app;
 
