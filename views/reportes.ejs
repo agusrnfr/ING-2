@@ -68,88 +68,79 @@
                 <div class="col-7 m-1">
                     Practicas realizadas a todas las mascotas en el mes seleccionado
                 </div>
+                <form action="/generar_reporte_practicas" method="POST">
                 <div class="col-5">
                     <div class="input-group">
-                      <input class="form-control form-control-user m-1" type="month" id="fecha_reporte_practicas">
+                      <input class="form-control form-control-user m-1" type="month" id="fecha_reporte_practicas" name="fecha_name">
                       <div class="input-group-append">
-                        <a class="btn btn-outline-primary m-1" href="/generar_reporte_practicas">
+                        <button class="btn btn-outline-primary m-1" id="generarReporteBtn">
                           <i class="bi bi-pencil-square"></i> Generar reporte
-                        </a>
+                        </button>
                       </div>
+                    </form>
+                    
                     </div>
                   </div>
+                  
                   <!-- tabla -->
+                  <% if (typeof historiales !== 'undefined') { %>
+                    <div class="caption-heading">Practicas del mes: <%= mes_elegido %></div>
 
-                  <div class="table-responsive">
-                    <caption>
-                    <div class="caption-heading">Historial de visitas</div>
-                   </caption>
-                   <table class="table" id="tabla1">
-                       <thead class="table-secondary">
-                           <tr>
-                               <th class="text-center" scope="col">Fecha</th>
-                               <th class="text-center" scope="col">Mascota</th>
-                               <th class="text-center" scope="col">Practica</th>
-                               <th class="text-center" scope="col">Observaciones</th>
-                               <th class="text-center" scope="col">Monto de la consulta</th>
+                    <div class="table-responsive">
+                      <table class="table" id="tabla1">
 
-                           </tr>
-                       </thead>
-                       <tbody>
-                           <% let indice = 0; %>
-                                   <% if (practicas && practicas.length > 0) { %>
-                                        <% practicas.forEach(historial=> { %>
-                                        <% const fechaCorta = visita.fecha.split(" ")[0]; %>
-                                   <tr class="paginate">
-                                       <td class="text-center align-middle">
-                                           <%= fechaCorta %>
-                                       </td>
-                                       <td class="text-center align-middle">
-                                           <%= visita.nombre %>
-                                       </td>
-                                       <td class="text-center align-middle">
-                                           <%= visita.practica %>
-                                       </td>
-                                       <td class="text-center align-middle">
-                                           <%= visita.observacion %>
-                                       </td>
-
-                                       <td class="text-center align-middle">
-                                           <div class="card">
-                                             <button class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#collapseContent<%= indice %>" aria-expanded="false" aria-controls="collapseContent">
-                                               <i class="bi bi-cash"></i> Ver más
-                                             </button>
-                                         
-                                             <div id="collapseContent<%= indice %>" class="collapse">
-                                               <!-- Contenido colapsable del botón -->
-                                               <div class="card-body">
-                                                 <p>Monto consulta: $<%= visita.monto_abonado %></p>
-                                                 <% if (visita.monto_beneficio > 0) { %>
-                                                   <p>Monto Beneficio: $<%= visita.monto_beneficio %></p>
-                                                   <% } %>
-                                                   <p>--------------------------------------</p>
-                                                   <% if (visita.monto_abonado >= visita.monto_beneficio) { %>
-                                                     <p>Total $<%= visita.monto_abonado - visita.monto_beneficio %></p>
-                                                   <% } else { %>
-                                                     <p>Total $0</p>
-                                                   <% } %>
-                                                 
-                                               </div>
-                                             </div>
-                                           </div>
-                                         </td>
-
-                                   </tr>
-                                   <% indice++; %>
-                                   <% }); %>
-                                       <% } %>
-                          
-                       </tbody>
-                   </table>
-                  </div>
+                        <thead class="table-secondary">
+                          <tr>
+                            <th class="text-center">Fecha</th>
+                            <th class="text-center">Cliente</th>
+                            <th class="text-center">Practica</th>
+                            <th class="text-center">Monto</th>
+                            <th class="text-center">Descuento por beneficio</th>
+                            <th class="text-center">Monto total</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% if (historiales && historiales.length > 0) { %>
+                            <% historiales.forEach(visita => { %>
+                              <tr class="paginate">
+                                <td class="text-center align-middle">
+                                  <%= visita.fecha %>
+                                </td>
+                                <td class="text-center align-middle">
+                                  <%= visita.cliente %>
+                                </td>
+                                <td class="text-center align-middle">
+                                  <%= visita.practica %>
+                                </td>
+                                <td class="text-center align-middle">
+                                  <%= visita.monto_total %>
+                                </td>
+                                <td class="text-center align-middle">
+                                  <% if (visita.monto_beneficio > 0) { %>
+                                    <span style="color: red;"><%= visita.monto_beneficio %></span>
+                                  <% } else { %>
+                                    <%= visita.monto_beneficio %>
+                                  <% } %>
+                                </td>
+                                <td class="text-center align-middle">
+                                  <% if (visita.monto_abonado > 0) { %>
+                                    <span style="color: green; font-weight: bold;"><%= visita.monto_abonado %></span>
+                                  <% } else { %>
+                                    <%= visita.monto_abonado %>
+                                  <% } %>
+                                </td>
+                              </tr>
+                            <% }); %>
+                          <% } %>
+                        </tbody>
+                      </table>
+                    </div>
+                    
+                    
+                  <% } %>
                  <!--   fin tabla -->
                 
-                 
+                
             </div>
             <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                 <div class="col-5 m-1">
@@ -165,7 +156,7 @@
                       </div>
                     </div>
                 </div>
-            <br>
+           
 
 
             </div>
@@ -198,7 +189,7 @@
         <script>
           $(document).ready(function () {
               const tableRows = $('#tabla1 tbody tr').length;
-              const pagingEnable = tableRows > 50;
+              const pagingEnable = false;
               $('#tabla1').DataTable({
                   paging: pagingEnable,
                   ordering: false,
@@ -210,13 +201,14 @@
                       { "searchable": false }, 
                       { "searchable": false }, 
                       { "searchable": false },
+                      { "searchable": false },
                   ],
                   lengthMenu: [
                       [5, 15, 50, -1],
                       [5, 15, 50, 'Todos'],
                   ],
                   pageLength: 50, // Establecer como la opción por defecto
-                  searching: true, // deshabilita la función de búsqueda
+                  searching: false, // deshabilita la función de búsqueda
                   language: {
                       paginate: { previous: 'Anterior', next: 'Siguiente', },
                       zeroRecords: 'No hay datos registrados para el mes elegido',
@@ -230,5 +222,11 @@
 
           });
       </script>
+<!--       <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          var secondTab = document.getElementById("nav-profile-tab");
+          secondTab.click();
+        });
+      </script> -->
 </body>
 </html>

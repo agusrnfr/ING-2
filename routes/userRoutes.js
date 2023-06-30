@@ -17,7 +17,7 @@ const { mostrarCampanias, publicarCampania, verificacionesCampania, guardarPubli
 
 const { mostrarIndexCruzas, publicarMascotaCruza, guardarPublicacionCruza, publicacionGuardadaCruza, verificacionesCruza, verificarPerroEsDeUsuario, mostrarPublicacionMascota } = require('../controllers/cruzasController');
 
-const { mostrarReportes} = require('../controllers/reportesController');
+const { mostrarReportes, generarReporte} = require('../controllers/reportesController');
 //invocamos express
 const app = require('express').Router()
 
@@ -111,6 +111,7 @@ app.get('/cruzas/verPublicacionDeMascota/:id', comprobar_sesion, verificarPerroE
 
 //REPORTES
 app.get('/reportes', comprobar_sesion, comprobar_sesion_admin, mostrarReportes);
+app.post('/generar_reporte_practicas', comprobar_sesion, comprobar_sesion_admin, generarReporte)
 
 module.exports = app;
 
