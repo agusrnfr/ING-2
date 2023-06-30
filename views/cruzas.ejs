@@ -35,7 +35,8 @@
                                     <% if (mascotas.length> 0) { %>
                                         <div class="row mb-3 h-100">
                                             <div class="mb-3">
-                                                <select id="mascota" class="form-select form-select-lg text-center">
+                                                <select id="mascota" class="form-select form-select-lg text-center"
+                                                    onchange="deshabilitarBotones()">
                                                     <option value="" disabled selected>Mascota</option>
                                                     <% mascotas.forEach(mascota=> {%>
                                                         <option value="<%= mascota.id %>" <% if
@@ -49,13 +50,13 @@
                                             <div class="mb-3">
                                                 <button type="button" id="verPerfil"
                                                     class="btn btn-outline-danger btn-lg p-1 w-100"
-                                                    onclick="verPublicacion()"><i class="bi bi-chat-square-heart"></i>
+                                                    onclick="verPublicacion()"><i class="bi bi-postcard-heart"></i>
                                                     Mi publicación</button>
                                             </div>
                                             <div class="mb-3">
                                                 <button type="button" id="publicar"
                                                     class="btn btn-outline-danger btn-lg p-1 w-100"
-                                                    onclick="publicarMascota()"><i class="bi bi-envelope-heart"></i>
+                                                    onclick="publicarMascota()"><i class="bi bi-chat-square-heart"></i>
                                                     Realizar
                                                     publicación</button>
                                             </div>
@@ -104,8 +105,40 @@
             crossorigin="anonymous"></script>
         <script>
 
-            const myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {})
-            myModal.toggle()
+            // Verificar si el modal ya ha sido mostrado en la sesión actual
+            const modalMostrado = localStorage.getItem('modalMostrado');
+
+            if (!modalMostrado) {
+                // Mostrar el modal solo si no ha sido mostrado previamente para el usuario actual
+                const myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+                myModal.show();
+
+                // Guardar el indicador de que el modal ha sido mostrado para el usuario actual
+                localStorage.setItem('modalMostrado', 'true');
+            }
+
+
+            document.getElementById("verPerfil").disabled = true;
+            document.getElementById("publicar").disabled = true;
+            document.getElementById("verRecomendaciones").disabled = true;
+
+            function deshabilitarBotones() {
+                const mascota = document.getElementById("mascota").value;
+                if (mascota != "") {
+                    const tienePublicacion = mascotaTienePublicacion(mascota)
+                    if (tienePublicacion === "true") {
+                        document.getElementById("verPerfil").disabled = false;
+                        document.getElementById("publicar").disabled = true;
+                        document.getElementById("verRecomendaciones").disabled = false;
+                    }
+                    else {
+                        document.getElementById("verPerfil").disabled = true;
+                        document.getElementById("publicar").disabled = false;
+                        document.getElementById("verRecomendaciones").disabled = true;
+                    }
+                }
+            }
+
 
             function mascotaTienePublicacion(mascota) {
                 const tienePublicacion = document.querySelector('option[value="' + mascota + '"]').getAttribute('data-publicacion');
