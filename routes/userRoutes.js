@@ -15,7 +15,7 @@ const { mostrarHistorial , crearHistorial,mostrarCarga, mostrarLibreta} = requir
 const { mostrarCupones } = require('../controllers/cuponesController');
 const { mostrarCampanias, publicarCampania, verificacionesCampania, guardarPublicacionCampania, publicacionGuardada, verificacionesDonacion, realizarDonacion} = require('../controllers/campaniasController');
 
-const { mostrarIndexCruzas, publicarMascotaCruza, guardarPublicacionCruza, publicacionGuardadaCruza, verificacionesCruza, verificarPerroEsDeUsuario, mostrarPublicacionMascota, mostrarRecomendacionesCruza } = require('../controllers/cruzasController');
+const { mostrarIndexCruzas, publicarMascotaCruza, guardarPublicacionCruza, publicacionGuardadaCruza, verificacionesCruza, verificarPerroEsDeUsuario, verificacionesDeMascotasContacto, mostrarPublicacionMascota, mostrarRecomendacionesCruza, mostrarContactoCruza, contactoCruzaGuardado, verificacionesContactoCruza, contactarCruza} = require('../controllers/cruzasController');
 
 //invocamos express
 const app = require('express').Router()
@@ -106,7 +106,10 @@ app.get('/cruzas/publicarMascota/:id', comprobar_sesion, verificarPerroEsDeUsuar
 app.post('/cruzas/publicarMascota/:id', comprobar_sesion, verificarPerroEsDeUsuario, verificacionesCruza, guardarPublicacionCruza);
 app.get('/cruzas/publicacionGuardada', comprobar_sesion, publicacionGuardadaCruza);
 app.get('/cruzas/verRecomendaciones/:id', comprobar_sesion, verificarPerroEsDeUsuario, mostrarRecomendacionesCruza);
-app.get('/cruzas/verPublicacionDeMascota/:id', comprobar_sesion, mostrarPublicacionMascota);
+app.get('/cruzas/verPublicacionDeMascota/:id', comprobar_sesion, verificarPerroEsDeUsuario, mostrarPublicacionMascota);
+app.get('/cruzas/contactoCruza/:id', comprobar_sesion, verificacionesDeMascotasContacto, mostrarContactoCruza);
+app.post('/cruzas/contactoCruza/:id', comprobar_sesion, verificacionesDeMascotasContacto, verificacionesContactoCruza, contactarCruza);
+app.get('/cruzas/contactoCruzaGuardado', comprobar_sesion, contactoCruzaGuardado);
 
 module.exports = app;
 

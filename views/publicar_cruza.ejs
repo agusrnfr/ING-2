@@ -11,12 +11,11 @@
                             <div class="row justify-content-center">
                                 <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-3">Publicar cruza <i
                                         class="bi bi-bookmark-heart-fill"></i></p>
-                                <div class="alert alert-warning text-center" role="alert">
+                                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
                                     Se esta realizando publicación de cruza para la mascota <strong>
                                         <%= mascota.nombre %>
-                                    </strong> del usuario <strong>
-                                        <%= usuario.name %>
                                     </strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
                                 <div class="col-md-6"> <!-- Columna del formulario -->
                                     <form method="POST">
@@ -75,10 +74,10 @@
                 </div>
             </div>
         </div>
-        <script>
-        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
 
     </body>
-    <%- include ('sweet-alert') %>
 
         </html>
