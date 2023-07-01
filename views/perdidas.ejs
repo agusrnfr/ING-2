@@ -21,7 +21,7 @@
                         <div class="content">
                             <p>Descripción</p>
                             <h5 class="text-center">
-                                <a href="/contactoAdoptante?idAdopcion=" class="btn btn-outline-primary float-right">Contactar</a>
+                                <a href="/contactoPerdida" class="btn btn-outline-primary float-right">Contactar</a>
                                 <a href="#" class="btn btn-outline-info float-right" data-toggle="collapse" data-target="#collapseInfo<%= i %>">Más info</a>
                                 <div id="collapseInfo<%= i %>" class="collapse">
                                     <div class="card">
@@ -44,14 +44,38 @@
               <% } %>
             </div>
           </div>
-          <div class="text-center mt-2">
-            <a class="small" href="/" style="color: white;">Volver</a>
+          <div class="floating-button">
+            <a href="/crear-publicacion" class="btn btn-primary">Crear publicación</a>
           </div>
-
+          <div class="text-center mt-2">
+              <a class="small" href="/" style="color: white;">Volver</a>
+            </div>
+        <br>
           <style>
-body {
-  background: #eeeded;
-}
+                .floating-button {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                }
+
+                .floating-button a {
+                display: block;
+                width: 200px;
+                height: 40px;
+                line-height: 30px;
+                text-align: center;
+                background-color: #007bff;
+                color: #fff;
+                border-radius: 20px;
+                text-decoration: none;
+                }
+
+                .floating-button a:hover {
+                background-color: #0056b3;
+                }
+                body {
+                background: #eeeded;
+                }
 
 .card {
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
