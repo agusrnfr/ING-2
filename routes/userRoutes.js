@@ -3,6 +3,7 @@ const { mostrarTablaUsers, filtrar } = require('../controllers/userController');
 const { validarLogin, mostrarLogin, deslogear } = require('../controllers/loginController');
 const { mostrarRegister, registrar, chequear_mail_duplicado } = require('../controllers/registerController');
 const { mostrarTrabajadores, mostrarCargaTrabajador, guardarTrabajador,mostrarPaseadores, mostrarGuarderias,cambiarEstadoTrabajador} = require('../controllers/trabajadorController');
+const { mostrarGuarderiasFiltradasPorZona , mostrarPaseadoresFiltradosPorZona} = require('../controllers/trabajadorController');
 const { mostrarIndex } = require('../controllers/indexController');
 const { comprobar_sesion, comprobar_sesion_admin } = require('../controllers/loginController');
 const { mostrarAgregarMascota, registrarMascota , mostrarMascota , eliminarMascota} = require('../controllers/mascotasController');
@@ -13,6 +14,8 @@ const { mostrarAdopciones, cambiarEstado, mostrarPublicacion, guardarPublicacion
 const { mostrarHistorial , crearHistorial,mostrarCarga, mostrarLibreta} = require('../controllers/historialController');
 
 const { mostrarCupones } = require('../controllers/cuponesController');
+const { mostrarPerdidas } = require('../controllers/perdidasController');
+const { mostrarBusquedas } = require('../controllers/busquedasController');
 const { mostrarCampanias, publicarCampania, verificacionesCampania, guardarPublicacionCampania, publicacionGuardada, verificacionesDonacion, realizarDonacion} = require('../controllers/campaniasController');
 
 const { mostrarIndexCruzas, publicarMascotaCruza, guardarPublicacionCruza, publicacionGuardadaCruza, verificacionesCruza, verificarPerroEsDeUsuario, mostrarPublicacionMascota } = require('../controllers/cruzasController');
@@ -48,6 +51,8 @@ app.get('/paseadores',mostrarPaseadores)
 app.get('/guarderias',mostrarGuarderias)
 app.get('/contactar/trabajador/:id', mostrarContactoTrabajador)
 app.post('/contactar/trabajador/:id', contactar)
+app.post('/mostrarGuarderiasFiltradasPorZona', mostrarGuarderiasFiltradasPorZona)
+app.post('/mostrarPaseadoresFiltradosPorZona', mostrarPaseadoresFiltradosPorZona)
 
 app.get('/modificar_mi_perfil',comprobar_sesion, mostrarModificarPerfil)
 app.post('/modificarMiPerfil', comprobar_sesion, modificarMiPerfil)
@@ -112,6 +117,12 @@ app.get('/cruzas/verPublicacionDeMascota/:id', comprobar_sesion, verificarPerroE
 //REPORTES
 app.get('/reportes', comprobar_sesion, comprobar_sesion_admin, mostrarReportes);
 app.post('/generar_reporte_practicas', comprobar_sesion, comprobar_sesion_admin, generarReporte)
+
+//PERDIDAS
+app.get('/perdidas', mostrarPerdidas);
+
+//BUSQUEDAS
+app.get('/busquedas', mostrarBusquedas);
 
 module.exports = app;
 
