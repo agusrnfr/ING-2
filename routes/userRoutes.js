@@ -11,11 +11,10 @@ const { mostrarCliente , mostrarClienteModificar , actualizarUsuario , actualiza
 const { mostrarModificarPerfil , modificarMiPerfil , mostrarModificarMiPassword, modificarMiPassword} = require('../controllers/modificarPerfilController');
 const { mostrarAdopciones, cambiarEstado, mostrarPublicacion, guardarPublicacion, mostrarContacto, contactoAdoptante} = require('../controllers/adopcionController');
 const { mostrarHistorial , crearHistorial,mostrarCarga, mostrarLibreta} = require('../controllers/historialController');
-
 const { mostrarCupones } = require('../controllers/cuponesController');
 const { mostrarCampanias, publicarCampania, verificacionesCampania, guardarPublicacionCampania, publicacionGuardada, verificacionesDonacion, realizarDonacion} = require('../controllers/campaniasController');
-
 const { mostrarIndexCruzas, publicarMascotaCruza, guardarPublicacionCruza, publicacionGuardadaCruza, verificacionesCruza, verificarPerroEsDeUsuario, verificacionesDeMascotasContacto, mostrarPublicacionMascota, mostrarRecomendacionesCruza, mostrarContactoCruza, contactoCruzaGuardado, verificacionesContactoCruza, contactarCruza} = require('../controllers/cruzasController');
+const { mostrarVeterinarias } = require('../controllers/veterinariasController');
 
 //invocamos express
 const app = require('express').Router()
@@ -110,6 +109,9 @@ app.get('/cruzas/verPublicacionDeMascota/:id', comprobar_sesion, verificarPerroE
 app.get('/cruzas/contactoCruza/:id', comprobar_sesion, verificacionesDeMascotasContacto, mostrarContactoCruza);
 app.post('/cruzas/contactoCruza/:id', comprobar_sesion, verificacionesDeMascotasContacto, verificacionesContactoCruza, contactarCruza);
 app.get('/cruzas/contactoCruzaGuardado', comprobar_sesion, contactoCruzaGuardado);
+
+//VETERINARIAS DE TURNO
+app.get('/veterinariasDeTurno', mostrarVeterinarias);
 
 module.exports = app;
 
