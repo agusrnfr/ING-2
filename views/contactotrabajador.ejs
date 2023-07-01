@@ -70,7 +70,30 @@
                          name="servicio" 
                          type= "text"
                          id="servicio" 
-                         placeholder="Servicio que solicita" 
+                         value="<%= trabajador.servicio %>"
+                         readonly style="background-color: #f2f2f2; opacity: 0.7; pointer-events: none;"
+                         required="">
+                </div>
+
+                <label for="color">Dias disponibles: (*)</label>
+                <div class="mb-3">
+                  <input class="form-control form-control-user" 
+                         name="dias" 
+                         type= "text"
+                         id="dias" 
+                         value="<%= trabajador.dias %>"
+                         readonly style="background-color: #f2f2f2; opacity: 0.7; pointer-events: none;"
+                         required="">
+                </div>
+
+                <label for="color">Horarios disponibles: (*)</label>
+                <div class="mb-3">
+                  <input class="form-control form-control-user" 
+                         name="horario" 
+                         type= "text"
+                         id="horario" 
+                         value="<%= trabajador.horario %>"
+                         readonly style="background-color: #f2f2f2; opacity: 0.7; pointer-events: none;"
                          required="">
                 </div>
 
@@ -79,10 +102,6 @@
                 <textarea class="form-control form-control-user" name="fecha" id="fecha" 
                  placeholder="Fechas en que requiere el servicio " rows="5" cols="30"></textarea></div>
 
-                <label for="color">Horarios: (*) </label>
-                <div class="mb-3">
-                <textarea class="form-control form-control-user" name="horario" id="horario" 
-                 placeholder="Horarios que requiere del servicio " rows="5" cols="30"></textarea></div>
       
                  <span id="mensaje" style="color: black;"></span>
               </div>
@@ -90,7 +109,7 @@
       
           </div>
           <div class="col-md-10 col-lg-6 col-xl-6 d-flex align-items-center order-1 order-lg-2 justify-content-center">
-              <img src="/img/trabajador2.jpg" width="350px">
+              <img src="/img/trabajador2.jpg" width="330px">
           </div>
       
           <style>
@@ -125,6 +144,7 @@
           const servicio = document.getElementById('servicio').value;
           const fecha = document.getElementById('fecha').value;
           const horario = document.getElementById('horario').value;
+          const dias = document.getElementById('dias').value;
 
         
           if (!nombreyA || !telefono|| !mail || !servicio || !fecha || !horario) {
