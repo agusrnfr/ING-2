@@ -1,6 +1,7 @@
 'use strict';
 const Trabajador = require('../db/models/trabajador.js');
 const session = require('express-session');
+const { Op } = require('sequelize');
 
 const guardarTrabajador = (req, res) => {
   const nombre = req.body.nombre;
@@ -142,9 +143,6 @@ function ordenarTrabajadoresPorServicio(trabajadores) {
 
 const mostrarPaseadores = async(req,res) => {
   const trabajadores = await Trabajador.findAll();
-  if (trabajadores.length === 0) {
-    return res.send('No hay trabajadores cargados');
-  }
   const trabajadoresOrdenados = ordenarTrabajadoresPorServicio(trabajadores);
   const otrosTrabajadores = filtroTrabajadores(trabajadoresOrdenados);
 
@@ -153,14 +151,33 @@ const mostrarPaseadores = async(req,res) => {
 
 const mostrarGuarderias = async(req,res) => {
   const trabajadores = await Trabajador.findAll();
-  if (trabajadores.length === 0) {
-    return res.send('No hay trabajadores cargados');
-  }
   const trabajadoresOrdenados = ordenarTrabajadoresPorServicio(trabajadores);
   const guarderias = filtroGuarderias(trabajadoresOrdenados);
 
   res.render('guarderias',{guarderias, session: session })
 }
+
+const mostrarGuarderiasFiltradasPorZona = async(req,res) => {
+  const trabajadores = await Trabajador.findAll({
+    where: { zona : req.body.zona  },
+  });
+  const trabajadoresOrdenados = ordenarTrabajadoresPorServicio(trabajadores);
+  const guarderias = filtroGuarderias(trabajadoresOrdenados);
+
+  res.render('guarderias',{guarderias, session: session })
+}
+
+const mostrarPaseadoresFiltradosPorZona = async(req,res) => {
+  const trabajadores = await Trabajador.findAll({
+    where: { zona : req.body.zona  },
+  });
+  const trabajadoresOrdenados = ordenarTrabajadoresPorServicio(trabajadores);
+  const otrosTrabajadores = filtroTrabajadores(trabajadoresOrdenados);
+
+  res.render('paseadores', {otrosTrabajadores, session: session })
+}
+
+
 
 const cambiarEstadoTrabajador = async (req, res) => {
   const trabajadorId = req.body.id;
@@ -195,4 +212,6 @@ module.exports = {
   mostrarPaseadores,
   mostrarGuarderias,
   cambiarEstadoTrabajador,
+  mostrarGuarderiasFiltradasPorZona,
+  mostrarPaseadoresFiltradosPorZona,
 };

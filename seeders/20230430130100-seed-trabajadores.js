@@ -1,5 +1,5 @@
  'use strict';
-
+ require('../globals.js');
  /** @type {import('sequelize-cli').Migration} */
  module.exports = {
    async up (queryInterface, Sequelize) {
@@ -9,7 +9,7 @@
      nombre: "Nicolas Robin",
      email: "nicoRobin@gmail.com",
      servicio: "Paseador",
-     zona: "Tolosa",
+     zona: ZONAS.PASO,
      estado: true,
     }], {});
 
@@ -17,7 +17,7 @@
       nombre: "Nicolas Robin",
       email: "nicoRobin@gmail.com",
       servicio: "Paseador",
-      zona: "Tolosa",
+      zona: ZONAS.MORENO,
       estado: true,
      }], {});
 
@@ -25,7 +25,7 @@
       nombre: "Nicolas Robin",
       email: "nicoRobin@gmail.com",
       servicio: "Paseador",
-      zona: "Tolosa",
+      zona: ZONAS.MORENO,
       estado: true,
      }], {});
 
@@ -33,7 +33,7 @@
       nombre: "Nicolas Robin",
       email: "nicoRobin@gmail.com",
       servicio: "Paseador",
-      zona: "Tolosa",
+      zona: ZONAS.MORENO,
       estado: true,
      }], {});
  
@@ -42,7 +42,7 @@
      nombre: "Jessica Vaisman",
      email: "jessVaisman@gmail.com",
      servicio: "Cuidador,Paseador",
-     zona: "Centro",
+     zona: ZONAS.MORENO,
      estado: true,
       }], {});
 
@@ -50,7 +50,7 @@
      nombre: "Victoria Paz",
      email: "vickypeace@gmail.com",
      servicio: "Paseador",
-     zona: "Barrio Aeropuerto",
+     zona: ZONAS.SAN_MARTIN,
      estado: true,
     }], {});
 
@@ -58,7 +58,7 @@
      nombre: "Patitas Felices",
      email: "patitasFe@gmail.com",
      servicio: "Guarderia",
-     zona: "Barrio Malvinas",
+     zona: ZONAS.ISLAS_MALVINAS,
      estado: true,
     }], {});
 
@@ -66,7 +66,7 @@
       nombre: "Patitas Felices",
       email: "patitasFe@gmail.com",
       servicio: "Guarderia",
-      zona: "Barrio Malvinas",
+      zona: ZONAS.ISLAS_MALVINAS,
       estado: true,
      }], {});
 
@@ -74,7 +74,7 @@
       nombre: "Patitas Felices",
       email: "patitasFe@gmail.com",
       servicio: "Guarderia",
-      zona: "Barrio Malvinas",
+      zona: ZONAS.MORENO,
       estado: true,
      }], {});
 
@@ -82,7 +82,7 @@
       nombre: "Patitas Felices",
       email: "patitasFe@gmail.com",
       servicio: "Guarderia",
-      zona: "Barrio Malvinas",
+      zona: ZONAS.PASO,
       estado: true,
      }], {});
 
@@ -90,7 +90,7 @@
       nombre: "Patitas Felices",
       email: "patitasFe@gmail.com",
       servicio: "Guarderia",
-      zona: "Barrio Malvinas",
+      zona: ZONAS.ROCHA,
       estado: true,
      }], {});
 
@@ -98,7 +98,7 @@
       nombre: "Patitas Felices",
       email: "patitasFe@gmail.com",
       servicio: "Guarderia",
-      zona: "Barrio Malvinas",
+      zona: ZONAS.ISLAS_MALVINAS,
       estado: true,
      }], {});
  
