@@ -38,8 +38,7 @@
         <span class="emoji">&#x1F50E;</span>  Buscar por zona
       </button>
       <div class="dropdown-content">
-        <form id="searchForm" action="/ruta-de-destino" method="GET">
-          <select class="form-control form-control-user" name="zona" id="zona" required>
+          <select class="form-control form-control-user" name="zona" id="zona" required=" " >
             <option value="" disabled selected>Selecciona una zona</option>
             <option value="Plaza Moreno">Plaza Moreno</option>
             <option value="Plaza San Martín">Plaza San Martín</option>
@@ -58,8 +57,7 @@
             <option value="Plaza Malvinas Argentinas">Plaza Malvinas Argentinas</option>
             <option value="Plaza Güemes Este">Plaza Güemes Este</option>
           </select>
-          <button type="submit" class="btn btn-primary" style="margin: 10px auto; display: block;">Buscar</button>
-        </form>
+          <button class="btn btn-primary" style="margin: 10px auto; display: block;" onclick="enviarZona()">Buscar</button>
       </div>
     </div>
       
@@ -163,6 +161,12 @@
   });
 </script>
 
+<script>
+  function enviarZona() {
+    const zonaSeleccionada = document.getElementById('zona').value;
+    window.location.href = `/filtro?zona=${encodeURIComponent(zonaSeleccionada)}&usuario=${encodeURIComponent('Guarderia')}`;
+  }
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
 integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"

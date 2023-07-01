@@ -90,7 +90,7 @@
       nombre: "Patitas Felices",
       email: "patitasFe@gmail.com",
       servicio: "Guarderia",
-      zona: "Barrio Malvinas",
+      zona: "Plaza Italia",
       dias: "Lunes,Martes,Jueves",
       horario: "9:00,14:00",
       estado: true,
