@@ -1,1 +1,86 @@
-perdidas
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<%- include ('header', {tituloweb: '¡Oh my dog! | Turnos ' }); %>
+
+    <body id="body">
+        <div class="container">
+            <div class="row">
+              <% for (var i = 1; i <= 6; i++) { %>
+                <div class="col-sm-4">
+                  <div class="card">
+                    <div class="image" style="display: flex; flex-direction: column;">
+                        <div class="alert alert-danger text-center" role="alert" style="margin-bottom: 0;">
+                          <strong style="font-size: 20px;">Se busca</strong>
+                        </div>
+                        <img src="http://loremflickr.com/320/200/dog/?random=<%= i %>" />
+                      </div>
+                      <div class="card-inner">
+                        <div class="header">
+                          <h2 class="text-center">Nombre</h2>
+                          <h3 class="text-center">Zona</h3>
+                        </div>
+                        <div class="content">
+                            <p>Descripción</p>
+                            <h5 class="text-center">
+                                <a href="/contactoAdoptante?idAdopcion=" class="btn btn-outline-primary float-right">Contactar</a>
+                                <a href="#" class="btn btn-outline-info float-right" data-toggle="collapse" data-target="#collapseInfo<%= i %>">Más info</a>
+                                <div id="collapseInfo<%= i %>" class="collapse">
+                                    <div class="card">
+                                      <div class="card-body">
+                                        <p class="card-text small">Fecha de pérdida: 30/02/1000</p>
+                                        <p class="card-text small">Edad: 2</p>
+                                        <p class="card-text small">Sexo: macho</p>
+                                        <p class="card-text small">Comportamiento: inquieto</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                            </h5>
+                        </div>
+                        <h5 class="text-center">
+                        <a href="/contactoAdoptante?idAdopcion=" class="btn btn-outline-success float-right">Marcar como Encontrado</a>
+                    </h5>
+                    </div>
+                  </div>
+                </div>
+              <% } %>
+            </div>
+          </div>
+          <div class="text-center mt-2">
+            <a class="small" href="/" style="color: white;">Volver</a>
+          </div>
+
+          <style>
+body {
+  background: #eeeded;
+}
+
+.card {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+  margin-top:10px;
+  margin-bottom:10px;
+  background-color:#FFF;
+}
+
+.card:hover {
+  box-shadow: 0 5px 5px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+.card > .card-inner {
+  padding:10px;
+}
+.card .header h2, h3 {
+  margin-bottom: 0px;
+  margin-top:0px;
+}
+.card .header {
+  margin-bottom:5px;
+}
+.card img{
+  width:100%;
+}
+          </style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
+
+  </body>
