@@ -9,41 +9,28 @@
                 <div class="card text-black mb-3" style="border-radius: 25px;">
                     <div class="card-body p-md-4">
                         <div class="row justify-content-center">
-                            <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-3">Crear publicación de perro perdido <i class="bi bi-heartbreak"></i></p>
+                            <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-3">Crear publicación de busqueda <i class="bi bi-heartbreak"></i></p>
                             <div class="col-md-6"> <!-- Primera columna del formulario -->
-                                <form method="POST" action="/crear_publicacion_perdida">
+                                <form method="POST" action="/campanias/publicarCampania">
                                     <div class="row mb-3 h-100">
                                         <div class="mb-3">
-                                            <label for="zona">¿La mascota había sido registrada en la veterinaria?</label>
-                                            <select class="form-control form-control" name="select_mascota" id="select_mascota" required onchange="disableFields()">
-                                              <option value="" selected disabled>No</option>
-                                              <% Object.values(mascotas).forEach(function(mascota) { %>
-                                                <option value="<%= mascota.nombre %>"><%= mascota.nombre %></option>
-                                              <% }); %>
-                                            </select>
-                                          </div>
-                                          <div class="mb-3">
-                                            <label for="nombre_mascota" class="b">Nombre de la mascota? (*)</label>
-                                            <input class="form-control form-control-user" id="nombre_mascota" name="nombre_mascota" type="text" maxlength="256" required>
-                                          </div>
-                                          <div class="mb-3">
-                                            <label for="edad" class="b">Edad (*)</label>
-                                            <input class="form-control form-control-user" type="text" name="edad" id="edad" required>
-                                          </div>
+                                            <label for="edad" class="b"> Edad (*) </label>
+                                            <input class="form-control form-control-user" type="text" name="edad" required>
+                                        </div>
                                         <div class="mb-3">
-                                            <label for="mail" class="b"> Mail de contacto (*) </label>
-                                            <input class="form-control form-control-user" type="text" name="mail" value="<%= session.usuario.mail %>" required>
+                                            <label for="mail" class="b"> Mail (*) </label>
+                                            <input class="form-control form-control-user" type="text" name="mail" required>
                                         </div>
                                         <div class="mb-3">
                                             <label for="caracteristicas" class="b">Características</label>
-                                            <textarea class="form-control form-control-user" name="caracteristicas" maxlength="1000" required></textarea>
+                                            <textarea class="form-control form-control-user" name="caracteristicas" rows="5" maxlength="1000" required></textarea>
                                           </div>
                                           
                                     </div>
                                 </div>
                                 <div class="col-md-6"> <!-- Segunda columna del formulario -->
                                     <div class="mb-3">
-                                        <label for="fecha_perdida" class="b"> Día en que se perdió (*) </label>
+                                        <label for="fecha_perdida" class="b"> Día en que se encontro (*) </label>
                                         <% let fechaMinima = new Date();
                                         fechaMinima.setDate(fechaMinima.getDate() + 1);
                                         fechaMinima = fechaMinima.toISOString().split("T")[0];
@@ -55,7 +42,7 @@
                                     </div>
                                     <div class="mb-3">
                                     <label for="telefono"> Teléfono (*) </label>
-                                    <input class="form-control form-control-user" name="telefono" value="<%= session.usuario.tel %>" type="text" pattern="[0-9]{10}" maxlength="10" value="" required
+                                    <input class="form-control form-control-user" name="telefono" type="text" pattern="[0-9]{10}" maxlength="10" value="" required
                                         title="Ingrese un número de teléfono válido">
                                 </div>
                                 <div class="mb-3">
@@ -63,7 +50,7 @@
                                     <textarea class="form-control form-control-user" name="comportamiento" maxlength="500"></textarea>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="zona">Zona en que se perdio (*)</label>
+                                    <label for="zona">Zona en que se encontro (*)</label>
                                     <select class="form-control form-control" name="zona" id="zona" required onchange="enableButton()">
                                       <option value="" selected disabled>Selecciona una zona</option>
                                       <% Object.values(global.ZONAS).forEach(function(zona) { %>
@@ -101,30 +88,6 @@
     </div>
     <script>
     </script>
-
-
-<script>
-    function disableFields() {
-      var select = document.getElementById("select_mascota");
-      var selectedOption = select.options[select.selectedIndex];
-      var nombreMascota = selectedOption.value;
-      var nombreInput = document.getElementById("nombre_mascota");
-      var edadInput = document.getElementById("edad");
-      var fotoInput = document.getElementById("input-file")
-      
-      if (nombreMascota) {
-        nombreInput.disabled = true;
-        edadInput.disabled = true;
-        fotoInput.disabled = true;
-      } else {
-        nombreInput.disabled = false;
-        edadInput.disabled = false;
-        fotoInput.disabled = false;
-      }
-    }
-  </script>
-
-
 
 </body>
 <%- include ('sweet-alert') %>

@@ -125,13 +125,13 @@ app.post('/generar_reporte_practicas', comprobar_sesion, comprobar_sesion_admin,
 
 //PERDIDAS
 app.get('/perdidas', mostrarPerdidas);
-app.get('/crear_publicacion_perdida', mostrarFormularioPerdida)
-app.post('/crear_publicacion_perdida', generarPublicacionPerdida)
+app.get('/crear_publicacion_perdida', comprobar_sesion, mostrarFormularioPerdida)
+app.post('/crear_publicacion_perdida', comprobar_sesion, generarPublicacionPerdida)
 
 //BUSQUEDAS
 app.get('/busquedas', mostrarBusquedas);
-app.get('/crear_publicacion_busqueda', mostrarFormularioBusqueda)
-app.post('/crear_publicacion_busqueda', generarPublicacionBusqueda)
+app.get('/crear_publicacion_busqueda', comprobar_sesion, mostrarFormularioBusqueda)
+app.post('/crear_publicacion_busqueda', comprobar_sesion, generarPublicacionBusqueda)
 
 module.exports = app;
 

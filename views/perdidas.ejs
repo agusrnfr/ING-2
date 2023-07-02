@@ -44,9 +44,11 @@
               <% } %>
             </div>
           </div>
+          <% if (session && session.loggedin) { %>
           <div class="floating-button">
             <a href="/crear_publicacion_perdida" class="btn btn-primary">Crear publicación</a>
           </div>
+          <% } %>
           <div class="text-center mt-2">
               <a class="small" href="/" style="color: white;">Volver</a>
             </div>
