@@ -3,6 +3,16 @@
 const mostrarBusquedas = async(req, res) => {
     return res.render('../views/busquedas')
 }
+
+const mostrarFormularioBusqueda = async(req, res) => {
+    return res.render('../views/crear_publicacion_busqueda')
+}
+
+const generarPublicacionBusqueda = async(req, res) => {
+}
+
 module.exports = {
     mostrarBusquedas,
+    mostrarFormularioBusqueda,
+    generarPublicacionBusqueda,
 }

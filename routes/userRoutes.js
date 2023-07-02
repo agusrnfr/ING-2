@@ -13,8 +13,8 @@ const { mostrarModificarPerfil , modificarMiPerfil , mostrarModificarMiPassword,
 const { mostrarAdopciones, cambiarEstado, mostrarPublicacion, guardarPublicacion, mostrarContacto, contactoAdoptante} = require('../controllers/adopcionController');
 const { mostrarHistorial , crearHistorial,mostrarCarga, mostrarLibreta} = require('../controllers/historialController');
 const { mostrarCupones } = require('../controllers/cuponesController');
-const { mostrarPerdidas } = require('../controllers/perdidasController');
-const { mostrarBusquedas } = require('../controllers/busquedasController');
+const { mostrarPerdidas, mostrarFormularioPerdida, generarPublicacionPerdida} = require('../controllers/perdidasController');
+const { mostrarBusquedas, mostrarFormularioBusqueda, generarPublicacionBusqueda} = require('../controllers/busquedasController');
 const { mostrarCampanias, publicarCampania, verificacionesCampania, guardarPublicacionCampania, publicacionGuardada, verificacionesDonacion, realizarDonacion} = require('../controllers/campaniasController');
 const { mostrarIndexCruzas, publicarMascotaCruza, guardarPublicacionCruza, publicacionGuardadaCruza, verificacionesCruza, verificarPerroEsDeUsuario, verificacionesDeMascotasContacto, mostrarPublicacionMascota, mostrarRecomendacionesCruza, mostrarContactoCruza, contactoCruzaGuardado, verificacionesContactoCruza, contactarCruza} = require('../controllers/cruzasController');
 const { mostrarVeterinarias } = require('../controllers/veterinariasController');
@@ -125,9 +125,13 @@ app.post('/generar_reporte_practicas', comprobar_sesion, comprobar_sesion_admin,
 
 //PERDIDAS
 app.get('/perdidas', mostrarPerdidas);
+app.get('/crear_publicacion_perdida', mostrarFormularioPerdida)
+app.post('/crear_publicacion_perdida', generarPublicacionPerdida)
 
 //BUSQUEDAS
 app.get('/busquedas', mostrarBusquedas);
+app.get('/crear_publicacion_busqueda', mostrarFormularioBusqueda)
+app.post('/crear_publicacion_busqueda', generarPublicacionBusqueda)
 
 module.exports = app;
 
