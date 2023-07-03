@@ -4,26 +4,28 @@
     <body id="body">
         <div class="container">
             <div class="row">
-              <% for (var i = 1; i <= 6; i++) { %>
+              <% perdidas.forEach(perdida => { %>
                 <div class="col-sm-4">
                   <div class="card">
                     <div class="image" style="display: flex; flex-direction: column;">
                         <div class="alert alert-danger text-center" role="alert" style="margin-bottom: 0;">
                           <strong style="font-size: 20px;">Se busca</strong>
                         </div>
-                        <img src="http://loremflickr.com/320/200/dog/?random=<%= i %>" />
+                        <img src="<%= perdida.foto %>"/>
                       </div>
                       <div class="card-inner">
                         <div class="header">
-                          <h2 class="text-center">Nombre</h2>
-                          <h3 class="text-center">Zona</h3>
+                          <h2 class="text-center"><%= perdida.nombre %></h2>
+                          <h3 class="text-center"><%= perdida.zona %></h3>
                         </div>
                         <div class="content">
-                            <p>Descripción</p>
+                          <h8 class="text-center">
+                            <p><%= perdida.caracteristicas %></p>
+                          </h8>
                             <h5 class="text-center">
                                 <a href="/contacto_perdida" class="btn btn-outline-primary float-right">Contactar</a>
-                                <a href="#" class="btn btn-outline-info float-right" data-toggle="collapse" data-target="#collapseInfo<%= i %>">Más info</a>
-                                <div id="collapseInfo<%= i %>" class="collapse">
+                                <a href="#" class="btn btn-outline-info float-right" data-toggle="collapse" data-target="#collapseInfo<%= perdida.id %>">Más info</a>
+                                <div id="collapseInfo<%= perdida.id %>" class="collapse">
                                     <div class="card">
                                       <div class="card-body">
                                         <p class="card-text small">Fecha de pérdida: 30/02/1000</p>
@@ -41,7 +43,7 @@
                     </div>
                   </div>
                 </div>
-              <% } %>
+              <% }) %>
             </div>
           </div>
           <% if (session && session.loggedin) { %>

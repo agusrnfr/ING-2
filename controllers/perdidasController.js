@@ -2,9 +2,11 @@
 const session = require('express-session');
 const User = require('../db/models/user.js');
 const Mascota = require('../db/models/mascota');
+const Perdida = require('../db/models/perdida');
 
 const mostrarPerdidas = async(req, res) => {
-    return res.render('../views/perdidas', { session })
+    const perdidas = await Perdida.findAll()
+    return res.render('../views/perdidas', { session , perdidas })
 }
 
 const mostrarFormularioPerdida = async(req, res) => {
