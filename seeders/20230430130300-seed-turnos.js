@@ -101,6 +101,15 @@ module.exports = {
       fecha: moment().hour(9).minute(30).toDate(),
       banda_horaria: 'Mañana',
       estado: 'Aceptado',
+      practica: 'Vacuna A',
+      UserId: 3,
+      MascotumId: 8,
+    }], {});
+
+    await queryInterface.bulkInsert('turnos', [{
+      fecha: moment().hour(9).minute(30).toDate(),
+      banda_horaria: 'Mañana',
+      estado: 'Aceptado',
       practica: 'Vacuna B',
       UserId: 3,
       MascotumId: 1,
