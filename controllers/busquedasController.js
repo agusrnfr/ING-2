@@ -11,8 +11,18 @@ const mostrarFormularioBusqueda = async(req, res) => {
 const generarPublicacionBusqueda = async(req, res) => {
 }
 
+const mostrarContactarBusqueda = async(req, res) => {
+    res.render('../views/contactar_busqueda')
+}
+
+const contactarBusqueda = async(req, res) => {
+}
+
+
 module.exports = {
     mostrarBusquedas,
     mostrarFormularioBusqueda,
     generarPublicacionBusqueda,
+    mostrarContactarBusqueda,
+    contactarBusqueda,
 }

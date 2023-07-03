@@ -13,8 +13,8 @@ const { mostrarModificarPerfil , modificarMiPerfil , mostrarModificarMiPassword,
 const { mostrarAdopciones, cambiarEstado, mostrarPublicacion, guardarPublicacion, mostrarContacto, contactoAdoptante} = require('../controllers/adopcionController');
 const { mostrarHistorial , crearHistorial,mostrarCarga, mostrarLibreta} = require('../controllers/historialController');
 const { mostrarCupones } = require('../controllers/cuponesController');
-const { mostrarPerdidas, mostrarFormularioPerdida, generarPublicacionPerdida} = require('../controllers/perdidasController');
-const { mostrarBusquedas, mostrarFormularioBusqueda, generarPublicacionBusqueda} = require('../controllers/busquedasController');
+const { mostrarPerdidas, mostrarFormularioPerdida, generarPublicacionPerdida, mostrarContactarPerdida, contactarPerdida } = require('../controllers/perdidasController');
+const { mostrarBusquedas, mostrarFormularioBusqueda, generarPublicacionBusqueda, mostrarContactarBusqueda, contactarBusqueda } = require('../controllers/busquedasController');
 const { mostrarCampanias, publicarCampania, verificacionesCampania, guardarPublicacionCampania, publicacionGuardada, verificacionesDonacion, realizarDonacion} = require('../controllers/campaniasController');
 const { mostrarIndexCruzas, publicarMascotaCruza, guardarPublicacionCruza, publicacionGuardadaCruza, verificacionesCruza, verificarPerroEsDeUsuario, verificacionesDeMascotasContacto, mostrarPublicacionMascota, mostrarRecomendacionesCruza, mostrarContactoCruza, contactoCruzaGuardado, verificacionesContactoCruza, contactarCruza} = require('../controllers/cruzasController');
 const { mostrarVeterinarias } = require('../controllers/veterinariasController');
@@ -127,11 +127,15 @@ app.post('/generar_reporte_practicas', comprobar_sesion, comprobar_sesion_admin,
 app.get('/perdidas', mostrarPerdidas);
 app.get('/crear_publicacion_perdida', comprobar_sesion, mostrarFormularioPerdida)
 app.post('/crear_publicacion_perdida', comprobar_sesion, generarPublicacionPerdida)
+app.get('/contacto_perdida', mostrarContactarPerdida)
+app.post('/contacto_perdida', contactarPerdida)
 
 //BUSQUEDAS
 app.get('/busquedas', mostrarBusquedas);
 app.get('/crear_publicacion_busqueda', comprobar_sesion, mostrarFormularioBusqueda)
 app.post('/crear_publicacion_busqueda', comprobar_sesion, generarPublicacionBusqueda)
+app.get('/contacto_busqueda', mostrarContactarBusqueda)
+app.post('/contacto_busqueda', contactarBusqueda)
 
 module.exports = app;
 

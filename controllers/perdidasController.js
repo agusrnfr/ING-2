@@ -17,8 +17,21 @@ const generarPublicacionPerdida = async(req, res) => {
     res.send('Publicacion de perdida generada')
 }
 
+const mostrarContactarPerdida = async(req, res) => {
+    if(session && session.usuario){
+        return res.render('../views/contactar_perdida', { session })
+    }
+    return res.render('../views/contactar_perdida', { session: null })
+}
+
+const contactarPerdida = async(req, res) => {
+}
+
+
 module.exports = {
     mostrarPerdidas,
     mostrarFormularioPerdida,
     generarPublicacionPerdida,
+    mostrarContactarPerdida,
+    contactarPerdida,
 }
