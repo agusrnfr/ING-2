@@ -4,19 +4,63 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+    
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        padding: 12px 16px;
+        z-index: 1;
+        top: 100%; 
+      }
+    
+      .dropdown.open .dropdown-content {
+        display: block;
+      }
+    </style>
     <%- include ('header', {tituloweb: '¡Oh my dog! | Guarderias'}); %>
 </head>
 <body id="body">
 
-  <div class="row" style="margin: 30px;">
-    <h2 class="text-center">Guarderías</h2>
+  <div class="row" style="margin: 30px; display: flex; justify-content: center;">
+    <h2 class="text-center">Guarderías</h2> 
     <strong><p style="font-size: 20px;"></p></strong>
+
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body text-center">
+              <form method="POST" action="/mostrarGuarderiasFiltradasPorZona" class="form-inline">
+                <div class="form-group">
+                  <select class="form-control form-control-sm mb-2" name="zona" id="zona" required onchange="enableButton()">
+                    <option value="" selected disabled>Selecciona una zona</option>
+                    <% Object.values(global.ZONAS).forEach(function(zona) { %>
+                      <option value="<%= zona %>"><%= zona %></option>
+                    <% }); %>
+                  </select>
+                </div>
+                <button class="btn btn-primary ml-2" type="submit" id="submitButton" disabled><i class="bi bi-piggy-bank"></i> Filtrar por zona</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      
     <% if (guarderias.length > 0) { %>
       <% guarderias.forEach((trabajador) => { %>
 
         <% if ((typeof session.usuario !== 'undefined' && session.usuario.rol === 'admin') || (!session.usuario || (session.usuario && session.usuario.rol !== 'admin' && trabajador.estado))) { %>
             
-          <div class="card" style="width: 300px; height: 250px; margin: 10px;">
+          <div class="card" style="width: 300px; height: 370px; margin: 10px;">
               <div class="card-body">
                 
                   <% if (typeof session.usuario !== 'undefined' && (session.loggedin === true) &&(session.usuario.rol === 'admin')) { %>
@@ -44,12 +88,16 @@
                   </div>
                 </div>
                 <h5 class="card-title">
-                  <%= trabajador.nombre %> <span class="emoji">&#x1F3E1;</span>
+                  <%= trabajador.nombre %> <span class="emoji">&#x1F3E1;</span> 
                 </h5>
                 <br>
                 <% let serviciosConcatenados = trabajador.servicio.split(',').map(servicio => servicio.trim()).join(', '); %>
-                <p class="card-text"><strong>Servicio:</strong> <%= serviciosConcatenados %></p>
+                
+                <p class="card-text"><strong>Servicio:</strong> <%= trabajador.servicio %></p>
                 <p class="card-text"><strong>Zona:</strong> <%= trabajador.zona %></p>
+                <p class="card-text"><strong>Dias Disponibles:</strong> <%= trabajador.dias %></p>
+                <p class="card-text"><strong>Horarios:</strong> <%= trabajador.horario %></p>
+
               </div>
               <a href="<%=`/contactar/trabajador/${trabajador.id}`%>" class="btn btn-primary">Contactar</a>
               <br>
@@ -61,27 +109,7 @@
       <p style="text-align: center;">No hay publicaciones de paseadores disponibles.</p>
     <% } %>
     
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-sm-6">
-          <div class="card">
-            <div class="card-body text-center">
-              <form method="POST" action="/mostrarGuarderiasFiltradasPorZona" class="form-inline">
-                <div class="form-group">
-                  <select class="form-control form-control-sm mb-2" name="zona" id="zona" required onchange="enableButton()">
-                    <option value="" selected disabled>Selecciona una zona</option>
-                    <% Object.values(global.ZONAS).forEach(function(zona) { %>
-                      <option value="<%= zona %>"><%= zona %></option>
-                    <% }); %>
-                  </select>
-                </div>
-                <button class="btn btn-primary ml-2" type="submit" id="submitButton" disabled><i class="bi bi-piggy-bank"></i> Filtrar por zona</button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+
     
     <script>
       function enableButton() {
@@ -129,12 +157,36 @@
   }
 </script>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var dropdown = document.querySelector('.dropdown');
+    var dropdownContent = dropdown.querySelector('.dropdown-content');
+    var button = dropdown.querySelector('button');
+
+    button.addEventListener('click', function() {
+      dropdown.classList.toggle('open');
+    });
+
+    document.addEventListener('click', function(event) {
+      if (!dropdown.contains(event.target)) {
+        dropdown.classList.remove('open');
+      }
+    });
+  });
+</script>
+
+<script>
+  function enviarZona() {
+    const zonaSeleccionada = document.getElementById('zona').value;
+    window.location.href = `/filtro?zona=${encodeURIComponent(zonaSeleccionada)}&usuario=${encodeURIComponent('Guarderia')}`;
+  }
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
 integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
 crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> 
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> 
 
 </body>
 
