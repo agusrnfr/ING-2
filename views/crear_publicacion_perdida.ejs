@@ -22,12 +22,20 @@
                                               <% }); %>
                                             </select>
                                           </div>
+
                                           <div class="mb-3">
-                                            <label for="nombre_mascota" class="b">Nombre de la mascota? (*)</label>
+                                            <div class="alert alert-info" role="alert" id="warning_datos_precargan" style="display: none;">
+                                              <i class="bi bi-exclamation-triangle-fill"></i> Los datos de la mascota serán utilizados para el formulario
+                                            </div>
+                                          </div>
+                                          
+                                          
+                                          <div class="mb-3">
+                                            <label for="nombre_mascota" class="b" id="nombre_mascota_label">Nombre de la mascota? (*)</label>
                                             <input class="form-control form-control-user" id="nombre_mascota" name="nombre_mascota" type="text" maxlength="256" required>
                                           </div>
                                           <div class="mb-3">
-                                            <label for="edad" class="b">Edad (*)</label>
+                                            <label for="edad" class="b" id="edad_label">Edad (*)</label>
                                             <input class="form-control form-control-user" type="text" name="edad" id="edad" required>
                                           </div>
                                         <div class="mb-3">
@@ -71,7 +79,7 @@
                                       <% }); %>
                                     </select>
                                   </div>
-                                <div class="mb-3"><label for="input-file" class="form-label">Agregar fotografia</label><input type="file" class="form-control" id="input-file" name="imagen"></div>
+                                <div class="mb-3"><label for="input-file" class="form-label" id="input-file_label">Agregar fotografia</label><input type="file" class="form-control" id="input-file" name="imagen"></div>
                             </div>
                             <div>
                                 <button class="btn btn-primary d-block btn-user w-100" type="submit"
@@ -90,6 +98,17 @@
                                 }
                             }
                         </style>
+                            <style>
+                            #warning_datos_precargan {
+                                margin-top: 10px !important;
+                                margin-bottom: 1px !important;
+                                padding-bottom: 1px !important;
+                            }
+
+                            .mb-3 {
+                                margin-bottom: 1px !important; /* Ajusta el valor según tus necesidades */
+                            }
+                            </style>
                     </div>
                     <hr>
                     <div class="text-center mb-2" style="font-size: smaller;">Los campos con (*) son obligatorios</div>
@@ -111,15 +130,28 @@
       var nombreInput = document.getElementById("nombre_mascota");
       var edadInput = document.getElementById("edad");
       var fotoInput = document.getElementById("input-file")
+      var nombreLabel = document.getElementById("nombre_mascota_label");
+      var edadLabel =  document.getElementById("edad_label");
+      var fotoLabel = document.getElementById("input-file_label");
+      var warning_datos_precargan = document.getElementById("warning_datos_precargan");
       
       if (nombreMascota) {
-        nombreInput.disabled = true;
-        edadInput.disabled = true;
-        fotoInput.disabled = true;
+        nombreInput.style.display = "none";
+        edadInput.style.display = "none";
+        fotoInput.style.display = "none";
+        nombreLabel.style.display = "none";
+        edadLabel.style.display = "none";
+        fotoLabel.style.display = "none";
+        warning_datos_precargan.style.display = "block";
+
       } else {
-        nombreInput.disabled = false;
-        edadInput.disabled = false;
-        fotoInput.disabled = false;
+        nombreInput.disabled = "block";
+        edadInput.disabled = "block";
+        fotoInput.disabled = "block";
+        nombreLabel.style.display = "block";
+        edadLabel.style.display = "block";
+        fotoLabel.style.display = "block";
+        warning_datos_precargan.style.display = "none";
       }
     }
   </script>
