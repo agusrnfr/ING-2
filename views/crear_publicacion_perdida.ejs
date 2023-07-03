@@ -15,7 +15,7 @@
                                     <div class="row mb-3 h-100">
                                         <div class="mb-3">
                                             <label for="zona">¿La mascota había sido registrada en la veterinaria?</label>
-                                            <select class="form-control form-control" name="select_mascota" id="select_mascota" required onchange="disableFields()">
+                                            <select class="form-control form-control" name="select_mascota" id="select_mascota" onchange="disableFields()">
                                               <option value="" selected disabled>No</option>
                                               <% Object.values(mascotas).forEach(function(mascota) { %>
                                                 <option value="<%= mascota.id %>"><%= mascota.nombre %></option>
@@ -44,7 +44,7 @@
                                             <input class="form-control form-control-user" type="text" name="mail" value="<%= session.usuario.mail %>" required>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="caracteristicas" class="b">Características</label>
+                                            <label for="caracteristicas" class="b">Características (*)</label>
                                             <textarea class="form-control form-control-user" name="caracteristicas" maxlength="1000" required></textarea>
                                           </div>
                                           

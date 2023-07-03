@@ -16,7 +16,7 @@ const mostrarFormularioPerdida = async(req, res) => {
 }
 
 const generarPublicacionPerdida = async(req, res) => {
-    res.send('Publicacion de perdida generada')
+    res.send('coming soon')
 }
 
 const mostrarContactarPerdida = async(req, res) => {
@@ -27,6 +27,7 @@ const mostrarContactarPerdida = async(req, res) => {
 }
 
 const contactarPerdida = async(req, res) => {
+    res.send('coming soon')
 }
 
 

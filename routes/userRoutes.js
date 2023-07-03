@@ -128,14 +128,14 @@ app.get('/perdidas', mostrarPerdidas);
 app.get('/crear_publicacion_perdida', comprobar_sesion, mostrarFormularioPerdida)
 app.post('/crear_publicacion_perdida', comprobar_sesion, generarPublicacionPerdida)
 app.get('/contacto_perdida', mostrarContactarPerdida)
-app.post('/contacto_perdida', contactarPerdida)
+app.post('/contactarPerdida', contactarPerdida)
 
 //BUSQUEDAS
 app.get('/busquedas', mostrarBusquedas);
 app.get('/crear_publicacion_busqueda', comprobar_sesion, mostrarFormularioBusqueda)
 app.post('/crear_publicacion_busqueda', comprobar_sesion, generarPublicacionBusqueda)
 app.get('/contacto_busqueda', mostrarContactarBusqueda)
-app.post('/contacto_busqueda', contactarBusqueda)
+app.post('/contactarbusqueda', contactarBusqueda)
 
 module.exports = app;
 
