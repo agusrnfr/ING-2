@@ -18,7 +18,8 @@
               <div class="row justify-content-center">
                 <div class="col-md-10 col-lg-5 col-xl-10 order-2 order-lg-1">
                   <p class="text-center h1 fw-bold mb-2 mx-1 mx-md-4 mt-3">Contactar dueño <i class="bi bi-envelope-plus-fill"></i> </p>
-                  <p class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-0">Por favor, ingrese sus datos de contacto</p>
+                  <p class="text-center h6 fw-bold mb-2 mx-1 mx-md-4 mt-0">Por favor, ingrese sus datos de contacto</p>
+                  <div class="alert alert-info" role="alert">Se va a contactar a: <strong> pepito </strong></div>
 
     <form id= "miForm"  action="/nada" method="POST">
 
@@ -121,134 +122,6 @@
 
 </div>
 <%- include ('sweet-alert') %>
-</body>
-
-</html>
-<!DOCTYPE html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <%- include ('header', {tituloweb: '¡Oh my dog! | Contacto perdida'}); %>
-</head>
-
-<body id="body">
-    <div class="container h-100 mt-3" >
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-lg-12 col-xl-7">
-          <div class="card text-black" style="border-radius: 25px;">
-            <div class="card-body p-md-15">
-              <div class="row justify-content-center">
-                <div class="col-md-10 col-lg-5 col-xl-10 order-2 order-lg-1">
-                  <p class="text-center h1 fw-bold mb-1 mx-1 mx-md-4 mt-3">Contactar dueño<i class="bi bi-telephone-outbound-fill"></i></p>
-                  <p class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-0">Por favor, ingrese sus datos de contacto</p>
-                  
-                  
-
-    <form id= "miForm"  action="/nada" method="POST">
-
-        <div class="row mb-3">
-
-          <label for="color">Nombre y Apellido: (*)</label>
-          <div class="mb-3">
-            <input class="form-control form-control-user" 
-                   type="text" 
-                   name="nombre" 
-                   id="nombre" 
-                   placeholder="Ej: Juan Perez" 
-                   <% if (session && session.usuario && session.loggedin) { %>
-                    value="<%= session.usuario.name %>"
-                    readonly style="background-color: #f2f2f2; opacity: 0.7; pointer-events: none;"
-                  <% } %>
-                   <% if (session && session.usuario && session.loggedin) { %>
-                   readonly style="background-color: #f2f2f2; opacity: 0.7; pointer-events: none;"
-                   <% } %>
-                   required>
-          </div>
-          
-          <label for="color">Telefono: (*)</label>
-          <div class="mb-3">
-            <input class="form-control form-control-user" 
-                   name="telefono" 
-                   type="number" 
-                   id="telefono" 
-                   min = 0
-                   placeholder="Numero de telefono" 
-                   <% if (session && session.usuario && session.loggedin) { %>
-                    value="<%= session.usuario.tel %>"
-                  <% } %>
-                   required="">
-          </div>
-          
-          <label for="color">Mail: (*)</label>
-          <div class="mb-3">
-            <input class="form-control form-control-user" 
-                   name="mail" 
-                   type="email" 
-                   id="mail" 
-                   placeholder="Mail de contacto" 
-                   <% if (session && session.usuario && session.loggedin) { %>
-                    value="<%= session.usuario.mail %>"
-                  <% } %>
-                   required="">
-          </div>
-
-        <button class="btn btn-primary d-block btn-user w-100" name="Ingresar" type="submit">Enviar mail</button>
-
-    </div>
-  </div>
-
-    <style>
-        @media only screen and (max-width: 900px) {
-          img {
-            display: none;
-          }
-          div {
-            display: block;
-          }
-        }
-      </style>
-</div>
-<hr>
-</form>
-
-<div class="text-center mb-2" style="font-size: smaller;">Los campos con (*) son obligatorios</div>
-<div class="text-center"><a class="small" href="/perdidas">Volver</a></div>
-</div>
-</div>
-    </div>
-</div>
-</div>
-</div>
-<br><br>
-
-
-</body>
-
-
-<!-- Script que verifica que ningun campo quede en blanco-->
-<script>
- const form = document.getElementById('miForm');
- form.addEventListener('submit', (event) => {
-   const nombreyA = document.getElementById('nombre').value;
-   const telefono = document.getElementById('telefono').value;
-   const mail = document.getElementById('mail').value;
-   const motivos = document.getElementById('motivos').value;
- 
-   if (!nombreyA || !telefono|| !mail || !motivos) {
-     event.preventDefault(); // Evita que se envíe el formulario
-     const mensajeElemento = document.getElementById('mensaje');
-     mensajeElemento.textContent = 'Por favor complete todos los campos solicitados.';
-   }
- });
- 
-</script>
-
-</div>
-<%- include ('sweet-alert') %>
-
 </body>
 
 </html>
