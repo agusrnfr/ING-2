@@ -8,9 +8,15 @@
                 <div class="col-sm-4">
                   <div class="card">
                     <div class="image" style="display: flex; flex-direction: column;">
+                      <% if (perdida.se_encontro === true) { %>
+                        <div class="alert alert-success text-center" role="alert" style="margin-bottom: 0;">
+                          <strong style="font-size: 20px;">¡Encontrado!</strong>
+                        </div>
+                      <% } else { %>
                         <div class="alert alert-danger text-center" role="alert" style="margin-bottom: 0;">
                           <strong style="font-size: 20px;">Se busca</strong>
                         </div>
+                      <% } %>
                         <img src="<%= perdida.foto %>"/>
                       </div>
                       <div class="card-inner">
@@ -28,10 +34,13 @@
                                 <div id="collapseInfo<%= perdida.id %>" class="collapse">
                                     <div class="card">
                                       <div class="card-body">
-                                        <p class="card-text small">Fecha de pérdida: 30/02/1000</p>
-                                        <p class="card-text small">Edad: 2</p>
-                                        <p class="card-text small">Sexo: macho</p>
-                                        <p class="card-text small">Comportamiento: inquieto</p>
+                                        
+                                        <% var fecha = perdida.fecha_perdida; %>
+                                        <% var fechaFormateada = new Date(fecha); %>
+                                        <p class="card-text small">Fecha de perdida: <%= (fechaFormateada.getDate() < 10 ? '0' : '') + fechaFormateada.getDate() %>/<%= (fechaFormateada.getMonth() + 1 < 10 ? '0' : '') + (fechaFormateada.getMonth() + 1) %>/<%= fechaFormateada.getFullYear() %></p>
+                                        <p class="card-text small">Edad: <%= perdida.edad %> años</p>
+                                        <p class="card-text small">Sexo: <%= perdida.sexo %></p>
+                                        <p class="card-text small"><%= perdida.comportamiento %></p>
                                       </div>
                                     </div>
                                   </div>
