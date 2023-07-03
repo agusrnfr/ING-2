@@ -4,7 +4,7 @@ const { validarLogin, mostrarLogin, deslogear } = require('../controllers/loginC
 const { mostrarRegister, registrar, chequear_mail_duplicado } = require('../controllers/registerController');
 const { mostrarTrabajadores, mostrarCargaTrabajador, guardarTrabajador,mostrarPaseadores, mostrarGuarderias,cambiarEstadoTrabajador} = require('../controllers/trabajadorController');
 const { mostrarGuarderiasFiltradasPorZona , mostrarPaseadoresFiltradosPorZona} = require('../controllers/trabajadorController');
-const { mostrarIndex } = require('../controllers/indexController');
+const { mostrarIndex, mostrarComingSoon } = require('../controllers/indexController');
 const { comprobar_sesion, comprobar_sesion_admin } = require('../controllers/loginController');
 const { mostrarAgregarMascota, registrarMascota , mostrarMascota , eliminarMascota} = require('../controllers/mascotasController');
 const { verificaciones, solicitarTurno, mostrarTodosLosTurnos, mostrarMisTurnos, cambiarEstadoTurno, guardarTurno, turnoGuardado ,mostrarTurnosDia} = require('../controllers/turnosController');
@@ -136,6 +136,8 @@ app.get('/crear_publicacion_busqueda', comprobar_sesion, mostrarFormularioBusque
 app.post('/crear_publicacion_busqueda', comprobar_sesion, generarPublicacionBusqueda)
 app.get('/contacto_busqueda', mostrarContactarBusqueda)
 app.post('/contactarbusqueda', contactarBusqueda)
+
+app.get('/coming_soon', mostrarComingSoon)
 
 module.exports = app;
 
