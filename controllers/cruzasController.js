@@ -176,14 +176,15 @@ const mostrarPublicacionMascota = async (req, res) => {
 }
 
 
-async function obtenerSexoRazaMascota(id) {
+async function obtenerDatosMascota(id) {
     const mascota = await Mascota.findOne({
         where: { id: id },
         raw: true,
-        attributes: ['sexo', 'raza', 'UserId'],
+        attributes: ['nombre','sexo', 'raza', 'UserId'],
     });
 
     return {
+        nombre: mascota.nombre,
         sexo: mascota.sexo,
         raza: mascota.raza,
         UserId: mascota.UserId,
@@ -193,7 +194,7 @@ async function obtenerSexoRazaMascota(id) {
 const mostrarRecomendacionesCruza = async (req, res) => { //muestra la lista de cruzas de la misma raza y sexo opuesto
     try {
         const { id } = req.params;
-        const mascota = await obtenerSexoRazaMascota(id);
+        const mascota = await obtenerDatosMascota(id);
         const cruza = await Cruza.findOne({
             where: {
                 MascotumId: id,
@@ -234,6 +235,7 @@ const mostrarRecomendacionesCruza = async (req, res) => { //muestra la lista de 
                 }
             }),
             idContactante: id,
+            mascota,
         });
     }
     catch (error) {

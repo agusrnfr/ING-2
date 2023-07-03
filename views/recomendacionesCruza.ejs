@@ -9,6 +9,11 @@
             <div class="card-body p-md-4">
               <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-3">Recomendaciones <i
                   class="bi bi-chat-right-heart-fill"></i></p>
+                  <div class="alert alert-info alert-dismissible fade show text-center" role="alert">
+                    <i class="bi bi-info-circle-fill"></i> Se están visualizando las recomendaciones para la mascota
+                    <strong><%= mascota.nombre %></strong>. Las recomendaciones corresponden a <strong><%= mascota.sexo === 'Macho' ? 'hembras' : 'machos' %> </strong> de raza <strong> <%= mascota.raza %></strong>.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
               <% if (cruzas.length> 0) { %>
                 <div id="carouselRecomendaciones" class="carousel carousel-dark slide">
                   <div class="carousel-inner">
