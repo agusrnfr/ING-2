@@ -1,7 +1,7 @@
 
 
 const mostrarBusquedas = async(req, res) => {
-    return res.render('../views/busquedas')
+    return res.render('../views/coming_soon')
 }
 
 const mostrarFormularioBusqueda = async(req, res) => {
