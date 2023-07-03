@@ -40,7 +40,7 @@
                     <div class="mb-3">
                       <select class="form-control form-control-user" name="servicio" id="servicio">
                         <option value="" disabled selected>Selecciona un servicio</option>
-                        <option value="Paseador,Cuidador">Paseador, Cuidador</option>
+                        <option value="Paseador|Cuidador">Paseador|Cuidador</option>
                         <option value="Guarderia">Guardería</option>
                       </select>
                     </div>
@@ -95,8 +95,8 @@
 
                     <label for="monto">Rango de Horario Disponible (*)</label>
                     <div class="mb-3">
-                      <input class="form-control form-control-user" type= "datetime" name = "horaInicio" id="horaInicio" value="08:00" required=" ">
-                      <input class="form-control form-control-user" type="text" name="horaFin" id="horaFin" value="18:00" required=" ">
+                      <input class="form-control form-control-user" type="text" name="horaInicio" id="horaInicio" placeholder="Ejemplo: 08:00" required>
+                      <input class="form-control form-control-user" type="text" name="horaFin" id="horaFin" placeholder="Ejemplo: 18:00" required>
                     </div>
 
                     <div class="text-center mb-2" style="font-size: smaller;">Los campos con (*) son obligatorios</div>
@@ -212,6 +212,22 @@ btnEnviar.onclick = function(event) {
     confirmarRegistro();
   }
 };
+</script>
+<script>
+  var inputHoraInicio = document.getElementById("horaInicio");
+  var inputHoraFin = document.getElementById("horaFin");
+
+  inputHoraInicio.addEventListener("input", function() {
+    this.value = this.value.replace(/[^0-9:]/g, "");
+    this.value = this.value.replace(/(\d{2})(\d{1,2})/, "$1:$2");
+    this.value = this.value.replace(/(:\d{3}).*$/, "$1");
+  });
+
+  inputHoraFin.addEventListener("input", function() {
+    this.value = this.value.replace(/[^0-9:]/g, "");
+    this.value = this.value.replace(/(\d{2})(\d{1,2})/, "$1:$2");
+    this.value = this.value.replace(/(:\d{3}).*$/, "$1");
+  });
 </script>
 
 <%- include ('sweet-alert') %>

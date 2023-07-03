@@ -33,31 +33,25 @@
     <h2 class="text-center">Guarderías</h2> 
     <strong><p style="font-size: 20px;"></p></strong>
 
-    <div class="dropdown" style="display: flex; justify-content: center;">
-      <button class="btn btn-primary" type="button">
-        <span class="emoji">&#x1F50E;</span>  Buscar por zona
-      </button>
-      <div class="dropdown-content">
-          <select class="form-control form-control-user" name="zona" id="zona" required=" " >
-            <option value="" disabled selected>Selecciona una zona</option>
-            <option value="Plaza Moreno">Plaza Moreno</option>
-            <option value="Plaza San Martín">Plaza San Martín</option>
-            <option value="Plaza Belgrano">Plaza Belgrano</option>
-            <option value="Plaza Azcuénaga">Plaza Azcuénaga</option>
-            <option value="Plaza Islas Malvinas">Plaza Islas Malvinas</option>
-            <option value="Plaza Italia">Plaza Italia</option>
-            <option value="Plaza Rocha">Plaza Rocha</option>
-            <option value="Plaza Paso">Plaza Paso</option>
-            <option value="Plaza Sarmiento">Plaza Sarmiento</option>
-            <option value="Plaza Almirante Brown">Plaza Almirante Brown</option>
-            <option value="Plaza España">Plaza España</option>
-            <option value="Plaza Güemes">Plaza Güemes</option>
-            <option value="Plaza Mateu">Plaza Mateu</option>
-            <option value="Plaza Grigera">Plaza Grigera</option>
-            <option value="Plaza Malvinas Argentinas">Plaza Malvinas Argentinas</option>
-            <option value="Plaza Güemes Este">Plaza Güemes Este</option>
-          </select>
-          <button class="btn btn-primary" style="margin: 10px auto; display: block;" onclick="enviarZona()">Buscar</button>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body text-center">
+              <form method="POST" action="/mostrarGuarderiasFiltradasPorZona" class="form-inline">
+                <div class="form-group">
+                  <select class="form-control form-control-sm mb-2" name="zona" id="zona" required onchange="enableButton()">
+                    <option value="" selected disabled>Selecciona una zona</option>
+                    <% Object.values(global.ZONAS).forEach(function(zona) { %>
+                      <option value="<%= zona %>"><%= zona %></option>
+                    <% }); %>
+                  </select>
+                </div>
+                <button class="btn btn-primary ml-2" type="submit" id="submitButton" disabled><i class="bi bi-piggy-bank"></i> Filtrar por zona</button>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
       
@@ -115,27 +109,7 @@
       <p style="text-align: center;">No hay publicaciones de paseadores disponibles.</p>
     <% } %>
     
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-sm-6">
-          <div class="card">
-            <div class="card-body text-center">
-              <form method="POST" action="/mostrarGuarderiasFiltradasPorZona" class="form-inline">
-                <div class="form-group">
-                  <select class="form-control form-control-sm mb-2" name="zona" id="zona" required onchange="enableButton()">
-                    <option value="" selected disabled>Selecciona una zona</option>
-                    <% Object.values(global.ZONAS).forEach(function(zona) { %>
-                      <option value="<%= zona %>"><%= zona %></option>
-                    <% }); %>
-                  </select>
-                </div>
-                <button class="btn btn-primary ml-2" type="submit" id="submitButton" disabled><i class="bi bi-piggy-bank"></i> Filtrar por zona</button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+
     
     <script>
       function enableButton() {

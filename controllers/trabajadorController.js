@@ -101,48 +101,6 @@ const mostrarTrabajadores = async (req, res) => {
   }
 };
 
-const mostrarPaseadores = async(req,res) => {
-  try {
-    await obtenerTrabajadores();
-    
-    if (trabajadores.length === 0) {
-      return res.send('No hay trabajadores cargados');
-    }
-    
-    const trabajadoresOrdenados = ordenarTrabajadoresPorEstado(trabajadores);
-    const otrosTrabajadores = filtroTrabajadores(trabajadoresOrdenados);
-    
-    res.render('paseadores', { otrosTrabajadores, session: session });
-  } catch (error) {
-    console.error('Error al obtener los trabajadores:', error);
-    res.send('Ocurrió un error al obtener los trabajadores');
-  }
-};
-
-
-const mostrarGuarderias = async (req, res, resultadosFiltrados, aplicarFiltros = false) => {
-  try {
-    await obtenerTrabajadores();
-
-    if (trabajadores.length === 0) {
-      return res.send('No hay guarderías cargadas');
-    }
-
-    let guarderias;
-    if (aplicarFiltros) {
-      guarderias = resultadosFiltrados;
-    } else {
-      const trabajadoresOrdenados = ordenarTrabajadoresPorEstado(trabajadores);
-      guarderias = filtroGuarderias(trabajadoresOrdenados);
-    }
-
-    res.render('guarderias', { guarderias, session: session });
-  } catch (error) {
-    console.error('Error al obtener las guarderías:', error);
-    res.send('Ocurrió un error al obtener las guarderías');
-  }
-};
-
 const mostrarGuarderiasFiltradas = async (req, res, guarderiasFiltradas) => {
   try {
     if (guarderiasFiltradas.length === 0) {
@@ -210,7 +168,7 @@ function ordenarTrabajadoresPorEstado(trabajadores) {
 
 const mostrarPaseadores = async(req,res) => {
   const trabajadores = await Trabajador.findAll();
-  const trabajadoresOrdenados = ordenarTrabajadoresPorServicio(trabajadores);
+  const trabajadoresOrdenados = ordenarTrabajadoresPorEstado(trabajadores);
   const otrosTrabajadores = filtroTrabajadores(trabajadoresOrdenados);
 
   res.render('paseadores', {otrosTrabajadores, session: session })
@@ -218,7 +176,7 @@ const mostrarPaseadores = async(req,res) => {
 
 const mostrarGuarderias = async(req,res) => {
   const trabajadores = await Trabajador.findAll();
-  const trabajadoresOrdenados = ordenarTrabajadoresPorServicio(trabajadores);
+  const trabajadoresOrdenados = ordenarTrabajadoresPorEstado(trabajadores);
   const guarderias = filtroGuarderias(trabajadoresOrdenados);
 
   res.render('guarderias',{guarderias, session: session })
@@ -228,7 +186,7 @@ const mostrarGuarderiasFiltradasPorZona = async(req,res) => {
   const trabajadores = await Trabajador.findAll({
     where: { zona : req.body.zona  },
   });
-  const trabajadoresOrdenados = ordenarTrabajadoresPorServicio(trabajadores);
+  const trabajadoresOrdenados = ordenarTrabajadoresPorEstado(trabajadores);
   const guarderias = filtroGuarderias(trabajadoresOrdenados);
 
   res.render('guarderias',{guarderias, session: session })
@@ -238,7 +196,7 @@ const mostrarPaseadoresFiltradosPorZona = async(req,res) => {
   const trabajadores = await Trabajador.findAll({
     where: { zona : req.body.zona  },
   });
-  const trabajadoresOrdenados = ordenarTrabajadoresPorServicio(trabajadores);
+  const trabajadoresOrdenados = ordenarTrabajadoresPorEstado(trabajadores);
   const otrosTrabajadores = filtroTrabajadores(trabajadoresOrdenados);
 
   res.render('paseadores', {otrosTrabajadores, session: session })
