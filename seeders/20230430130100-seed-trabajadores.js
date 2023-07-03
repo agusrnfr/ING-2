@@ -1,5 +1,5 @@
  'use strict';
-
+ require('../globals.js');
  /** @type {import('sequelize-cli').Migration} */
  module.exports = {
    async up (queryInterface, Sequelize) {
@@ -9,7 +9,7 @@
      nombre: "Nicolas Robin",
      email: "nicoRobin@gmail.com",
      servicio: "Paseador",
-     zona: "Tolosa",
+     zona: ZONAS.PASO,
      dias: "Lunes,Martes",
      horario: "9:00,14:00",
      estado: true,
@@ -19,7 +19,7 @@
       nombre: "Nicolas Robin",
       email: "nicoRobin@gmail.com",
       servicio: "Paseador",
-      zona: "Tolosa",
+      zona: ZONAS.MORENO,
       dias: "Lunes,Martes",
       horario: "9:00,14:00",
       estado: true,
@@ -29,7 +29,7 @@
       nombre: "Nicolas Robin",
       email: "nicoRobin@gmail.com",
       servicio: "Paseador",
-      zona: "Tolosa",
+      zona: ZONAS.MORENO,
       dias: "Lunes,Martes",
       horario: "9:00,14:00",
       estado: true,
@@ -39,7 +39,7 @@
       nombre: "Nicolas Robin",
       email: "nicoRobin@gmail.com",
       servicio: "Paseador",
-      zona: "Tolosa",
+      zona: ZONAS.MORENO,
       dias: "Lunes,Martes",
       horario: "9:00,14:00",
       estado: true,
@@ -50,7 +50,7 @@
      nombre: "Jessica Vaisman",
      email: "jessVaisman@gmail.com",
      servicio: "Cuidador,Paseador",
-     zona: "Centro",
+     zona: ZONAS.MORENO,
      dias: "Lunes,Martes",
      horario: "9:00,14:00",
      estado: true,
@@ -60,7 +60,7 @@
      nombre: "Victoria Paz",
      email: "vickypeace@gmail.com",
      servicio: "Paseador",
-     zona: "Barrio Aeropuerto",
+     zona: ZONAS.SAN_MARTIN,
      dias: "Lunes,Martes",
      horario: "9:00,14:00",
      estado: true,
@@ -70,7 +70,7 @@
      nombre: "Patitas Felices",
      email: "patitasFe@gmail.com",
      servicio: "Guarderia",
-     zona: "Barrio Malvinas",
+     zona: ZONAS.ISLAS_MALVINAS,
      dias: "Lunes,Martes,Jueves",
      horario: "9:00,14:00",
      estado: true,
@@ -80,7 +80,7 @@
       nombre: "Patitas Felices",
       email: "patitasFe@gmail.com",
       servicio: "Guarderia",
-      zona: "Barrio Malvinas",
+      zona: ZONAS.ISLAS_MALVINAS,
       dias: "Lunes,Martes,Jueves",
       horario: "9:00,14:00",
       estado: true,
@@ -90,9 +90,7 @@
       nombre: "Patitas Felices",
       email: "patitasFe@gmail.com",
       servicio: "Guarderia",
-      zona: "Plaza Italia",
-      dias: "Lunes,Martes,Jueves",
-      horario: "9:00,14:00",
+      zona: ZONAS.MORENO,
       estado: true,
      }], {});
 
@@ -100,9 +98,23 @@
       nombre: "Patitas Felices",
       email: "patitasFe@gmail.com",
       servicio: "Guarderia",
-      zona: "Barrio Malvinas",
-      dias: "Lunes,Martes,Jueves",
-      horario: "9:00,14:00",
+      zona: ZONAS.PASO,
+      estado: true,
+     }], {});
+
+     await queryInterface.bulkInsert('trabajadores', [{
+      nombre: "Patitas Felices",
+      email: "patitasFe@gmail.com",
+      servicio: "Guarderia",
+      zona: ZONAS.ROCHA,
+      estado: true,
+     }], {});
+
+     await queryInterface.bulkInsert('trabajadores', [{
+      nombre: "Patitas Felices",
+      email: "patitasFe@gmail.com",
+      servicio: "Guarderia",
+      zona: ZONAS.ISLAS_MALVINAS,
       estado: true,
      }], {});
 

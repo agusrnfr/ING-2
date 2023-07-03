@@ -1,117 +1,132 @@
-<%- include ('header', {tituloweb: '¡Oh my dog!'}); %>
+<%- include ('header', {tituloweb: '¡Oh my dog!' }); %>
 
-<body id="body">
-<card>
+    <body id="body">
+        <div class="card" style="width: 30rem;margin: 5px;">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <h3>Inicio</h3>
+                </h5>
+                <p class="card-text">
 
-<div class="card" style="width: 30rem;margin: 5px;">
-    <div class="card-body">
-    <h5 class="card-title"> <h3>Inicio</h3></h5>
-    <p class="card-text">
-
-        <% if (typeof session.usuario !== 'undefined' && (session.loggedin === true)) { %>
-            <h5>Bienvenido: <strong><%= session.usuario.mail %></strong></h5>
-        <% } else { %>
-            <h5>Bienvenido <strong>visitante</strong></h5>
-        <% } %>
-
-
-<% if (typeof session.usuario !== 'undefined' && (session.loggedin === true)) { %>
-    <div>
-    <form id="logout-form" action="/logout" method="POST">
-        <button type="submit" class="btn btn-link">Cerrar sesión</button>
-    </form>
-    </div>
-<% } else { %>
-
-    <div>
-        <a href="/login">login</a>
-    </div>
-
-<% } %>
-<br>
-<div>
-    <h5>Servicios</h5>
-</div>
-
-<div>
-    <a href="/adopciones">Adopcion de perros</a>
-</div>
-<div>
-    <a href="/campanias">Campañas</a>
-</div>
-
-<div>
-    <a href="/trabajadores">Paseadores, Cuidadores y Refugios</a>
-</div>
+                    <% if (typeof session.usuario !=='undefined' && (session.loggedin===true)) { %>
+                        <h5>Bienvenido: <strong>
+                                <%= session.usuario.mail %>
+                            </strong></h5>
+                        <% } else { %>
+                            <h5>Bienvenido <strong>visitante</strong></h5>
+                            <% } %>
 
 
-<% if (typeof session.usuario !== 'undefined' && (session.loggedin === true)) { %>
+                                <% if (typeof session.usuario !=='undefined' && (session.loggedin===true)) { %>
+                                    <div>
+                                        <form id="logout-form" action="/logout" method="POST">
+                                            <button type="submit" class="btn btn-link" onclick="borrarModal()">Cerrar
+                                                sesión</button>
+                                        </form>
+                                    </div>
+                                    <% } else { %>
 
- <div>
-    <a href="/turnos">Solicitar un turno</a>
- </div>
- <div>
-    <a href="/cruzas">Cruzas caninas</a>
- </div>
-<br>
+                                        <div>
+                                            <a href="/login">login</a>
+                                        </div>
 
-<div>
-    <h5>Mi perfil</h5>
-</div>
-<div>
-    <a href="/ver_cliente/<%= session.usuario.id %>">Ver mi perfil</a>
-</div>
+                                        <% } %>
+                                            <br>
+                                            <div>
+                                                <h5>Servicios</h5>
+                                            </div>
 
-<div>
-    <a href="/modificar_mi_perfil">Modificar mi perfil</a>
-</div>
+                                            <div>
+                                                <a href="/adopciones">Adopcion de perros</a>
+                                            </div>
+                                            <div>
+                                                <a href="/campanias">Campañas</a>
+                                            </div>
 
-<!-- <div>
-    <a href="/ver_mascota/<%= session.usuario.id %>">Mis mascotas</a>
-</div> -->
+                                            <div>
+                                                <a href="/trabajadores">Paseadores, Cuidadores y Refugios</a>
+                                            </div>
+                                            <div>
+                                                <a href="/veterinariasDeTurno">Veterinarias de turno</a>
+                                            </div>
+                                            <div>
+                                                <a href="/perdidas">Perdidas de perros</a>
+                                            </div>
+                                            <div>
+                                                <a href="/busquedas">Busqueda de dueños</a>
+                                            </div>
+                                            <% if (typeof session.usuario !=='undefined' && (session.loggedin===true)) {
+                                                %>
 
-<!-- <div>
-    <a href="/historial/<%= session.usuario.id %>">Historial de visitas</a>
-</div>
+                                                <div>
+                                                    <a href="/turnos">Solicitar un turno</a>
+                                                </div>
+                                                <div>
+                                                    <a href="/cruzas">Cruzas caninas</a>
+                                                </div>
+                                                <br>
 
-<div>
-    <a href="/ver_cliente/cupones/<%= session.usuario.id %>">Ver mis beneficios</a>
-</div> -->
+                                                <div>
+                                                    <h5>Mi perfil</h5>
+                                                </div>
+                                                <div>
+                                                    <a href="/ver_cliente/<%= session.usuario.id %>">Ver mi
+                                                        perfil</a>
+                                                </div>
 
-<div>
-    <a href="/turnos/misTurnos">Listar mis turnos</a>
-</div><br>
-<% } %>
+                                                <div>
+                                                    <a href="/modificar_mi_perfil">Modificar mi perfil</a>
+                                                </div>
+                                                <div>
+                                                    <a href="/turnos/misTurnos">Listar mis turnos</a>
+                                                </div><br>
+                                                <% } %>
 
 
-<% if (typeof session.usuario !== 'undefined' && (session.loggedin === true) &&(session.usuario.rol === 'admin')) { %>
-    <div>
-        <h5>Administrador</h5>
-    </div>
+                                                    <% if (typeof session.usuario !=='undefined' &&
+                                                        (session.loggedin===true) &&(session.usuario.rol==='admin' )) {
+                                                        %>
+                                                        <div>
+                                                            <h5>Administrador</h5>
+                                                        </div>
 
-<div>
-     <a href="/turnos_dia">Listar turnos del dia</a>
-</div>
-    
-<div>
-    <a href="/table">Lista de clientes</a>
-</div>
+                                                        <div>
+                                                            <a href="/turnos_dia">Listar turnos del dia</a>
+                                                        </div>
 
-<div>
-    <a href="/register">Registrar a un cliente</a>
-</div>
+                                                        <div>
+                                                            <a href="/table">Lista de clientes</a>
+                                                        </div>
 
-<div>
-    <a href="/cargar_trabajador">Registrar un trabajador</a>
-</div>
+                                                        <div>
+                                                            <a href="/register">Registrar a un cliente</a>
+                                                        </div>
 
-<div>
-    <a href="/turnos/listarTodosLosTurnos">Listar turnos de todos los clientes</a>
-</div>
-<% } %>
+                                                        <div>
+                                                            <a href="/cargar_trabajador">Registrar un trabajador</a>
+                                                        </div>
 
-</p>
- </div>
-</div>
+                                                        <div>
+                                                            <a href="/turnos/listarTodosLosTurnos">Listar turnos de
+                                                                todos los clientes</a>
+                                                        </div>
 
-</body>
+                                                        <div>
+                                                            <a href="/reportes">Reportes</a>
+                                                        </div>
+
+                                                        <% } %>
+
+                </p>
+            </div>
+        </div>
+
+    </body>
+
+    <script>
+        function borrarModal() {
+            localStorage.removeItem('modalMostrado');
+        }
+    </script>
+
+    </html>

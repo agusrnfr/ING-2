@@ -44,3 +44,27 @@ global.PRACTICAS_QUE_GENERAN_LIBRETA = [
   global.PRACTICA.VACUNA_B,
   global.PRACTICA.DESPARASITACION
 ];
+
+global.SEXOS = {
+  MACHO: 'Macho',
+  HEMBRA: 'Hembra',
+}
+
+global.ZONAS = {
+  MORENO: 'Plaza Moreno',
+  SAN_MARTIN: 'Plaza San Martín',
+  BELGRANO: 'Plaza Belgrano',
+  AZCUENAGA: 'Plaza Azcuénaga',
+  ISLAS_MALVINAS: 'Plaza Islas Malvinas',
+  ITALIA: 'Plaza Italia',
+  ROCHA: 'Plaza Rocha',
+  PASO: 'Plaza Paso',
+  SARMIENTO: 'Plaza Sarmiento',
+  ALMIRANTE_BROWN: 'Plaza Almirante Brown',
+  ESPANA: 'Plaza España',
+  GUEMES: 'Plaza Güemes',
+  MATEU: 'Plaza Mateu',
+  GRIGERA: 'Plaza Grigera',
+  MALVINAS_ARGENTINAS: 'Plaza Malvinas Argentinas',
+  GUEMES_ESTE: 'Plaza Güemes Este',
+};

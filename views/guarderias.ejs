@@ -114,10 +114,50 @@
     <% } else { %>
       <p style="text-align: center;">No hay publicaciones de paseadores disponibles.</p>
     <% } %>
-  </div>
- <div class="text-center">
-    <a class="small" href="/trabajadores" style="color: white;">Volver</a>
-  </div>
+    
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body text-center">
+              <form method="POST" action="/mostrarGuarderiasFiltradasPorZona" class="form-inline">
+                <div class="form-group">
+                  <select class="form-control form-control-sm mb-2" name="zona" id="zona" required onchange="enableButton()">
+                    <option value="" selected disabled>Selecciona una zona</option>
+                    <% Object.values(global.ZONAS).forEach(function(zona) { %>
+                      <option value="<%= zona %>"><%= zona %></option>
+                    <% }); %>
+                  </select>
+                </div>
+                <button class="btn btn-primary ml-2" type="submit" id="submitButton" disabled><i class="bi bi-piggy-bank"></i> Filtrar por zona</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      function enableButton() {
+        var select = document.getElementById('zona');
+        var button = document.getElementById('submitButton');
+    
+        if (select.value !== '') {
+          button.disabled = false;
+        } else {
+          button.disabled = true;
+        }
+      }
+    </script>
+    
+    
+    
+
+
+    <div class="text-center mt-2">
+      <a class="small" href="/trabajadores" style="color: white;">Volver</a>
+    </div>
+    
 
  <script>
   async function cambiarEstado(elementId, trabajadorId, estadoDisp) {

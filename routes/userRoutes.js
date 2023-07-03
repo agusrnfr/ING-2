@@ -3,6 +3,7 @@ const { mostrarTablaUsers, filtrar } = require('../controllers/userController');
 const { validarLogin, mostrarLogin, deslogear } = require('../controllers/loginController');
 const { mostrarRegister, registrar, chequear_mail_duplicado } = require('../controllers/registerController');
 const { mostrarTrabajadores, mostrarCargaTrabajador, guardarTrabajador,mostrarPaseadores, mostrarGuarderias,cambiarEstadoTrabajador,mostrarFiltrado} = require('../controllers/trabajadorController');
+const { mostrarGuarderiasFiltradasPorZona , mostrarPaseadoresFiltradosPorZona} = require('../controllers/trabajadorController');
 const { mostrarIndex } = require('../controllers/indexController');
 const { comprobar_sesion, comprobar_sesion_admin } = require('../controllers/loginController');
 const { mostrarAgregarMascota, registrarMascota , mostrarMascota , eliminarMascota} = require('../controllers/mascotasController');
@@ -11,12 +12,14 @@ const { mostrarCliente , mostrarClienteModificar , actualizarUsuario , actualiza
 const { mostrarModificarPerfil , modificarMiPerfil , mostrarModificarMiPassword, modificarMiPassword} = require('../controllers/modificarPerfilController');
 const { mostrarAdopciones, cambiarEstado, mostrarPublicacion, guardarPublicacion, mostrarContacto, contactoAdoptante} = require('../controllers/adopcionController');
 const { mostrarHistorial , crearHistorial,mostrarCarga, mostrarLibreta} = require('../controllers/historialController');
-
 const { mostrarCupones } = require('../controllers/cuponesController');
+const { mostrarPerdidas } = require('../controllers/perdidasController');
+const { mostrarBusquedas } = require('../controllers/busquedasController');
 const { mostrarCampanias, publicarCampania, verificacionesCampania, guardarPublicacionCampania, publicacionGuardada, verificacionesDonacion, realizarDonacion} = require('../controllers/campaniasController');
+const { mostrarIndexCruzas, publicarMascotaCruza, guardarPublicacionCruza, publicacionGuardadaCruza, verificacionesCruza, verificarPerroEsDeUsuario, verificacionesDeMascotasContacto, mostrarPublicacionMascota, mostrarRecomendacionesCruza, mostrarContactoCruza, contactoCruzaGuardado, verificacionesContactoCruza, contactarCruza} = require('../controllers/cruzasController');
+const { mostrarVeterinarias } = require('../controllers/veterinariasController');
 
-const { mostrarIndexCruzas, publicarMascotaCruza, guardarPublicacionCruza, publicacionGuardadaCruza, verificacionesCruza, verificarPerroEsDeUsuario, mostrarPublicacionMascota } = require('../controllers/cruzasController');
-
+const { mostrarReportes, generarReporte} = require('../controllers/reportesController');
 //invocamos express
 const app = require('express').Router()
 
@@ -48,6 +51,8 @@ app.get('/guarderias',mostrarGuarderias)
 app.get('/filtro',mostrarFiltrado)
 app.get('/contactar/trabajador/:id', mostrarContactoTrabajador)
 app.post('/contactar/trabajador/:id', contactar)
+app.post('/mostrarGuarderiasFiltradasPorZona', mostrarGuarderiasFiltradasPorZona)
+app.post('/mostrarPaseadoresFiltradosPorZona', mostrarPaseadoresFiltradosPorZona)
 
 app.get('/modificar_mi_perfil',comprobar_sesion, mostrarModificarPerfil)
 app.post('/modificarMiPerfil', comprobar_sesion, modificarMiPerfil)
@@ -106,8 +111,24 @@ app.get('/cruzas', comprobar_sesion, mostrarIndexCruzas);
 app.get('/cruzas/publicarMascota/:id', comprobar_sesion, verificarPerroEsDeUsuario, publicarMascotaCruza);
 app.post('/cruzas/publicarMascota/:id', comprobar_sesion, verificarPerroEsDeUsuario, verificacionesCruza, guardarPublicacionCruza);
 app.get('/cruzas/publicacionGuardada', comprobar_sesion, publicacionGuardadaCruza);
-//app.get('/cruzas/verRecomendaciones/:id', comprobar_sesion, verificarPerroEsDeUsuario, mostrarRecomendaciones);
+app.get('/cruzas/verRecomendaciones/:id', comprobar_sesion, verificarPerroEsDeUsuario, mostrarRecomendacionesCruza);
 app.get('/cruzas/verPublicacionDeMascota/:id', comprobar_sesion, verificarPerroEsDeUsuario, mostrarPublicacionMascota);
+app.get('/cruzas/contactoCruza/:id', comprobar_sesion, verificacionesDeMascotasContacto, mostrarContactoCruza);
+app.post('/cruzas/contactoCruza/:id', comprobar_sesion, verificacionesDeMascotasContacto, verificacionesContactoCruza, contactarCruza);
+app.get('/cruzas/contactoCruzaGuardado', comprobar_sesion, contactoCruzaGuardado);
+
+//VETERINARIAS DE TURNO
+app.get('/veterinariasDeTurno', mostrarVeterinarias);
+
+//REPORTES
+app.get('/reportes', comprobar_sesion, comprobar_sesion_admin, mostrarReportes);
+app.post('/generar_reporte_practicas', comprobar_sesion, comprobar_sesion_admin, generarReporte)
+
+//PERDIDAS
+app.get('/perdidas', mostrarPerdidas);
+
+//BUSQUEDAS
+app.get('/busquedas', mostrarBusquedas);
 
 module.exports = app;
 
