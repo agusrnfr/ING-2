@@ -18,7 +18,7 @@
                                             <select class="form-control form-control" name="select_mascota" id="select_mascota" required onchange="disableFields()">
                                               <option value="" selected disabled>No</option>
                                               <% Object.values(mascotas).forEach(function(mascota) { %>
-                                                <option value="<%= mascota.nombre %>"><%= mascota.nombre %></option>
+                                                <option value="<%= mascota.id %>"><%= mascota.nombre %></option>
                                               <% }); %>
                                             </select>
                                           </div>
@@ -136,6 +136,9 @@
       var warning_datos_precargan = document.getElementById("warning_datos_precargan");
       
       if (nombreMascota) {
+        nombreInput.removeAttribute('required');
+        edadInput.removeAttribute('required');
+        fotoInput.removeAttribute('required');
         nombreInput.style.display = "none";
         edadInput.style.display = "none";
         fotoInput.style.display = "none";
@@ -145,6 +148,9 @@
         warning_datos_precargan.style.display = "block";
 
       } else {
+        nombreInput.setAttribute('required', '');
+        edadInput.setAttribute('required', '');
+        fotoInput.setAttribute('required', '');
         nombreInput.disabled = "block";
         edadInput.disabled = "block";
         fotoInput.disabled = "block";
