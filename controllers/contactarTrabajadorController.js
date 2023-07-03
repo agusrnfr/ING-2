@@ -85,9 +85,9 @@ const contactar = async (req, res) => {
         from: '"Interes en servicio" <veterinaria.omd@gmail.com>',
         to: "laura.cuenca1@gmail.com", //deberia ser --> to: mailTurno,
         subject: "Interes en servicio",
-        text: "Estimado "+ trabajador.nombre + ","+" el cliente "+ nombre + "esta interesado en sus servicios " + servicio 
-        + " Sus horarios disponibles son:  "+horario+". Su mail es: "+ mail + ", su telefono es " + telefono 
-        + " sus dias disponibles son: " + dias,
+        text: "Estimado "+ trabajador.nombre + ","+" el cliente "+ nombre + " esta interesado en sus servicios " + servicio 
+        + ". Tus horarios disponibles son:  "+horario+". Su mail es: "+ mail + ", su telefono es " + telefono 
+        + " los dias requeridos son: " + fecha,
         })
            .catch(error => {
                console.log('Error al enviar mail');
