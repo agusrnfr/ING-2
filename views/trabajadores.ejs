@@ -39,15 +39,16 @@
                 const endIndex = Math.min(startIndex + 4, otrosTrabajadores.length);
                 const dataPage = otrosTrabajadores.slice(startIndex, endIndex);
                 dataPage.forEach((trabajador) => { %>
-                  <div class="card" style="width: 300px; height: 250px; margin: 10px;">
+                  <div class="card" style="width: 300px; height: 370px; margin: 10px;">
                     <div class="card-body">
                       <h5 class="card-title">
                         <%= trabajador.nombre %> <span class="emoji">&#x1F9AE;</span>
                       </h5>
                       <br>
-                      <% let serviciosConcatenados = trabajador.servicio.split(',').map(servicio => servicio.trim()).join(', '); %>
-                      <p class="card-text"><strong>Servicio:</strong> <%= serviciosConcatenados %></p>
+                      <p class="card-text"><strong>Zona:</strong> <%= trabajador.servicio %></p>
                       <p class="card-text"><strong>Zona:</strong> <%= trabajador.zona %></p>
+                      <p class="card-text"><strong>Dias Disponibles:</strong> <%= trabajador.dias %></p>
+                      <p class="card-text"><strong>Horarios:</strong> <%= trabajador.horario %></p>
                     </div>
                     <a href="<%=`/contactar/trabajador/${trabajador.id}`%>" class="btn btn-primary">Contactar</a>
                     <br>
@@ -107,14 +108,16 @@
               const endIndex = Math.min(startIndex + 4, guarderias.length);
               const dataPage = guarderias.slice(startIndex, endIndex);
               dataPage.forEach((guarderia) => { %>
-              <div class="card" style="width: 300px; height: 250px; margin: 10px;">
+              <div class="card" style="width: 300px; height: 370px; margin: 10px;">
                 <div class="card-body">
                   <h5 class="card-title">
                     <%= guarderia.nombre %> <span class="emoji">&#x1F3E1;</span>
                   </h5>
                   <br>
-                  <p class="card-text"><strong>Servicio:</strong> <%= guarderia.servicio %></p>
-                  <p class="card-text"><strong>Zona:</strong> <%= guarderia.zona %></p>
+                <p class="card-text"><strong>Servicio:</strong> <%= guarderia.servicio %></p>
+                <p class="card-text"><strong>Zona:</strong> <%= guarderia.zona %></p>
+                <p class="card-text"><strong>Dias Disponibles:</strong> <%= guarderia.dias %></p>
+                <p class="card-text"><strong>Horarios:</strong> <%= guarderia.horario %></p>
                 </div>
                 <a href="<%=`/contactar/trabajador/${guarderia.id}`%>" class="btn btn-primary">Contactar</a>
                 <br>

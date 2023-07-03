@@ -1,0 +1,94 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<%- include ('header', {tituloweb: '¡Oh my dog! | Formulario publicacion perdida ' }); %>
+
+<body id="body">
+
+    <div class="container h-50 mt-4">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-lg-12 col-xl-10">
+                <div class="card text-black mb-3" style="border-radius: 25px;">
+                    <div class="card-body p-md-4">
+                        <div class="row justify-content-center">
+                            <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-3">Crear publicación de busqueda <i class="bi bi-heartbreak"></i></p>
+                            <div class="col-md-6"> <!-- Primera columna del formulario -->
+                                <form method="POST" action="/campanias/publicarCampania">
+                                    <div class="row mb-3 h-100">
+                                        <div class="mb-3">
+                                            <label for="edad" class="b"> Edad (*) </label>
+                                            <input class="form-control form-control-user" type="text" name="edad" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="mail" class="b"> Mail (*) </label>
+                                            <input class="form-control form-control-user" type="text" name="mail" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="caracteristicas" class="b">Características</label>
+                                            <textarea class="form-control form-control-user" name="caracteristicas" rows="5" maxlength="1000" required></textarea>
+                                          </div>
+                                          
+                                    </div>
+                                </div>
+                                <div class="col-md-6"> <!-- Segunda columna del formulario -->
+                                    <div class="mb-3">
+                                        <label for="fecha_perdida" class="b"> Día en que se encontro (*) </label>
+                                        <% let fechaMinima = new Date();
+                                        fechaMinima.setDate(fechaMinima.getDate() + 1);
+                                        fechaMinima = fechaMinima.toISOString().split("T")[0];
+                                        let fechaMaxima = new Date();
+                                        fechaMaxima.setFullYear(fechaMaxima.getFullYear() + 5);
+                                        fechaMaxima = fechaMaxima.toISOString().split("T")[0]; %>
+                                        <input class="form-control form-control-user" type="date"
+                                            name="fecha_perdida" min="<%= fechaMinima %>" max="<%= fechaMaxima %>" required>
+                                    </div>
+                                    <div class="mb-3">
+                                    <label for="telefono"> Teléfono (*) </label>
+                                    <input class="form-control form-control-user" name="telefono" type="text" pattern="[0-9]{10}" maxlength="10" value="" required
+                                        title="Ingrese un número de teléfono válido">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="comportamiento" class="b"> Comportamiento </label>
+                                    <textarea class="form-control form-control-user" name="comportamiento" maxlength="500"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="zona">Zona en que se encontro (*)</label>
+                                    <select class="form-control form-control" name="zona" id="zona" required onchange="enableButton()">
+                                      <option value="" selected disabled>Selecciona una zona</option>
+                                      <% Object.values(global.ZONAS).forEach(function(zona) { %>
+                                        <option value="<%= zona %>"><%= zona %></option>
+                                      <% }); %>
+                                    </select>
+                                  </div>
+                                <div class="mb-3"><label for="input-file" class="form-label">Agregar fotografia</label><input type="file" class="form-control" id="input-file" name="imagen"></div>
+                            </div>
+                            <div>
+                                <button class="btn btn-primary d-block btn-user w-100" type="submit"
+                                    id="enviar_turno">Publicar</button>
+                            </div>
+                            </form>
+                        </div>
+                        <style>
+                            @media only screen and (max-width: 1000px) {
+                                img {
+                                    display: none;
+                                }
+
+                                div {
+                                    display: block;
+                                }
+                            }
+                        </style>
+                    </div>
+                    <hr>
+                    <div class="text-center mb-2" style="font-size: smaller;">Los campos con (*) son obligatorios</div>
+                    <div class="text-center"><a class="small" href="/perdidas">Volver</a></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    </script>
+
+</body>
+<%- include ('sweet-alert') %>
+</html>

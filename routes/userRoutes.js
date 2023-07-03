@@ -2,7 +2,7 @@ const { mostrarContactoTrabajador, contactar } = require('../controllers/contact
 const { mostrarTablaUsers, filtrar } = require('../controllers/userController');
 const { validarLogin, mostrarLogin, deslogear } = require('../controllers/loginController');
 const { mostrarRegister, registrar, chequear_mail_duplicado } = require('../controllers/registerController');
-const { mostrarTrabajadores, mostrarCargaTrabajador, guardarTrabajador,mostrarPaseadores, mostrarGuarderias,cambiarEstadoTrabajador} = require('../controllers/trabajadorController');
+const { mostrarTrabajadores, mostrarCargaTrabajador, guardarTrabajador,mostrarPaseadores, mostrarGuarderias,cambiarEstadoTrabajador,mostrarFiltrado} = require('../controllers/trabajadorController');
 const { mostrarGuarderiasFiltradasPorZona , mostrarPaseadoresFiltradosPorZona} = require('../controllers/trabajadorController');
 const { mostrarIndex } = require('../controllers/indexController');
 const { comprobar_sesion, comprobar_sesion_admin } = require('../controllers/loginController');
@@ -48,6 +48,7 @@ app.get('/trabajadores', mostrarTrabajadores)
 app.post('/trabajador/estado', comprobar_sesion_admin,cambiarEstadoTrabajador)
 app.get('/paseadores',mostrarPaseadores)
 app.get('/guarderias',mostrarGuarderias)
+app.get('/filtro',mostrarFiltrado)
 app.get('/contactar/trabajador/:id', mostrarContactoTrabajador)
 app.post('/contactar/trabajador/:id', contactar)
 app.post('/mostrarGuarderiasFiltradasPorZona', mostrarGuarderiasFiltradasPorZona)
@@ -130,4 +131,3 @@ app.get('/perdidas', mostrarPerdidas);
 app.get('/busquedas', mostrarBusquedas);
 
 module.exports = app;
-

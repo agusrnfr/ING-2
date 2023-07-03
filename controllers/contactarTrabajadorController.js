@@ -1,5 +1,6 @@
 const Trabajador = require('../db/models/trabajador.js');
 const session = require('express-session');
+const { transporter } = require('../config/mailer');
 
 const mostrarContactoTrabajador = async (req, res) => {
     try {
@@ -42,6 +43,7 @@ const contactar = async (req, res) => {
     const fecha = req.body.fecha;
     const mail = req.body.mail;
     const telefono = req.body.telefono;
+    const dias = req.body.dias;
    
     const trabajador = await Trabajador.findByPk(req.params.id)
       if (!trabajador) {
@@ -83,7 +85,9 @@ const contactar = async (req, res) => {
         from: '"Interes en servicio" <veterinaria.omd@gmail.com>',
         to: "laura.cuenca1@gmail.com", //deberia ser --> to: mailTurno,
         subject: "Interes en servicio",
-        text: "Estimado "+ trabajador.nombre + ","+" el cliente "+ nombre + "esta interesado en sus servicios " + servicio + " Los horarios solicitados son:  "+horario+". Su mail es: "+ mail + ", su telefono es " + telefono ,
+        text: "Estimado "+ trabajador.nombre + ","+" el cliente "+ nombre + " esta interesado en sus servicios " + servicio 
+        + ". Tus horarios disponibles son:  "+horario+". Su mail es: "+ mail + ", su telefono es " + telefono 
+        + " los dias requeridos son: " + fecha,
         })
            .catch(error => {
                console.log('Error al enviar mail');
