@@ -6,12 +6,17 @@ const { Op } = require('sequelize');
 const guardarTrabajador = (req, res) => {
   const nombre = req.body.nombre;
   const email = req.body.email;
-  const servicios = Array.isArray(req.body.servicio) ? [...req.body.servicio] : [req.body.servicio];
-  const servicio = servicios.join(',');
+  const servicio= req.body.servicio;
   const zona = req.body.zona;
-  const estado = req.body.estado;
+  const estado = true;
+  const diasArray = Array.isArray(req.body.dia) ? [...req.body.dia] : [req.body.dia];
+  const dias = diasArray.join(',');
+  const horaInicio = req.body.horaInicio;
+  const horaFin = req.body.horaFin;
 
-  if (!nombre || !email|| !servicio || !zona) {
+  const horario= horaInicio+ ','+ horaFin;
+
+  if (!nombre || !email|| !servicio || !zona ) {
     console.error('Error al guardar trabajador, campos incompletos');
     return;
   }
@@ -22,6 +27,8 @@ const guardarTrabajador = (req, res) => {
     servicio: servicio,
     zona: zona,
     estado: estado,
+    dias: dias,
+    horario: horario,
   })
     .then((Trabajador) => {
       res.render('cargar_trabajador', {
@@ -36,10 +43,11 @@ const guardarTrabajador = (req, res) => {
     })
     .catch((error) => {
       console.error('Error al crear trabajador:', error);
+      console.log(error);
       res.render('cargar_trabajador', {
         alert: true,
         alertTitle: 'Registro de trabajador fallido',
-        alertMessage: '',
+        alertMessage:'',
         alertIcon: 'error',
         showConfirmButton: false,
         timer: 2000,
@@ -47,7 +55,14 @@ const guardarTrabajador = (req, res) => {
     });
 };
 
+let trabajadores = [];
 
+async function obtenerTrabajadores() {
+  trabajadores = await Trabajador.findAll();
+  return trabajadores;
+}
+
+// Muestra de vistassss <3
 const mostrarCargaTrabajador = (req,res) => {
   res.render('cargar_trabajador')
 }
@@ -55,7 +70,7 @@ const mostrarCargaTrabajador = (req,res) => {
 const mostrarTrabajadores = async (req, res) => {
   try{
   const trabajadores = await getAllTrabajadoresDisponibles();
-  const trabajadoresOrdenados = ordenarTrabajadoresPorServicio(trabajadores);
+  const trabajadoresOrdenados = ordenarTrabajadoresPorEstado(trabajadores);
   const guarderias = filtroGuarderias(trabajadoresOrdenados);
   const otrosTrabajadores = filtroTrabajadores(trabajadoresOrdenados);
   
@@ -65,6 +80,7 @@ const mostrarTrabajadores = async (req, res) => {
     res.render('trabajadores',{
       guarderias,
       otrosTrabajadores,
+      session: session,
       numPagesGuarderias,
       numPagesOtrosTrabajadores,
     });
@@ -73,6 +89,7 @@ const mostrarTrabajadores = async (req, res) => {
   res.render('trabajadores', {
     guarderias,
     otrosTrabajadores,
+    session: session,
     numPagesGuarderias,
     numPagesOtrosTrabajadores,
   });
@@ -83,6 +100,47 @@ const mostrarTrabajadores = async (req, res) => {
     res.send('Hubo un error al cargar las publicaciones de servicios de trabajo.');
   }
 };
+
+const mostrarGuarderiasFiltradas = async (req, res, guarderiasFiltradas) => {
+  try {
+    if (guarderiasFiltradas.length === 0) {
+      return res.send('No hay guarderías disponibles en esta zona.');
+    }
+
+    res.render('guarderias', { guarderias: guarderiasFiltradas, session: session });
+  } catch (error) {
+    console.error('Error al obtener las guarderías:', error);
+    res.send('Ocurrió un error al obtener las guarderías');
+  }
+};
+
+//Filtrado
+const mostrarFiltrado = async (req, res) => {
+  const zonaSeleccionada = req.query.zona;
+  const usuario = req.query.usuario;
+
+  let resultadosFiltrados;
+
+  if (trabajadores.length === 0) {
+    await obtenerTrabajadores();
+  }
+
+  if (usuario === 'Guarderia') {
+    guarderia = filtroGuarderias(trabajadores);
+    resultadosFiltrados = filtroZona(guarderia,zonaSeleccionada)
+    mostrarGuarderiasFiltradas(req, res, resultadosFiltrados, true, session);
+
+  } else {
+    paseadores = filtroTrabajadores(trabajadores);
+    resultadosFiltrados = filtroZona(paseadores,zonaSeleccionada)
+    mostrarPaseadores(res, resultadosFiltrados, true)
+  }
+}
+
+function filtroZona(trab , zona){
+  const TrabporZona= trab.filter(trabajador => trabajador.zona === zona)
+  return TrabporZona;
+}
 
 function filtroGuarderias(trabajadoresOrdenados){
   const guarderias = trabajadoresOrdenados.filter(trabajador => trabajador.servicio === 'Guarderia');
@@ -99,51 +157,18 @@ async function getAllTrabajadoresDisponibles() {
   return trabajadores;
 }
 
-function ordenarTrabajadoresPorServicio(trabajadores) {
+function ordenarTrabajadoresPorEstado(trabajadores) {
   return trabajadores.sort((a, b) => {
-    const serviciosA = a.servicio.split(',').map(servicio => servicio.trim().toLowerCase());
-    const serviciosB = b.servicio.split(',').map(servicio => servicio.trim().toLowerCase());
-
-    const ordenServicio = {
-      cuidador: 1,
-      paseador: 2,
-      'cuidador,paseador': 3
-    };
-
     const estadoA = a.estado ? 1 : 0;
     const estadoB = b.estado ? 1 : 0;
 
-    if (estadoA === estadoB) {
-      // Ambos tienen el mismo estado, se verifica el estado "disponible" o "no disponible"
-      if (estadoA === 1) {
-        // Ambos están disponibles, se procede a comparar los servicios
-        if (serviciosA.length === 1 && serviciosB.length === 1) {
-          // Ambos tienen solo un rol, se ordenan por el orden definido en el objeto ordenServicio
-          return ordenServicio[serviciosA[0]] - ordenServicio[serviciosB[0]];
-        } else if (serviciosA.length === 1) {
-          // A tiene solo un rol, se coloca antes que B
-          return -1;
-        } else if (serviciosB.length === 1) {
-          // B tiene solo un rol, se coloca antes que A
-          return 1;
-        } else {
-          // Ambos tienen ambos roles, se ordenan por el orden definido en el objeto ordenServicio
-          return ordenServicio[serviciosA[0]] - ordenServicio[serviciosB[0]];
-        }
-      } else {
-        // Ambos están no disponibles, se mantiene el orden actual
-        return 0;
-      }
-    } else {
-      // Diferentes estados, se coloca al final el estado "no disponible"
-      return estadoB - estadoA;
-    }
+    return estadoB - estadoA;
   });
 }
 
 const mostrarPaseadores = async(req,res) => {
   const trabajadores = await Trabajador.findAll();
-  const trabajadoresOrdenados = ordenarTrabajadoresPorServicio(trabajadores);
+  const trabajadoresOrdenados = ordenarTrabajadoresPorEstado(trabajadores);
   const otrosTrabajadores = filtroTrabajadores(trabajadoresOrdenados);
 
   res.render('paseadores', {otrosTrabajadores, session: session })
@@ -151,7 +176,7 @@ const mostrarPaseadores = async(req,res) => {
 
 const mostrarGuarderias = async(req,res) => {
   const trabajadores = await Trabajador.findAll();
-  const trabajadoresOrdenados = ordenarTrabajadoresPorServicio(trabajadores);
+  const trabajadoresOrdenados = ordenarTrabajadoresPorEstado(trabajadores);
   const guarderias = filtroGuarderias(trabajadoresOrdenados);
 
   res.render('guarderias',{guarderias, session: session })
@@ -161,7 +186,7 @@ const mostrarGuarderiasFiltradasPorZona = async(req,res) => {
   const trabajadores = await Trabajador.findAll({
     where: { zona : req.body.zona  },
   });
-  const trabajadoresOrdenados = ordenarTrabajadoresPorServicio(trabajadores);
+  const trabajadoresOrdenados = ordenarTrabajadoresPorEstado(trabajadores);
   const guarderias = filtroGuarderias(trabajadoresOrdenados);
 
   res.render('guarderias',{guarderias, session: session })
@@ -171,7 +196,7 @@ const mostrarPaseadoresFiltradosPorZona = async(req,res) => {
   const trabajadores = await Trabajador.findAll({
     where: { zona : req.body.zona  },
   });
-  const trabajadoresOrdenados = ordenarTrabajadoresPorServicio(trabajadores);
+  const trabajadoresOrdenados = ordenarTrabajadoresPorEstado(trabajadores);
   const otrosTrabajadores = filtroTrabajadores(trabajadoresOrdenados);
 
   res.render('paseadores', {otrosTrabajadores, session: session })
@@ -194,13 +219,13 @@ const cambiarEstadoTrabajador = async (req, res) => {
         { where: { id: trabajadorId } }
       );
   
-      res.json({ success: true }); // Envía una respuesta JSON indicando que el cambio de estado se realizó correctamente
+      res.json({ success: true }); 
     } catch (error) {
       console.error(error);
-      res.json({ success: false }); // Envía una respuesta JSON indicando que hubo un error al cambiar el estado
+      res.json({ success: false }); 
     }
   } else {
-    res.json({ success: false }); // Envía una respuesta JSON indicando que el usuario no es el dueño de la publicación
+    res.json({ success: false });
   }
 }
 
@@ -214,4 +239,5 @@ module.exports = {
   cambiarEstadoTrabajador,
   mostrarGuarderiasFiltradasPorZona,
   mostrarPaseadoresFiltradosPorZona,
+  mostrarFiltrado,
 };

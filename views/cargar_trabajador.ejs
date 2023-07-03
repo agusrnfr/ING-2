@@ -38,49 +38,71 @@
 
                     <label for="servicio">Tipo de servicio (*)</label>
                     <div class="mb-3">
-                      <input type="checkbox" name="servicio" id="cuidador" value="Cuidador">
-                      <label for="cuidador">Cuidador</label>
-                      <br>
-                      <input type="checkbox" name="servicio" id="paseador" value="Paseador">
-                      <label for="paseador">Paseador</label>
-                      <br>
-                      <input type="checkbox" name="servicio" id="guarderia" value="Guarderia">
-                      <label for="guarderia">Guardería</label>
+                      <select class="form-control form-control-user" name="servicio" id="servicio">
+                        <option value="" disabled selected>Selecciona un servicio</option>
+                        <option value="Paseador|Cuidador">Paseador|Cuidador</option>
+                        <option value="Guarderia">Guardería</option>
+                      </select>
                     </div>
 
                     <label for="zona">Zona (*)</label>
                     <div class="mb-3">
                       <select class="form-control form-control-user" name="zona" id="zona" required>
-                        <option value="">Seleccione la zona</option>
-                        <option value="Centro">Centro</option>
-                        <option value="La Loma">La Loma</option>
-                        <option value="Tolosa">Tolosa</option>
-                        <option value="Los Hornos">Los Hornos</option>
-                        <option value="Gonnet">Gonnet</option>
-                        <option value="Villa Elisa">Villa Elisa</option>
-                        <option value="City Bell">City Bell</option>
-                        <option value="Ringuelet">Ringuelet</option>
-                        <option value="Villa Castells">Villa Castells</option>
-                        <option value="Altos de San Lorenzo">Altos de San Lorenzo</option>
-                        <option value="Barrio Norte">Barrio Norte</option>
-                        <option value="Barrio Hipódromo">Barrio Hipódromo</option>
-                        <option value="Barrio Meridiano V">Barrio Meridiano V</option>
-                        <option value="Barrio Aeropuerto">Barrio Aeropuerto</option>
-                        <option value="Barrio Malvinas">Barrio Malvinas</option>
-                        <option value="Barrio El Retiro">Barrio El Retiro</option>
-                        <option value="Barrio Universitario">Barrio Universitario</option>
-                        <option value="Barrio El Mondongo">Barrio El Mondongo</option>
-                        <option value="Barrio El Carmen">Barrio El Carmen</option>
+                        <option value="" disabled selected>Selecciona una zona</option>
+                        <option value="Plaza Moreno">Plaza Moreno</option>
+                        <option value="Plaza San Martín">Plaza San Martín</option>
+                        <option value="Plaza Belgrano">Plaza Belgrano</option>
+                        <option value="Plaza Azcuénaga">Plaza Azcuénaga</option>
+                        <option value="Plaza Islas Malvinas">Plaza Islas Malvinas</option>
+                        <option value="Plaza Italia">Plaza Italia</option>
+                        <option value="Plaza Rocha">Plaza Rocha</option>
+                        <option value="Plaza Paso">Plaza Paso</option>
+                        <option value="Plaza Sarmiento">Plaza Sarmiento</option>
+                        <option value="Plaza Almirante Brown">Plaza Almirante Brown</option>
+                        <option value="Plaza España">Plaza España</option>
+                        <option value="Plaza Güemes">Plaza Güemes</option>
+                        <option value="Plaza Mateu">Plaza Mateu</option>
+                        <option value="Plaza Grigera">Plaza Grigera</option>
+                        <option value="Plaza Malvinas Argentinas">Plaza Malvinas Argentinas</option>
+                        <option value="Plaza Güemes Este">Plaza Güemes Este</option>
                       </select>
                     </div>
 
-                    <input type="hidden" name="estado" value="true">
+                    <label for="servicio">Dias disponibles (*)</label>
+                    <div class="mb-3">
+                      <input type="checkbox" name="dia" id="domingo" value="Domingo">
+                      <label for="domingo">Domingo</label>
+                      <br>
+                      <input type="checkbox" name="dia" id="lunes" value="Lunes">
+                      <label for="lunes">Lunes</label>
+                      <br>
+                      <input type="checkbox" name="dia" id="martes" value="Martes">
+                      <label for="martes">Martes</label>
+                      <br>
+                      <input type="checkbox" name="dia" id="miercoles" value="Miercoles">
+                      <label for="miercoles">Miercoles</label>
+                      <br>
+                      <input type="checkbox" name="dia" id="jueves" value="Jueves">
+                      <label for="jueves">Jueves</label>
+                      <br>
+                      <input type="checkbox" name="dia" id="viernes" value="Viernes">
+                      <label for="viernes">Viernes</label>
+                      <br>
+                      <input type="checkbox" name="dia" id="sabado" value="Sabado">
+                      <label for="sabado">Sabado</label>
+                      <br>
+                    </div>
 
-                    
+                    <label for="monto">Rango de Horario Disponible (*)</label>
+                    <div class="mb-3">
+                      <input class="form-control form-control-user" type="text" name="horaInicio" id="horaInicio" placeholder="Ejemplo: 08:00" required>
+                      <input class="form-control form-control-user" type="text" name="horaFin" id="horaFin" placeholder="Ejemplo: 18:00" required>
+                    </div>
+
                     <div class="text-center mb-2" style="font-size: smaller;">Los campos con (*) son obligatorios</div>
 
                     <div id="mensaje"></div>
-                    <div id="mensajeGuarderia"></div>
+                    
                   </div>
 
                   <button id="registrar" class="btn btn-primary d-block btn-user w-100" name="registrar" type="submit">Registrar</button>
@@ -136,76 +158,76 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
   integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
   crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/smoothness/jquery-ui.css">
   
 <script>
 
 const btnEnviar = document.getElementById("registrar");
 
-function camposVacios(){
+function camposVacios() {
   const nombreInput = document.getElementById('nombre');
-  const email = document.getElementById('email');
+  const emailInput = document.getElementById('email');
   const zonaInput = document.getElementById('zona');
+  const servicioInput = document.getElementById('servicio');
+  const horaInicioInput = document.getElementById('horaInicio');
+  const horaFinInput = document.getElementById('horaFin');
+
   const nombre = nombreInput.value;
-  const servicioInputs = document.querySelectorAll('input[name="servicio"]:checked');
-  const serviciosSeleccionados = Array.from(servicioInputs).map(input => input.value);
+  const email = emailInput.value;
   const zona = zonaInput.value;
-  const estado = true; 
+  const servicio = servicioInput.value;
+  const horaInicio = horaInicioInput.value;
+  const horaFin = horaFinInput.value;
 
-  if (!nombre || !email.value.trim() || serviciosSeleccionados.length === 0 || !zona) {
-    event.preventDefault();
+   // Obtener los checkboxes de los días
+   const diasInputs = document.querySelectorAll('input[name="dia"]:checked');
+   const dias = Array.from(diasInputs).map((input) => input.value).join(',');
+
+  if (!nombre || !email.trim() || !servicio || !zona || !horaInicio || !horaFin || dias.length === 0) {
     const mensajeElemento = document.getElementById('mensaje');
-    mensajeElemento.textContent = 'Por favor complete todos los campos solicitados.';
+    mensajeElemento.textContent = 'Por favor complete todos los campos solicitados y seleccione al menos un día.';
     return true;
-  } 
-
+  }
   return false;
 }
-function checkGuarderia() {
-  var guarderiaCheckbox = document.getElementById("guarderia");
-  var cuidadorCheckbox = document.getElementById("cuidador");
-  var paseadorCheckbox = document.getElementById("paseador");
-  
 
-  if (guarderiaCheckbox.checked) {
-    cuidadorCheckbox.checked = false;
-    paseadorCheckbox.checked = false;
-    cuidadorCheckbox.disabled = true;
-    paseadorCheckbox.disabled = true;
-    
-  } else {
-    cuidadorCheckbox.disabled = false;
-    paseadorCheckbox.disabled = false;
-    
-  }
-}
 function confirmarUtilizacion() {
-    // Cerrar el modal
-    $('#modalConfirmacion').modal('hide');
+  // Cerrar el modal
+  $('#modalConfirmacion').modal('hide');
 
-    // Enviar el formulario
-    document.getElementById('myForm').submit();
-  }
+  // Enviar el formulario
+  document.getElementById('myForm').submit();
+}
 
-  function confirmarRegistro(){
-    $('#modalConfirmacion').modal('show');
-  }
+function confirmarRegistro() {
+  $('#modalConfirmacion').modal('show');
+}
 
-  btnEnviar.onclick = function (event) {
+btnEnviar.onclick = function(event) {
   event.preventDefault();
-  var guarderiaCheckbox = document.getElementById("guarderia");
-  var cuidadorCheckbox = document.getElementById("cuidador");
-  var paseadorCheckbox = document.getElementById("paseador");
-  var mensajeGuarderia= document.getElementById('mensajeGuarderia');
-
-  if (guarderiaCheckbox.checked && (cuidadorCheckbox.checked || paseadorCheckbox.checked)) {
-    mensajeGuarderia.textContent = "La opción de Guardería solo puede ser seleccionada sin otros roles.";
-    return false;
-  } else if (camposVacios()) {
+  if (camposVacios()) {
     return false;
   } else {
     confirmarRegistro();
   }
 };
+</script>
+<script>
+  var inputHoraInicio = document.getElementById("horaInicio");
+  var inputHoraFin = document.getElementById("horaFin");
+
+  inputHoraInicio.addEventListener("input", function() {
+    this.value = this.value.replace(/[^0-9:]/g, "");
+    this.value = this.value.replace(/(\d{2})(\d{1,2})/, "$1:$2");
+    this.value = this.value.replace(/(:\d{3}).*$/, "$1");
+  });
+
+  inputHoraFin.addEventListener("input", function() {
+    this.value = this.value.replace(/[^0-9:]/g, "");
+    this.value = this.value.replace(/(\d{2})(\d{1,2})/, "$1:$2");
+    this.value = this.value.replace(/(:\d{3}).*$/, "$1");
+  });
 </script>
 
 <%- include ('sweet-alert') %>
