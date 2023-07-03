@@ -4,7 +4,7 @@ const { validarLogin, mostrarLogin, deslogear } = require('../controllers/loginC
 const { mostrarRegister, registrar, chequear_mail_duplicado } = require('../controllers/registerController');
 const { mostrarTrabajadores, mostrarCargaTrabajador, guardarTrabajador,mostrarPaseadores, mostrarGuarderias,cambiarEstadoTrabajador} = require('../controllers/trabajadorController');
 const { mostrarGuarderiasFiltradasPorZona , mostrarPaseadoresFiltradosPorZona} = require('../controllers/trabajadorController');
-const { mostrarIndex } = require('../controllers/indexController');
+const { mostrarIndex, mostrarComingSoon } = require('../controllers/indexController');
 const { comprobar_sesion, comprobar_sesion_admin } = require('../controllers/loginController');
 const { mostrarAgregarMascota, registrarMascota , mostrarMascota , eliminarMascota} = require('../controllers/mascotasController');
 const { verificaciones, solicitarTurno, mostrarTodosLosTurnos, mostrarMisTurnos, cambiarEstadoTurno, guardarTurno, turnoGuardado ,mostrarTurnosDia} = require('../controllers/turnosController');
@@ -13,8 +13,8 @@ const { mostrarModificarPerfil , modificarMiPerfil , mostrarModificarMiPassword,
 const { mostrarAdopciones, cambiarEstado, mostrarPublicacion, guardarPublicacion, mostrarContacto, contactoAdoptante} = require('../controllers/adopcionController');
 const { mostrarHistorial , crearHistorial,mostrarCarga, mostrarLibreta} = require('../controllers/historialController');
 const { mostrarCupones } = require('../controllers/cuponesController');
-const { mostrarPerdidas } = require('../controllers/perdidasController');
-const { mostrarBusquedas } = require('../controllers/busquedasController');
+const { mostrarPerdidas, mostrarFormularioPerdida, generarPublicacionPerdida, mostrarContactarPerdida, contactarPerdida } = require('../controllers/perdidasController');
+const { mostrarBusquedas, mostrarFormularioBusqueda, generarPublicacionBusqueda, mostrarContactarBusqueda, contactarBusqueda } = require('../controllers/busquedasController');
 const { mostrarCampanias, publicarCampania, verificacionesCampania, guardarPublicacionCampania, publicacionGuardada, verificacionesDonacion, realizarDonacion} = require('../controllers/campaniasController');
 const { mostrarIndexCruzas, publicarMascotaCruza, guardarPublicacionCruza, publicacionGuardadaCruza, verificacionesCruza, verificarPerroEsDeUsuario, verificacionesDeMascotasContacto, mostrarPublicacionMascota, mostrarRecomendacionesCruza, mostrarContactoCruza, contactoCruzaGuardado, verificacionesContactoCruza, contactarCruza} = require('../controllers/cruzasController');
 const { mostrarVeterinarias } = require('../controllers/veterinariasController');
@@ -125,9 +125,19 @@ app.post('/generar_reporte_practicas', comprobar_sesion, comprobar_sesion_admin,
 
 //PERDIDAS
 app.get('/perdidas', mostrarPerdidas);
+app.get('/crear_publicacion_perdida', comprobar_sesion, mostrarFormularioPerdida)
+app.post('/crear_publicacion_perdida', comprobar_sesion, generarPublicacionPerdida)
+app.get('/contacto_perdida', mostrarContactarPerdida)
+app.post('/contactarPerdida', contactarPerdida)
 
 //BUSQUEDAS
 app.get('/busquedas', mostrarBusquedas);
+app.get('/crear_publicacion_busqueda', comprobar_sesion, mostrarFormularioBusqueda)
+app.post('/crear_publicacion_busqueda', comprobar_sesion, generarPublicacionBusqueda)
+app.get('/contacto_busqueda', mostrarContactarBusqueda)
+app.post('/contactarbusqueda', contactarBusqueda)
+
+app.get('/coming_soon', mostrarComingSoon)
 
 module.exports = app;
 

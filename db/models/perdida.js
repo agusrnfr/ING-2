@@ -4,6 +4,10 @@ const sequelize = require('../db');
 class Perdida extends Model { }
 
 Perdida.init({
+    nombre: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     zona: {
         type: DataTypes.STRING,
         allowNull: false,
