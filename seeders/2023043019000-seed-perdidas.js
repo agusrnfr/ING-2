@@ -15,7 +15,7 @@ module.exports = {
       sexo: SEXOS.MACHO,
       foto: '/img/perdidas_y_busquedas/perdidas/1.bmp',
       comportamiento: 'camina en dos patas como persona',
-      caracteristicas: 'aveces usa sombrero',
+      caracteristicas: 'aveces usa sombrero, le gusta ser como un bebe humano',
       mail: 'juancho@gmail.com',
       tel: "2216032221",
       se_encontro: false,
