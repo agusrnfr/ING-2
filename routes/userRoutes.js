@@ -129,7 +129,7 @@ app.get('/crear_publicacion_perdida', comprobar_sesion, mostrarFormularioPerdida
 app.post('/crear_publicacion_perdida', comprobar_sesion, generarPublicacionPerdida)
 app.get('/contacto_perdida/:id', mostrarContactarPerdida)
 app.post('/contacto_perdida/contactarPerdida/:id', contactarPerdida)
-app.post('/perdidas/marcarPerdidaComoEncontrado', marcarPerdidaComoEncontrado);
+app.post('/marcarPerdidaComoEncontrado', marcarPerdidaComoEncontrado);
 
 //BUSQUEDAS
 app.get('/busquedas', mostrarBusquedas);

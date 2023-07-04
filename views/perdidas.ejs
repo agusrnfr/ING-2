@@ -49,15 +49,35 @@
                             </h5>
                         </div>
                         <h5 class="text-center">
-                          <% if (perdida.se_encontro === false && session && session.usuario && perdida.UserId === session.usuario.id) { %>
-                            <form action="perdidas/marcarPerdidaComoEncontrado" method="POST">
-                              <input type="hidden" name="parametro1" value="<%= perdida.id%>">
-                              <button type="submit" class="btn btn-success float-right">
-                                Marcar como Encontrado <i class="bi bi-check-lg"></i>
-                              </button>
-                            </form>
-                            
-                          <% } %>
+<% if (perdida.se_encontro === false && session && session.usuario && perdida.UserId === session.usuario.id) { %>
+  <form action="marcarPerdidaComoEncontrado" method="POST" id="form_marcar_<%= perdida.id %>">
+    <input type="hidden" name="parametro1" value="<%= perdida.id %>">
+    <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#confirmModal_<%= perdida.id %>">
+      Marcar como Encontrado <i class="bi bi-check-lg"></i>
+    </button>
+
+    <!-- Modal de confirmación -->
+    <div class="modal fade" id="confirmModal_<%= perdida.id %>" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel_<%= perdida.id %>" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="confirmModalLabel_<%= perdida.id %>">Confirmar</h5>
+
+          </div>
+          <div class="modal-body">
+            <p>¿Confirmas que encontraste tu mascota?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-success">Confirmar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </form>
+<% } %>
+
                     </h5>
                     </div>
                   </div>

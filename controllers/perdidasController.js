@@ -81,39 +81,12 @@ const contactarPerdida = async(req, res) => {
 
 const marcarPerdidaComoEncontrado = async(req, res) => {
     publicacionPerdida = await Perdida.findByPk(req.body.parametro1)
-    const perdidas = await Perdida.findAll()
     if(!publicacionPerdida){
         return res.send('No existe la publicacion')
     }
-    try{
-        publicacionPerdida.se_encontro = true
-        await publicacionPerdida.save()
-        return res.render('perdidas.ejs',{
-            alert:true,
-            alertTitle:"Nos alegramos que hayas encontrado a tu mascota! 😁",
-            alertMessage:"",
-            alertIcon:"success",
-            showConfirmButton:false,
-            timer:1500,
-            session: session, 
-            perdidas,
-            ruta: 'perdidas'
-        })
-
-    }
-    catch(error){
-        res.render('perdidas.ejs',{
-            alert:true,
-            alertTitle:"No se ha podido marcar como encontrado",
-            alertMessage:"",
-            alertIcon:"error",
-            showConfirmButton:false,
-            timer:1500,
-            session: session, 
-            perdidas,
-            ruta: 'perdidas'
-        })
-    }
+    publicacionPerdida.se_encontro = true
+    await publicacionPerdida.save()
+    return res.redirect('/perdidas')
 }
 
 module.exports = {
