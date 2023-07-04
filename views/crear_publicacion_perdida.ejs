@@ -11,7 +11,7 @@
                         <div class="row justify-content-center">
                             <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-3">Crear publicación de perro perdido <i class="bi bi-heartbreak"></i></p>
                             <div class="col-md-6"> <!-- Primera columna del formulario -->
-                                <form method="POST" action="/crear_publicacion_perdida">
+                                <form method="POST" action="/crear_publicacion_perdida" enctype="multipart/form-data">
                                     <div class="row mb-3 h-100">
                                         <div class="mb-3">
                                             <label for="zona">¿La mascota había sido registrada en la veterinaria?</label>
@@ -95,7 +95,7 @@
                                       <% }); %>
                                     </select>
                                   </div>
-                                <div class="mb-2"><label for="input-file" class="form-label" id="input-file_label">Agregar fotografia</label><input type="file" class="form-control" id="input-file" name="imagen"></div>
+                                  <div class="mb-3"><label for="input-file" class="form-label">Agregar fotografia</label><input type="file" class="form-control" id="input-file" name="imagen">
 
                                 
                             </div>

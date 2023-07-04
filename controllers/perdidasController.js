@@ -48,14 +48,18 @@ const generarPublicacionPerdida = async(req, res) => {
     const telefono = req.body.telefono;
     const comportamiento = req.body.comportamiento;
     const zona = req.body.zona;
-    const imagen = req.body.imagen;
+
+    console.log(req.file.path)
+    /* let imagen = req.file.path;
+    imagen = req.file.path.replace("public", "")//para q se guarde bien el path */
+
     const perdidas = await Perdida.findAll({
         order: [
           [sequelize.literal('NOT se_encontro'), 'DESC'],
           ['id', 'ASC'],
         ],
     });
-
+    console.log(imagen)
     try {
         await Perdida.create({
             nombre: nombre_mascota,
