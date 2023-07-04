@@ -126,7 +126,7 @@ app.post('/generar_reporte_practicas', comprobar_sesion, comprobar_sesion_admin,
 //PERDIDAS
 app.get('/perdidas', mostrarPerdidas);
 app.get('/crear_publicacion_perdida', comprobar_sesion, mostrarFormularioPerdida)
-app.post('/crear_publicacion_perdida', comprobar_sesion, generarPublicacionPerdida)
+app.post('/crear_publicacion_perdida', comprobar_sesion, upload.single('imagen'), generarPublicacionPerdida)
 app.get('/contacto_perdida/:id', mostrarContactarPerdida)
 app.post('/contacto_perdida/contactarPerdida/:id', contactarPerdida)
 app.post('/marcarPerdidaComoEncontrado', marcarPerdidaComoEncontrado);

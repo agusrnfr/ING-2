@@ -41,7 +41,8 @@ const generarPublicacionPerdida = async(req, res) => {
         nombre_mascota = req.body.nombre_mascota;
         sexo = req.body.sexo;
         edad = req.body.edad;
-        foto = req.body.imagen;
+        const imagen = req.file.path.replace("public", "")//para q se guarde bien el path */
+        foto = imagen;
     }
     const mail = req.body.mail;
     const caracteristicas = req.body.caracteristicas;
@@ -49,9 +50,6 @@ const generarPublicacionPerdida = async(req, res) => {
     const telefono = req.body.telefono;
     const comportamiento = req.body.comportamiento;
     const zona = req.body.zona;
-
-    /* let imagen = req.file.path;
-    imagen = req.file.path.replace("public", "")//para q se guarde bien el path */
 
     const perdidas = await Perdida.findAll({
         order: [
