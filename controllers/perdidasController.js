@@ -27,20 +27,21 @@ const generarPublicacionPerdida = async(req, res) => {
     const usuario = await User.findByPk(session.usuario.id)
     const mascotas = await usuario.getMascotas()
     const select_mascota = req.body.select_mascota;
-    let nombre_mascota, sexo, edad;
+    console.log(req.body.select_mascota)
+    let nombre_mascota, sexo, edad, foto;
     if(select_mascota){ // busca la info si se selecciono una mascota
-        console.log('entro')
         const pk = req.body.select_mascota;
         const mascota = await Mascota.findByPk(pk);
-        console.log(mascota)
         nombre_mascota = mascota.nombre;
         sexo = mascota.sexo;
         const fechaActual = moment();
         edad = fechaActual.diff(mascota.fecha_nacimiento, 'years')
+        foto = mascota.foto
     }else{
         nombre_mascota = req.body.nombre_mascota;
         sexo = req.body.sexo;
         edad = req.body.edad;
+        foto = req.body.imagen;
     }
     const mail = req.body.mail;
     const caracteristicas = req.body.caracteristicas;
@@ -49,7 +50,6 @@ const generarPublicacionPerdida = async(req, res) => {
     const comportamiento = req.body.comportamiento;
     const zona = req.body.zona;
 
-    console.log(req.file.path)
     /* let imagen = req.file.path;
     imagen = req.file.path.replace("public", "")//para q se guarde bien el path */
 
@@ -59,7 +59,7 @@ const generarPublicacionPerdida = async(req, res) => {
           ['id', 'ASC'],
         ],
     });
-    console.log(imagen)
+
     try {
         await Perdida.create({
             nombre: nombre_mascota,
@@ -67,7 +67,7 @@ const generarPublicacionPerdida = async(req, res) => {
             fecha_perdida: fecha_perdida,
             edad: edad,
             sexo: sexo,
-            foto: imagen,
+            foto: foto,
             comportamiento: comportamiento,
             caracteristicas: caracteristicas,
             mail: mail,
