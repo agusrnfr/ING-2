@@ -3,6 +3,7 @@ const Mascota = require('../db/models/mascota');
 const User = require('../db/models/user');
 const session = require('express-session');
 const moment = require('moment');
+const Libreta = require('../db/models/libreta.js');
 const { transporter } = require('../config/mailer');
 
 const verificaciones = async (req, res, next) => { // Verifica que los datos ingresados sean válidos
@@ -105,9 +106,13 @@ const solicitarTurno = async (req, res) => { // Muestra el formulario para solic
     }
 };
 
-const calcularFechaVacuna = (fecha, practica, mascota, banda_horaria) => { // Calcula la fecha de la vacuna
+const calcularFechaVacuna = async (fecha, practica, mascota, banda_horaria) => { // Calcula la fecha de la vacuna
     const edadMascota = calcularEdadMasco(mascota.fechaNacimiento); // Calcula la edad de la mascota en meses
-    if (practica == 'Vacuna A' && edadMascota < 4) { // Si la mascota tiene menos de 4 meses, se le asigna la fecha de la vacuna A a 21 días de la fecha actual
+    const dosis_dadas = await Libreta.findAll({
+        where:{ practica : global.PRACTICA.VACUNA_A,
+                MascotumId: mascota.id}})
+
+    if (practica == 'Vacuna A' && edadMascota < 4  && dosis_dadas.length < 2) { // Si la mascota tiene menos de 4 meses, se le asigna la fecha de la vacuna A a 21 días de la fecha actual
         fecha = moment().add(21, 'days').startOf('day');
         if (fecha.day() == 6 && banda_horaria.toLowerCase() == 'tarde') { // Si la fecha es sábado y la banda horaria es tarde, se le asigna la fecha de la vacuna A a 23 días de la fecha actual
             return fecha.add(2, 'days'); // 
@@ -116,7 +121,7 @@ const calcularFechaVacuna = (fecha, practica, mascota, banda_horaria) => { // Ca
         } else {
             return fecha; // Si la fecha no es sábado ni domingo, se le asigna la fecha de la vacuna A a 21 días de la fecha actual
         }
-    } else if ((practica == 'Vacuna A' && edadMascota >= 4) || practica == 'Vacuna B') { // Si la mascota tiene 4 meses o más o es la vacuna B , se le asigna la fecha de la vacuna a 1 año de la fecha actual
+      } else if ((practica == 'Vacuna A' && edadMascota >= 4 && dosis_dadas.length < 2) || practica == 'Vacuna B' || (practica == 'Vacuna A' && dosis_dadas.length >= 2)) { // Si la mascota tiene 4 meses o más o es la vacuna B , se le asigna la fecha de la vacuna a 1 año de la fecha actual
         fecha = moment().add(1, 'year').startOf('day');
         if (fecha.day() == 6 && banda_horaria.toLowerCase() == 'tarde') { // Si la fecha es sábado y la banda horaria es tarde, se le asigna la fecha de la vacuna a 1 año y 2 días de la fecha actual
             return fecha.add(2, 'days');
@@ -131,7 +136,8 @@ const calcularFechaVacuna = (fecha, practica, mascota, banda_horaria) => { // Ca
 }
 
 const crearTurnoBD = async (fecha, banda_horaria, practica, UserId, mascota) => { // Crea el turno en la base de datos
-    let fechaBD = calcularFechaVacuna(fecha, practica, mascota, banda_horaria).toDate();
+    let fechaBD = await calcularFechaVacuna(fecha, practica, mascota, banda_horaria);
+    fechaBD = moment(fechaBD).toDate();
     if (!fechaBD) {
         throw new Error('No se pudo calcular la fecha del turno');
     }

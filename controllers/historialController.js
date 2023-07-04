@@ -176,17 +176,8 @@ const crearHistorial = async (req, res) => {  //Crea un historial
         };
 
         if(practica === global.PRACTICA.VACUNA_A){
-          const dosis_dadas_A = await Libreta.findAll({
-            where:{ practica : global.PRACTICA.VACUNA_A,
-                    MascotumId: mascota.id}})
-          if(dosis_dadas_A.length < 2){ //cuando llega aca ya se dio la dosis 
-            await crearTurnoBD(fecha, turno.banda_horaria, turno.practica, turno.UserId, mascotaObj)
-          } else { // a practica, se le asigna Vacuna B, asi le asigna un turno dentro de un año
-            turno.practica= global.PRACTICA.VACUNA_B
             await crearTurnoBD(fecha, turno.banda_horaria, turno.practica, turno.UserId, mascotaObj)
           }
-        }
-        
         if(practica === global.PRACTICA.VACUNA_B){
             await crearTurnoBD(fecha, turno.banda_horaria, turno.practica, turno.UserId, mascotaObj)
         } 
