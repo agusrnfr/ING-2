@@ -27,7 +27,6 @@ const generarPublicacionPerdida = async(req, res) => {
     const usuario = await User.findByPk(session.usuario.id)
     const mascotas = await usuario.getMascotas()
     const select_mascota = req.body.select_mascota;
-    console.log(req.body.select_mascota)
     let nombre_mascota, sexo, edad, foto;
     if(select_mascota){ // busca la info si se selecciono una mascota
         const pk = req.body.select_mascota;
