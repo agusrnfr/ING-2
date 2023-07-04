@@ -137,7 +137,7 @@ app.get('/crear_publicacion_busqueda', comprobar_sesion, mostrarFormularioBusque
 app.post('/crear_publicacion_busqueda', comprobar_sesion, upload.single('imagen'), generarPublicacionBusqueda)
 app.get('/contacto_busqueda/:id', mostrarContactarBusqueda)
 app.post('/contactarbusqueda/:id', contactarBusqueda)
-app.post('marcarBusquedaComoEncontrado', marcarBusquedaComoEncontrado);
+app.post('/marcarBusquedaComoEncontrado', marcarBusquedaComoEncontrado);
 
 app.get('/coming_soon', mostrarComingSoon)
 
