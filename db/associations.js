@@ -36,6 +36,7 @@ Busqueda.belongsTo(User);
 
 User.hasMany(Perdida);
 Perdida.belongsTo(User);
+Perdida.belongsTo(Mascota, { allowNull: true })
 
 User.hasMany(Adopcion);
 Adopcion.belongsTo(User);

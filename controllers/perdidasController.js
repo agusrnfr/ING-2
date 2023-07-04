@@ -4,9 +4,16 @@ const User = require('../db/models/user.js');
 const Mascota = require('../db/models/mascota');
 const Perdida = require('../db/models/perdida');
 const { transporter } = require('../config/mailer');
+const sequelize = require('../db/db');
+const moment = require('moment');
 
 const mostrarPerdidas = async(req, res) => {
-    const perdidas = await Perdida.findAll()
+    const perdidas = await Perdida.findAll({
+        order: [
+          [sequelize.literal('NOT se_encontro'), 'DESC'],
+          ['id', 'ASC'],
+        ],
+    });
     return res.render('../views/perdidas', { session , perdidas })
 }
 
@@ -17,7 +24,71 @@ const mostrarFormularioPerdida = async(req, res) => {
 }
 
 const generarPublicacionPerdida = async(req, res) => {
-    res.render('../views/coming_soon')
+    const usuario = await User.findByPk(session.usuario.id)
+    const mascotas = await usuario.getMascotas()
+    const select_mascota = req.body.select_mascota;
+    let nombre_mascota, sexo, edad;
+    if(select_mascota){ // busca la info si se selecciono una mascota
+        console.log('entro')
+        const pk = req.body.select_mascota;
+        const mascota = await Mascota.findByPk(pk);
+        console.log(mascota)
+        nombre_mascota = mascota.nombre;
+        sexo = mascota.sexo;
+        const fechaActual = moment();
+        edad = fechaActual.diff(mascota.fecha_nacimiento, 'years')
+    }else{
+        nombre_mascota = req.body.nombre_mascota;
+        sexo = req.body.sexo;
+        edad = req.body.edad;
+    }
+    const mail = req.body.mail;
+    const caracteristicas = req.body.caracteristicas;
+    const fecha_perdida = req.body.fecha_perdida;
+    const telefono = req.body.telefono;
+    const comportamiento = req.body.comportamiento;
+    const zona = req.body.zona;
+    const imagen = req.body.imagen;
+    const perdidas = await Perdida.findAll({
+        order: [
+          [sequelize.literal('NOT se_encontro'), 'DESC'],
+          ['id', 'ASC'],
+        ],
+    });
+
+    try {
+        await Perdida.create({
+            nombre: nombre_mascota,
+            zona: zona,
+            fecha_perdida: fecha_perdida,
+            edad: edad,
+            sexo: sexo,
+            foto: imagen,
+            comportamiento: comportamiento,
+            caracteristicas: caracteristicas,
+            mail: mail,
+            tel: telefono,
+            se_encontro: false,
+            MascotumId: select_mascota,
+            UserId: session.usuario.id,
+        });
+        res.render('crear_publicacion_perdida.ejs',{
+            alert:true,
+            alertTitle:"Publicacion creada",
+            alertMessage:"",
+            alertIcon:"success",
+            showConfirmButton:false,
+            timer:1500,
+            session: session,
+            ruta: 'perdidas',
+            perdidas,
+            mascotas,
+        })
+
+    }
+    catch (error) {
+        console.log(error);
+    }
 }
 
 const mostrarContactarPerdida = async(req, res) => {
