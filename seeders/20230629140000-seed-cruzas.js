@@ -15,6 +15,13 @@ module.exports = {
             se_muestra: true,
             MascotumId: 11,
         }], {});
+        await queryInterface.bulkInsert('cruzas', [{
+            texto_libre: 'Es una perra muy bonita',
+            mail: 'juancho2@gmail.com',
+            tel: '2216786708',
+            se_muestra: true,
+            MascotumId: 4,
+        }], {});
     },
     async down(queryInterface, Sequelize) {
         // Comandos para revertir la inserción de datos
