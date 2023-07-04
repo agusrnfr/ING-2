@@ -29,8 +29,10 @@
                             <p><%= perdida.caracteristicas %></p>
                           </h8>
                             <h5 class="text-center">
-                                <a href="/contacto_perdida" class="btn btn-outline-primary float-right">Contactar</a>
-                                <a href="#" class="btn btn-outline-info float-right" data-toggle="collapse" data-target="#collapseInfo<%= perdida.id %>">Más info</a>
+                              <% if (!(perdida.se_encontro === true || (session && session.usuario && perdida.UserId === session.usuario.id))) { %>
+                                <a href="/contacto_perdida/<%= perdida.id %>" class="btn btn-outline-primary float-right">Contactar <i class="bi bi-envelope-plus"></i></a>
+                              <% } %>
+                                <a href="#" class="btn btn-outline-info float-right" data-toggle="collapse" data-target="#collapseInfo<%= perdida.id %>">Más info <i class="bi bi-search"></i> </a>
                                 <div id="collapseInfo<%= perdida.id %>" class="collapse">
                                     <div class="card">
                                       <div class="card-body">
@@ -47,7 +49,15 @@
                             </h5>
                         </div>
                         <h5 class="text-center">
-                        <a href="/coming_soon" class="btn btn-outline-success float-right">Marcar como Encontrado</a>
+                          <% if (perdida.se_encontro === false && session && session.usuario && perdida.UserId === session.usuario.id) { %>
+                            <form action="perdidas/marcarPerdidaComoEncontrado" method="POST">
+                              <input type="hidden" name="parametro1" value="<%= perdida.id%>">
+                              <button type="submit" class="btn btn-success float-right">
+                                Marcar como Encontrado <i class="bi bi-check-lg"></i>
+                              </button>
+                            </form>
+                            
+                          <% } %>
                     </h5>
                     </div>
                   </div>

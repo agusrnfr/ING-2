@@ -18,6 +18,9 @@ const mostrarContactarBusqueda = async(req, res) => {
 const contactarBusqueda = async(req, res) => {
 }
 
+const marcarBusquedaComoEncontrado = async(req, res) => {
+}
+
 
 module.exports = {
     mostrarBusquedas,
@@ -25,4 +28,5 @@ module.exports = {
     generarPublicacionBusqueda,
     mostrarContactarBusqueda,
     contactarBusqueda,
+    marcarBusquedaComoEncontrado,
 }

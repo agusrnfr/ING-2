@@ -19,9 +19,9 @@
                 <div class="col-md-10 col-lg-5 col-xl-10 order-2 order-lg-1">
                   <p class="text-center h1 fw-bold mb-2 mx-1 mx-md-4 mt-3">Contactar dueño <i class="bi bi-envelope-plus-fill"></i> </p>
                   <p class="text-center h6 fw-bold mb-2 mx-1 mx-md-4 mt-0">Por favor, ingrese sus datos de contacto</p>
-                  <div class="alert alert-info" role="alert">Se va a contactar a: <strong> pepito </strong></div>
+                  <div class="alert alert-info" role="alert">Se va a contactar a: <strong> <%= UsuarioAContactar.name %> </strong></div>
 
-    <form id= "miForm"  action="contactarPerdida" method="POST">
+    <form id= "miForm"  action="contactarPerdida/<%= publicacionPerdida.id %>" method="POST">
 
         <div class="row mb-3">
 

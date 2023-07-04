@@ -13,8 +13,8 @@ const { mostrarModificarPerfil , modificarMiPerfil , mostrarModificarMiPassword,
 const { mostrarAdopciones, cambiarEstado, mostrarPublicacion, guardarPublicacion, mostrarContacto, contactoAdoptante} = require('../controllers/adopcionController');
 const { mostrarHistorial , crearHistorial,mostrarCarga, mostrarLibreta} = require('../controllers/historialController');
 const { mostrarCupones } = require('../controllers/cuponesController');
-const { mostrarPerdidas, mostrarFormularioPerdida, generarPublicacionPerdida, mostrarContactarPerdida, contactarPerdida } = require('../controllers/perdidasController');
-const { mostrarBusquedas, mostrarFormularioBusqueda, generarPublicacionBusqueda, mostrarContactarBusqueda, contactarBusqueda } = require('../controllers/busquedasController');
+const { mostrarPerdidas, mostrarFormularioPerdida, generarPublicacionPerdida, mostrarContactarPerdida, contactarPerdida, marcarPerdidaComoEncontrado } = require('../controllers/perdidasController');
+const { mostrarBusquedas, mostrarFormularioBusqueda, generarPublicacionBusqueda, mostrarContactarBusqueda, contactarBusqueda, marcarBusquedaComoEncontrado } = require('../controllers/busquedasController');
 const { mostrarCampanias, publicarCampania, verificacionesCampania, guardarPublicacionCampania, publicacionGuardada, verificacionesDonacion, realizarDonacion} = require('../controllers/campaniasController');
 const { mostrarIndexCruzas, publicarMascotaCruza, guardarPublicacionCruza, publicacionGuardadaCruza, verificacionesCruza, verificarPerroEsDeUsuario, verificacionesDeMascotasContacto, mostrarPublicacionMascota, mostrarRecomendacionesCruza, mostrarContactoCruza, contactoCruzaGuardado, verificacionesContactoCruza, contactarCruza} = require('../controllers/cruzasController');
 const { mostrarVeterinarias } = require('../controllers/veterinariasController');
@@ -127,15 +127,17 @@ app.post('/generar_reporte_practicas', comprobar_sesion, comprobar_sesion_admin,
 app.get('/perdidas', mostrarPerdidas);
 app.get('/crear_publicacion_perdida', comprobar_sesion, mostrarFormularioPerdida)
 app.post('/crear_publicacion_perdida', comprobar_sesion, generarPublicacionPerdida)
-app.get('/contacto_perdida', mostrarContactarPerdida)
-app.post('/contactarPerdida', contactarPerdida)
+app.get('/contacto_perdida/:id', mostrarContactarPerdida)
+app.post('/contacto_perdida/contactarPerdida/:id', contactarPerdida)
+app.post('/perdidas/marcarPerdidaComoEncontrado', marcarPerdidaComoEncontrado);
 
 //BUSQUEDAS
 app.get('/busquedas', mostrarBusquedas);
 app.get('/crear_publicacion_busqueda', comprobar_sesion, mostrarFormularioBusqueda)
 app.post('/crear_publicacion_busqueda', comprobar_sesion, generarPublicacionBusqueda)
-app.get('/contacto_busqueda', mostrarContactarBusqueda)
-app.post('/contactarbusqueda', contactarBusqueda)
+app.get('/contacto_busqueda/:id', mostrarContactarBusqueda)
+app.post('/contactarbusqueda/:id', contactarBusqueda)
+app.post('marcarBusquedaComoEncontrado', marcarBusquedaComoEncontrado);
 
 app.get('/coming_soon', mostrarComingSoon)
 
