@@ -76,10 +76,62 @@ const generarPublicacionBusqueda = async(req, res) => {
 }
 
 const mostrarContactarBusqueda = async(req, res) => {
-    res.render('../views/contactar_busqueda')
+    publicacionBusqueda = await Busqueda.findByPk(req.params.id)
+    if(!publicacionBusqueda){
+        return res.send('No existe la publicacion')
+    }
+    const UsuarioAContactar = await User.findByPk(publicacionBusqueda.UserId)
+    if(!UsuarioAContactar){
+        return res.send('No existe el usuario') // esto nunca deberia ocurrir
+    }
+    return res.render('../views/contactar_busqueda', { session, publicacionBusqueda, UsuarioAContactar })
 }
 
 const contactarBusqueda = async(req, res) => {
+    publicacionBusqueda = await Busqueda.findByPk(req.params.id)
+    if(!publicacionBusqueda){
+        return res.send('No existe la publicacion')
+    }
+    const UsuarioAContactar = await User.findByPk(publicacionBusqueda.UserId)
+    if(!UsuarioAContactar){
+        return res.send('No existe el usuario') // esto nunca deberia ocurrir
+    }
+
+    try{
+        await transporter.sendMail({
+            from: '"Interes en servicio" <veterinaria.omd@gmail.com>',
+            to: "laura.cuenca1@gmail.com", //deberia ser --> to: mailTurno,
+            subject: "Interes en servicio",
+            text: "Estimado "+ UsuarioAContactar.name + ","+" el cliente "+ req.body.nombre + " es el dueño de la mascota que publicó llamada: " + publicacionBusqueda.nombre + " su telefono para comunicarse es " + req.body.telefono ,
+            })
+        res.render('contactar_busqueda.ejs',{
+            alert:true,
+            alertTitle:"Mail enviado",
+            alertMessage:"",
+            alertIcon:"success",
+            showConfirmButton:false,
+            timer:1500,
+            session: session, 
+            publicacionBusqueda: publicacionBusqueda, 
+            UsuarioAContactar: UsuarioAContactar,
+            ruta: 'busquedas'
+        })
+    }
+    catch(error){
+        res.render('contactar_busqueda.ejs',{
+            alert:true,
+            alertTitle:"No se ha podido enviar el mail",
+            alertMessage:"",
+            alertIcon:"error",
+            showConfirmButton:false,
+            timer:1500,
+            session: session, 
+            publicacionBusqueda: publicacionBusqueda, 
+            UsuarioAContactar: UsuarioAContactar,
+            ruta: 'busquedas'
+        })
+        console.error('Error al enviar mail');
+    }
 }
 
 const marcarBusquedaComoEncontrado = async(req, res) => {
