@@ -231,7 +231,7 @@ function horaValidacionInicio() {
   var inputHoraInicio = document.getElementById("horaInicio");
   const horaErrorInicio = document.getElementById('horaErrorInicio');
 
-  if (inputHoraInicio.value.length < 5 || inputHoraInicio.value.length > 5) {
+  if (inputHoraInicio.value.length < 5 ) {
       horaErrorInicio.textContent = "El formato de hora es ej: 08:00";
       return true;
     }
@@ -242,7 +242,7 @@ function horaValidacionFin() {
   var inputHoraFin = document.getElementById("horaFin");
   const horaError = document.getElementById('horaErrorFin');
 
-  if (inputHoraFin.value.length < 5 || inputHoraFin.value.length > 5) {
+  if (inputHoraFin.value.length < 5 ) {
       horaError.textContent = "El formato de hora es ej: 18:00";
       return true;
     }
