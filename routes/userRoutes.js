@@ -19,7 +19,7 @@ const { mostrarCampanias, publicarCampania, verificacionesCampania, guardarPubli
 const { mostrarIndexCruzas, publicarMascotaCruza, guardarPublicacionCruza, publicacionGuardadaCruza, verificacionesCruza, verificarPerroEsDeUsuario, verificacionesDeMascotasContacto, mostrarPublicacionMascota, mostrarRecomendacionesCruza, mostrarContactoCruza, contactoCruzaGuardado, verificacionesContactoCruza, contactarCruza} = require('../controllers/cruzasController');
 const { mostrarVeterinarias } = require('../controllers/veterinariasController');
 
-const { mostrarReportes, generarReporte} = require('../controllers/reportesController');
+const { mostrarReportes, generarReporte, generarReporteAdopciones} = require('../controllers/reportesController');
 //invocamos express
 const app = require('express').Router()
 
@@ -122,6 +122,7 @@ app.get('/veterinariasDeTurno', mostrarVeterinarias);
 //REPORTES
 app.get('/reportes', comprobar_sesion, comprobar_sesion_admin, mostrarReportes);
 app.post('/generar_reporte_practicas', comprobar_sesion, comprobar_sesion_admin, generarReporte)
+app.post('/generar_reporte_adopciones', comprobar_sesion, comprobar_sesion_admin, generarReporteAdopciones)
 
 //PERDIDAS
 app.get('/perdidas', mostrarPerdidas);

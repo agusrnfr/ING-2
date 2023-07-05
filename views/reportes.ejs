@@ -158,15 +158,16 @@
                 <div class="col-5 m-1">
                 Adopciones realizadas en el mes seleccionado
                 </div>
-                <div class="col-5">
-                    <div class="input-group">
-                      <input class="form-control form-control-user m-1" type="month" id="fecha_reporte_adopciones">
-                      <div class="input-group-append">
-                        <a class="btn btn-outline-primary m-1" href="/generar_reporte_adopciones">
-                          <i class="bi bi-pencil-square"></i> Generar reporte
-                        </a>
-                      </div>
-                    </div>
+                <form action="/generar_reporte_adopciones" method="POST">
+                  <div class="col-5">
+                      <div class="input-group">
+                        <input class="form-control form-control-user m-1" type="month" id="fecha_reporte_adopciones" name="fecha_name_adopciones">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-primary m-1" id="generarReporteBtn2" disabled>
+                            <i class="bi bi-pencil-square"></i> Generar reporte
+                          </button>
+                        </div>
+                      </form>
                 </div>
            
 
@@ -229,12 +230,22 @@
       <script>
         const fechaReporteInput = document.getElementById('fecha_reporte_practicas');
         const btnGenerarReporte = document.getElementById('generarReporteBtn');
+        const fechaReporteInput2 = document.getElementById('fecha_reporte_adopciones');
+        const btnGenerarReporte2 = document.getElementById('generarReporteBtn2');
 
         fechaReporteInput.addEventListener('change', function() {
           if (fechaReporteInput.value) {
             btnGenerarReporte.removeAttribute('disabled');
           } else {
             btnGenerarReporte.setAttribute('disabled', 'disabled');
+          }
+        });
+
+        fechaReporteInput2.addEventListener('change', function() {
+          if (fechaReporteInput2.value) {
+            btnGenerarReporte2.removeAttribute('disabled');
+          } else {
+            btnGenerarReporte2.setAttribute('disabled', 'disabled');
           }
         });
       </script>

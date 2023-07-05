@@ -41,7 +41,12 @@ const generarReporte = async(req, res) => {
     return res.render('../views/reportes', { historiales: data , mes_elegido})
 }
 
+const generarReporteAdopciones = async(req, res) => {
+  return res.send("hola")
+}
+
   module.exports = {
       mostrarReportes,
       generarReporte,
+      generarReporteAdopciones,
   }
