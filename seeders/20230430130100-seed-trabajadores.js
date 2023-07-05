@@ -4,6 +4,7 @@ require('../globals.js');
 module.exports = {
   async up (queryInterface, Sequelize) {
 
+    /*
    
    await queryInterface.bulkInsert('trabajadores', [{
     nombre: "Nicolas Robin",
@@ -65,6 +66,8 @@ module.exports = {
     horario: "9:00,14:00",
     estado: true,
    }], {});
+
+   */
 
    await queryInterface.bulkInsert('trabajadores', [{
     nombre: "Patitas Felices",
