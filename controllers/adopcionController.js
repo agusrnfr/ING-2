@@ -2,6 +2,7 @@ const { error } = require('jquery');
 const Adopcion = require('../db/models/adopcion.js');
 const User = require('../db/models/user');
 const { transporter } = require('../config/mailer');
+const moment = require('moment');
 
 const session = require('express-session');
 
@@ -48,10 +49,11 @@ const cambiarEstado = async (req, res) => {
     try {
       // Actualizar el estado de adopción de la publicación
       await Adopcion.update(
-        { se_adopto: !adopcion.se_adopto },
+        { se_adopto: !adopcion.se_adopto,
+          fecha_adopcion: moment().toDate() },
         { where: { id: adopcionId } }
       );
-  
+
       res.json({ success: true }); // Envía una respuesta JSON indicando que el cambio de estado se realizó correctamente
     } catch (error) {
       console.error(error);
