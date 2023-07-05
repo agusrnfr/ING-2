@@ -2,12 +2,13 @@
  const faker = require('faker');
  const moment = require('moment');
  const { Adopcion } = require('../db/models/adopcion');
+ require('../globals.js');
 
  module.exports = {
    up: async (queryInterface, Sequelize) => {
     const excludeList = [4, 5];
     const nombres= ['Negro','Umi','Kira','Milaneso','Bobi','Eren','Zoro','Nami'];
-    const RAZA = ['Mestizo', 'Labrador', 'Caniche', 'Bulldog'];
+    //const RAZA = ['Mestizo', 'Labrador', 'Caniche', 'Bulldog'];
     const colores = ['Negro', 'Marrón', 'Blanco', 'Gris'];
     const caracteristica = ['Juguetón', 'Cariñoso', 'Guardián', 'Activo', 'Asustadizo','Serio'];
     const sexos = ['Macho', 'Hembra'];
@@ -84,19 +85,54 @@
 
 
     await queryInterface.bulkInsert('adopciones', [{
-      nombre: 'Umi',
-      raza: 'cruza',
+      nombre: 'chacha',
+      raza: RAZA.CRUZA,
       color: 'gris',
-      caracteristicas: 'juguetona',
+      caracteristicas: 'frenetica',
       sexo: 'Hembra',
       origen: 'rescatada',
       edad: '2',
       tipo_edad: 'años',
-      se_adopto: false,
+      se_adopto: true,
       vacunas: true,
       UserId: 3,
-      mail: 'juancho@gmail.com',
+      mail: 'agusrojasmc@gmail.com',
       tel: 2116032221,
+      fecha_adopcion: moment().subtract(1, 'days').toDate(),
+    }], {});
+
+    await queryInterface.bulkInsert('adopciones', [{
+      nombre: 'chicha',
+      raza: RAZA.CRUZA,
+      color: 'gris',
+      caracteristicas: 'rabiosa',
+      sexo: 'Hembra',
+      origen: 'rescatada',
+      edad: '1',
+      tipo_edad: 'años',
+      se_adopto: true,
+      vacunas: true,
+      UserId: 3,
+      mail: 'agusrojasmc@gmail.com',
+      tel: 2116032221,
+      fecha_adopcion: moment().subtract(2, 'days').toDate(),
+    }], {});
+
+    await queryInterface.bulkInsert('adopciones', [{
+      nombre: 'Umi',
+      raza: RAZA.CRUZA,
+      color: 'gris',
+      caracteristicas: 'juguetona',
+      sexo: SEXOS.MACHO,
+      origen: 'rescatada',
+      edad: '2',
+      tipo_edad: 'años',
+      se_adopto: true,
+      vacunas: false,
+      UserId: 3,
+      mail: 'agusrojasmc@gmail.com',
+      tel: 2116032221,
+      fecha_adopcion: moment().subtract(3, 'days').toDate(),
     }], {});
 
   //   for (let i = 0; i < 1; i++) {

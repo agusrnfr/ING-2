@@ -13,13 +13,13 @@ const { mostrarModificarPerfil , modificarMiPerfil , mostrarModificarMiPassword,
 const { mostrarAdopciones, cambiarEstado, mostrarPublicacion, guardarPublicacion, mostrarContacto, contactoAdoptante} = require('../controllers/adopcionController');
 const { mostrarHistorial , crearHistorial,mostrarCarga, mostrarLibreta} = require('../controllers/historialController');
 const { mostrarCupones } = require('../controllers/cuponesController');
-const { mostrarPerdidas } = require('../controllers/perdidasController');
-const { mostrarBusquedas } = require('../controllers/busquedasController');
+const { mostrarPerdidas, mostrarFormularioPerdida, generarPublicacionPerdida, mostrarContactarPerdida, contactarPerdida, marcarPerdidaComoEncontrado } = require('../controllers/perdidasController');
+const { mostrarBusquedas, mostrarFormularioBusqueda, generarPublicacionBusqueda, mostrarContactarBusqueda, contactarBusqueda, marcarBusquedaComoEncontrado } = require('../controllers/busquedasController');
 const { mostrarCampanias, publicarCampania, verificacionesCampania, guardarPublicacionCampania, publicacionGuardada, verificacionesDonacion, realizarDonacion} = require('../controllers/campaniasController');
 const { mostrarIndexCruzas, publicarMascotaCruza, guardarPublicacionCruza, publicacionGuardadaCruza, verificacionesCruza, verificarPerroEsDeUsuario, verificacionesDeMascotasContacto, mostrarPublicacionMascota, mostrarRecomendacionesCruza, mostrarContactoCruza, contactoCruzaGuardado, verificacionesContactoCruza, contactarCruza} = require('../controllers/cruzasController');
 const { mostrarVeterinarias } = require('../controllers/veterinariasController');
 
-const { mostrarReportes, generarReporte} = require('../controllers/reportesController');
+const { mostrarReportes, generarReporte, generarReporteAdopciones} = require('../controllers/reportesController');
 //invocamos express
 const app = require('express').Router()
 
@@ -123,11 +123,24 @@ app.get('/veterinariasDeTurno', mostrarVeterinarias);
 //REPORTES
 app.get('/reportes', comprobar_sesion, comprobar_sesion_admin, mostrarReportes);
 app.post('/generar_reporte_practicas', comprobar_sesion, comprobar_sesion_admin, generarReporte)
+app.post('/generar_reporte_adopciones', comprobar_sesion, comprobar_sesion_admin, generarReporteAdopciones)
 
 //PERDIDAS
 app.get('/perdidas', mostrarPerdidas);
+app.get('/crear_publicacion_perdida', comprobar_sesion, mostrarFormularioPerdida)
+app.post('/crear_publicacion_perdida', comprobar_sesion, upload.single('imagen'), generarPublicacionPerdida)
+app.get('/contacto_perdida/:id', mostrarContactarPerdida)
+app.post('/contacto_perdida/contactarPerdida/:id', contactarPerdida)
+app.post('/marcarPerdidaComoEncontrado', marcarPerdidaComoEncontrado);
 
 //BUSQUEDAS
 app.get('/busquedas', mostrarBusquedas);
+app.get('/crear_publicacion_busqueda', comprobar_sesion, mostrarFormularioBusqueda)
+app.post('/crear_publicacion_busqueda', comprobar_sesion, upload.single('imagen'), generarPublicacionBusqueda)
+app.get('/contacto_busqueda/:id', mostrarContactarBusqueda)
+app.post('/contacto_busqueda/contactarBusqueda/:id', contactarBusqueda)
+app.post('/marcarBusquedaComoEncontrado', marcarBusquedaComoEncontrado);
+
+//app.get('/coming_soon', mostrarComingSoon)
 
 module.exports = app;

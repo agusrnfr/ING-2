@@ -88,7 +88,6 @@
 
                     <div class="table-responsive">
                       <table class="table" id="tabla1">
-
                         <thead class="table-secondary">
                           <tr>
                             <th class="text-center">Fecha</th>
@@ -100,6 +99,7 @@
                           </tr>
                         </thead>
                         <tbody>
+                          <% let totalMonto = 0; %>
                           <% if (historiales && historiales.length > 0) { %>
                             <% historiales.forEach(visita => { %>
                               <tr class="paginate">
@@ -113,7 +113,7 @@
                                   <%= visita.practica %>
                                 </td>
                                 <td class="text-center align-middle">
-                                  <%= visita.monto_total %>
+                                  <%= visita.monto_abonado %>
                                 </td>
                                 <td class="text-center align-middle">
                                   <% if (visita.monto_beneficio > 0) { %>
@@ -123,18 +123,30 @@
                                   <% } %>
                                 </td>
                                 <td class="text-center align-middle">
-                                  <% if (visita.monto_abonado > 0) { %>
-                                    <span style="color: green; font-weight: bold;"><%= visita.monto_abonado %></span>
+                                  <% if (visita.monto_abonado - visita.monto_beneficio > 0) { %>
+                                    <span style="color: green; font-weight: bold;"><%= visita.monto_abonado - visita.monto_beneficio %></span>
                                   <% } else { %>
-                                    <%= visita.monto_abonado %>
+                                    <%= visita.monto_abonado - visita.monto_beneficio %>
                                   <% } %>
                                 </td>
                               </tr>
+                              <% totalMonto += (visita.monto_abonado - visita.monto_beneficio); %>
                             <% }); %>
                           <% } %>
+                          <tr class="total-row">
+                            <td></td> <!-- Empty cell to match the column count -->
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="text-center"><strong>Total recauado en practicas del mes: $<%= totalMonto %></strong></td>
+                          </tr>
                         </tbody>
                       </table>
                     </div>
+                    
+                    
+                    
                     
                     
                   <% } %>
@@ -146,18 +158,75 @@
                 <div class="col-5 m-1">
                 Adopciones realizadas en el mes seleccionado
                 </div>
-                <div class="col-5">
-                    <div class="input-group">
-                      <input class="form-control form-control-user m-1" type="month" id="fecha_reporte_adopciones">
-                      <div class="input-group-append">
-                        <a class="btn btn-outline-primary m-1" href="/generar_reporte_adopciones">
-                          <i class="bi bi-pencil-square"></i> Generar reporte
-                        </a>
-                      </div>
-                    </div>
+                <form action="/generar_reporte_adopciones" method="POST">
+                  <div class="col-5">
+                      <div class="input-group">
+                        <input class="form-control form-control-user m-1" type="month" id="fecha_reporte_adopciones" name="fecha_name_adopciones">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-primary m-1" id="generarReporteBtn2" disabled>
+                            <i class="bi bi-pencil-square"></i> Generar reporte
+                          </button>
+                        </div>
+                      </form>
                 </div>
-           
+              </div>
+                  <!-- tabla2 -->
+                  <% if (typeof adopciones !== 'undefined') { %>
+                    <div class="caption-heading">Adopciones del mes: <%= mes_elegido %></div>
 
+                    <div class="table-responsive">
+                      <table class="table" id="tabla2">
+                        <thead class="table-secondary">
+                          <tr>
+                            <th class="text-center">Fecha de adopcion</th>
+                            <th class="text-center">Raza</th>
+                            <th class="text-center">Sexo</th>
+                            <th class="text-center">Vacunas</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% let cant_adopciones = 0; %>
+                          <% if (adopciones && adopciones.length > 0) { %>
+                            <% adopciones.forEach(adopcion => { %>
+                              <tr class="paginate">
+                                <td class="text-center align-middle">
+                                  <% const fecha = adopcion.fecha_adopcion; %>
+                                  <% const fechaFormateada = `${fecha.getDate().toString().padStart(2, '0')}/${(fecha.getMonth() + 1).toString().padStart(2, '0')}/${fecha.getFullYear()}`; %>
+                                  <%= fechaFormateada %>
+                                </td>
+                                <td class="text-center align-middle">
+                                  <%= adopcion.raza %>
+                                </td>
+                                <td class="text-center align-middle">
+                                  <%= adopcion.sexo %>
+                                </td>
+                                <td class="text-center align-middle">
+                                  <% if (adopcion.vacunas) { %>
+                                    Dadas
+                                  <% } else { %>
+                                    No dadas
+                                  <% } %>
+                                </td>
+                              </tr>
+                              <% cant_adopciones++; %>
+                            <% }); %>
+                          <% } %>
+                          <tr class="total-row">
+                            <td></td> <!-- Empty cell to match the column count -->
+                            <td></td>
+                            <td></td>
+                            <td class="text-center"><strong>Adopciones que hubo: <%= cant_adopciones %></strong></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    
+                    
+                    
+                    
+                    
+                  <% } %>
+                 <!--   fin tabla2 -->
 
             </div>
           </div>
@@ -195,14 +264,6 @@
                   ordering: false,
                   dom: '<"top"i>rt<"search-container"lf><"bottom"lp><"clear">',
                   info: false,
-                  columns: [
-                      { "searchable": false },
-                      { "searchable": true }, //nombre mascota,
-                      { "searchable": false }, 
-                      { "searchable": false }, 
-                      { "searchable": false },
-                      { "searchable": false },
-                  ],
                   lengthMenu: [
                       [5, 15, 50, -1],
                       [5, 15, 50, 'Todos'],
@@ -222,9 +283,39 @@
 
           });
       </script>
+              <script>
+                $(document).ready(function () {
+                    const tableRows = $('#tabla2 tbody tr').length;
+                    const pagingEnable = false;
+                    $('#tabla2').DataTable({
+                        paging: pagingEnable,
+                        ordering: false,
+                        dom: '<"top"i>rt<"search-container"lf><"bottom"lp><"clear">',
+                        info: false,
+                        lengthMenu: [
+                            [5, 15, 50, -1],
+                            [5, 15, 50, 'Todos'],
+                        ],
+                        pageLength: 50, // Establecer como la opción por defecto
+                        searching: false, // deshabilita la función de búsqueda
+                        language: {
+                            paginate: { previous: 'Anterior', next: 'Siguiente', },
+                            zeroRecords: 'No hay datos registrados para el mes elegido',
+                            info: 'Mostrando pagina _PAGE_ de _PAGES_',
+                            infoEmpty: 'No hay datos registrados para el mes elegido',
+                            search: 'Buscar por nombre de mascota',
+                            lengthMenu: 'Mostrar _MENU_ entradas',
+                        },
+      
+                    });
+      
+                });
+            </script>
       <script>
         const fechaReporteInput = document.getElementById('fecha_reporte_practicas');
         const btnGenerarReporte = document.getElementById('generarReporteBtn');
+        const fechaReporteInput2 = document.getElementById('fecha_reporte_adopciones');
+        const btnGenerarReporte2 = document.getElementById('generarReporteBtn2');
 
         fechaReporteInput.addEventListener('change', function() {
           if (fechaReporteInput.value) {
@@ -233,12 +324,26 @@
             btnGenerarReporte.setAttribute('disabled', 'disabled');
           }
         });
-      </script>
-<!--       <script>
-        document.addEventListener("DOMContentLoaded", function() {
-          var secondTab = document.getElementById("nav-profile-tab");
-          secondTab.click();
+
+        fechaReporteInput2.addEventListener('change', function() {
+          if (fechaReporteInput2.value) {
+            btnGenerarReporte2.removeAttribute('disabled');
+          } else {
+            btnGenerarReporte2.setAttribute('disabled', 'disabled');
+          }
         });
-      </script> -->
+      </script>
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          // Obtener el valor de mostrarPagina desde la página de vista
+          const mostrarPagina = <%= mostrarPagina %>;
+
+          if (mostrarPagina === 2) {
+            var secondTab = document.getElementById("nav-profile-tab");
+            secondTab.click();
+          }
+        });
+      </script>
+
 </body>
 </html>

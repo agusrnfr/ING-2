@@ -17,7 +17,7 @@
                           <strong style="font-size: 20px;">Se busca</strong>
                         </div>
                       <% } %>
-                        <img src="<%= perdida.foto %>"/>
+                      <img src="<%= perdida.foto %>" width="320" height="200" />
                       </div>
                       <div class="card-inner">
                         <div class="header">
@@ -29,8 +29,10 @@
                             <p><%= perdida.caracteristicas %></p>
                           </h8>
                             <h5 class="text-center">
-                                <a href="/contacto_perdida" class="btn btn-outline-primary float-right">Contactar</a>
-                                <a href="#" class="btn btn-outline-info float-right" data-toggle="collapse" data-target="#collapseInfo<%= perdida.id %>">Más info</a>
+                              <% if (!(perdida.se_encontro === true || (session && session.usuario && perdida.UserId === session.usuario.id))) { %>
+                                <a href="/contacto_perdida/<%= perdida.id %>" class="btn btn-outline-primary float-right">Contactar <i class="bi bi-envelope-plus"></i></a>
+                              <% } %>
+                                <a href="#" class="btn btn-outline-info float-right" data-toggle="collapse" data-target="#collapseInfo<%= perdida.id %>">Más info <i class="bi bi-search"></i> </a>
                                 <div id="collapseInfo<%= perdida.id %>" class="collapse">
                                     <div class="card">
                                       <div class="card-body">
@@ -47,7 +49,35 @@
                             </h5>
                         </div>
                         <h5 class="text-center">
-                        <a href="/coming_soon" class="btn btn-outline-success float-right">Marcar como Encontrado</a>
+<% if (perdida.se_encontro === false && session && session.usuario && perdida.UserId === session.usuario.id) { %>
+  <form action="marcarPerdidaComoEncontrado" method="POST" id="form_marcar_<%= perdida.id %>">
+    <input type="hidden" name="parametro1" value="<%= perdida.id %>">
+    <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#confirmModal_<%= perdida.id %>">
+      Marcar como Encontrado <i class="bi bi-check-lg"></i>
+    </button>
+
+    <!-- Modal de confirmación -->
+    <div class="modal fade" id="confirmModal_<%= perdida.id %>" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel_<%= perdida.id %>" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="confirmModalLabel_<%= perdida.id %>">Confirmar</h5>
+
+          </div>
+          <div class="modal-body">
+            <p>¿Confirmas que encontraste tu mascota?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-success">Confirmar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </form>
+<% } %>
+
                     </h5>
                     </div>
                   </div>

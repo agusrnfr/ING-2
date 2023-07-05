@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%- include ('header', {tituloweb: '¡Oh my dog! | Contacto busqueda'}); %>
 </head>
 
 <body id="body">
-    <div class="container h-100 mt-4" >
+    <div class="container h-100 mt-3" >
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-lg-12 col-xl-7">
           <div class="card text-black" style="border-radius: 25px;">
-            <div class="card-body p-md-5">
+            <div class="card-body p-md-15">
               <div class="row justify-content-center">
-                <div class="col-md-10 col-lg-5 col-xl-6 order-2 order-lg-1">
-                    <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Contactar dueño</p>
+                <div class="col-md-10 col-lg-5 col-xl-10 order-2 order-lg-1">
+                  <p class="text-center h1 fw-bold mb-2 mx-1 mx-md-4 mt-3">Contactar dueño <i class="bi bi-envelope-plus-fill"></i> </p>
+                  <p class="text-center h6 fw-bold mb-2 mx-1 mx-md-4 mt-0">Por favor, ingrese sus datos de contacto</p>
+                  <div class="alert alert-info" role="alert">Se va a contactar a: <strong> <%= UsuarioAContactar.name %> </strong></div>
 
-    <form id= "miForm"  action="/contactoAdoptante?idAdopcion=<%= adopcion.id %>" method="POST">
+    <form id= "miForm"  action="contactarBusqueda/<%= publicacionBusqueda.id %>" method="POST">
 
         <div class="row mb-3">
 
@@ -29,7 +32,10 @@
                    name="nombre" 
                    id="nombre" 
                    placeholder="Ej: Juan Perez" 
-                   value="<%= nombre %>"
+                   <% if (session && session.usuario && session.loggedin) { %>
+                    value="<%= session.usuario.name %>"
+                    readonly style="background-color: #f2f2f2; opacity: 0.7; pointer-events: none;"
+                  <% } %>
                    <% if (session && session.usuario && session.loggedin) { %>
                    readonly style="background-color: #f2f2f2; opacity: 0.7; pointer-events: none;"
                    <% } %>
@@ -44,7 +50,9 @@
                    id="telefono" 
                    min = 0
                    placeholder="Numero de telefono" 
-                   value="<%= telefono %>"
+                   <% if (session && session.usuario && session.loggedin) { %>
+                    value="<%= session.usuario.tel %>"
+                  <% } %>
                    required="">
           </div>
           
@@ -55,16 +63,16 @@
                    type="email" 
                    id="mail" 
                    placeholder="Mail de contacto" 
-                   value="<%= mail %>"
+                   <% if (session && session.usuario && session.loggedin) { %>
+                    value="<%= session.usuario.mail %>"
+                  <% } %>
                    required="">
           </div>
 
         <button class="btn btn-primary d-block btn-user w-100" name="Ingresar" type="submit">Enviar mail</button>
 
     </div>
-    <div class="col-md-10 col-lg-6 col-xl-6 d-flex align-items-center order-1 order-lg-2 justify-content-center">
-        <img src="/img/perriflor.png" width="300px">
-    </div>
+  </div>
 
     <style>
         @media only screen and (max-width: 900px) {
@@ -79,8 +87,9 @@
 </div>
 <hr>
 </form>
+
 <div class="text-center mb-2" style="font-size: smaller;">Los campos con (*) son obligatorios</div>
-<div class="text-center"><a class="small" href="/adopciones">Volver</a></div>
+<div class="text-center"><a class="small" href="/busquedas">Volver</a></div>
 </div>
 </div>
     </div>

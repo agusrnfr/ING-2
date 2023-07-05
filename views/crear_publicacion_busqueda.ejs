@@ -9,28 +9,52 @@
                 <div class="card text-black mb-3" style="border-radius: 25px;">
                     <div class="card-body p-md-4">
                         <div class="row justify-content-center">
-                            <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-3">Crear publicación de busqueda <i class="bi bi-heartbreak"></i></p>
+                            <p class="text-center h1 fw-bold mb-4 mx-1 mx-md-4 mt-3">Crear publicación de perro perdido <i class="bi bi-heartbreak"></i></p>
                             <div class="col-md-6"> <!-- Primera columna del formulario -->
-                                <form method="POST" action="/campanias/publicarCampania">
+                                <form method="POST" enctype="multipart/form-data">
                                     <div class="row mb-3 h-100">
+
+
+                                          <div class="mb-3">
+                                            <div class="alert alert-info" role="alert" id="warning_datos_precargan" style="display: none;">
+                                              <i class="bi bi-exclamation-triangle-fill"></i> Los datos de la mascota serán utilizados para el formulario
+                                              <a href="#" onclick="location.reload(); return false;" class="alert-link">Deshacer</a>
+                                            </div>
+                                          </div>
+
+                                          <div class="mb-3">
+                                            <select class="form-select" name="sexo" id="sexo" required>
+                                              <option value="" disabled selected>Sexo*</option>
+                                              <option value="Macho">Macho</option>
+                                              <option value="Hembra">Hembra</option>
+                                            </select>
+                                          </div>
+                                          <div class="mb-3">
+                                            <label for="edad" class="b" id="edad_label">Edad aproximada en años (0 si no llega al año) (*)</label>
+                                            <input class="form-control form-control-user" type="number" name="edad" id="edad" required oninput="validarEdad()">
+                                            <script>
+                                              function validarEdad() {
+                                                var edadInput = document.getElementById('edad');
+                                                if (edadInput.value < 0) {
+                                                  edadInput.value = 0;
+                                                }
+                                              }
+                                              </script>
+                                          </div>
                                         <div class="mb-3">
-                                            <label for="edad" class="b"> Edad (*) </label>
-                                            <input class="form-control form-control-user" type="text" name="edad" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="mail" class="b"> Mail (*) </label>
-                                            <input class="form-control form-control-user" type="text" name="mail" required>
+                                            <label for="mail" class="b"> Mail de contacto (*) </label>
+                                            <input class="form-control form-control-user" type="text" name="mail" value="<%= session.usuario.mail %>" required>
                                         </div>
                                         <div class="mb-3">
                                             <label for="caracteristicas" class="b">Características</label>
-                                            <textarea class="form-control form-control-user" name="caracteristicas" rows="5" maxlength="1000" required></textarea>
+                                            <textarea class="form-control form-control-user" name="caracteristicas" maxlength="1000"></textarea>
                                           </div>
                                           
                                     </div>
                                 </div>
                                 <div class="col-md-6"> <!-- Segunda columna del formulario -->
                                     <div class="mb-3">
-                                        <label for="fecha_perdida" class="b"> Día en que se encontro (*) </label>
+                                        <label for="fecha_encuentro" class="b"> Día en que aparecio (*) </label>
                                         <% let fechaMinima = new Date();
                                         fechaMinima.setDate(fechaMinima.getDate() + 1);
                                         fechaMinima = fechaMinima.toISOString().split("T")[0];
@@ -38,11 +62,11 @@
                                         fechaMaxima.setFullYear(fechaMaxima.getFullYear() + 5);
                                         fechaMaxima = fechaMaxima.toISOString().split("T")[0]; %>
                                         <input class="form-control form-control-user" type="date"
-                                            name="fecha_perdida" min="<%= fechaMinima %>" max="<%= fechaMaxima %>" required>
+                                            name="fecha_encuentro" min="<%= fechaMinima %>" max="<%= fechaMaxima %>" required>
                                     </div>
                                     <div class="mb-3">
-                                    <label for="telefono"> Teléfono (*) </label>
-                                    <input class="form-control form-control-user" name="telefono" type="text" pattern="[0-9]{10}" maxlength="10" value="" required
+                                    <label for="telefono"> Teléfono de contacto (*) </label>
+                                    <input class="form-control form-control-user" name="telefono" value="<%= session.usuario.tel %>" type="text" pattern="[0-9]{10}" maxlength="10" value="" required
                                         title="Ingrese un número de teléfono válido">
                                 </div>
                                 <div class="mb-3">
@@ -58,7 +82,9 @@
                                       <% }); %>
                                     </select>
                                   </div>
-                                <div class="mb-3"><label for="input-file" class="form-label">Agregar fotografia</label><input type="file" class="form-control" id="input-file" name="imagen"></div>
+                                  <div class="mb-3"><label for="input-file" class="form-label">Agregar fotografia</label><input type="file" class="form-control" id="input-file" name="imagen">
+
+                                
                             </div>
                             <div>
                                 <button class="btn btn-primary d-block btn-user w-100" type="submit"
@@ -77,6 +103,17 @@
                                 }
                             }
                         </style>
+                            <style>
+                            #warning_datos_precargan {
+                                margin-top: 10px !important;
+                                margin-bottom: 1px !important;
+                                padding-bottom: 1px !important;
+                            }
+
+                            .mb-3 {
+                                margin-bottom: 1px !important; /* Ajusta el valor según tus necesidades */
+                            }
+                            </style>
                     </div>
                     <hr>
                     <div class="text-center mb-2" style="font-size: smaller;">Los campos con (*) son obligatorios</div>
@@ -88,6 +125,53 @@
     </div>
     <script>
     </script>
+
+
+<script>
+    function disableFields() {
+      var select = document.getElementById("select_mascota");
+      var selectedOption = select.options[select.selectedIndex];
+      var nombreMascota = selectedOption.value;
+      var nombreInput = document.getElementById("nombre_mascota");
+      var edadInput = document.getElementById("edad");
+      var fotoInput = document.getElementById("input-file")
+      var nombreLabel = document.getElementById("nombre_mascota_label");
+      var edadLabel =  document.getElementById("edad_label");
+      var fotoLabel = document.getElementById("input-file_label");
+      var sexo = document.getElementById("sexo");
+      var warning_datos_precargan = document.getElementById("warning_datos_precargan");
+      
+      if (nombreMascota) {
+        nombreInput.removeAttribute('required');
+        edadInput.removeAttribute('required');
+        fotoInput.removeAttribute('required');
+        sexo.removeAttribute('required');
+        nombreInput.style.display = "none";
+        edadInput.style.display = "none";
+        fotoInput.style.display = "none";
+        nombreLabel.style.display = "none";
+        edadLabel.style.display = "none";
+        fotoLabel.style.display = "none";
+        sexo.style.display = "none";
+        warning_datos_precargan.style.display = "block";
+
+      } else {
+        nombreInput.setAttribute('required', '');
+        edadInput.setAttribute('required', '');
+        fotoInput.setAttribute('required', '');
+        nombreInput.disabled = "block";
+        edadInput.disabled = "block";
+        fotoInput.disabled = "block";
+        nombreLabel.style.display = "block";
+        edadLabel.style.display = "block";
+        fotoLabel.style.display = "block";
+        sexo.style.display = "block";
+        warning_datos_precargan.style.display = "none";
+      }
+    }
+  </script>
+
+
 
 </body>
 <%- include ('sweet-alert') %>
