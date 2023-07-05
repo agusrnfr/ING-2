@@ -25,7 +25,7 @@
 
                                           <div class="mb-3">
                                             <div class="alert alert-info" role="alert" id="warning_datos_precargan" style="display: none;">
-                                              <i class="bi bi-exclamation-triangle-fill"></i> Los datos de la mascota serán utilizados para el formulario
+                                              <i class="bi bi-exclamation-triangle-fill"></i> Los datos de la mascota serán utilizados para el formulario (incluyendo la foto)
                                               <a href="#" onclick="location.reload(); return false;" class="alert-link">Deshacer</a>
                                             </div>
                                           </div>
@@ -95,7 +95,7 @@
                                       <% }); %>
                                     </select>
                                   </div>
-                                  <div class="mb-3"><label for="input-file" class="form-label">Agregar fotografia</label><input type="file" class="form-control" id="input-file" name="imagen">
+                                  <div class="mb-3"><label for="input-file" class="form-label" id="fotoLabel">Agregar fotografia (*)</label><input type="file" class="form-control" id="input-file" name="imagen" required>
 
                                 
                             </div>
@@ -150,7 +150,7 @@
       var fotoInput = document.getElementById("input-file")
       var nombreLabel = document.getElementById("nombre_mascota_label");
       var edadLabel =  document.getElementById("edad_label");
-      var fotoLabel = document.getElementById("input-file_label");
+      var fotoLabel = document.getElementById("fotoLabel");
       var sexo = document.getElementById("sexo");
       var warning_datos_precargan = document.getElementById("warning_datos_precargan");
       
