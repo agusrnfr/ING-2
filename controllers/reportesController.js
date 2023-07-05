@@ -1,11 +1,12 @@
 //const Adopciones = require('../db/models/adopciones.js');
 const Historial = require('../db/models/historial.js');
 const User = require('../db/models/user.js');
+const Adopciones = require('../db/models/adopcion.js');
 const { Sequelize } = require('sequelize');
 const moment = require('moment');
 
 const mostrarReportes = async(req, res) => {
-    return res.render('../views/reportes')
+    return res.render('../views/reportes', {mostrarPagina: 1})
 }
 
 
@@ -38,11 +39,31 @@ const generarReporte = async(req, res) => {
         };
       }));
 
-    return res.render('../views/reportes', { historiales: data , mes_elegido})
+    return res.render('../views/reportes', { historiales: data , mes_elegido, mostrarPagina: 1})
 }
 
 const generarReporteAdopciones = async(req, res) => {
-  return res.send("hola")
+  const año = req.body.fecha_name_adopciones.split("-")[0];
+  const mes = req.body.fecha_name_adopciones.split("-")[1];
+
+  const fecha = new Date(2023, req.body.fecha_name_adopciones.split("-")[1] - 1);
+  const mes_elegido = fecha.toLocaleString('es-ES', { month: 'long' });
+
+  const adopciones = await Adopciones.unscoped().findAll({
+    where: Sequelize.and(
+      {
+        se_adopto: true, // Filtrar los registros con se_adopto en true
+        fecha_adopcion: {
+          [Sequelize.Op.and]: [
+            Sequelize.where(Sequelize.fn('MONTH', Sequelize.col('fecha_adopcion')), mes),
+            Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('fecha_adopcion')), año)
+          ]
+        }
+      }
+    )
+  });
+  
+  return res.render('../views/reportes', { adopciones , mes_elegido , mostrarPagina: 2})
 }
 
   module.exports = {

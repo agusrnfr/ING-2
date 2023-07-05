@@ -169,8 +169,58 @@
                         </div>
                       </form>
                 </div>
-           
+              </div>
+                  <!-- tabla2 -->
+                  <% if (typeof adopciones !== 'undefined') { %>
+                    <div class="caption-heading">Adopciones del mes: <%= mes_elegido %></div>
 
+                    <div class="table-responsive">
+                      <table class="table" id="tabla2">
+                        <thead class="table-secondary">
+                          <tr>
+                            <th class="text-center">Raza</th>
+                            <th class="text-center">Sexo</th>
+                            <th class="text-center">Vacunas</th>
+                            <th class="text-center">Fecha de adopcion</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% let cant_adopciones = 0; %>
+                          <% if (adopciones && adopciones.length > 0) { %>
+                            <% adopciones.forEach(visita => { %>
+                              <tr class="paginate">
+                                <td class="text-center align-middle">
+                                  <%= adopcion.raza %>
+                                </td>
+                                <td class="text-center align-middle">
+                                  <%= adopcion.sexo %>
+                                </td>
+                                <td class="text-center align-middle">
+                                  <%= adopcion.vacunas %>
+                                </td>
+                                <td class="text-center align-middle">
+                                  <%= adopcion.fecha_adopcion %>
+                                </td>
+                              </tr>
+                              <% cant_adopciones++; %>
+                            <% }); %>
+                          <% } %>
+                          <tr class="total-row">
+                            <td></td> <!-- Empty cell to match the column count -->
+                            <td></td>
+                            <td></td>
+                            <td class="text-center"><strong>Adopciones que hubo: <%= cant_adopciones %></strong></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    
+                    
+                    
+                    
+                    
+                  <% } %>
+                 <!--   fin tabla2 -->
 
             </div>
           </div>
@@ -227,6 +277,34 @@
 
           });
       </script>
+              <script>
+                $(document).ready(function () {
+                    const tableRows = $('#tabla2 tbody tr').length;
+                    const pagingEnable = false;
+                    $('#tabla2').DataTable({
+                        paging: pagingEnable,
+                        ordering: false,
+                        dom: '<"top"i>rt<"search-container"lf><"bottom"lp><"clear">',
+                        info: false,
+                        lengthMenu: [
+                            [5, 15, 50, -1],
+                            [5, 15, 50, 'Todos'],
+                        ],
+                        pageLength: 50, // Establecer como la opción por defecto
+                        searching: false, // deshabilita la función de búsqueda
+                        language: {
+                            paginate: { previous: 'Anterior', next: 'Siguiente', },
+                            zeroRecords: 'No hay datos registrados para el mes elegido',
+                            info: 'Mostrando pagina _PAGE_ de _PAGES_',
+                            infoEmpty: 'No hay datos registrados para el mes elegido',
+                            search: 'Buscar por nombre de mascota',
+                            lengthMenu: 'Mostrar _MENU_ entradas',
+                        },
+      
+                    });
+      
+                });
+            </script>
       <script>
         const fechaReporteInput = document.getElementById('fecha_reporte_practicas');
         const btnGenerarReporte = document.getElementById('generarReporteBtn');
@@ -249,11 +327,17 @@
           }
         });
       </script>
-<!--       <script>
+      <script>
         document.addEventListener("DOMContentLoaded", function() {
-          var secondTab = document.getElementById("nav-profile-tab");
-          secondTab.click();
+          // Obtener el valor de mostrarPagina desde la página de vista
+          const mostrarPagina = <%= mostrarPagina %>;
+
+          if (mostrarPagina === 2) {
+            var secondTab = document.getElementById("nav-profile-tab");
+            secondTab.click();
+          }
         });
-      </script> -->
+      </script>
+
 </body>
 </html>

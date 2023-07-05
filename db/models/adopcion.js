@@ -52,6 +52,10 @@ Adopcion.init({
         type: DataTypes.STRING,
         allowNull: false,
     },
+    fecha_adopcion: {
+        type: DataTypes.DATE,
+        allowNull: true,
+    },
 }, {
     sequelize,
     modelName: 'Adopcion',
