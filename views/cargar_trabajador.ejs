@@ -34,6 +34,7 @@
                     <div class="mb-3">
                       <input class="form-control form-control-user" name="email" type= "email" id="email"
                         placeholder="Ingrese el email del trabajador" required=" ">
+                        <small id="emailError" style="color: black;"></small>
                     </div>
 
                     <label for="servicio">Tipo de servicio (*)</label>
@@ -96,7 +97,11 @@
                     <label for="monto">Rango de Horario Disponible (*)</label>
                     <div class="mb-3">
                       <input class="form-control form-control-user" type="text" name="horaInicio" id="horaInicio" placeholder="Ejemplo: 08:00" required>
+                      <small id="horaErrorInicio" style="color: black;"></small>
+                      <br>
+                      
                       <input class="form-control form-control-user" type="text" name="horaFin" id="horaFin" placeholder="Ejemplo: 18:00" required>
+                      <small id="horaErrorFin" style="color: black;"></small>
                     </div>
 
                     <div class="text-center mb-2" style="font-size: smaller;">Los campos con (*) son obligatorios</div>
@@ -162,7 +167,26 @@
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/smoothness/jquery-ui.css">
   
 <script>
+  var inputHoraInicio = document.getElementById("horaInicio");
+  var inputHoraFin = document.getElementById("horaFin");
 
+  inputHoraInicio.addEventListener("input", function() {
+    this.value = this.value.replace(/[^0-9:]/g, "");
+    this.value = this.value.replace(/(\d{2})(\d{1,2})/, "$1:$2");
+    this.value = this.value.replace(/(:\d{3}).*$/, "$1");
+    this.value = this.value.slice(0, 5);
+  });
+
+  inputHoraFin.addEventListener("input", function() {
+    this.value = this.value.replace(/[^0-9:]/g, "");
+    this.value = this.value.replace(/(\d{2})(\d{1,2})/, "$1:$2");
+    this.value = this.value.replace(/(:\d{3}).*$/, "$1");
+    this.value = this.value.slice(0, 5);
+  });
+
+</script>
+
+<script>
 const btnEnviar = document.getElementById("registrar");
 
 function camposVacios() {
@@ -187,8 +211,41 @@ function camposVacios() {
   if (!nombre || !email.trim() || !servicio || !zona || !horaInicio || !horaFin || dias.length === 0) {
     const mensajeElemento = document.getElementById('mensaje');
     mensajeElemento.textContent = 'Por favor complete todos los campos solicitados y seleccione al menos un día.';
-    return true;
+     return true;
   }
+  return false;
+}
+
+function emailValidacion(){
+  const emailInput = document.getElementById('email');
+  const email = emailInput.value;  
+  const emailError = document.getElementById('emailError');
+    if (!emailInput.validity.valid || !email.includes("@")) {
+      emailError.textContent = "Ingrese una dirección de correo electrónico válida";
+      return true;
+    } 
+  return false;  
+}
+
+function horaValidacionInicio() {
+  var inputHoraInicio = document.getElementById("horaInicio");
+  const horaErrorInicio = document.getElementById('horaErrorInicio');
+
+  if (inputHoraInicio.value.length < 5 || inputHoraInicio.value.length > 5) {
+      horaErrorInicio.textContent = "El formato de hora es ej: 08:00";
+      return true;
+    }
+  return false;
+}
+
+function horaValidacionFin() {
+  var inputHoraFin = document.getElementById("horaFin");
+  const horaError = document.getElementById('horaErrorFin');
+
+  if (inputHoraFin.value.length < 5 || inputHoraFin.value.length > 5) {
+      horaError.textContent = "El formato de hora es ej: 18:00";
+      return true;
+    }
   return false;
 }
 
@@ -206,28 +263,12 @@ function confirmarRegistro() {
 
 btnEnviar.onclick = function(event) {
   event.preventDefault();
-  if (camposVacios()) {
+  if (camposVacios() || emailValidacion() || horaValidacionInicio() || horaValidacionFin()) {
     return false;
   } else {
     confirmarRegistro();
   }
 };
-</script>
-<script>
-  var inputHoraInicio = document.getElementById("horaInicio");
-  var inputHoraFin = document.getElementById("horaFin");
-
-  inputHoraInicio.addEventListener("input", function() {
-    this.value = this.value.replace(/[^0-9:]/g, "");
-    this.value = this.value.replace(/(\d{2})(\d{1,2})/, "$1:$2");
-    this.value = this.value.replace(/(:\d{3}).*$/, "$1");
-  });
-
-  inputHoraFin.addEventListener("input", function() {
-    this.value = this.value.replace(/[^0-9:]/g, "");
-    this.value = this.value.replace(/(\d{2})(\d{1,2})/, "$1:$2");
-    this.value = this.value.replace(/(:\d{3}).*$/, "$1");
-  });
 </script>
 
 <%- include ('sweet-alert') %>
