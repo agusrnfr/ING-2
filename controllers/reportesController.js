@@ -26,7 +26,7 @@ const generarReporte = async(req, res) => {
       });
       const data = await Promise.all(historial.map(async (historial) => {
         const fechaHoraZonaHoraria = moment.tz(historial.fecha, 'America/Argentina/Buenos_Aires');
-        const monto_total = historial.monto_beneficio + historial.monto_abonado;
+        const monto_total = historial.monto_abonado - historial.monto_beneficio;
         const cliente = await User.findByPk(historial.UserId);
         return {
           fecha: fechaHoraZonaHoraria.format('DD/MM/YYYY'),

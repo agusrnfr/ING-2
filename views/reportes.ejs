@@ -88,7 +88,6 @@
 
                     <div class="table-responsive">
                       <table class="table" id="tabla1">
-
                         <thead class="table-secondary">
                           <tr>
                             <th class="text-center">Fecha</th>
@@ -100,6 +99,7 @@
                           </tr>
                         </thead>
                         <tbody>
+                          <% let totalMonto = 0; %>
                           <% if (historiales && historiales.length > 0) { %>
                             <% historiales.forEach(visita => { %>
                               <tr class="paginate">
@@ -113,7 +113,7 @@
                                   <%= visita.practica %>
                                 </td>
                                 <td class="text-center align-middle">
-                                  <%= visita.monto_total %>
+                                  <%= visita.monto_abonado %>
                                 </td>
                                 <td class="text-center align-middle">
                                   <% if (visita.monto_beneficio > 0) { %>
@@ -123,18 +123,30 @@
                                   <% } %>
                                 </td>
                                 <td class="text-center align-middle">
-                                  <% if (visita.monto_abonado > 0) { %>
-                                    <span style="color: green; font-weight: bold;"><%= visita.monto_abonado %></span>
+                                  <% if (visita.monto_abonado - visita.monto_beneficio > 0) { %>
+                                    <span style="color: green; font-weight: bold;"><%= visita.monto_abonado - visita.monto_beneficio %></span>
                                   <% } else { %>
-                                    <%= visita.monto_abonado %>
+                                    <%= visita.monto_abonado - visita.monto_beneficio %>
                                   <% } %>
                                 </td>
                               </tr>
+                              <% totalMonto += (visita.monto_abonado - visita.monto_beneficio); %>
                             <% }); %>
                           <% } %>
+                          <tr class="total-row">
+                            <td></td> <!-- Empty cell to match the column count -->
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="text-center"><strong>Total recauado en practicas del mes: $<%= totalMonto %></strong></td>
+                          </tr>
                         </tbody>
                       </table>
                     </div>
+                    
+                    
+                    
                     
                     
                   <% } %>
@@ -195,14 +207,6 @@
                   ordering: false,
                   dom: '<"top"i>rt<"search-container"lf><"bottom"lp><"clear">',
                   info: false,
-                  columns: [
-                      { "searchable": false },
-                      { "searchable": true }, //nombre mascota,
-                      { "searchable": false }, 
-                      { "searchable": false }, 
-                      { "searchable": false },
-                      { "searchable": false },
-                  ],
                   lengthMenu: [
                       [5, 15, 50, -1],
                       [5, 15, 50, 'Todos'],
