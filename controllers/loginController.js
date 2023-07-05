@@ -58,6 +58,7 @@ const validarLogin = async (req, res) => {
 const deslogear = async (req, res) => {
     if (session.loggedin) {
         session.loggedin = false
+        delete session.usuario;
     }
     res.redirect('/')
 };
