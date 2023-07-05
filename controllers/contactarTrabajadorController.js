@@ -63,6 +63,7 @@ const contactar = async (req, res) => {
         alertIcon: 'error',
         showConfirmButton: false,
         timer: 2000, 
+        ruta: 'trabajadores',  
       });
   
     } else {
@@ -80,6 +81,7 @@ const contactar = async (req, res) => {
         alertIcon: 'success',
         showConfirmButton: false,
         timer: 1500, 
+        ruta: 'trabajadores',  
       });
       await transporter.sendMail({
         from: '"Interes en servicio" <veterinaria.omd@gmail.com>',
