@@ -38,6 +38,7 @@
         <div class="col-sm-6">
           <div class="card">
             <div class="card-body text-center">
+              <p id="selectedValue"></p>
               <form method="POST" action="/mostrarGuarderiasFiltradasPorZona" class="form-inline">
                 <div class="form-group">
                   <select class="form-control form-control-sm mb-2" name="zona" id="zona" required onchange="enableButton()">
@@ -47,8 +48,9 @@
                     <% }); %>
                   </select>
                 </div>
-                <button class="btn btn-primary ml-2" type="submit" id="submitButton" disabled><i class="bi bi-piggy-bank"></i> Filtrar por zona</button>
+                <button class="btn btn-primary ml-2" type="submit" id="submitButton" disabled> Filtrar por zona</button>
               </form>
+              
             </div>
           </div>
         </div>
@@ -57,17 +59,18 @@
       
     <% if (guarderias.length > 0) { %>
       <% guarderias.forEach((trabajador) => { %>
+        
+          <% if ((session.usuario && session.usuario.rol === 'admin') || (!session.usuario && trabajador.estado) || (session.usuario && session.usuario.rol !== 'admin' && trabajador.estado)) { %>   
 
-        <% if ((typeof session.usuario !== 'undefined' && session.usuario.rol === 'admin') || (!session.usuario || (session.usuario && session.usuario.rol !== 'admin' && trabajador.estado))) { %>
-            
+
           <div class="card" style="width: 300px; height: 370px; margin: 10px;">
               <div class="card-body">
                 
-                  <% if (typeof session.usuario !== 'undefined' && (session.loggedin === true) &&(session.usuario.rol === 'admin')) { %>
-                <a id="trab<%= trabajador.id %>" class="btn btn-primary" 
-                  data-bs-toggle="modal" data-bs-target="#confirmacionModal_<%= trabajador.id %>">
-                  <span id="texto-trab <%= trabajador.id %>"> <%= trabajador.estado ? 'Disponible' : 'No Disponible' %></span>
-                </a>
+                <% if (typeof session.usuario !== 'undefined' && session.usuario.rol === 'admin') { %>
+                   <a id="trab<%= trabajador.id %>" class="btn btn-primary" 
+                       data-bs-toggle="modal" data-bs-target="#confirmacionModal_<%= trabajador.id %>">
+                       <span id="texto-trab <%= trabajador.id %>"> <%= trabajador.estado ? 'Disponible' : 'No Disponible' %></span>
+                    </a>
                 <% } %>
                 <!-- Modal de confirmación -->
                 <div class="modal fade" id="confirmacionModal_<%= trabajador.id %>" tabindex="-1" aria-labelledby="confirmacionModalLabel" aria-hidden="true">
@@ -106,25 +109,54 @@
         <% } %>
       <% }) %>
     <% } else { %>
-      <p style="text-align: center;">No hay publicaciones de guarderias disponibles.</p>
+      <p style="text-align: center;">No hay publicaciones de paseadores disponibles.</p>
     <% } %>
     
 
     
     <script>
-      function enableButton() {
-        var select = document.getElementById('zona');
-        var button = document.getElementById('submitButton');
-    
-        if (select.value !== '') {
-          button.disabled = false;
-        } else {
-          button.disabled = true;
-        }
-      }
-    </script>
-    
-    
+function enableButton() {
+  var select = document.getElementById('zona');
+  var button = document.getElementById('submitButton');
+  var selectedValue = select.options[select.selectedIndex].text;
+  var selectedValueElement = document.getElementById('selectedValue');
+
+  if (select.value !== '') {
+    button.disabled = false;
+  } else {
+    button.disabled = true;
+  }
+
+  selectedValueElement.textContent = "Seleccionaste: " + selectedValue;
+
+  // Configurar el tiempo de expiración de la cookie en 30 segundos
+  var expirationDate = new Date();
+  expirationDate.setTime(expirationDate.getTime() + (3 * 1000)); // 3 segundos
+
+  // Guardar el valor seleccionado en una cookie con tiempo de expiración
+  document.cookie = "selectedValue=" + selectedValue + "; expires=" + expirationDate.toUTCString() + "; path=/";
+}
+
+window.addEventListener('DOMContentLoaded', function() {
+  var selectedValue = getCookie("selectedValue");
+  var selectedValueElement = document.getElementById('selectedValue');
+  if (selectedValue) {
+    selectedValueElement.textContent = "Seleccionaste: " + selectedValue;
+  }
+});
+
+// Función para obtener el valor de una cookie por nombre
+function getCookie(name) {
+  var cookies = document.cookie.split("; ");
+  for (var i = 0; i < cookies.length; i++) {
+    var cookie = cookies[i].split("=");
+    if (cookie[0] === name) {
+      return cookie[1];
+    }
+  }
+  return "";
+}
+   </script>
     
 
 
@@ -175,12 +207,6 @@
   });
 </script>
 
-<script>
-  function enviarZona() {
-    const zonaSeleccionada = document.getElementById('zona').value;
-    window.location.href = `/filtro?zona=${encodeURIComponent(zonaSeleccionada)}&usuario=${encodeURIComponent('Guarderia')}`;
-  }
-</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
 integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
