@@ -178,17 +178,22 @@
                       <table class="table" id="tabla2">
                         <thead class="table-secondary">
                           <tr>
+                            <th class="text-center">Fecha de adopcion</th>
                             <th class="text-center">Raza</th>
                             <th class="text-center">Sexo</th>
                             <th class="text-center">Vacunas</th>
-                            <th class="text-center">Fecha de adopcion</th>
                           </tr>
                         </thead>
                         <tbody>
                           <% let cant_adopciones = 0; %>
                           <% if (adopciones && adopciones.length > 0) { %>
-                            <% adopciones.forEach(visita => { %>
+                            <% adopciones.forEach(adopcion => { %>
                               <tr class="paginate">
+                                <td class="text-center align-middle">
+                                  <% const fecha = adopcion.fecha_adopcion; %>
+                                  <% const fechaFormateada = `${fecha.getDate().toString().padStart(2, '0')}/${(fecha.getMonth() + 1).toString().padStart(2, '0')}/${fecha.getFullYear()}`; %>
+                                  <%= fechaFormateada %>
+                                </td>
                                 <td class="text-center align-middle">
                                   <%= adopcion.raza %>
                                 </td>
@@ -196,10 +201,11 @@
                                   <%= adopcion.sexo %>
                                 </td>
                                 <td class="text-center align-middle">
-                                  <%= adopcion.vacunas %>
-                                </td>
-                                <td class="text-center align-middle">
-                                  <%= adopcion.fecha_adopcion %>
+                                  <% if (adopcion.vacunas) { %>
+                                    Dadas
+                                  <% } else { %>
+                                    No dadas
+                                  <% } %>
                                 </td>
                               </tr>
                               <% cant_adopciones++; %>

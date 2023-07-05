@@ -1,5 +1,6 @@
 'use strict';
 require('../globals.js');
+
 module.exports = {
   /** @type {import('sequelize-cli').Migration} */
   async up(queryInterface, Sequelize) {
