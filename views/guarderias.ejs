@@ -180,7 +180,7 @@ function getCookie(name) {
       });
       if (response.ok) {
         const textoBoton = document.getElementById(`texto-${elementId}`);
-        textoBoton.innerHTML = nuevoEstado ? 'Disponible' : 'No disponible';
+        textoBoton.innerHTML = nuevoEstado ? 'Disponible' : 'No Disponible';
         $('#confirmacionModal_' + trabajadorId).modal('hide'); // Ocultar el modal manualmente usando jQuery
       }
     } catch (error) {
