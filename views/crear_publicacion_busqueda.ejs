@@ -23,12 +23,13 @@
                                           </div>
 
                                           <div class="mb-3">
+                                            <label for="sexo" class="b">Sexo*</label>
                                             <select class="form-select" name="sexo" id="sexo" required>
-                                              <option value="" disabled selected>Sexo*</option>
-                                              <option value="Macho">Macho</option>
-                                              <option value="Hembra">Hembra</option>
+                                                <option value="" disabled selected>Seleccione el sexo</option>
+                                                <option value="Macho">Macho</option>
+                                                <option value="Hembra">Hembra</option>
                                             </select>
-                                          </div>
+                                        </div>
                                           <div class="mb-3">
                                             <label for="edad" class="b" id="edad_label">Edad aproximada en años (0 si no llega al año) (*)</label>
                                             <input class="form-control form-control-user" type="number" name="edad" id="edad" required oninput="validarEdad()">
@@ -47,15 +48,16 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="caracteristicas" class="b">Características</label>
-                                            <textarea class="form-control form-control-user" name="caracteristicas" maxlength="1000"></textarea>
+                                            <textarea class="form-control form-control-user" name="caracteristicas" maxlength="1000" rows="7"></textarea>
                                           </div>
                                           
                                     </div>
                                 </div>
                                 <div class="col-md-6"> <!-- Segunda columna del formulario -->
                                   <div class="mb-3">
-                                    <input class="form-control form-control-user" type="date" name="fecha_encuentro"   placeholder="Fecha de encuentro" required>
-                                  </div>
+                                    <label for="fecha_encuentro" class="b">Fecha de encuentro*</label>
+                                    <input class="form-control form-control-user" type="date" name="fecha_encuentro" placeholder="Fecha de encuentro" required>
+                                </div>
 
                                   <span id="fecha-invalida" class="text-danger" style="display:none;">Fecha inválida</span>
                                     <div class="mb-3">
