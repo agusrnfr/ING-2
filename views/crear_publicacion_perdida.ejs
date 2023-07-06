@@ -60,16 +60,17 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="caracteristicas" class="b">Características</label>
-                                            <textarea class="form-control form-control-user" name="caracteristicas" maxlength="1000"></textarea>
+                                            <textarea class="form-control form-control-user" name="caracteristicas" maxlength="1000" rows="2"></textarea>
                                           </div>
                                           
                                     </div>
                                 </div>
                                 <div class="col-md-6"> <!-- Segunda columna del formulario -->
-                                    <br>
-                                  <div class="mb-3">
-                                    <input class="form-control form-control-user" type="date" name="fecha_perdida"   placeholder="Fecha de perdida" required>
+                                    <div class="mb-3">
+                                      <label for="fecha_perdida" class="b">Fecha de pérdida*</label>
+                                      <input class="form-control form-control-user" type="date" name="fecha_perdida" placeholder="Fecha de pérdida" required>
                                   </div>
+                                  
                                   <span id="fecha-invalida" class="text-danger" style="display:none;">Fecha inválida</span>
 
                                     <div class="mb-3">
