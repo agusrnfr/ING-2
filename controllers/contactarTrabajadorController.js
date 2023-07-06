@@ -79,7 +79,8 @@ const contactar = async (req, res) => {
         alertMessage: '',
         alertIcon: 'success',
         showConfirmButton: false,
-        timer: 1500, 
+        timer: 1500,
+        ruta: 'trabajadores', 
       });
       await transporter.sendMail({
         from: '"Interes en servicio" <veterinaria.omd@gmail.com>',

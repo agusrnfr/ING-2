@@ -171,15 +171,31 @@ const mostrarPaseadores = async(req,res) => {
   const trabajadoresOrdenados = ordenarTrabajadoresPorEstado(trabajadores);
   const otrosTrabajadores = filtroTrabajadores(trabajadoresOrdenados);
 
-  res.render('paseadores', {otrosTrabajadores, session: session })
+  let rol = 'visitante'; // Inicializar la variable 'rol' con el valor predeterminado 'visitante'
+
+  if (session.loggedin && session.usuario.rol === 'admin') {
+    rol = 'admin'; // Asignar el valor 'admin' a la variable 'rol' si cumple la condición de ser 'admin'
+  } else if (session.loggedin) {
+    rol = 'cliente'; // Asignar el valor 'cliente' a la variable 'rol' si cumple la condición de estar logueado pero no ser 'admin'
+  }
+
+  res.render('paseadores', {otrosTrabajadores, session: { usuario: { rol } } });
 }
 
-const mostrarGuarderias = async(req,res) => {
+const mostrarGuarderias = async (req, res) => {
   const trabajadores = await Trabajador.findAll();
   const trabajadoresOrdenados = ordenarTrabajadoresPorEstado(trabajadores);
   const guarderias = filtroGuarderias(trabajadoresOrdenados);
 
-  res.render('guarderias',{guarderias, session: session })
+  let rol = 'visitante'; // Inicializar la variable 'rol' con el valor predeterminado 'visitante'
+
+  if (session.loggedin && session.usuario.rol === 'admin') {
+    rol = 'admin'; // Asignar el valor 'admin' a la variable 'rol' si cumple la condición de ser 'admin'
+  } else if (session.loggedin) {
+    rol = 'cliente'; // Asignar el valor 'cliente' a la variable 'rol' si cumple la condición de estar logueado pero no ser 'admin'
+  }
+
+  res.render('guarderias', { guarderias, session: { usuario: { rol } } });
 }
 
 const mostrarGuarderiasFiltradasPorZona = async(req,res) => {
@@ -188,8 +204,15 @@ const mostrarGuarderiasFiltradasPorZona = async(req,res) => {
   });
   const trabajadoresOrdenados = ordenarTrabajadoresPorEstado(trabajadores);
   const guarderias = filtroGuarderias(trabajadoresOrdenados);
+  let rol = 'visitante'; // Inicializar la variable 'rol' con el valor predeterminado 'visitante'
 
-  res.render('guarderias',{guarderias, session: session })
+  if (session.loggedin && session.usuario.rol === 'admin') {
+    rol = 'admin'; // Asignar el valor 'admin' a la variable 'rol' si cumple la condición de ser 'admin'
+  } else if (session.loggedin) {
+    rol = 'cliente'; // Asignar el valor 'cliente' a la variable 'rol' si cumple la condición de estar logueado pero no ser 'admin'
+  }
+
+ res.render('guarderias', { guarderias, session: { usuario: { rol } } });
 }
 
 const mostrarPaseadoresFiltradosPorZona = async(req,res) => {
@@ -198,8 +221,15 @@ const mostrarPaseadoresFiltradosPorZona = async(req,res) => {
   });
   const trabajadoresOrdenados = ordenarTrabajadoresPorEstado(trabajadores);
   const otrosTrabajadores = filtroTrabajadores(trabajadoresOrdenados);
+  let rol = 'visitante'; // Inicializar la variable 'rol' con el valor predeterminado 'visitante'
 
-  res.render('paseadores', {otrosTrabajadores, session: session })
+  if (session.loggedin && session.usuario.rol === 'admin') {
+    rol = 'admin'; // Asignar el valor 'admin' a la variable 'rol' si cumple la condición de ser 'admin'
+  } else if (session.loggedin) {
+    rol = 'cliente'; // Asignar el valor 'cliente' a la variable 'rol' si cumple la condición de estar logueado pero no ser 'admin'
+  }
+
+  res.render('paseadores', {otrosTrabajadores, session: { usuario: { rol } } });
 }
 
 

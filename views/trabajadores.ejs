@@ -45,7 +45,7 @@
                         <%= trabajador.nombre %> <span class="emoji">&#x1F9AE;</span>
                       </h5>
                       <br>
-                      <p class="card-text"><strong>Zona:</strong> <%= trabajador.servicio %></p>
+                      <p class="card-text"><strong>Servicio:</strong> <%= trabajador.servicio %></p>
                       <p class="card-text"><strong>Zona:</strong> <%= trabajador.zona %></p>
                       <p class="card-text"><strong>Dias Disponibles:</strong> <%= trabajador.dias %></p>
                       <p class="card-text"><strong>Horarios:</strong> <%= trabajador.horario %></p>
@@ -82,7 +82,14 @@
   <% } else { %>
     <div class="row p-2">
       <h2 class="text-center">Paseadores | Cuidadores</h2>
-      <p style="text-align: center;">No hay publicaciones de paseadores disponibles.</p>
+
+      <% if (typeof session.usuario !=='undefined' &&(session.loggedin===true) &&(session.usuario.rol==='admin' )) { %>
+      <div class="text-center">
+        <a class="small" href="/paseadores" style="color: white;">Ver Todo</a>
+      </div>
+      <% } %>
+
+      <p style="text-align: center;">No hay publicaciones de trabajadores disponibles.</p>
     </div>
   <% } %>
 </div>
@@ -151,6 +158,13 @@
   <% } else { %>
     <div class="row p-2">
       <h2 class="text-center">Guarderías</h2>
+
+      <% if (typeof session.usuario !=='undefined' &&(session.loggedin===true) &&(session.usuario.rol==='admin' )) { %>
+      <div class="text-center">
+        <a class="small" href="/guarderias" style="color: white;">Ver Todo</a>
+      </div>
+      <% } %>
+
       <p style="text-align: center;">No hay publicaciones de guarderias disponibles.</p>
     </div>
   <% } %>
