@@ -371,7 +371,7 @@ const contactarCruza = async (req, res) => {
         });
         await transporter.sendMail({
             from: '"Contacto por cruza" <veterinaria.omd@gmail.com>',
-            to: "agusrojastfm@gmail.com", //deberia ser --> to: mailDuenio,
+            to: "laura.cuenca1@gmail.com", //deberia ser --> to: mailDuenio,
             subject: 'Contacto por cruza',
             text: 'El usuario ' + nombre + ' desea contactarse con usted por la cruza de su mascota ' + nombreMascota + '.\n' +
                 'Sus datos son:\n' +
