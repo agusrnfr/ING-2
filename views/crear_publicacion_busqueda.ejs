@@ -53,17 +53,12 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6"> <!-- Segunda columna del formulario -->
-                                    <div class="mb-3">
-                                        <label for="fecha_encuentro" class="b"> Día en que aparecio (*) </label>
-                                        <% let fechaMinima = new Date();
-                                        fechaMinima.setDate(fechaMinima.getDate() + 1);
-                                        fechaMinima = fechaMinima.toISOString().split("T")[0];
-                                        let fechaMaxima = new Date();
-                                        fechaMaxima.setFullYear(fechaMaxima.getFullYear() + 5);
-                                        fechaMaxima = fechaMaxima.toISOString().split("T")[0]; %>
-                                        <input class="form-control form-control-user" type="date"
-                                            name="fecha_encuentro" min="<%= fechaMinima %>" max="<%= fechaMaxima %>" required>
-                                    </div>
+                                  <br>
+                                  <div class="mb-3">
+                                    <input class="form-control form-control-user" type="date" name="fecha_encuentro"   placeholder="Fecha de perdida" required>
+                                  </div>
+
+                                  <span id="fecha-invalida" class="text-danger" style="display:none;">Fecha inválida</span>
                                     <div class="mb-3">
                                     <label for="telefono"> Teléfono de contacto (*) </label>
                                     <input class="form-control form-control-user" name="telefono" value="<%= session.usuario.tel %>" type="text" pattern="[0-9]{10}" maxlength="10" value="" required
@@ -82,7 +77,8 @@
                                       <% }); %>
                                     </select>
                                   </div>
-                                  <div class="mb-3"><label for="input-file" class="form-label">Agregar fotografia (*)</label><input type="file" class="form-control" id="input-file" name="imagen" required>
+                                  
+                                  <div class="mb-4"><label for="input-file" class="form-label">Agregar fotografia (*)</label><input type="file" class="form-control" id="input-file" name="imagen" required>
 
                                 
                             </div>
@@ -170,7 +166,26 @@
       }
     }
   </script>
-
+<script>
+  var fecha_encuentro = document.getElementsByName("fecha_perdida")[0];
+  // Obtener la fecha actual
+  var fechaActual = new Date().toISOString().split("T")[0];
+  // Establecer la fecha mínima y máxima
+  fecha_encuentro.setAttribute("max", fechaActual);
+  fecha_encuentro.oninput = function() {
+    // Obtener la fecha ingresada
+  var fechaIngresada = this.value;
+  boton_publicar = document.getElementById("enviar_turno")
+  // Verificar si la fecha ingresada es válida y no es posterior a hoy
+  if (Date.parse(fechaIngresada) && fechaIngresada <= fechaActual) {
+      document.getElementById("fecha-invalida").style.display = "none";
+      boton_publicar.disabled = false;
+        } else {
+      document.getElementById("fecha-invalida").style.display = "block";
+      boton_publicar.disabled = true;
+  }
+}
+</script>
 
 
 </body>
