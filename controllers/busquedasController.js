@@ -46,7 +46,7 @@ const generarPublicacionBusqueda = async(req, res) => {
     try {
         await Busqueda.create({
             zona: zona,
-            fecha_encuentro: fecha_encuentro,
+            fecha_encuentro: moment(fecha_encuentro, 'YYYY-MM-DD').toDate(),
             edad: edad,
             sexo: sexo,
             foto: foto,

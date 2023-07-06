@@ -34,7 +34,7 @@ const registrarMascota = async (req, res) => {
         foto: foto,
         sexo: sexo,
         color: color,
-        fecha_nacimiento: fecha_nacimiento,
+        fecha_nacimiento: moment(fecha_nacimiento, 'YYYY-MM-DD').toDate(),
         observaciones: observaciones,
     })
     .then(user => {

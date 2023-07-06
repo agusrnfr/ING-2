@@ -61,7 +61,7 @@ const generarPublicacionPerdida = async(req, res) => {
         await Perdida.create({
             nombre: nombre_mascota,
             zona: zona,
-            fecha_perdida: fecha_perdida,
+            fecha_perdida: moment(fecha_perdida, 'YYYY-MM-DD').toDate(),
             edad: edad,
             sexo: sexo,
             foto: foto,
