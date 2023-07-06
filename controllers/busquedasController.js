@@ -102,7 +102,7 @@ const contactarBusqueda = async(req, res) => {
             from: '"Interes en servicio" <veterinaria.omd@gmail.com>',
             to: "laura.cuenca1@gmail.com", //deberia ser --> to: mailTurno,
             subject: "Interes en servicio",
-            text: "Estimado "+ UsuarioAContactar.name + ","+" el cliente "+ req.body.nombre + " es el dueño de la mascota que publicó llamada: " + publicacionBusqueda.nombre + " su telefono para comunicarse es " + req.body.telefono ,
+            text: "Estimado "+ UsuarioAContactar.name + ","+" el cliente "+ req.body.nombre + " es el dueño de la mascota que publicó " + " su telefono para comunicarse es " + req.body.telefono + " y su mail: " + req.body.mail
             })
         res.render('contactar_busqueda.ejs',{
             alert:true,
