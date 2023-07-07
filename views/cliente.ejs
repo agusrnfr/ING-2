@@ -39,7 +39,7 @@
                                     <tr>
                                       <th scope="col">Nombre</th>
                                       <th scope="col">Raza</th>
-                                      <th scope="col">Edad en meses</th>
+                                      <th scope="col">Edad</th>
                                       <th scope="col">Acciones</th>
                                     </tr>
                                   </thead>
@@ -48,7 +48,15 @@
                                     <tr class="paginate">
                                       <td><%= mascota.nombre %></td>
                                       <td><%= mascota.raza %></td>
-                                      <td><%= calcularEdadMasco(mascota.fecha_nacimiento) %></td>
+                                      
+                                      <td>
+                                        
+                                        <% if (calcularEdadMasco(mascota.fecha_nacimiento) < 12) { %>
+                                          <%= calcularEdadMasco(mascota.fecha_nacimiento) %> (meses)
+                                        <% } else { %>
+                                          <%= Math.floor(calcularEdadMasco(mascota.fecha_nacimiento) / 12) %> (años)
+                                        <% } %>
+                                      </td>
                                       <td>
                                         <button type="button" onclick="location.href='<%= `/ver_mascota/${mascota.id}` %>'" class="btn btn-outline-primary d-inline mr-2">
                                           <i class="bi bi-eye-fill"></i> Ver
