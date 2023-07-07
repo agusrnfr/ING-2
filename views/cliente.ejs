@@ -49,12 +49,20 @@
                                       <td><%= mascota.nombre %></td>
                                       <td><%= mascota.raza %></td>
                                       
+                                      <% var meses = calcularEdadMasco(mascota.fecha_nacimiento); %>
                                       <td>
-                                        
-                                        <% if (calcularEdadMasco(mascota.fecha_nacimiento) < 12) { %>
-                                          <%= calcularEdadMasco(mascota.fecha_nacimiento) %> (meses)
+                                        <% if (meses < 12) { %>
+                                          <% if (meses === 1) { %>
+                                            <%= meses %> (mes)
+                                          <% } else { %>
+                                            <%= meses %> (meses)
+                                          <% } %>
                                         <% } else { %>
-                                          <%= Math.floor(calcularEdadMasco(mascota.fecha_nacimiento) / 12) %> (años)
+                                          <% if (Math.floor(meses / 12) === 1) { %>
+                                            <%= Math.floor(meses / 12) %> (año)
+                                          <% } else { %>
+                                            <%= Math.floor(meses / 12) %> (años)
+                                          <% } %>
                                         <% } %>
                                       </td>
                                       <td>
