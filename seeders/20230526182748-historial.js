@@ -44,6 +44,15 @@ module.exports = {
       UserId: 8,
       MascotumId: 12,
     }], {});
+    await queryInterface.bulkInsert('historiales', [{
+      fecha: moment().subtract(15, 'days').toDate(),
+      practica: 'Vacuna A',
+      observacion: 'Es muy jugueton',
+      monto_abonado: '4200',
+      monto_beneficio: '2000',
+      UserId: 3,
+      MascotumId: 8,
+    }], {});
 
 
   },
