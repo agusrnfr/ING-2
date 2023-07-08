@@ -45,7 +45,7 @@ module.exports = {
       MascotumId: 12,
     }], {});
     await queryInterface.bulkInsert('historiales', [{
-      fecha: moment().subtract(15, 'days').toDate(),
+      fecha: moment().subtract(21, 'days').toDate(),
       practica: 'Vacuna A',
       observacion: 'Es muy jugueton',
       monto_abonado: '4200',
@@ -53,8 +53,6 @@ module.exports = {
       UserId: 3,
       MascotumId: 8,
     }], {});
-
-
   },
 
   async down(queryInterface, Sequelize) {
