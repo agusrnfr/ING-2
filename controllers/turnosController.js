@@ -121,7 +121,7 @@ const calcularFechaVacuna = async (fecha, practica, mascota, banda_horaria) => {
         } else {
             return fecha; // Si la fecha no es sábado ni domingo, se le asigna la fecha de la vacuna A a 21 días de la fecha actual
         }
-      } else if ((practica == 'Vacuna A' && edadMascota >= 4 && dosis_dadas.length < 2) || practica == 'Vacuna B' || (practica == 'Vacuna A' && dosis_dadas.length >= 2)) { // Si la mascota tiene 4 meses o más o es la vacuna B , se le asigna la fecha de la vacuna a 1 año de la fecha actual
+      } else if ((practica == 'Vacuna A' && edadMascota >= 4 ) || practica == 'Vacuna B' || (practica == 'Vacuna A' && dosis_dadas.length >= 2)) { // Si la mascota tiene 4 meses o más o es la vacuna B , se le asigna la fecha de la vacuna a 1 año de la fecha actual
         fecha = moment().add(1, 'year').startOf('day');
         if (fecha.day() == 6 && banda_horaria.toLowerCase() == 'tarde') { // Si la fecha es sábado y la banda horaria es tarde, se le asigna la fecha de la vacuna a 1 año y 2 días de la fecha actual
             return fecha.add(2, 'days');
