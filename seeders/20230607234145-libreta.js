@@ -10,12 +10,6 @@ module.exports = {
       practica: 'Vacuna A',
       MascotumId: 1,
     }], {});
-    await queryInterface.bulkInsert('libretas', [{
-      fecha: moment().subtract(21, 'days').toDate(),
-      practica: 'Vacuna A',
-      MascotumId: 8,
-    }], {});
-
   },
 
   async down(queryInterface, Sequelize) {
