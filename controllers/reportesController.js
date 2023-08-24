@@ -4,9 +4,10 @@ const User = require('../db/models/user.js');
 const Adopciones = require('../db/models/adopcion.js');
 const { Sequelize } = require('sequelize');
 const moment = require('moment');
+const session = require('express-session');
 
 const mostrarReportes = async(req, res) => {
-    return res.render('../views/reportes', {mostrarPagina: 1})
+    return res.render('../views/reportes', {mostrarPagina: 1, session})
 }
 
 

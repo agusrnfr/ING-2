@@ -64,7 +64,7 @@ async function obtenerTrabajadores() {
 
 // Muestra de vistassss <3
 const mostrarCargaTrabajador = (req,res) => {
-  res.render('cargar_trabajador')
+  res.render('cargar_trabajador', { session })
 }
 
 const mostrarTrabajadores = async (req, res) => {

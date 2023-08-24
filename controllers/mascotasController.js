@@ -78,6 +78,7 @@ const mostrarMascota = async (req, res) => {
         mascota: mascota.dataValues,
         usuario: usuario.dataValues,
         mascotas: mascotas,
+        session,
     })
 }
 

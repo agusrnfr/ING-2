@@ -21,7 +21,7 @@ const mostrarIndexCruzas = async (req, res) => {
     const UserId = session.usuario.id;
     try {
         const mascotas = await buscarMascotasClientesConPublicacionCruza(UserId);
-        res.render('cruzas', { mascotas });
+        res.render('cruzas', { mascotas , session });
     }
     catch (error) {
         console.log(error);

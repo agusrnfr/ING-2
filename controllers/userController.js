@@ -1,6 +1,7 @@
 'use strict';
 const User = require('../db/models/user.js');
 const { Op } = require('sequelize');
+const session = require('express-session');
 
 /**
  * Muestra la tabla de usuarios
@@ -10,7 +11,7 @@ const mostrarTablaUsers = async (req, res) => {
   const data = await User.findAll({
     where: { rol: 'cliente' }
   });
-  res.render('../views/table_usuarios.ejs', {data})
+  res.render('../views/table_usuarios.ejs', {data , session})
 }
 
 /**

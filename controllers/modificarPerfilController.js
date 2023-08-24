@@ -9,7 +9,7 @@ const mostrarModificarPerfil = async(req, res) => {
         console.error('Error: No existe tu user, esto nunca deberia ocurrir');
         return
     }
-    return res.render('../views/modificar_mi_perfil', { usuario: session.usuario })
+    return res.render('../views/modificar_mi_perfil', { usuario: session.usuario , session })
 }
 
 const modificarMiPerfil = async(req, res) => {

@@ -98,11 +98,11 @@ const solicitarTurno = async (req, res) => { // Muestra el formulario para solic
     const UserId = session.usuario.id;
     try {
         const mascotas = await buscarMascotasCliente(UserId);
-        res.render('solicitar_turno.ejs', { mascotas });
+        res.render('solicitar_turno.ejs', { mascotas , session});
     }
     catch (error) {
         console.log(error);
-        res.status(500).render('solicitar_turno.ejs', { mascotas: [] });
+        res.status(500).render('solicitar_turno.ejs', { mascotas: [] , session});
     }
 };
 
@@ -201,10 +201,10 @@ const mostrarTodosLosTurnos = async (req, res) => { // Muestra todos los turnos
                 };
             })
             .sort((a, b) => moment(a.fecha, 'DD/MM/YYYY HH:mm').diff(moment(b.fecha, 'DD/MM/YYYY HH:mm')));
-        res.render('turnos_listado.ejs', { data });
+        res.render('turnos_listado.ejs', { data , session });
     } catch (error) {
         console.log(error);
-        res.status(500).render('turnos_listado.ejs', { data: [] });
+        res.status(500).render('turnos_listado.ejs', { data: [] , session});
     };
 };
 
@@ -230,11 +230,11 @@ const mostrarMisTurnos = async (req, res) => { // Muestra los turnos del usuario
                 };
             })
             .sort((a, b) => moment(a.fecha, 'DD/MM/YYYY HH:mm').diff(moment(b.fecha, 'DD/MM/YYYY HH:mm')));
-        res.render('turnos_listado_cliente.ejs', { data });
+        res.render('turnos_listado_cliente.ejs', { data , session});
     }
     catch (error) {
         console.log(error);
-        res.status(500).render('turnos_listado_cliente.ejs', { data: [] });
+        res.status(500).render('turnos_listado_cliente.ejs', { data: [] , session});
     };
 };
 
@@ -395,7 +395,7 @@ const mostrarTurnosDia = async (req, res) => {
             });
 
         const index = 0;
-        res.render('turnos_dia', { data, index });
+        res.render('turnos_dia', { data, index , session });
     } catch (error) {
         console.log(error);
         res.status(500).render('turnos_dia', { data: [] });

@@ -1,4 +1,5 @@
 const User = require('../db/models/user.js');
+const session = require('express-session');
 
 /**
  * Si se ingresa el nombre todo en mayuscula o de forma
@@ -26,7 +27,7 @@ function validarCampos(mail , pass , name , tel , DNI){
 }
 
 const mostrarRegister = (req,res) =>{
-    res.render('register')
+    res.render('register',{ session })
 }
 
 /**
