@@ -15,19 +15,62 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+  <nav class="navbar navbar-expand-sm navbar-white bg-white" aria-label="Third navbar example">
     <div class="container-fluid">
       <a class="navbar-brand" href="/"> <img src="/img/Logo2.png" width="50"> Veterinaria ¡Oh my dog! </a>
-      <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <i class="fas fa-bars"></i>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
- <!--      <a class="nav-link active" aria-current="page" href="/">Inicio</a>
-           <a class="nav-link" href="/">Features</a>
-          <a class="nav-link" href="/">Pricing</a>
-          <a class="nav-link disabled">Disabled</a> -->
+      <div class="collapse navbar-collapse" id="navbarsExample03">
+        <ul class="navbar-nav me-auto mb-2 mb-sm-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Inicio</a>
+          </li>
+          <% if (session && session.usuario && session.loggedin === true) { %>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Mi perfil</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/ver_cliente/<%= session.usuario.id %>">Ver mi perfil</a></li>
+                    <li><a class="dropdown-item" href="/modificar_mi_perfil">Modificar mi perfil</a></li>
+                    <li><a class="dropdown-item" href="/turnos/misTurnos">Listar mis turnos</a></li>
+                  </ul>
+                </li>
+          <% } %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Servicios</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Adopcion de perros</a></li>
+              <li><a class="dropdown-item" href="#">Campañas</a></li>
+              <li><a class="dropdown-item" href="#">Paseadores, cuidadores y guarderias</a></li>
+              <li><a class="dropdown-item" href="#">Veterinarias de turno</a></li>
+              <li><a class="dropdown-item" href="#">Perdidas de perros</a></li>
+              <li><a class="dropdown-item" href="#">Busqueda de dueños</a></li>
+              <li><a class="dropdown-item" href="#">Solicitar un turno</a></li>
+              <li><a class="dropdown-item" href="#">Cruzas caninas</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: rgb(235, 202, 96);border-radius: 10px;">Admin</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Listar turnos del dia</a></li>
+              <li><a class="dropdown-item" href="#">Lista de clientes</a></li>
+              <li><a class="dropdown-item" href="#">Registrar a un cliente</a></li>
+              <li><a class="dropdown-item" href="#">Registrar a un trabajador</a></li>
+              <li><a class="dropdown-item" href="#">Listar turnos de todos los clientes</a></li>
+              <li><a class="dropdown-item" href="#">Reportes</a></li>
+            </ul>
+          </li>
+        </ul>
+        <div class="text-end">
+          <% if (session && typeof session.usuario !=='undefined' && (session.loggedin===true)) { %>
+            <form id="logout-form" action="/logout" method="POST">
+              <button type="submit" class="btn btn-outline-dark me-2" onclick="borrarModal()">Cerrar
+                  sesión</button>
+          </form>
+            <% } else { %>
+              <button type="button" class="btn btn-warning" onclick="window.location.href='/login'">Iniciar sesión</button>
+              <% } %>
         </div>
       </div>
     </div>

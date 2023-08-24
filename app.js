@@ -4,6 +4,15 @@ const path = require('path');
 const app = express();
 const sequelize = require('./db/db');
 
+// var de sesion
+const session = require('express-session');
+
+// Agregar middleware para pasar session a todas las vistas
+app.use((req, res, next) => {
+  res.locals.session = req.session;
+  next();
+});
+
 //seteamos url encode para capturar los datos del formulario
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -14,14 +23,15 @@ app.set('view engine', 'ejs');
 //proyecto de rutas
 app.use('/', require('./routes/userRoutes'))
 
-// var de sesion
-const session = require('express-session');
+
 
 app.use(session({
   secret: 'secret',
   resave: 'true',
   saveUninitialized: 'true',
 }));
+
+
 
 // Establecer las variables globales en app.locals para los ejs y archivos
 require('./globals.js');
