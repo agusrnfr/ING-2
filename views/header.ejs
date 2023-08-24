@@ -50,6 +50,8 @@
               <li><a class="dropdown-item" href="#">Cruzas caninas</a></li>
             </ul>
           </li>
+
+          <% if (session && session.usuario && session.loggedin && (session.loggedin===true) && session.usuario.rol && (session.usuario.rol==='admin' )) {%>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: rgb(235, 202, 96);border-radius: 10px;">Admin</a>
             <ul class="dropdown-menu">
@@ -61,6 +63,8 @@
               <li><a class="dropdown-item" href="#">Reportes</a></li>
             </ul>
           </li>
+          <% } %>
+          
         </ul>
         <div class="text-end">
           <% if (session && typeof session.usuario !=='undefined' && (session.loggedin===true)) { %>
