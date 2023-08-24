@@ -40,14 +40,18 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Servicios</a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Adopcion de perros</a></li>
-              <li><a class="dropdown-item" href="#">Campañas</a></li>
-              <li><a class="dropdown-item" href="#">Paseadores, cuidadores y guarderias</a></li>
-              <li><a class="dropdown-item" href="#">Veterinarias de turno</a></li>
-              <li><a class="dropdown-item" href="#">Perdidas de perros</a></li>
-              <li><a class="dropdown-item" href="#">Busqueda de dueños</a></li>
-              <li><a class="dropdown-item" href="#">Solicitar un turno</a></li>
-              <li><a class="dropdown-item" href="#">Cruzas caninas</a></li>
+              <li><a class="dropdown-item" href="/adopciones">Adopcion de perros</a></li>
+              <li><a class="dropdown-item" href="/campanias"></a></li>
+              <li><a class="dropdown-item" href="/trabajadores">Paseadores, cuidadores y guarderias</a></li>
+              <li><a class="dropdown-item" href="/veterinariasDeTurno">Veterinarias de turno</a></li>
+              <li><a class="dropdown-item" href="/perdidas">Perdidas de perros</a></li>
+              <li><a class="dropdown-item" href="/busquedas">Busqueda de dueños</a></li>
+
+              <% if (session && session.usuario && session.loggedin && (session.loggedin===true)){%>
+              <li><a class="dropdown-item" href="/turnos"><strong>Solicitar un turno</strong> </a></li>
+              <li><a class="dropdown-item" href="/cruzas"><strong>Cruzas caninas</strong></a></li>
+              <% } %>
+
             </ul>
           </li>
 
@@ -55,12 +59,12 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: rgb(235, 202, 96);border-radius: 10px;">Admin</a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Listar turnos del dia</a></li>
-              <li><a class="dropdown-item" href="#">Lista de clientes</a></li>
-              <li><a class="dropdown-item" href="#">Registrar a un cliente</a></li>
-              <li><a class="dropdown-item" href="#">Registrar a un trabajador</a></li>
-              <li><a class="dropdown-item" href="#">Listar turnos de todos los clientes</a></li>
-              <li><a class="dropdown-item" href="#">Reportes</a></li>
+              <li><a class="dropdown-item" href="/turnos_dia">Listar turnos del dia</a></li>
+              <li><a class="dropdown-item" href="/table">Lista de clientes</a></li>
+              <li><a class="dropdown-item" href="/register">Registrar a un cliente</a></li>
+              <li><a class="dropdown-item" href="/cargar_trabajador">Registrar a un trabajador</a></li>
+              <li><a class="dropdown-item" href="/turnos/listarTodosLosTurnos">Listar turnos de todos los clientes</a></li>
+              <li><a class="dropdown-item" href="/reportes">Reportes</a></li>
             </ul>
           </li>
           <% } %>
@@ -79,6 +83,6 @@
       </div>
     </div>
   </nav>
+  <script src="https://getbootstrap.com/docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </body>
-
 </html>
