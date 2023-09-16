@@ -24,6 +24,7 @@ Cruza.init({
     sequelize,
     modelName: 'Cruza',
     tableName: 'cruzas',
+    timestamps: false,
 });
 
 module.exports = Cruza;

@@ -30,6 +30,7 @@ Historial.init({
     sequelize,
     modelName: 'Historial',
     tableName: 'historiales',
+    timestamps: false,
 });
 
 module.exports = Historial;

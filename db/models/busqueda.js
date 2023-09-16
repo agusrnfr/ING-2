@@ -48,6 +48,7 @@ Busqueda.init({
     sequelize,
     modelName: 'Busqueda',
     tableName: 'busquedas',
+    timestamps: false,
 });
 
 module.exports = Busqueda;

@@ -60,6 +60,7 @@ Adopcion.init({
     sequelize,
     modelName: 'Adopcion',
     tableName: 'adopciones',
+    timestamps: false,
 });
 
 module.exports = Adopcion;

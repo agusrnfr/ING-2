@@ -33,6 +33,7 @@ Turno.init({
     sequelize,
     modelName: 'Turno',
     tableName: 'turnos',
+    timestamps: false,
 });
 
 module.exports = Turno;

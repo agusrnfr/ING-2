@@ -39,6 +39,7 @@ Trabajador.init({
   sequelize,
   modelName: 'Trabajador',
   tableName: 'trabajadores',
+  timestamps: false,
 });
 
 module.exports = Trabajador;

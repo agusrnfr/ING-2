@@ -7,7 +7,7 @@ module.exports = {
     async up(queryInterface, Sequelize) {
         await queryInterface.bulkInsert('campanias', [{
             titulo: 'Donación a la veterinaria ¡Oh my dog!',
-            descripcion: '¡Oh my dog! es una veterinaria comprometida con el bienestar animal. Tu donación apoyará a refugios locales, proporcionándoles los recursos necesarios para rescatar, cuidar y encontrar hogares amorosos a animales abandonados. Únete a nuestra causa y ayúdanos a hacer una diferencia en la vida de estos adorables seres. ¡Dona hoy para salvar vidas!',
+            descripcion: '¡Oh my dog! es una veterinaria comprometida con el bienestar animal. Tu donación apoyará a refugios locales!',
         }], {});
         await queryInterface.bulkInsert('campanias', [{
             titulo: 'Campaña de donación de alimentos',

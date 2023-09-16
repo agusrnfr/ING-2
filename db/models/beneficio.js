@@ -16,6 +16,7 @@ Beneficio.init({
     sequelize,
     modelName: 'Beneficio',
     tableName: 'beneficios',
+    timestamps: false,
 });
 
 module.exports = Beneficio;

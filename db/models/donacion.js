@@ -16,6 +16,7 @@ Donacion.init({
   sequelize,
   modelName: 'Donacion',
   tableName: 'donaciones',
+  timestamps: false,
 });
 
 module.exports = Donacion;

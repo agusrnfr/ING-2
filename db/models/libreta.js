@@ -19,6 +19,7 @@ Libreta.init({
     sequelize,
     modelName: 'Libreta',
     tableName: 'libretas',
+    timestamps: false,
 });
 
 module.exports = Libreta;

@@ -42,6 +42,7 @@ Mascota.init({
   sequelize,
   modelName: 'Mascota',
   tableName: 'mascotas',
+  timestamps: false,
 });
 
 //eliminado logico

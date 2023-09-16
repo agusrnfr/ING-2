@@ -52,6 +52,7 @@ Perdida.init({
     sequelize,
     modelName: 'Perdida',
     tableName: 'perdidas',
+    timestamps: false,
 });
 
 module.exports = Perdida;

@@ -20,6 +20,7 @@ Campania.init({
   sequelize,
   modelName: 'Campania',
   tableName: 'campanias',
+  timestamps: false,
 });
 
 module.exports = Campania;
